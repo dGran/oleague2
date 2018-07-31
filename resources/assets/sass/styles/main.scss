@@ -1,0 +1,255 @@
+@import "styles/partials/header.scss";
+@import "styles/partials/footer.scss";
+
+body {
+  min-height: 100vh;
+}
+
+.flex-grow {
+   flex: 1;
+}
+
+main {
+	.phases-selector, .groups-selector {
+	    list-style: none;
+	    height: auto;
+	    margin: 0;
+	    overflow-x: auto;
+	    overflow-y: hidden;
+	    padding: 0;
+	    white-space: nowrap;
+	    width: 100%;
+		li {
+		    display: inline-block;
+		    height: 100%;
+	    	&.active {
+	    		a {
+	    			background: #333;
+	    			border: 1px solid transparent;
+	    			color: #fff;
+	    			&:hover {
+	    				color: #fff;
+	    			}
+	    		}
+	    	}
+		    a {
+		    	background: #fff;
+		    	border: 1px solid #ddd;
+		    	color: $body-color;
+		    	display: block;
+		    	font-size: .9em;
+		    	padding: .2em .6em;
+		    	&:hover {
+		    		border: 1px solid #333;
+		    	}
+		    }
+		}
+	}
+	.schedule {
+		.day {
+			border: 1px solid #dddddd;
+			padding: 1px;
+			.title {
+				background: #f9f9f9;
+				padding: .5em;
+				font-size: 1.2em;
+				font-weight: 600;
+			}
+			.match {
+				background: #fff;
+				display: table;
+				font-size: 11px;
+				font-weight: 200;
+				line-height: 18px;
+				width: 100%;
+				.local {
+					border-top: 1px solid #f2f2f2;
+					display: table-cell;
+					padding-right: .5em;
+					text-align: right;
+					width: 42%;
+				}
+				.result {
+					background: #373737;
+					border-top: 1px solid #3a3a3a;
+					color: #fff;
+					display: table-cell;
+					font-size: 13px;
+					text-align: center;
+					font-weight: 500;
+					padding: 1em;
+					width: 16%;
+				}
+				.visitor {
+					border-top: 1px solid #f2f2f2;
+					display: table-cell;
+					padding-left: .5em;
+					width: 42%;
+				}
+			}
+		}
+	}
+	.standing {
+		border: 1px solid #ddd;
+		padding: 0px;
+		.standing-title {
+			background: #f9f9f9;
+			border-bottom: 1px solid #f2f2f2;
+			padding: .5em;
+			.principal {
+				font-size: 1.2em;
+				font-weight: 600;
+			}
+		}
+		.standing-table {
+			background: #fff;
+			font-size: .9em;
+			margin: 0;
+			padding: 0;
+			thead {
+				tr {
+					th {
+						border: none;
+						border-bottom: 1px solid #f2f2f2;
+						padding: .5em .75em;
+						vertical-align: middle;
+
+					}
+					.pts {
+						background: #EB9114;
+						border-bottom: 1px solid #cf7f15;
+						color: #fff;
+					}
+					.pj, .pg, .pe, .pp, .gf, .gc, .avg {
+						border-right: 1px solid #f2f2f2;
+					}
+					// .gf, .gc, .avg {
+					// 	display: none;
+					// }
+				}
+			}
+			tbody {
+				tr {
+					&:last-child {
+						td {
+							border-bottom: none;
+						}
+					}
+					td {
+						border: none;
+						border-bottom: 1px solid #f2f2f2;
+						padding: .25em .5em;
+						vertical-align: middle;
+					}
+					.position {
+						border-left: 3px solid transparent;
+						color: #B2B2B2;
+						font-weight: 600;
+						text-align: right;
+						&.blue {
+							border-left: 3px solid #005480;
+						}
+						&.green {
+							border-left: 3px solid #107a0f;
+						}
+						&.orange {
+							border-left: 3px solid #feb532;
+						}
+						&.red {
+							border-left: 3px solid #ca0306;
+						}
+					}
+					.logo {
+						padding: .25em 0;
+						img {
+							width: 24px;
+						}
+
+					}
+					.team {
+						.gamertag {
+							color: #abacae;
+							display: block;
+							font-size: .8em;
+						}
+
+					}
+					.data {
+						text-align: center;
+						&.pts {
+							background: #333;
+							border-bottom: 1px solid #3b3b3b;
+							color: #fff;
+						}
+						&.pj, &.pg, &.pe, &.pp, &.gf, &.gc, &.avg {
+							border-right: 1px solid #f2f2f2;
+						}
+						// &.gf, &.gc, &.avg {
+						// 	display: none;
+						// }
+					}
+				}
+			}
+		}
+	}
+	.legend {
+		span {
+			border-left: 3px solid transparent;
+			font-size: .9em;
+			padding: .25em .5em;
+			&.blue {
+				border-left: 3px solid #005480;
+			}
+			&.green {
+				border-left: 3px solid #107a0f;
+			}
+			&.orange {
+				border-left: 3px solid #feb532;
+			}
+			&.red {
+				border-left: 3px solid #ca0306;
+			}
+		}
+	}
+}
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+	.standing {
+		.standing-table {
+			tbody {
+				tr {
+					&:hover {
+						background: #f5f5f5;
+						.data {
+							&.pts {
+								color: lighten(#EB9114, 10%);
+							}
+						}
+					}
+					.logo {
+						padding: .25em .75em;
+					}
+					// .data {
+					// 	&.gf, &.gc, &.avg {
+					// 		display: table-cell;
+					// 	}
+					// }
+				}
+			}
+		}
+	}
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}

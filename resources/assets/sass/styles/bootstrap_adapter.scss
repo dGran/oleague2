@@ -1,0 +1,23 @@
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+//dropdowns
+.dropdown-menu {
+	padding: 0;
+	.dropdown-item {
+		padding: .6em;
+		i {
+			text-align: left;
+		}
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+	.dropdown-divider {
+		margin: 0;
+	}
+}

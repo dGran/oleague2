@@ -1,0 +1,18 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:200,400,500');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700');
+
+// Variables
+@import "admin_variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// my-styles
+@import "styles/tips.scss";
+@import "styles/bootstrap_adapter.scss";
+@import "styles/swal_adapter.scss";
+
+@import "admin_styles/layout.scss";
+@import "admin_styles/content.scss";

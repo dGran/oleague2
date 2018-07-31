@@ -1,0 +1,45 @@
+a:focus, button:focus, input:focus, .btn:focus {
+	outline: none !important;
+	text-decoration: none;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Change Autocomplete styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	-webkit-text-fill-color: $primary;
+	-webkit-box-shadow: 0 0 0px 1000px #F8F8F8 inset !important;
+	box-shadow: 0 0 0px 1000px #F8F8F8 inset !important;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Delete Shadows */
+input, select, textarea {
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	background-clip: padding-box; // ios solution
+}
+
+button .btn .btn-white .dropdown-toggle:focus {
+	background-color: red;
+}
+
+.country_id:hover {
+	background-color: red;
+}
+.form-control:focus, .form-control:active {
+    outline: none !important;
+	box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
