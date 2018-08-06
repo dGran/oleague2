@@ -136,7 +136,6 @@ header {
 			}
 		}
 		.menu {
-			// background: #e6e6e6;
 			border-top: 1px solid #5b5b5b;
 			nav {
 				padding: .25em 0;
@@ -167,6 +166,73 @@ header {
 					}
 				}
 			}
+		}
+		.match {
+			border-top: 1px solid #5b5b5b;
+
+				display: table;
+				width: 100%;
+				.local, .visitor {
+					display: table-cell;
+					padding-right: 1em;
+					text-align: right;
+					vertical-align: middle;
+					width: 42%;
+					.participant {
+						display: table-cell;
+						padding-right: 1em;
+						vertical-align: middle;
+						width: 100%;
+						.team {
+							color: #fff;
+							display: block;
+							line-height: 1.25em;
+							font-size: 1.75em;
+						}
+						.gamertag {
+							color: #abacae;
+							display: block;
+							font-size: 1em;
+						}
+					}
+					.logo {
+						display: table-cell;
+						vertical-align: middle;
+						img {
+							height: 64px;
+							width: 64px;
+						}
+					}
+
+				}
+				.result {
+					color: #fff;
+					display: table-cell;
+					font-size: 4em;
+					text-align: center;
+					font-weight: 500;
+					width: 16%;
+					&.pending {
+						background: #EB9114;
+						border-top: 1px solid #cf7f15;
+						color: #fff;
+						padding: 1em;
+					}
+					a {
+						color: #fff;
+						display: block;
+						padding: 1em;
+					}
+				}
+				.visitor {
+					padding-left: 1em;
+					padding-right: 0;
+					text-align: left;
+					.participant {
+						padding-left: 1em;
+						padding-right: 0;
+					}
+				}
 		}
 	}
 

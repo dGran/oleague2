@@ -26,6 +26,7 @@ Route::get('competiciones/competicion', 'HomeController@competition')->name('com
 Route::get('competiciones/competicion/clasificacion', 'HomeController@competition_standing')->name('competition.league.standing');
 Route::get('competiciones/competicion/calendario', 'HomeController@competition_schedule')->name('competition.league.schedule');
 Route::get('competiciones/competicion/estadisticas', 'HomeController@competition_statistics')->name('competition.league.statistics');
+Route::get('competiciones/competicion/partido', 'HomeController@competition_match')->name('competition.match');
 
 // User routes
 Route::get('perfil', 'ProfileController@edit')->name('profileEdit');

@@ -114,4 +114,9 @@ class HomeController extends Controller
     {
         return view('competitions.league.statistics');
     }
+
+    public function competition_match()
+    {
+        return view('competitions.match');
+    }
 }
