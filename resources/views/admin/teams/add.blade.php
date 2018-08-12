@@ -1,10 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 
 @section('content')
 {{-- <div class="container"> --}}
     <div class="row no-gutters">
 
-        <div class="col-md-12">
+        <div class="col-12 p-0 p-md-4">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('admin') }}">Admin</a></li>
@@ -15,7 +15,7 @@
         </div>
 
 
-        <div class="col-12 col-xl-6">
+        <div class="col-12 col-xl-6 p-0 p-md-4">
 
         @if (session('error'))
             <div class="alert alert-danger autohide">

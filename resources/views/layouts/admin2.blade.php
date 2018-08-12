@@ -26,64 +26,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+
 </head>
 
 <body>
 
-    <div id="app">
+	<section class="section left d-none d-lg-flex">
+		<div class="top-left">
+			{{ config('app.name', 'Laravel') }}
+		</div>
+		<div class="bottom left">
+			@include('admin.partials.menu')
+		</div>
+	</section>
 
-        <nav class="navbar bg-primary fixed-top top-menu" style="min-height: 56px">
-        </nav>
-        <!-- NavBar END -->
+	<section class="section center">
+		<div class="top-right">
+			Panel del Administración
+		</div>
+		<div class="bottom">
+			@yield('content')
+			<div class="p-3 text-muted w-100">
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque aspernatur nihil perspiciatis hic, id nobis, accusamus animi necessitatibus cumque est fugit incidunt rerum repudiandae eius et quas, aperiam ratione tempore!
+			</div>
+		</div>
+	</section>
 
-
-        <!-- Bootstrap row -->
-        <div class="row" id="body-row">
-            <!-- Sidebar -->
-            <div id="sidebar-container" class="sidebar-expanded d-none d-md-block col-2 sidebar-menu">
-                <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
-                <!-- Bootstrap List Group -->
-                <ul class="list-group">
-                    @include('admin.partials.menu')
-                </ul>
-                <!-- List Group END-->
-            </div>
-            <!-- sidebar-container END -->
-
-            <!-- MAIN -->
-            <div class="col py-3 admin-content">
-                @yield('content')
-            </div>
-            <!-- Main Col END -->
-
-            <div id="sidebar-table-options" class="sidebar-expanded d-none d-md-block col-2 sidebar-menu">
-                <!-- d-* hiddens the Sidebar in smaller devices. Its itens can be kept on the Navbar 'Menu' -->
-                <!-- Bootstrap List Group -->
-                <ul class="list-group sticky-top sticky-offset">
-                    <p class="test p-3">
-                        <div id="general-options">
-                            <a href="{{ route('admin.teams.add') }}" class="btn btn-primary " id="btnAdd">
-                                <i class="fas fa-plus d-inline-block d-md-none"></i>
-                                <span class="d-none d-md-inline-block">Nuevo equipo</span>
-                            </a>
-
-                        </div>
-                        <div class="multipleOptions d-none p-3 mr-3 border-top animated fadeIn">
-                            <small id="multipleinfo" class="d-block pb-2"></small>
-                            <input type="button" id="duplicateMany" class="btn btn-link d-block" value="Duplicar seleccionados" onclick="duplicateMany()">
-                            <input type="button" id="destroyMany" class="btn btn-link d-block" value="Eliminar seleccionados" onclick="destroyMany()">
-                        </div>
-                    </p>
-
-                </ul>
-                <!-- List Group END-->
-            </div>
-
-        </div>
-        <!-- body-row END -->
-
-    </div>
-    {{-- App --}}
+	<section class="section right d-none d-md-flex">
+		<div class="top-right">
+			<a href="{{ route('home') }}" class="text-white">Salir</a>
+		</div>
+		<div class="bottom right">
+			@yield('right-side')
+		</div>
+	</section>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
