@@ -4,8 +4,8 @@
 
 <div class="row no-gutters">
     <div class="col-12 p-0 p-md-4">
-        <div class="card border-0 rounded-0 m-0 p-0 w-100">
-            <div class="card-header sticky-top px-3 py-2" style="background: #fff">
+        <div class="admin-content border-0 rounded-0 m-0 p-0 w-100">
+            <div class="px-3 py-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb p-0 m-0 mb-1" style="font-size: .9em">
                         <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
@@ -15,9 +15,9 @@
                 <h5 class="text-uppercase m-0"><strong>Equipos</strong></h5>
             </div>
 
-            <div class="card-body p-0">
+            <div class="p-0">
 
-                <div class="col-md-12 notifications m-2">
+                <div class="col-md-12 notifications">
                     @if (session('status'))
                         <div class="alert alert-info autohide">
                             {{ session('status') }}
@@ -185,7 +185,7 @@
                 </table>
             </div> {{-- card-body --}}
 
-            <div class="card-footer clearfix border-top p-3 regs-info">
+            <div class="clearfix border-top p-3 regs-info">
                 @if ($teams->count() > 0)
                     <div class="float-left regs-info align-baseline">Registros: {{ $teams->firstItem() }}-{{ $teams->lastItem() }} de {{ $teams->total() }}</div>
                     <div class="float-right">{!! $teams->appends(Request::all())->render() !!}</div>

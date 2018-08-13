@@ -31,7 +31,28 @@
 
 <body>
 
-	<section class="section left d-none d-lg-flex">
+<div id="container">
+    <div id="sidebar">
+        <!-- Sidebar contents -->
+        <div id="sidebar-content">
+            @include('admin.partials.menu')
+        </div>
+    </div><!--
+ --><div id="content">
+        <!-- Main contents -->
+        <div id="main-content">
+            @yield('content')
+        </div>
+    </div><!--
+ --><div id="sidebar2">
+        <!-- Sidebar contents -->
+        <div id="sidebar2-content">
+            @yield('right-side')
+        </div>
+    </div>
+</div>
+
+{{-- 	<section class="section left d-none d-lg-flex">
 		<div class="top-left">
 			{{ config('app.name', 'Laravel') }}
 		</div>
@@ -46,9 +67,6 @@
 		</div>
 		<div class="bottom">
 			@yield('content')
-			<div class="p-3 text-muted w-100">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque aspernatur nihil perspiciatis hic, id nobis, accusamus animi necessitatibus cumque est fugit incidunt rerum repudiandae eius et quas, aperiam ratione tempore!
-			</div>
 		</div>
 	</section>
 
@@ -59,7 +77,7 @@
 		<div class="bottom right">
 			@yield('right-side')
 		</div>
-	</section>
+	</section> --}}
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
@@ -70,38 +88,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     {{-- Mouse Trap --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.2/mousetrap.min.js"></script>
-
-    <script>
-
-        // Hide submenus
-        $('#body-row .collapse').collapse('hide');
-
-        // Collapse/Expand icon
-        $('#collapse-icon').addClass('fa-angle-double-left');
-
-        // Collapse click
-        $('[data-toggle=sidebar-colapse]').click(function() {
-            SidebarCollapse();
-        });
-
-        function SidebarCollapse () {
-            $('.menu-collapsed').toggleClass('d-none');
-            $('.sidebar-submenu').toggleClass('d-none');
-            $('.submenu-icon').toggleClass('d-none');
-            $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
-
-            // Treating d-flex/d-none on separators with title
-            var SeparatorTitle = $('.sidebar-separator-title');
-            if ( SeparatorTitle.hasClass('d-flex') ) {
-                SeparatorTitle.removeClass('d-flex');
-            } else {
-                SeparatorTitle.addClass('d-flex');
-            }
-
-            // Collapse/Expand icon
-            $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
-        }
-    </script>
 
     @yield('js')
 </body>

@@ -4,119 +4,114 @@
 }
 
 html {
-	font-family: sans-serif;
 	height: 100%;
-	overflow: scroll;
-	overflow-x: hidden;
 }
 ::-webkit-scrollbar {
     background: transparent;  /* optional: just make scrollbar invisible */
     width: 0px;  /* remove scrollbar space */
 }
+
 body {
-	display: flex;
+	margin: 0;
 	height: 100%;
-	margin: 0px;
-	overflow: hidden;
-}
-#left {
-	flex-shrink: 0;
-}
-.section {
-	display: flex;
-	height: 100%;
-	flex-direction: column;
-	&.left {
-		// background-color: #333;
-		background-color: #f7f9fa;
-		flex-shrink: 0;
-	}
-	&.center {
-		background-color: #fff;
-	}
-	&.right {
-		background-color: #fff;
-		flex-shrink: 0;
-	}
 }
 
-.top-left {
-	background-color: #333;
-	color: white;
-	flex-shrink: 0;
-	padding: 1em;
+#container {
+	height: 100%;
 }
-.top-right {
-	background-color: #333;
-	color: white;
-	display: inline-flex;
-	flex-shrink: 0;
-	padding: 1em;
-}
-.bottom {
-	flex-grow: 1;
-	line-height: 1em;
-	overflow-y: auto;
-	&.left {
-		line-height: 1.5em;
-		min-width: 200px;
-		.left-menu {
-			// background-color: #333;
-			list-style: none;
-			padding: 20px;
-			li {
-				padding: 9px 15px;
-				// border-bottom: 1px solid darken(#333, 5%);
-			}
-			.section {
-				// background-color: #333;
-				color: $blue;
-				font-size: .9em;
-				text-transform: uppercase;
-			}
-			.item {
-				// background-color: #343a3f;
-				&:hover {
-					// background-color: #1d2124;
-				}
-				&.pending {
-					cursor: not-allowed;
-					&:hover {
-						// background-color: #343a3f;
-					}
-					a {
-						color: #BEC8D2;
-						&:hover {
-							color: #BEC8D2;
-						}
-					}
-				}
-				&.current {
-					// background-color: #1d2124;
-					a {
-						// color: #FFDA16;
-						&:hover {
-							// color: #FFDA16;
-						}
-					}
 
-				}
-				a {
-					color: #929ca7;
-					display: block;
-					&:hover {
-						color: #a2abb4;
-					}
-				}
-			}
-		}
-	}
-	&.right {
-		line-height: 1.5em;
-		min-width: 200px;
-		padding: 20px;
-	}
+#sidebar {
+	background-color: #f7f9fa;
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+	width: 15%;
+	overflow: auto;
 }
+
+#sidebar2 {
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+	width: 15%;
+	overflow: auto;
+}
+
+#content {
+	display: inline-block;
+	vertical-align: top;
+	height: 100%;
+	width: 70%;
+	overflow: auto;
+}
+
+// html {
+// 	font-family: sans-serif;
+// 	height: 100%;
+// 	overflow: scroll;
+// 	overflow-x: hidden;
+// }
+// ::-webkit-scrollbar {
+//     background: transparent;  /* optional: just make scrollbar invisible */
+//     width: 0px;  /* remove scrollbar space */
+// }
+// body {
+// 	display: flex;
+// 	height: 100%;
+// 	margin: 0px;
+// 	overflow: hidden;
+// }
+// #left {
+// 	flex-shrink: 0;
+// }
+// .section {
+// 	display: flex;
+// 	height: 100%;
+// 	flex-direction: column;
+// 	&.left {
+// 		// background-color: #333;
+// 		background-color: #f7f9fa;
+// 		flex-shrink: 0;
+// 	}
+// 	&.center {
+// 		background-color: #fff;
+// 	}
+// 	&.right {
+// 		background-color: #fff;
+// 		flex-shrink: 0;
+// 	}
+// }
+
+// .top-left {
+// 	background-color: #333;
+// 	color: white;
+// 	flex-shrink: 0;
+// 	padding: 1em;
+// }
+// .top-right {
+// 	background-color: #333;
+// 	color: white;
+// 	display: inline-flex;
+// 	flex-shrink: 0;
+// 	padding: 1em;
+// }
+// .bottom {
+// 	flex-grow: 1;
+// 	line-height: 1em;
+// 	overflow-y: auto;
+// 	min-width: 100%;
+// 	&.left {
+// 		line-height: 1.5em;
+// 		min-width: 230px;
+// 		max-width: 230px;
+// 	}
+// 	&.right {
+// 		line-height: 1.5em;
+// 		min-width: 230px;
+// 		max-width: 230px;
+// 		padding: 20px;
+// 	}
+// }
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
@@ -128,9 +123,6 @@ body {
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-	header {
-		border-bottom: 1px solid darken($primary, 25%);
-	}
 }
 
 // Extra large devices (large desktops, 1200px and up)
