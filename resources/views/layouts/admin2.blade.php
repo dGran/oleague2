@@ -31,53 +31,40 @@
 
 <body>
 
-<div id="container">
-    <div id="sidebar">
-        <!-- Sidebar contents -->
-        <div id="sidebar-content">
-            @include('admin.partials.menu')
-        </div>
-    </div><!--
- --><div id="content">
-        <!-- Main contents -->
-        <div id="main-content">
-            @yield('content')
-        </div>
-    </div><!--
- --><div id="sidebar2">
-        <!-- Sidebar contents -->
-        <div id="sidebar2-content">
-            @yield('right-side')
+    <div class="wrap">
+        <div class="sidebar left">
+            <!-- Sidebar contents -->
+            <div class="sidebar-content">
+                <div class="title sticky-top">
+                    Panel de Admin
+                </div>
+                <ul class="left-menu">
+                    @include('admin.partials.menu')
+                </ul>
+            </div>
+        </div><!--
+     --><div class="content">
+            <div class="top clearfix">
+                @include('admin.partials.top-menu')
+            </div>
+            <!-- Main contents -->
+            <div class="main-content">
+                @yield('content')
+            </div>
+        </div><!--
+     --><div class="sidebar">
+            <!-- Sidebar contents -->
+            <div class="sidebar-content">
+                @yield('right-side')
+            </div>
         </div>
     </div>
-</div>
 
-{{-- 	<section class="section left d-none d-lg-flex">
-		<div class="top-left">
-			{{ config('app.name', 'Laravel') }}
-		</div>
-		<div class="bottom left">
-			@include('admin.partials.menu')
-		</div>
-	</section>
-
-	<section class="section center">
-		<div class="top-right">
-			Panel del Administración
-		</div>
-		<div class="bottom">
-			@yield('content')
-		</div>
-	</section>
-
-	<section class="section right d-none d-md-flex">
-		<div class="top-right">
-			<a href="{{ route('home') }}" class="text-white">Salir</a>
-		</div>
-		<div class="bottom right">
-			@yield('right-side')
-		</div>
-	</section> --}}
+    <div class="sidebar-mobile animated">
+        <ul class="left-menu mobile">
+            @include('admin.partials.menu')
+        </ul>
+    </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
@@ -90,5 +77,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.2/mousetrap.min.js"></script>
 
     @yield('js')
+
+    <script>
+        $("#btn-menu").click(function(){
+            if ($(".sidebar-mobile").is(':visible')) {
+                $('.sidebar-mobile').removeClass('slideInLeft');
+                $('.sidebar-mobile').addClass('slideOutLeft');
+                $(this).children('i').removeClass('fa-times');
+                $(this).children('i').addClass('fa-bars');
+                $('.sidebar-mobile').hide();
+            } else {
+                $('.sidebar-mobile').removeClass('slideOutLeft');
+                $('.sidebar-mobile').addClass('slideInLeft');
+                $(this).children('i').removeClass('fa-bars');
+                $(this).children('i').addClass('fa-times');
+                $('.sidebar-mobile').show();
+            }
+        });
+    </script>
 </body>
 </html>

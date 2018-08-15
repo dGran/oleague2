@@ -1,70 +1,28 @@
-.left-menu {
-	// background-color: #333;
-	list-style: none;
-	padding: 20px;
- //  	display: table;
-	// margin: 0 auto;
-	font-size: 1rem;
-	li {
-		padding: 9px 15px;
-		// border-bottom: 1px solid darken(#333, 5%);
-	}
-	.section {
-		// background-color: #333;
-		color: $blue;
-		font-size: .9em;
-		text-transform: uppercase;
-	}
-	.item {
-		// background-color: #343a3f;
-		&:hover {
-			// background-color: #1d2124;
-		}
-		&.pending {
-			cursor: not-allowed;
-			&:hover {
-				// background-color: #343a3f;
-			}
-			a {
-				color: #BEC8D2;
-				&:hover {
-					color: #BEC8D2;
-				}
-			}
-		}
-		&.current {
-			// background-color: #1d2124;
-			a {
-				// color: #FFDA16;
-				&:hover {
-					// color: #FFDA16;
-				}
-			}
-
-		}
-		a {
-			color: #929ca7;
-			display: block;
-			&:hover {
-				color: #a2abb4;
-			}
-		}
-	}
+a.disabled {
+   pointer-events: none;
+   cursor: not-allowed;
 }
 
-.admin-content {
+.main-content {
 	.table {
 		line-height: 1.5em;
 		thead {
 			tr {
-				// background: rgba(0, 0, 0, 0.03);
 				text-transform: uppercase;
 			}
 		}
 		tbody {
 			tr {
+				&.selected {
+					background-color: #ebf4fc;
+				}
 				td {
 					padding: .5em .75em;
+					.actions {
+						.dropdown-toggle {
+							border: 1px solid $border-color;
+						}
+					}
 					//dropdown
 					.dropdown-toggle[aria-expanded="true"] {
 					    background: $gray-100 !important;
@@ -103,15 +61,27 @@
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-	.admin-content {
+	.main-content {
 		.table {
 			tbody {
 				tr {
-					&:hover {
-						background: #fdf6ee;
+					td {
+						.actions {
+							.dropdown-toggle {
+								border: 1px solid transparent;
+							}
+						}
 					}
-					.actions {
-						min-width: 180px;
+					&:hover {
+						// background: #fdf6ee;
+						.name {
+							color: $primary;
+						}
+						.actions {
+							.dropdown-toggle {
+								border: 1px solid $primary;
+							}
+						}
 					}
 				}
 			}

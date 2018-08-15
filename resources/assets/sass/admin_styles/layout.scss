@@ -12,106 +12,120 @@ html {
 }
 
 body {
+	height: 100%;
 	margin: 0;
+}
+
+.wrap {
 	height: 100%;
 }
 
-#container {
+.sidebar {
+	display: none;
 	height: 100%;
+	overflow: auto;
+	vertical-align: top;
+	width: 20%;
+	&.left {
+		background-color: #f7f9fa;
+		.sidebar-content {
+			padding: 0;
+			.title {
+				background-color: #EDF0F0;
+				padding: 1.2em;
+			}
+		}
+	}
+	.sidebar-content {
+		font-size: .9rem;
+		padding: 1.2em;
+	}
 }
 
-#sidebar {
+.sidebar-mobile {
 	background-color: #f7f9fa;
-	display: inline-block;
-	vertical-align: top;
+	display: none;
 	height: 100%;
-	width: 15%;
+	left: 0;
 	overflow: auto;
+	position: absolute;
+	top: 45px;
+	width: 100%;
+	vertical-align: top;
 }
 
-#sidebar2 {
+.content {
 	display: inline-block;
-	vertical-align: top;
 	height: 100%;
-	width: 15%;
 	overflow: auto;
+	vertical-align: top;
+	width: 100%;
+	.top {
+		background-color: $primary;
+		color: #fff;
+		height: 45px;
+		width: 100%;
+		a {
+			border: 1px solid transparent;
+			color: #fff;
+			display: block;
+			font-size: 1.75em;
+			padding: .1em .5em;
+			&:hover {
+				color: #fff;
+			}
+		}
+		h1 {
+			border: 1px solid transparent;
+			font-size: 1.25em;
+			margin: 0;
+			padding: .6em;
+		}
+	}
 }
 
-#content {
-	display: inline-block;
-	vertical-align: top;
-	height: 100%;
-	width: 70%;
-	overflow: auto;
+.left-menu {
+	list-style: none;
+	padding: 1.2em;
+	&.mobile {
+		padding: .5em;
+	}
+	li {
+		padding: 9px 15px;
+	}
+	.section {
+		color: $blue;
+		font-size: .9em;
+		text-transform: uppercase;
+	}
+	.item {
+		&.pending {
+			cursor: not-allowed;
+			&:hover {
+			}
+			a {
+				color: #BEC8D2;
+				&:hover {
+					color: #BEC8D2;
+				}
+			}
+		}
+		&.current {
+			a {
+				&:hover {
+				}
+			}
+		}
+		a {
+			color: #929ca7;
+			display: block;
+			&:hover {
+				color: #a2abb4;
+			}
+		}
+	}
 }
 
-// html {
-// 	font-family: sans-serif;
-// 	height: 100%;
-// 	overflow: scroll;
-// 	overflow-x: hidden;
-// }
-// ::-webkit-scrollbar {
-//     background: transparent;  /* optional: just make scrollbar invisible */
-//     width: 0px;  /* remove scrollbar space */
-// }
-// body {
-// 	display: flex;
-// 	height: 100%;
-// 	margin: 0px;
-// 	overflow: hidden;
-// }
-// #left {
-// 	flex-shrink: 0;
-// }
-// .section {
-// 	display: flex;
-// 	height: 100%;
-// 	flex-direction: column;
-// 	&.left {
-// 		// background-color: #333;
-// 		background-color: #f7f9fa;
-// 		flex-shrink: 0;
-// 	}
-// 	&.center {
-// 		background-color: #fff;
-// 	}
-// 	&.right {
-// 		background-color: #fff;
-// 		flex-shrink: 0;
-// 	}
-// }
-
-// .top-left {
-// 	background-color: #333;
-// 	color: white;
-// 	flex-shrink: 0;
-// 	padding: 1em;
-// }
-// .top-right {
-// 	background-color: #333;
-// 	color: white;
-// 	display: inline-flex;
-// 	flex-shrink: 0;
-// 	padding: 1em;
-// }
-// .bottom {
-// 	flex-grow: 1;
-// 	line-height: 1em;
-// 	overflow-y: auto;
-// 	min-width: 100%;
-// 	&.left {
-// 		line-height: 1.5em;
-// 		min-width: 230px;
-// 		max-width: 230px;
-// 	}
-// 	&.right {
-// 		line-height: 1.5em;
-// 		min-width: 230px;
-// 		max-width: 230px;
-// 		padding: 20px;
-// 	}
-// }
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
@@ -119,6 +133,15 @@ body {
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
+	.sidebar {
+		display: inline-block;
+	}
+	.content {
+		width: 60%;
+		.top {
+			display: none;
+		}
+	}
 }
 
 // Large devices (desktops, 992px and up)

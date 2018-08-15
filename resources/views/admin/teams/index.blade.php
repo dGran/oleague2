@@ -4,35 +4,34 @@
 
 <div class="row no-gutters">
     <div class="col-12 p-0 p-md-4">
-        <div class="admin-content border-0 rounded-0 m-0 p-0 w-100">
-            <div class="px-3 py-2">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb p-0 m-0 mb-1" style="font-size: .9em">
-                        <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Equipos</li>
-                    </ol>
-                </nav>
-                <h5 class="text-uppercase m-0"><strong>Equipos</strong></h5>
+        <div class="px-3 py-2">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb p-0 m-0 mb-1" style="font-size: .9em">
+                    <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Equipos</li>
+                </ol>
+            </nav>
+            <h5 class="text-uppercase m-0"><strong>Equipos</strong></h5>
+        </div>
+
+        <div>
+
+            <div class="col-md-12 notifications">
+                @if (session('status'))
+                    <div class="alert alert-info autohide">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger autohide">
+                        {{ session('error') }}
+                    </div>
+                @endif
             </div>
 
-            <div class="p-0">
+            <div class="general-options">
 
-                <div class="col-md-12 notifications">
-                    @if (session('status'))
-                        <div class="alert alert-info autohide">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="alert alert-danger autohide">
-                            {{ session('error') }}
-                        </div>
-                    @endif
-                </div>
-
-                <div class="general-options">
-
-                    <form id="frmFilter" role="search" method="get" action="{{ route('admin.teams') }}">
+                <form id="frmFilter" role="search" method="get" action="{{ route('admin.teams') }}">
                     <div class="row filters d-none m-0 border-bottom {{ $filterCategory ? 'd-block' : '' }}">
                         <div class="col-12 col-sm-7 col-md-6 col-xl-4 p-3">
                             <h5 class="p-0">Filtros</h5>
@@ -49,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="row p-3">
+                    <div class="row no-gutters p-3">
                         <div class="search col-7 col-md-6 col-xl-4">
                             <div class="input-group search">
                                 <input type="text" class="form-control" id="filterName" name="filterName" placeholder="Buscar..." aria-describedby="addon-search" value="{{ $filterName }}" autocomplete="off">
@@ -89,113 +88,101 @@
                                <button id="addon-filter" type="button" class="btn btn-outline-secondary input-group-text {{ $filterCategory ? 'active' : '' }}" data-toggle="button" aria-pressed="{{ $filterCategory ? 'true' : 'false' }}" autocomplete="off" onclick="showHideFilters()">
                                     <i class="fas fa-filter"></i>
                                 </button>
-                                <a href="{{ route('admin.teams.add') }}" class="btn btn-primary " id="btnAdd">
+                                <a href="{{ route('admin.teams.add') }}" class="btn btn-primary" id="btnAdd">
                                     <i class="fas fa-plus d-inline-block d-md-none"></i>
                                     <span class="d-none d-md-inline-block">Nuevo equipo</span>
                                 </a>
                             </div>
                         </div> {{-- actions col --}}
                     </div> {{-- row --}}
-                    </form>
+                </form>
 
-                </div> {{-- general-options --}}
+            </div> {{-- general-options --}}
 
-                <table class="table table-borderless m-0">
+            <table class="table table-borderless m-0">
 
-                    <thead>
-                        <tr class="border-top">
-                            <th width="1" scope="col" class="pr-0">
-                                <div class="pretty p-icon p-jelly">
-                                    <input type="checkbox" id="allMark" onchange="showHideAllMultipleOptions()">
-                                    <div class="state p-primary">
-                                        <i class="icon material-icons">done</i>
-                                        <label></label>
-                                    </div>
+                <thead>
+                    <tr class="border-top">
+                        <th width="1" scope="col" class="pr-0">
+                            <div class="pretty p-icon p-jelly">
+                                <input type="checkbox" id="allMark" onchange="showHideAllMultipleOptions()">
+                                <div class="state p-primary">
+                                    <i class="icon material-icons">done</i>
+                                    <label></label>
                                 </div>
-                            </th>
-                            <th width="32" scope="col" colspan="2" class="pl-0">Equipo</th>
-                            <th scope="col" class="text-right">Acciones</th>
-                        </tr>
-                    </thead>
+                            </div>
+                        </th>
+                        <th width="32" scope="col" colspan="2" class="pl-0">Equipo</th>
+                        <th scope="col" class="text-right">Acciones</th>
+                    </tr>
+                </thead>
 
-                    @foreach ($teams as $team)
-                        <tr class="border-top animated fadeIn">
-                            <td width="1" class="align-middle pr-0">
-                                <div class="pretty p-icon p-jelly">
-                                        <input type="checkbox" class="mark" value="{{ $team->id }}" name="teamId[]" onchange="showHideMultipleOptions()">
+                @foreach ($teams as $team)
+                    <tr class="border-top animated fadeIn">
+                        <td width="1" class="align-middle pr-0">
+                            <div class="pretty p-icon p-jelly">
+                                    <input type="checkbox" class="mark" value="{{ $team->id }}" name="teamId[]" onchange="showHideMultipleOptions(this)">
 
-                                    <div class="state p-primary">
-                                        <i class="icon material-icons">done</i>
-                                        <label></label>
-                                    </div>
+                                <div class="state p-primary">
+                                    <i class="icon material-icons">done</i>
+                                    <label></label>
                                 </div>
-                            </td>
-                            <td width="32" class="align-middle px-0">
-                                @if ($team->logo)
-                                    <img src="{{ @get_headers($team->logo) ? $team->logo : asset('img/teams/broken.png') }}" alt="" width="32">
-                                @else
-                                    <img src="{{ asset('img/no-photo.png') }}" alt="" width="32">
-                                @endif
-                            </td>
-                            <td class="align-middle">
-                                {{ $team->name }}
-                                <span class="d-block">
-                                    <small class="text-black-50 text-uppercase">{{ $team->category->name }}</small>
-                                </span>
-                            </td>
-                            <td align="right" class="align-middle actions">
+                            </div>
+                        </td>
+                        <td width="32" class="align-middle px-0">
+                            @if ($team->logo)
+                                <img src="{{ @get_headers($team->logo) ? $team->logo : asset('img/teams/broken.png') }}" alt="" width="32">
+                            @else
+                                <img src="{{ asset('img/no-photo.png') }}" alt="" width="32">
+                            @endif
+                        </td>
+                        <td class="align-middle">
+                            <span class="name">{{ $team->name }}</span>
+                            <span class="d-block">
+                                <small class="text-black-50 text-uppercase">{{ $team->category->name }}</small>
+                            </span>
+                        </td>
+                        <td align="right" class="actions align-middle">
 
-                                {{-- mobile view --}}
-                                <div class="actions d-block d-md-none">
-                                    <a class="btn btn-link btn-lg py-1 px-3 border dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fas fa-ellipsis-v text-secondary"></i>
+                            <div class="actions">
+                                <a id="btnRegActions" class="btn btn-link btn-lg py-1 px-3 dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-h text-secondary"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
+                                    <a class="dropdown-item text-secondary" href="{{ route('admin.teams.duplicate', $team->id) }}">
+                                        <i class="fas fa-clone fa-fw mr-1"></i>
+                                        Duplicar
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item text-secondary" href="{{ route('admin.teams.duplicate', $team->id) }}">
-                                            <i class="fas fa-clone fa-fw mr-1"></i>
-                                            Duplicar
-                                        </a>
-                                        <a class="dropdown-item text-secondary" href="">
-                                            <i class="fas fa-edit fa-fw mr-1"></i>
-                                            Editar
-                                        </a>
-                                        <form id="formDelete{{ $team->id }}" action="{{ route('admin.teams.destroy', $team->id) }}" method="post" class="d-inline">
-                                            {{ csrf_field() }}
-                                            {{ method_field('delete') }}
-                                            <a class="dropdown-item text-danger" onclick="confirmDelete('{{ $team->id }}', '{{ $team->name }}' )" value="Eliminar">
-                                                <i class="fas fa-trash fa-fw mr-1"></i>
-                                                Eliminar
-                                            </a>
-                                        </form>
-                                    </div>
-                                </div>
-                                {{-- rest of views --}}
-                                <div class="actions d-none d-md-block">
-                                    <a href="{{ route('admin.teams.duplicate', $team->id) }}" class="btn btn-outline-secondary btn-sm">Duplicar</a>
-                                    <a href="" class="btn btn-outline-secondary btn-sm">Editar</a>
+                                    <a class="dropdown-item text-secondary" href="">
+                                        <i class="fas fa-edit fa-fw mr-1"></i>
+                                        Editar
+                                    </a>
                                     <form id="formDelete{{ $team->id }}" action="{{ route('admin.teams.destroy', $team->id) }}" method="post" class="d-inline">
                                         {{ csrf_field() }}
                                         {{ method_field('delete') }}
-                                        <input type="button" class="btn btn-outline-danger btn-sm" onclick="confirmDelete('{{ $team->id }}', '{{ $team->name }}' )" value="Eliminar">
+                                        <a class="dropdown-item text-danger" onclick="confirmDelete('{{ $team->id }}', '{{ $team->name }}' )" value="Eliminar">
+                                            <i class="fas fa-trash fa-fw mr-1"></i>
+                                            Eliminar
+                                        </a>
                                     </form>
                                 </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
-            </div> {{-- card-body --}}
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        </div> {{-- card-body --}}
 
-            <div class="clearfix border-top p-3 regs-info">
-                @if ($teams->count() > 0)
-                    <div class="float-left regs-info align-baseline">Registros: {{ $teams->firstItem() }}-{{ $teams->lastItem() }} de {{ $teams->total() }}</div>
-                    <div class="float-right">{!! $teams->appends(Request::all())->render() !!}</div>
-                @else
-                    <div class="text-center">
-                        No se han encontrado registros
-                    </div>
-                @endif
-            </div>
-        </div> {{-- card --}}
+        <div class="clearfix border-top p-3 regs-info">
+            @if ($teams->count() > 0)
+                <div class="float-left regs-info align-baseline">Registros: {{ $teams->firstItem() }}-{{ $teams->lastItem() }} de {{ $teams->total() }}</div>
+                <div class="float-right">{!! $teams->appends(Request::all())->render() !!}</div>
+            @else
+                <div class="text-center">
+                    No se han encontrado registros
+                </div>
+            @endif
+        </div>
     </div> {{-- col --}}
 </div> {{-- row --}}
 
@@ -206,32 +193,32 @@
     <span class="d-block py-3 text-muted" id="multipleinfo">Elementos seleccionados</span>
     <div class="generalOptions animated fadeIn">
         <div class="text-center">
-            <a href="" class="btn btn-primary btn-block">
+            <a href="{{ route('admin.teams.add') }}" class="btn btn-primary btn-block" id="btnAdd">
                 <span>Crear nuevo equipo</span>
             </a>
         </div>
         <ul class="list-group border-top mt-3">
             <li class="list-group-item border-0">
                 <a href="">
-                    <span class="far fa-file-excel fa-fw mr-1"></span>
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xls)</span>
                 </a>
             </li>
             <li class="list-group-item border-0">
                 <a href="">
-                    <span class="far fa-file-excel fa-fw mr-1"></span>
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xlsx)</span>
                 </a>
             </li>
             <li class="list-group-item border-0">
                 <a href="">
-                    <span class="fas fa-cogs fa-fw mr-1"></span>
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.csv)</span>
                 </a>
             </li>
             <li class="list-group-item border-0">
                 <a href="">
-                    <span class="fas fa-cogs fa-fw mr-1"></span>
+                    <span class="fas fa-file-import fa-fw mr-1"></span>
                     <span>Importar</span>
                 </a>
             </li>
@@ -246,26 +233,26 @@
         </div>
         <ul class="list-group border-top mt-3">
             <li class="list-group-item border-0">
-                <a href="" onclick="duplicateMany()">
+                <a href="" id="duplicateMany" onclick="duplicateMany()">
                     <span class="fas fa-clone fa-fw mr-1"></span>
                     <span>Duplicar</span>
                 </a>
             </li>
             <li class="list-group-item border-0">
                 <a href="">
-                    <span class="far fa-file-excel fa-fw mr-1"></span>
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xls)</span>
                 </a>
             </li>
             <li class="list-group-item border-0">
                 <a href="">
-                    <span class="far fa-file-excel fa-fw mr-1"></span>
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xlsx)</span>
                 </a>
             </li>
             <li class="list-group-item border-0">
                 <a href="">
-                    <span class="fas fa-cogs fa-fw mr-1"></span>
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.csv)</span>
                 </a>
             </li>
@@ -311,6 +298,7 @@
     }
 
     function duplicateMany() {
+        $("#duplicateMany").addClass('disabled');
         var ids = [];
         $(".mark:checked").each(function() {
             ids.push($(this).val());
@@ -343,6 +331,7 @@
             closeOnClickOutside: false,
         })
         .then((value) => {
+            $("#destroyMany").addClass('disabled');
             if (value) {
                 var ids = [];
                 $(".mark:checked").each(function() {
@@ -355,14 +344,20 @@
         });
     }
 
-    function showHideMultipleOptions() {
+    function showHideMultipleOptions(element) {
+
+        if ($(element).is(':checked')) {
+            $(element).parents('tr').addClass('selected');
+        } else {
+            $(element).parents('tr').removeClass('selected');
+        }
+
         if ($(".mark:checked").length > 0) {
             if (!$(".multipleOptions").is(':visible')) {
                 $(".multipleOptions").removeClass('d-none');
                 $(".multipleOptions").addClass('d-block fadeIn');
                 $(".generalOptions").removeClass('d-block fadeIn');
                 $(".generalOptions").addClass('d-none');
-                // $("#multipleinfo").text('Elementos seleccionados: ' + $(".mark:checked").length);
             }
         } else {
             if ($(".multipleOptions").is(':visible')) {
@@ -370,7 +365,6 @@
                 $(".multipleOptions").addClass('d-none');
                 $(".generalOptions").removeClass('d-none');
                 $(".generalOptions").addClass('d-block fadeIn');
-                // $("#multipleinfo").text(' ');
             }
         }
         if ($(".mark:checked").length > 0) {
@@ -384,8 +378,10 @@
     function showHideAllMultipleOptions() {
         if ($("#allMark").is(':checked')) {
             $(".mark").prop('checked', true);
+            $(".mark").parents('tr').addClass('selected');
         } else {
             $(".mark").prop('checked', false);
+            $(".mark").parents('tr').removeClass('selected');
         }
 
         showHideMultipleOptions();

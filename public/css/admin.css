@@ -6955,23 +6955,23 @@ button.bg-dark:focus {
 }
 
 .border {
-  border: 1px solid #ced4da !important;
+  border: 1px solid #e6e8eb !important;
 }
 
 .border-top {
-  border-top: 1px solid #ced4da !important;
+  border-top: 1px solid #e6e8eb !important;
 }
 
 .border-right {
-  border-right: 1px solid #ced4da !important;
+  border-right: 1px solid #e6e8eb !important;
 }
 
 .border-bottom {
-  border-bottom: 1px solid #ced4da !important;
+  border-bottom: 1px solid #e6e8eb !important;
 }
 
 .border-left {
-  border-left: 1px solid #ced4da !important;
+  border-left: 1px solid #e6e8eb !important;
 }
 
 .border-0 {
@@ -10515,43 +10515,93 @@ html {
 }
 
 body {
+  height: 100%;
   margin: 0;
+}
+
+.wrap {
   height: 100%;
 }
 
-#container {
+.sidebar {
+  display: none;
   height: 100%;
+  overflow: auto;
+  vertical-align: top;
+  width: 20%;
 }
 
-#sidebar {
+.sidebar.left {
   background-color: #f7f9fa;
-  display: inline-block;
-  vertical-align: top;
-  height: 100%;
-  width: 15%;
-  overflow: auto;
 }
 
-#sidebar2 {
-  display: inline-block;
-  vertical-align: top;
-  height: 100%;
-  width: 15%;
-  overflow: auto;
+.sidebar.left .sidebar-content {
+  padding: 0;
 }
 
-#content {
-  display: inline-block;
-  vertical-align: top;
+.sidebar.left .sidebar-content .title {
+  background-color: #EDF0F0;
+  padding: 1.2em;
+}
+
+.sidebar .sidebar-content {
+  font-size: .9rem;
+  padding: 1.2em;
+}
+
+.sidebar-mobile {
+  background-color: #f7f9fa;
+  display: none;
   height: 100%;
-  width: 70%;
+  left: 0;
   overflow: auto;
+  position: absolute;
+  top: 45px;
+  width: 100%;
+  vertical-align: top;
+}
+
+.content {
+  display: inline-block;
+  height: 100%;
+  overflow: auto;
+  vertical-align: top;
+  width: 100%;
+}
+
+.content .top {
+  background-color: #2b92d6;
+  color: #fff;
+  height: 45px;
+  width: 100%;
+}
+
+.content .top a {
+  border: 1px solid transparent;
+  color: #fff;
+  display: block;
+  font-size: 1.75em;
+  padding: .1em .5em;
+}
+
+.content .top a:hover {
+  color: #fff;
+}
+
+.content .top h1 {
+  border: 1px solid transparent;
+  font-size: 1.25em;
+  margin: 0;
+  padding: .6em;
 }
 
 .left-menu {
   list-style: none;
-  padding: 20px;
-  font-size: 1rem;
+  padding: 1.2em;
+}
+
+.left-menu.mobile {
+  padding: .5em;
 }
 
 .left-menu li {
@@ -10585,57 +10635,88 @@ body {
   color: #a2abb4;
 }
 
-.admin-content .table {
+@media (min-width: 768px) {
+  .sidebar {
+    display: inline-block;
+  }
+
+  .content {
+    width: 60%;
+  }
+
+  .content .top {
+    display: none;
+  }
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.main-content .table {
   line-height: 1.5em;
 }
 
-.admin-content .table thead tr {
+.main-content .table thead tr {
   text-transform: uppercase;
 }
 
-.admin-content .table tbody tr td {
+.main-content .table tbody tr.selected {
+  background-color: #ebf4fc;
+}
+
+.main-content .table tbody tr td {
   padding: .5em .75em;
 }
 
-.admin-content .table tbody tr td .dropdown-toggle[aria-expanded="true"] {
+.main-content .table tbody tr td .actions .dropdown-toggle {
+  border: 1px solid #e6e8eb;
+}
+
+.main-content .table tbody tr td .dropdown-toggle[aria-expanded="true"] {
   background: #f8f9fa !important;
 }
 
-.admin-content .table tbody tr td .dropdown-toggle::after {
+.main-content .table tbody tr td .dropdown-toggle::after {
   display: none;
 }
 
-.admin-content .table tbody tr td .dropdown-menu {
+.main-content .table tbody tr td .dropdown-menu {
   background: #f8f9fa;
   padding: 0;
 }
 
-.admin-content .table tbody tr td .dropdown-menu .dropdown-item {
+.main-content .table tbody tr td .dropdown-menu .dropdown-item {
   padding: .6em;
   border-bottom: 1px solid #dee2e6;
 }
 
-.admin-content .table tbody tr td .dropdown-menu .dropdown-item i {
+.main-content .table tbody tr td .dropdown-menu .dropdown-item i {
   text-align: left;
 }
 
-.admin-content .table tbody tr td .dropdown-menu .dropdown-item:last-child {
+.main-content .table tbody tr td .dropdown-menu .dropdown-item:last-child {
   border-bottom: none;
 }
 
-.admin-content .regs-info {
+.main-content .regs-info {
   padding-top: .5em;
   font-size: .9em;
   font-weight: 300;
 }
 
 @media (min-width: 768px) {
-  .admin-content .table tbody tr:hover {
-    background: #fdf6ee;
+  .main-content .table tbody tr td .actions .dropdown-toggle {
+    border: 1px solid transparent;
   }
 
-  .admin-content .table tbody tr .actions {
-    min-width: 180px;
+  .main-content .table tbody tr:hover .name {
+    color: #2b92d6;
+  }
+
+  .main-content .table tbody tr:hover .actions .dropdown-toggle {
+    border: 1px solid #2b92d6;
   }
 }
 
