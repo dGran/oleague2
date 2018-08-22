@@ -5,7 +5,7 @@ a.disabled {
 
 .main-content {
 	.table {
-		line-height: 1.5em;
+		line-height: 1em;
 		thead {
 			tr {
 				text-transform: uppercase;
@@ -18,10 +18,11 @@ a.disabled {
 				}
 				td {
 					padding: .5em .75em;
-					.actions {
-						.dropdown-toggle {
-							border: 1px solid $border-color;
-						}
+				}
+				.actions {
+					padding: .5em;
+					.dropdown-toggle {
+						border: 1px solid $border-color;
 					}
 					//dropdown
 					.dropdown-toggle[aria-expanded="true"] {
@@ -65,13 +66,6 @@ a.disabled {
 		.table {
 			tbody {
 				tr {
-					td {
-						.actions {
-							.dropdown-toggle {
-								border: 1px solid transparent;
-							}
-						}
-					}
 					&:hover {
 						// background: #fdf6ee;
 						.name {
@@ -81,6 +75,11 @@ a.disabled {
 							.dropdown-toggle {
 								border: 1px solid $primary;
 							}
+						}
+					}
+					.actions {
+						.dropdown-toggle {
+							border: 1px solid transparent;
 						}
 					}
 				}

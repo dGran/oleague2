@@ -19,11 +19,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     {{-- Pretty checkbox --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pretty-checkbox/3.0.0/pretty-checkbox.min.css">
-
     {{-- Animate --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     {{-- Sweet Alert --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    {{-- Pace --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-loading-bar.min.css">
 
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
@@ -75,20 +76,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     {{-- Mouse Trap --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.2/mousetrap.min.js"></script>
+    {{-- Pace --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
 
     @yield('js')
 
     <script>
         $("#btn-menu").click(function(){
             if ($(".sidebar-mobile").is(':visible')) {
-                $('.sidebar-mobile').removeClass('slideInLeft');
-                $('.sidebar-mobile').addClass('slideOutLeft');
+                $('.sidebar-mobile').removeClass('fadeInLeft');
+                $('.sidebar-mobile').addClass('fadeOutUp');
                 $(this).children('i').removeClass('fa-times');
                 $(this).children('i').addClass('fa-bars');
                 $('.sidebar-mobile').hide();
             } else {
-                $('.sidebar-mobile').removeClass('slideOutLeft');
-                $('.sidebar-mobile').addClass('slideInLeft');
+                $('.sidebar-mobile').removeClass('fadeOutUp');
+                $('.sidebar-mobile').addClass('fadeInLeft');
                 $(this).children('i').removeClass('fa-bars');
                 $(this).children('i').addClass('fa-times');
                 $('.sidebar-mobile').show();

@@ -10570,7 +10570,7 @@ body {
 }
 
 .content .top {
-  background-color: #2b92d6;
+  background-color: #4a5f79;
   color: #fff;
   height: 45px;
   width: 100%;
@@ -10655,7 +10655,7 @@ a.disabled {
 }
 
 .main-content .table {
-  line-height: 1.5em;
+  line-height: 1em;
 }
 
 .main-content .table thead tr {
@@ -10670,33 +10670,37 @@ a.disabled {
   padding: .5em .75em;
 }
 
-.main-content .table tbody tr td .actions .dropdown-toggle {
+.main-content .table tbody tr .actions {
+  padding: .5em;
+}
+
+.main-content .table tbody tr .actions .dropdown-toggle {
   border: 1px solid #e6e8eb;
 }
 
-.main-content .table tbody tr td .dropdown-toggle[aria-expanded="true"] {
+.main-content .table tbody tr .actions .dropdown-toggle[aria-expanded="true"] {
   background: #f8f9fa !important;
 }
 
-.main-content .table tbody tr td .dropdown-toggle::after {
+.main-content .table tbody tr .actions .dropdown-toggle::after {
   display: none;
 }
 
-.main-content .table tbody tr td .dropdown-menu {
+.main-content .table tbody tr .actions .dropdown-menu {
   background: #f8f9fa;
   padding: 0;
 }
 
-.main-content .table tbody tr td .dropdown-menu .dropdown-item {
+.main-content .table tbody tr .actions .dropdown-menu .dropdown-item {
   padding: .6em;
   border-bottom: 1px solid #dee2e6;
 }
 
-.main-content .table tbody tr td .dropdown-menu .dropdown-item i {
+.main-content .table tbody tr .actions .dropdown-menu .dropdown-item i {
   text-align: left;
 }
 
-.main-content .table tbody tr td .dropdown-menu .dropdown-item:last-child {
+.main-content .table tbody tr .actions .dropdown-menu .dropdown-item:last-child {
   border-bottom: none;
 }
 
@@ -10707,16 +10711,16 @@ a.disabled {
 }
 
 @media (min-width: 768px) {
-  .main-content .table tbody tr td .actions .dropdown-toggle {
-    border: 1px solid transparent;
-  }
-
   .main-content .table tbody tr:hover .name {
     color: #2b92d6;
   }
 
   .main-content .table tbody tr:hover .actions .dropdown-toggle {
     border: 1px solid #2b92d6;
+  }
+
+  .main-content .table tbody tr .actions .dropdown-toggle {
+    border: 1px solid transparent;
   }
 }
 
