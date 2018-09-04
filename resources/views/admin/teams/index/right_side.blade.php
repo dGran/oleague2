@@ -1,15 +1,3 @@
-<form class="frmFilter" role="search" method="get" action="{{ route('admin.teams') }}">
-    {{-- search --}}
-    <div class="form-group row my-3">
-        <div class="col">
-        <div class="searchbox">
-            <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
-            <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off">
-            <span class="search-clear"><i class="fas fa-times"></i></span>
-            </div>
-        </div>
-    </div>
-
 <div class="tableOptions animated fadeIn">
     <a href="{{ route('admin.teams.add') }}" class="btn btn-primary" id="btnAdd">
         <span>Nuevo equipo</span>
@@ -35,8 +23,26 @@
         </li>
         <li class="list-group-item border-0 px-0">
             <a href="">
-                <span class="fas fa-file-import fa-fw mr-1"></span>
-                <span>Importar</span>
+               <form
+                id="frmImport"
+                    lang="{{ app()->getLocale() }}"
+                    role="form"
+                    method="POST"
+                    action="{{ route('admin.teams.import.file') }}"
+                    enctype="multipart/form-data"
+                    data-toggle="validator"
+                    autocomplete="off">
+                    {{ csrf_field() }}
+                    <input type="file" name="import_file" id="import_file" class="d-none">
+                    <span class="fas fa-file-import fa-fw mr-1"></span>
+                    <span onclick="import_file()">Importar</span>
+
+    {{--             <a href="">
+                    <span class="fas fa-file-import fa-fw mr-1"></span>
+                    <span>Importar</span>
+                </a> --}}
+                </form>
+
             </a>
         </li>
     </ul>
@@ -72,6 +78,19 @@
             </a>
         </li>
     </ul>
+</div>
+
+<form class="frmFilter" role="search" method="get" action="{{ route('admin.teams') }}">
+
+{{-- search --}}
+<div class="form-group row my-3">
+    <div class="col">
+    <div class="searchbox">
+        <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
+        <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off">
+        <span class="search-clear"><i class="fas fa-times"></i></span>
+        </div>
+    </div>
 </div>
 
 <div class="mt-4">
@@ -144,20 +163,3 @@
 </div>
 
 </form>
-
-            <form
-                lang="{{ app()->getLocale() }}"
-                role="form"
-                method="POST"
-                action="{{ route('admin.teams.import.file') }}"
-                enctype="multipart/form-data"
-                data-toggle="validator"
-                autocomplete="off">
-                {{ csrf_field() }}
-                <input type="file" name="import_file">
-                <input type="submit" value="importar">
-{{--             <a href="">
-                <span class="fas fa-file-import fa-fw mr-1"></span>
-                <span>Importar</span>
-            </a> --}}
-            </form>

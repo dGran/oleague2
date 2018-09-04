@@ -185,4 +185,39 @@
         $('a').removeClass('disabled');
         $('button').removeAttr("disabled");
     }
+
+    function import_file() {
+        swal({
+            title: "¿Estás seguro?",
+            text: 'Se van a importar los datos del archivo seleccionado.',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                $("#import_file").trigger('click');
+                $("#import_file").change(function() {
+                    $("#frmImport").submit();
+                });
+            }
+        });
+    }
+
+    function import_file_load() {
+    }
 </script>
