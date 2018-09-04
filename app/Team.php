@@ -8,8 +8,6 @@ class Team extends Model
 {
 	public $timestamps = false;
 
-	protected $perPage = 10;
-
     protected $fillable = [
         'team_category_id', 'name', 'logo',
     ];

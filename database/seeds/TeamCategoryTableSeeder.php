@@ -13,19 +13,28 @@ class TeamCategoryTableSeeder extends Seeder
     public function run()
     {
         $category = TeamCategory::create([
-            'name' => 'Selecciones nacionales'
+            'name' => 'Selecciones nacionales',
+            'slug' => str_slug('Selecciones nacionales')
         ]);
 
         $category = TeamCategory::create([
-            'name' => 'Liga española'
+            'name' => 'LaLiga',
+            'slug' => str_slug('LaLiga')
         ]);
 
         $category = TeamCategory::create([
-            'name' => 'Liga italiana'
+            'name' => 'Serie A TIM',
+            'slug' => str_slug('Serie A TIM')
         ]);
 
         $category = TeamCategory::create([
-            'name' => 'Liga inglesa'
+            'name' => 'Premier League',
+            'slug' => str_slug('Premier League')
+        ]);
+
+        $category = TeamCategory::create([
+            'name' => 'Bundesliga',
+            'slug' => str_slug('Bundesliga')
         ]);
     }
 }

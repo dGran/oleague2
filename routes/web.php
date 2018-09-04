@@ -43,6 +43,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/equipos', 'TeamController@index')->name('admin.teams');
 	Route::get('/admin/equipos/nuevo', 'TeamController@add')->name('admin.teams.add');
 	Route::post('/admin/equipos/nuevo', 'TeamController@save')->name('admin.teams.save');
+	Route::get('/admin/equipos/{slug}', 'TeamController@edit')->name('admin.teams.edit');
+	Route::put('/admin/equipos/{slug}', 'TeamController@update')->name('admin.teams.update');
 	Route::get('/admin/equipos/duplicar/{id}', 'TeamController@duplicate')->name('admin.teams.duplicate');
 	Route::delete('/admin/equipos/eliminar/{id}', 'TeamController@destroy')->name('admin.teams.destroy');
 	Route::get('/admin/equipos/duplicar-seleccionados/{ids}', 'TeamController@duplicateMany')->name('admin.teams.duplicate.many');

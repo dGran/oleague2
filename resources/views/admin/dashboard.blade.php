@@ -1,4 +1,4 @@
-@extends('layouts.admin2')
+@extends('layouts.admin')
 
 @section('top-menu')
     <div class="row no-gutters">

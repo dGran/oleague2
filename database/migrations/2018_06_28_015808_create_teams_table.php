@@ -18,6 +18,7 @@ class CreateTeamsTable extends Migration
             $table->integer('team_category_id')->unsigned();
             $table->string('name');
             $table->string('logo')->nullable();
+            $table->string('slug');
         });
     }
 

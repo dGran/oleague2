@@ -21,3 +21,28 @@ dl {
 		margin: 0;
 	}
 }
+
+//bootstrap select
+.bootstrap-select .dropdown-toggle {
+	background-color: transparent !important;
+	border-color: $gray-300;
+}
+
+.bootstrap-select .dropdown-toggle:focus {
+	background-color: transparent !important;
+	border-color: $info;
+	outline: none !important;
+	text-decoration: none;
+}
+
+.bootstrap-select .dropdown-toggle:hover {
+	background-color: transparent !important;
+	border-color: $info;
+}
+
+.bootstrap-select .dropdown-toggle:active {
+	-webkit-box-shadow: none !important;
+	background-color: transparent !important;
+	border-color: $info;
+	box-shadow: none !important;
+}

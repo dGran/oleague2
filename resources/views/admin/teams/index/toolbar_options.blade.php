@@ -1,0 +1,62 @@
+<div class="general-options">
+
+    <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
+        <div class="btn-group tableOptions" role="group">
+            <button id="addon-new" onclick="location.href='{{ route('admin.teams.add') }}'" type="button" class="btn btn-primary mr-1" data-toggle="button">
+                Nuevo
+            </button>
+            <button id="addon-filter" type="button" class="filter btn input-group-text {{ $filterCategory || $filterName ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
+                <i class="fas fa-filter"></i>
+            </button>
+            <button id="addon-import" type="button" class="btn input-group-text" data-toggle="button" onclick="">
+                <i class="fas fa-file-import"></i>
+            </button>
+            <button id="addon-export" type="button" class="btn input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-file-export"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="addon-export">
+                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xls']) }}">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xls)</span>
+                </a>
+                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xlsx']) }}">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xlsx)</span>
+                </a>
+                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'csv']) }}">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.csv)</span>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="btn-group d-none rowOptions" role="group">
+            <button type="button" class="btn btn-danger mr-1" data-toggle="button" onclick="destroyMany()">
+                <i class="fas fa-trash mr-2"></i>Eliminar
+            </button>
+            <button type="button" class="btn btn-outline-secondary input-group-text" data-toggle="button" onclick="duplicateMany()">
+                <i class="fas fa-clone"></i>
+            </button>
+            <button id="row-addon-export" type="button" class="btn btn-outline-secondary input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-file-export"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="row-addon-export">
+                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xls']) }}">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xls)</span>
+                </a>
+                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xlsx']) }}">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xlsx)</span>
+                </a>
+                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'csv']) }}">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.csv)</span>
+                </a>
+            </div>
+        </div>
+
+    </div> {{-- toolbar --}}
+
+</div> {{-- general-options --}}

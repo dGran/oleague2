@@ -12,8 +12,12 @@ html {
 }
 
 body {
+	color: #555;
+	font-size: .9rem;
 	height: 100%;
+	letter-spacing: -.03rem;
 	margin: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
 .wrap {
@@ -26,24 +30,36 @@ body {
 	overflow: auto;
 	vertical-align: top;
 	width: 20%;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 	&.left {
-		background-color: #f7f9fa;
+		background-color: #38424D;
+		font-weight: 500;
+		font-size: 15px;
 		.sidebar-content {
 			padding: 0;
 			.title {
-				background-color: #EDF0F0;
-				padding: 1.2em;
+				background-color: #1694CA;
+				color: #fff;
+				font-family: "Fira Sans Condensed","Helvetica Neue","Helvetica","Arial",sans-serif;
+				font-size: 22px;
+				letter-spacing: -.03rem;
+				padding: 1rem;
+				text-transform: uppercase;
+			    -webkit-font-smoothing: antialiased;
 			}
 		}
 	}
 	.sidebar-content {
-		font-size: .9rem;
+		// font-size: .9rem;
 		padding: 1.2em;
 	}
 }
 
 .sidebar-mobile {
-	background-color: #f7f9fa;
+	background-color: #38424D;
 	display: none;
 	height: 100%;
 	left: 0;
@@ -52,6 +68,38 @@ body {
 	top: 45px;
 	width: 100%;
 	vertical-align: top;
+	ul {
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-name: aniTopMenu;
+	}
+}
+
+@keyframes aniTopMenu {
+	from {
+		transform: translateY(-48px) ;
+	} to {
+		transform: translateY(0px) ;
+	}
+}  /*desplegado*/
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+    0%   {opacity:.6; left:0px; top:-245px;}
+    // 25%  {opacity:.7; left:0px; top:-25px;}
+    // 50%  {opacity:.8; left:0px; top:0px;}
+    // 75%  {opacity:.9; left:0px; top:25px;}
+    100% {opacity:1; left:0px; top:45px;}
+}
+
+/* Standard syntax */
+@keyframes example {
+    0%   {opacity:.6; left:0px; top:-45px;}
+    // 25%  {opacity:.7; left:0px; top:-25px;}
+    // 50%  {opacity:.8; left:0px; top:0px;}
+    // 75%  {opacity:.9; left:0px; top:25px;}
+    100% {opacity:1; left:0px; top:45px;}
 }
 
 .content {
@@ -61,7 +109,7 @@ body {
 	vertical-align: top;
 	width: 100%;
 	.top {
-		background-color: #4a5f79;
+		background-color: #1694CA;
 		color: #fff;
 		height: 45px;
 		width: 100%;
@@ -85,17 +133,17 @@ body {
 }
 
 .left-menu {
+	border-bottom: 1px solid #303944;
 	list-style: none;
-	padding: 1.2em;
+	padding: 1.75em 0;
 	&.mobile {
-		padding: .5em;
+		padding: 1em 0;
 	}
 	li {
 		padding: 9px 15px;
 	}
 	.section {
 		color: $blue;
-		font-size: .9em;
 		text-transform: uppercase;
 	}
 	.item {
@@ -104,23 +152,33 @@ body {
 			&:hover {
 			}
 			a {
-				color: #BEC8D2;
+				color: #6c6d71;
 				&:hover {
-					color: #BEC8D2;
+					color: #6c6d71;
 				}
 			}
 		}
 		&.current {
+			background: #fff;
 			a {
+				color: #555!important;
 				&:hover {
 				}
 			}
 		}
 		a {
-			color: #929ca7;
+			color: #bbb;
 			display: block;
+			line-height: 1.25rem;
+			// font-size: 1rem;
 			&:hover {
-				color: #a2abb4;
+				color: #fff;
+			}
+			span {
+			    text-overflow: ellipsis;
+			    overflow: hidden;
+			    white-space: nowrap;
+			    display: block;
 			}
 		}
 	}
@@ -134,10 +192,20 @@ body {
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
 	.sidebar {
-		display: inline-block;
+		&.left {
+			display: inline-block;
+			width: 25%;
+		}
+		&.right {
+			display: inline-block;
+			width: 25%;
+		}
 	}
 	.content {
-		width: 60%;
+		width: 50%;
+		&.without-right-side {
+			width: 75%;
+		}
 		.top {
 			display: none;
 		}
@@ -146,8 +214,58 @@ body {
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
+	.sidebar {
+		&.left {
+			width: 20%;
+		}
+		&.right {
+			width: 20%;
+		}
+	}
+	.content {
+		width: 60%;
+		&.without-right-side {
+			width: 80%;
+		}
+	}
 }
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
+	body {
+		font-size: 1rem;
+	}
+	.sidebar {
+		&.left {
+			.sidebar-content {
+				.title {
+					font-size: 28px;
+				}
+			}
+			.left-menu {
+				.item {
+					a {
+						font-size: 1.1rem;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 1800px) {
+	.sidebar {
+		&.left {
+			width: 15%;
+		}
+		&.right {
+			width: 15%;
+		}
+	}
+	.content {
+		width: 70%;
+		&.without-right-side {
+			width: 85%;
+		}
+	}
 }

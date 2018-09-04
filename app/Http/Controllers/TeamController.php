@@ -10,11 +10,52 @@ class TeamController extends Controller
 {
     public function index(Request $request)
     {
-    	$teams = Team::teamCategoryId($request->filterCategory)->name($request->filterName)->orderBy('id', 'desc')->paginate();
-    	$categories = TeamCategory::orderBy('name', 'asc')->get();
-    	$filterName = $request->get('filterName');
-    	$filterCategory = $request->get('filterCategory');
-    	return view('admin.teams.index', compact('teams', 'categories', 'filterName', 'filterCategory'));
+    	$filterName = $request->filterName;
+    	$filterCategory = $request->filterCategory;
+        $order = $request->order;
+        $pagination = $request->pagination;
+
+        if (!$pagination == null) {
+            if ($pagination == 'all') {
+                $perPage = Team::count();
+
+            } else {
+                $perPage = $pagination;
+            }
+        } else {
+            $perPage = 15;
+        }
+
+        switch ($order) {
+            case "default": //default
+                $sortField = "id";
+                $sortDirection = "desc";
+                break;
+            case "date":
+                $sortField = "id";
+                $sortDirection = "asc";
+                break;
+            case "date_desc":
+                $sortField = "id";
+                $sortDirection = "desc";
+                break;
+            case "name":
+                $sortField = "name";
+                $sortDirection = "asc";
+                break;
+            case "name_desc":
+                $sortField = "name";
+                $sortDirection = "desc";
+                break;
+            default :
+                $sortField = "id";
+                $sortDirection = "desc";
+                break;
+        }
+
+        $teams = Team::teamCategoryId($filterCategory)->name($filterName)->orderBy($sortField, $sortDirection)->paginate($perPage);
+        $categories = TeamCategory::orderBy('name', 'asc')->get();
+    	return view('admin.teams.index', compact('teams', 'categories', 'filterName', 'filterCategory', 'order', 'pagination'));
     }
 
     public function add()
@@ -28,17 +69,28 @@ class TeamController extends Controller
         try{
         	$this->validate($request, [
         		'name' => 'required',
-        		// 'avatar' => [
-        		// 	'image',
-        		// 	'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
-        		// ],
+                'team_category_id' => 'required',
+        		'logo' => [
+        			'image',
+        			'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+        		],
         	]);
         } catch(\Exception $e) {
-            return back()->with('error', 'No se han guardado los datos. Revisa los campos del formulario.');
+            return back()->withInput()->with('error', 'No se han guardado los datos. Revisa los campos del formulario.');
         }
 
     	$team = new Team;
     	$team->fill($request->all());
+        $team->slug = str_slug($request->name);
+
+        if ($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $name = $request->team_category_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/img/teams');
+            $imagePath = $destinationPath. "/".  $name;
+            $image->move($destinationPath, $name);
+            $team->logo = 'img/teams/' . $name;
+        }
     	$team->save();
 
     	if ($request->no_close) {
@@ -48,12 +100,80 @@ class TeamController extends Controller
     	return redirect()->route('admin.teams')->with('status', 'Nuevo equipo registrado correctamente');
     }
 
+    public function edit($slug)
+    {
+        $team = Team::where('slug', $slug)->first();
+        $categories = TeamCategory::orderBy('name', 'asc')->get();
+        return view('admin.teams.edit', compact('team', 'categories'));
+    }
+
+    public function update(Request $request, $slug)
+    {
+        try{
+            $this->validate($request, [
+                'name' => 'required',
+                'team_category_id' => 'required',
+                'logo' => [
+                    'image',
+                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                ],
+            ]);
+        } catch(\Exception $e) {
+            return back()->withInput()->with('error', 'No se han guardado los datos. Revisa los campos del formulario.');
+        }
+
+        $team = Team::where('slug', $slug)->first();
+        $team->team_category_id = $request->team_category_id;
+        $team->name = $request->name;
+        $team->slug = str_slug($request->name);
+
+        if ($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $name = $request->team_category_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/img/teams');
+            $imagePath = $destinationPath. "/".  $name;
+            if (\File::exists(public_path($team->logo))) {
+               \File::delete(public_path($team->logo));
+            }
+            $image->move($destinationPath, $name);
+            $team->logo = 'img/teams/' . $name;
+        } else {
+            if (!$request->old_logo) {
+                if ($team->logo) {
+                    if (\File::exists(public_path($team->logo))) {
+                       \File::delete(public_path($team->logo));
+                    }
+                    $team->logo = '';
+                }
+            }
+        }
+
+        $team->save();
+
+        return redirect()->route('admin.teams')->with('status', 'Cambios guardados correctamente en equipo "' . $team->name . '"');
+    }
+
     public function duplicate($id)
     {
     	$original = Team::find($id);
     	if ($original) {
 	    	$team = $original->replicate();
 	    	$team->name .= " (copia)";
+            $team->slug = str_slug($team->name);
+
+            if ($team->logo) {
+                $extension = strstr($team->logo, '.');
+                $logo = 'img/teams/' . $team->team_category_id . '_' . date('mdYHis') . uniqid() . $extension;
+                $sourceFilePath = public_path() . '/' . $team->logo;
+                $destinationPath = public_path() .'/' . $logo;
+                if (\File::exists($sourceFilePath)) {
+                    \File::copy($sourceFilePath,$destinationPath);
+                }
+
+                $team->logo = $logo;
+            }
+
+
 	    	$team->save();
 
 	    	return redirect()->route('admin.teams')->with('status', 'Se ha duplicado el equipo "' . $team->name . '" correctamente.');
@@ -73,6 +193,20 @@ class TeamController extends Controller
 	    		$counter = $counter +1;
 		    	$team = $original->replicate();
 		    	$team->name .= " (copia)";
+                $team->slug = str_slug($team->name);
+
+                if ($team->logo) {
+                    $extension = strstr($original->logo, '.');
+                    $logo = 'img/teams/' . $original->team_category_id . '_' . date('mdYHis') . uniqid() . $extension;
+                    $sourceFilePath = public_path() . '/' . $original->logo;
+                    $destinationPath = public_path() .'/' . $logo;
+                    if (\File::exists($sourceFilePath)) {
+                        \File::copy($sourceFilePath,$destinationPath);
+                    }
+
+                    $team->logo = $logo;
+                }
+
 		    	$team->save();
 		    }
     	}
@@ -88,6 +222,9 @@ class TeamController extends Controller
     	$team = Team::find($id);
     	if ($team) {
 	    	$name = $team->name;
+            if (\File::exists(public_path($team->logo))) {
+                \File::delete(public_path($team->logo));
+            }
 	    	$team->delete();
 	    	return redirect()->route('admin.teams')->with('status', 'Se ha eliminado el equipo "' . $name . '" correctamente');
     	} else {
@@ -104,6 +241,9 @@ class TeamController extends Controller
 	    	$team = Team::find($ids[$i]);
 	    	if ($team) {
 	    		$counter = $counter +1;
+                if (\File::exists(public_path($team->logo))) {
+                    \File::delete(public_path($team->logo));
+                }
 				$team->delete();
 		    }
     	}
@@ -116,17 +256,18 @@ class TeamController extends Controller
 
     public function importFile(Request $request)
     {
-        if ($request->hasFile('sample_file')) {
-            $path = $request->file('sample_file')->getRealPath();
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
             $data = \Excel::load($path)->get();
 
             if ($data->count()) {
                 foreach ($data as $key => $value) {
-                    $arr[] = ['title' => $value->title, 'body' => $value->body];
+                    $slug = str_slug($value->name);
+                    $arr[] = ['team_category_id' => $value->team_category_id, 'name' => $value->name, 'logo' => $value->logo, 'slug' => $slug];
                 }
                 if (!empty($arr)) {
-                    DB::table('teams')->insert($arr);
-                    dd('Insert Recorded successfully.');
+                    \DB::table('teams')->insert($arr);
+                    return back()->with('status', 'Datos importados correctamente.');
                 }
             }
         }

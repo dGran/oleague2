@@ -1,7 +1,9 @@
 <li class="item {{ Request::is('admin') ? 'current' : '' }}">
     <a href="{{ route('admin') }}">
-        <span class="fas fa-home fa-fw mr-2"></span>
-        <span>Dashboard</span>
+        <span>
+            <i class="fas fa-home fa-fw mr-2"></i>
+            Dashboard
+        </span>
     </a>
 </li>
 <li class="section">
@@ -9,14 +11,18 @@
 </li>
 <li class="item">
     <a href="">
-        <span class="fas fa-trophy fa-fw mr-2"></span>
-        <span>Competiciones</span>
+        <span>
+            <i class="fas fa-trophy fa-fw mr-2"></i>
+            Competiciones
+        </span>
     </a>
 </li>
 <li class="item">
     <a href="">
-        <span class="fas fa-list-ol fa-fw mr-2"></span>
-        <span>Marcado de zonas</span>
+        <span>
+            <i class="fas fa-list-ol fa-fw mr-2"></i>
+            Marcado de zonas
+        </span>
     </a>
 </li>
 <li class="section">
@@ -24,14 +30,18 @@
 </li>
 <li class="item">
     <a href="">
-        <span class="fas fa-cogs fa-fw mr-2"></span>
-        <span>Configuración</span>
+        <span>
+            <i class="fas fa-cogs fa-fw mr-2"></i>
+            Configuración
+        </span>
     </a>
 </li>
 <li class="item">
     <a href="">
-        <span class="fas fa-exchange-alt fa-fw mr-2"></span>
-        <span>Traspasos</span>
+        <span>
+            <i class="fas fa-exchange-alt fa-fw mr-2"></i>
+            Traspasos
+        </span>
     </a>
 </li>
 <li class="section">
@@ -39,34 +49,42 @@
 </li>
 <li class="item pending">
     <a>
-        <span class="fas fa-table fa-fw mr-2"></span>
-        <span>Usuarios</span>
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Usuarios
+        </span>
     </a>
 </li>
 <li class="item pending">
     <a>
-        <span class="fas fa-table fa-fw mr-2"></span>
-        <span>Jugadores</span>
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Jugadores
+        </span>
     </a>
 </li>
 <li class="item pending">
     <a>
-        <span class="fas fa-table fa-fw mr-2"></span>
-        <span>Categorías de equipos</span>
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Categorías de equipos
+        </span>
     </a>
 </li>
 <li class="item {{ Request::is('admin/equipos*') ? 'current' : '' }}">
     <a href="{{ route('admin.teams') }}">
-        {{-- <div class="w-100 justify-content-start align-items-center"> --}}
-            <span class="fas fa-table fa-fw mr-2"></span>
-            <span>Equipos</span>
-        {{-- </div> --}}
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Equipos
+        </span>
     </a>
 </li>
 <li class="item pending">
     <a>
-        <span class="fas fa-table fa-fw mr-2"></span>
-        <span>Países</span>
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Países
+        </span>
     </a>
 </li>
 
@@ -75,13 +93,17 @@
 </li>
 <li class="item pending">
     <a>
-        <span class="fas fa-table fa-fw mr-2"></span>
-        <span>Slack</span>
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Slack
+        </span>
     </a>
 </li>
 <li class="item pending">
     <a>
-        <span class="fas fa-table fa-fw mr-2"></span>
-        <span>Telegram</span>
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Telegram
+        </span>
     </a>
 </li>

@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     {{-- Bootstrap Select --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
     {{-- font-awesome --}}
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     {{-- Material Icons --}}
@@ -37,26 +37,24 @@
             <!-- Sidebar contents -->
             <div class="sidebar-content">
                 <div class="title sticky-top">
-                    Panel de Admin
+                    <i class="fas fa-cogs mr-2"></i>
+                    ADMIN PANEL
                 </div>
                 <ul class="left-menu">
                     @include('admin.partials.menu')
                 </ul>
+                <p style="color: #a2a2a2; font-size: 13px; padding: 1em">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed incidunt, nam nostrum ut autem reiciendis accusantium molestias! Officiis reprehenderit culpa quas optio repellendus vero, corrupti ab in nisi distinctio vitae!
+                </p>
             </div>
         </div><!--
-     --><div class="content">
+     --><div class="content without-right-side">
             <div class="top clearfix">
                 @include('admin.partials.top-menu')
             </div>
             <!-- Main contents -->
             <div class="main-content">
                 @yield('content')
-            </div>
-        </div><!--
-     --><div class="sidebar">
-            <!-- Sidebar contents -->
-            <div class="sidebar-content">
-                @yield('right-side')
             </div>
         </div>
     </div>
@@ -67,11 +65,12 @@
         </ul>
     </div>
 
+    @yield('modal')
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
     {{-- Bootstrap Select --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     {{-- Sweet Alert --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     {{-- Mouse Trap --}}
@@ -82,21 +81,39 @@
     @yield('js')
 
     <script>
+
+        $(function() {
+            setTimeout(function() {
+                $(".autohide").fadeTo(1000, 500).slideUp(500, function(){
+                    $(".autohide").slideUp(500);
+                });
+            }, 2000);
+
+            $('.search-clear').on("click", function() {
+                $('.search-input').val('');
+            });
+            $('.search-input').keydown(function(e){
+                if (e.keyCode == 27) {
+                    $(this).val('');
+                }
+            });
+            $(".search-input").focus(function(){
+                $(this).select();
+            });
+        });
+
         $("#btn-menu").click(function(){
             if ($(".sidebar-mobile").is(':visible')) {
-                $('.sidebar-mobile').removeClass('fadeInLeft');
-                $('.sidebar-mobile').addClass('fadeOutUp');
                 $(this).children('i').removeClass('fa-times');
                 $(this).children('i').addClass('fa-bars');
                 $('.sidebar-mobile').hide();
             } else {
-                $('.sidebar-mobile').removeClass('fadeOutUp');
-                $('.sidebar-mobile').addClass('fadeInLeft');
                 $(this).children('i').removeClass('fa-bars');
                 $(this).children('i').addClass('fa-times');
                 $('.sidebar-mobile').show();
             }
         });
+
     </script>
 </body>
 </html>

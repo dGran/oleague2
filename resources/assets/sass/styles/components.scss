@@ -1,0 +1,41 @@
+.searchbox {
+	font-size: 1rem;
+	position: relative;
+	label {
+		color:  $primary;
+    	position: absolute;
+    	left: .625em;
+    	top: .3em;
+	}
+	input {
+		padding-left: 2.25em;
+		padding-right: 2em;
+	}
+	span {
+		color: lighten($secondary, 20%);
+		cursor: pointer;
+		position: absolute;
+    	right: .625em;
+    	top: .3em;
+    	&:hover {
+    		color: $primary;
+    	}
+	}
+}
+
+a.disabled {
+   pointer-events: none;
+   cursor: not-allowed;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}
