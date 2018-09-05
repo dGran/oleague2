@@ -282,7 +282,7 @@ class TeamController extends Controller
 	public function exportFile($type, $filterCategory=null, $filterName=null)
 	{
 
-        $teams = Team::teamCategoryId($filterCategory)->name($filterName)->orderBy('id', 'desc')->get()->toArray();
+        $teams = Team::teamCategoryId($filterCategory)->name($filterName)->orderBy('id', 'asc')->get()->toArray();
         return \Excel::create('equipos_export' . time(), function($excel) use ($teams) {
             $excel->sheet('equipos', function($sheet) use ($teams)
             {

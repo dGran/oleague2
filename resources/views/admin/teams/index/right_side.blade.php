@@ -22,7 +22,7 @@
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="">
+            <a href="" onclick="import_file()">
                <form
                 id="frmImport"
                     lang="{{ app()->getLocale() }}"
@@ -35,7 +35,7 @@
                     {{ csrf_field() }}
                     <input type="file" name="import_file" id="import_file" class="d-none">
                     <span class="fas fa-file-import fa-fw mr-1"></span>
-                    <span onclick="import_file()">Importar</span>
+                    <span>Importar</span>
                 </form>
             </a>
         </li>
