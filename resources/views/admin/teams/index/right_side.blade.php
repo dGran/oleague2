@@ -36,13 +36,7 @@
                     <input type="file" name="import_file" id="import_file" class="d-none">
                     <span class="fas fa-file-import fa-fw mr-1"></span>
                     <span onclick="import_file()">Importar</span>
-
-    {{--             <a href="">
-                    <span class="fas fa-file-import fa-fw mr-1"></span>
-                    <span>Importar</span>
-                </a> --}}
                 </form>
-
             </a>
         </li>
     </ul>

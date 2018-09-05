@@ -187,23 +187,24 @@
     }
 
     function import_file() {
+        window.event.preventDefault();
         swal({
-            title: "¿Estás seguro?",
-            text: 'Se van a importar los datos del archivo seleccionado.',
+            title: "Importar datos",
+            text: 'Se van a importar los datos del archivo seleccionado, pulsa continuar y selecciona el archivo que contiene los datos (.xls, .xlsx, .csv).',
             buttons: {
-                confirm: {
-                    text: "Sí, estoy seguro",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-danger",
-                    closeModal: true
-                },
                 cancel: {
-                    text: "No, cancelar",
+                    text: "Cancelar",
                     value: null,
                     visible: true,
                     className: "btn btn-secondary",
                     closeModal: true,
+                },
+                confirm: {
+                    text: "Continuar",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true
                 }
             },
             closeOnClickOutside: false,
@@ -211,13 +212,12 @@
         .then((value) => {
             if (value) {
                 $("#import_file").trigger('click');
-                $("#import_file").change(function() {
-                    $("#frmImport").submit();
-                });
             }
         });
+
     }
 
-    function import_file_load() {
-    }
+    $('#import_file').change(function(){
+        $("#frmImport").submit();
+    });
 </script>

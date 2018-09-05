@@ -266,12 +266,17 @@ class TeamController extends Controller
                     $arr[] = ['team_category_id' => $value->team_category_id, 'name' => $value->name, 'logo' => $value->logo, 'slug' => $slug];
                 }
                 if (!empty($arr)) {
-                    \DB::table('teams')->insert($arr);
-                    return back()->with('status', 'Datos importados correctamente.');
+                    try {
+                        \DB::table('teams')->insert($arr);
+                        return back()->with('status', 'Datos importados correctamente.');
+                    }
+                    catch (\Exception $e) {
+                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido.');
+                    }
                 }
             }
         }
-        dd('Request data does not have any files to import.');
+        return back()->with('error', 'Fallo al importar los datos, no has cargado ningún archivo válido.');
     }
 
 	public function exportFile($type, $filterCategory=null, $filterName=null)
