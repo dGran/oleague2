@@ -6,7 +6,7 @@
     @endif
 
     @if (session('status'))
-        <div class="alert alert-info autohide">
+        <div class="alert alert-success autohide">
             {{ session('status') }}
         </div>
     @endif
