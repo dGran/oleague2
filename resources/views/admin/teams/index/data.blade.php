@@ -50,11 +50,7 @@
                         </div>
                     </td>
                     <td class="logo" onclick="rowSelect(this)">
-                        @if ($team->logo)
-                            <img src="{{ file_exists($team->logo) ? asset($team->logo) : asset('img/teams/broken.png') }}" alt="" width="32">
-                        @else
-                            <img src="{{ asset('img/no-photo.png') }}" alt="" width="32">
-                        @endif
+                        <img src="{{ $team->getLogoFormatted() }}" alt="" width="32">
                     </td>
                     <td class="name" onclick="rowSelect(this)">
                         <span>{{ $team->name }}</span>

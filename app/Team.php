@@ -30,4 +30,35 @@ class Team extends Model
 			$query->where("team_category_id", "=", $teamCategoryId);
 		}
 	}
+
+	public function getLogoFormatted() {
+		if ($this->logo) {
+			$logo = $this->logo;
+			$local_logo = asset($this->logo);
+			$broken = asset('img/broken.png');
+			$local = false;
+
+			if (starts_with($logo, 'img/')) {
+				$local = true;
+			}
+
+			if ($local) {
+				if (file_exists($logo)) {
+					return $local_logo;
+				} else {
+					return $broken;
+				}
+			} else {
+				if (validateUrl($logo)) {
+					return $logo;
+				} else {
+					return $broken;
+				}
+			}
+		} else {
+			$no_logo = asset('img/no-photo.png');
+			return $no_logo;
+		}
+
+	}
 }
