@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Team;
 use App\TeamCategory;
 
-use App\Events\TeamWasSaved;
+use App\Events\TableWasSaved;
+use App\Events\TableWasDeleted;
 
 class TeamController extends Controller
 {
@@ -96,7 +97,7 @@ class TeamController extends Controller
     	$team->save();
 
         if ($team->save()) {
-            event(new TeamWasSaved($team));
+            event(new TableWasSaved($team, $team->name));
         }
 
     	if ($request->no_close) {
@@ -231,6 +232,7 @@ class TeamController extends Controller
             if (\File::exists(public_path($team->logo))) {
                 \File::delete(public_path($team->logo));
             }
+            event(new TableWasDeleted($team, $team->name));
 	    	$team->delete();
 	    	return redirect()->route('admin.teams')->with('status', 'Se ha eliminado el equipo "' . $name . '" correctamente');
     	} else {

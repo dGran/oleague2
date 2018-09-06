@@ -16,8 +16,11 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Event' => [
             'App\Listeners\EventListener',
         ],
-        'App\Events\TeamWasSaved' => [
-            'App\Listeners\AddActionInAdminLog'
+        'App\Events\TableWasSaved' => [
+            'App\Listeners\PostInAdminLog'
+        ],
+        'App\Events\TableWasDeleted' => [
+            'App\Listeners\DeleteInAdminLog'
         ]
     ];
 
