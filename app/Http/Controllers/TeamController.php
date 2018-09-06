@@ -169,17 +169,18 @@ class TeamController extends Controller
             $team->slug = str_slug($team->name);
 
             if ($team->logo) {
-                $extension = strstr($team->logo, '.');
-                $logo = 'img/teams/' . $team->team_category_id . '_' . date('mdYHis') . uniqid() . $extension;
-                $sourceFilePath = public_path() . '/' . $team->logo;
-                $destinationPath = public_path() .'/' . $logo;
-                if (\File::exists($sourceFilePath)) {
-                    \File::copy($sourceFilePath,$destinationPath);
+                if ($team->isLocalLogo()) {
+                    $extension = strstr($team->logo, '.');
+                    $logo = 'img/teams/' . $team->team_category_id . '_' . date('mdYHis') . uniqid() . $extension;
+                    $sourceFilePath = public_path() . '/' . $team->logo;
+                    $destinationPath = public_path() .'/' . $logo;
+                    if (\File::exists($sourceFilePath)) {
+                        \File::copy($sourceFilePath,$destinationPath);
+                    }
+
+                    $team->logo = $logo;
                 }
-
-                $team->logo = $logo;
             }
-
 
 	    	$team->save();
 
@@ -203,15 +204,17 @@ class TeamController extends Controller
                 $team->slug = str_slug($team->name);
 
                 if ($team->logo) {
-                    $extension = strstr($original->logo, '.');
-                    $logo = 'img/teams/' . $original->team_category_id . '_' . date('mdYHis') . uniqid() . $extension;
-                    $sourceFilePath = public_path() . '/' . $original->logo;
-                    $destinationPath = public_path() .'/' . $logo;
-                    if (\File::exists($sourceFilePath)) {
-                        \File::copy($sourceFilePath,$destinationPath);
-                    }
+                    if ($team->isLocalLogo()) {
+                        $extension = strstr($team->logo, '.');
+                        $logo = 'img/teams/' . $team->team_category_id . '_' . date('mdYHis') . uniqid() . $extension;
+                        $sourceFilePath = public_path() . '/' . $team->logo;
+                        $destinationPath = public_path() .'/' . $logo;
+                        if (\File::exists($sourceFilePath)) {
+                            \File::copy($sourceFilePath,$destinationPath);
+                        }
 
-                    $team->logo = $logo;
+                        $team->logo = $logo;
+                    }
                 }
 
 		    	$team->save();
@@ -229,8 +232,10 @@ class TeamController extends Controller
     	$team = Team::find($id);
     	if ($team) {
 	    	$name = $team->name;
-            if (\File::exists(public_path($team->logo))) {
-                \File::delete(public_path($team->logo));
+            if ($team->isLocalLogo()) {
+                if (\File::exists(public_path($team->logo))) {
+                    \File::delete(public_path($team->logo));
+                }
             }
             event(new TableWasDeleted($team, $team->name));
 	    	$team->delete();
@@ -249,8 +254,10 @@ class TeamController extends Controller
 	    	$team = Team::find($ids[$i]);
 	    	if ($team) {
 	    		$counter = $counter +1;
-                if (\File::exists(public_path($team->logo))) {
-                    \File::delete(public_path($team->logo));
+                if ($team->isLocalLogo()) {
+                    if (\File::exists(public_path($team->logo))) {
+                        \File::delete(public_path($team->logo));
+                    }
                 }
                 event(new TableWasDeleted($team, $team->name));
 				$team->delete();

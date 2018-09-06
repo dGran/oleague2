@@ -31,18 +31,20 @@ class Team extends Model
 		}
 	}
 
+	public function isLocalLogo() {
+		if (starts_with($this->logo, 'img/teams/')) {
+			return true;
+		}
+		return false;
+	}
+
 	public function getLogoFormatted() {
 		if ($this->logo) {
 			$logo = $this->logo;
 			$local_logo = asset($this->logo);
 			$broken = asset('img/broken.png');
-			$local = false;
 
-			if (starts_with($logo, 'img/')) {
-				$local = true;
-			}
-
-			if ($local) {
+			if ($this->isLocalLogo()) {
 				if (file_exists($logo)) {
 					return $local_logo;
 				} else {
