@@ -49,7 +49,7 @@
                 <small>min: 48x48 max: 256x256 ratio: 1/1</small>
                 <div class="preview mt-2 border p-3 {{ $team->logo ? 'd-block' : 'd-none' }}">
                     <figure class="m-0">
-                        <img id="logo_preview" src="{{ asset($team->logo) }}" alt="logo" width="96">
+                        <img id="logo_preview" src="{{ file_exists($team->logo) ? asset($team->logo) : asset('img/teams/broken.png') }}" alt="logo" width="96">
                     </figure>
                 </div>
             </div>

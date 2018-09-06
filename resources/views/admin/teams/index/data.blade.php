@@ -51,7 +51,7 @@
                     </td>
                     <td class="logo" onclick="rowSelect(this)">
                         @if ($team->logo)
-                            <img src="{{ @get_headers(asset($team->logo)) ? asset($team->logo) : asset('img/teams/broken.png') }}" alt="" width="32">
+                            <img src="{{ file_exists($team->logo) ? asset($team->logo) : asset('img/teams/broken.png') }}" alt="" width="32">
                         @else
                             <img src="{{ asset('img/no-photo.png') }}" alt="" width="32">
                         @endif

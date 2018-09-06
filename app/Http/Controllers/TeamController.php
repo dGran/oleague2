@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Team;
 use App\TeamCategory;
 
+use App\Events\TeamWasSaved;
+
 class TeamController extends Controller
 {
     public function index(Request $request)
@@ -92,6 +94,10 @@ class TeamController extends Controller
             $team->logo = 'img/teams/' . $name;
         }
     	$team->save();
+
+        if ($team->save()) {
+            event(new TeamWasSaved($team));
+        }
 
     	if ($request->no_close) {
     		return back()->with('status', 'Nuevo equipo registrado correctamente');
@@ -262,17 +268,22 @@ class TeamController extends Controller
 
             if ($data->count()) {
                 foreach ($data as $key => $value) {
-                    $slug = str_slug($value->name);
-                    $arr[] = ['team_category_id' => $value->team_category_id, 'name' => $value->name, 'logo' => $value->logo, 'slug' => $slug];
+                    // try {
+                        $slug = str_slug($value->name);
+                        $arr[] = ['team_category_id' => $value->team_category_id, 'name' => $value->name, 'logo' => $value->logo, 'slug' => $slug];
+                    // }
+                    // catch (\Exception $e) {
+                        // return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
+                    // }
                 }
                 if (!empty($arr)) {
-                    try {
+                    // try {
                         \DB::table('teams')->insert($arr);
                         return back()->with('status', 'Datos importados correctamente.');
-                    }
-                    catch (\Exception $e) {
-                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido.');
-                    }
+                    // }
+                    // catch (\Exception $e) {
+                        // return back()->with('error', 'Fallo al importar los datos, el archivo es inválido.');
+                    // }
                 }
             }
         }
