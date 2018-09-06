@@ -252,6 +252,7 @@ class TeamController extends Controller
                 if (\File::exists(public_path($team->logo))) {
                     \File::delete(public_path($team->logo));
                 }
+                event(new TableWasDeleted($team, $team->name));
 				$team->delete();
 		    }
     	}
