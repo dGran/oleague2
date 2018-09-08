@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-class TableWasDeleted extends Event
+class TableWasImported extends Event
 {
     public $reg;
     public $title;
@@ -12,4 +12,5 @@ class TableWasDeleted extends Event
         $this->reg = $reg;
         $this->title = $title;
     }
+
 }

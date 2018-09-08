@@ -8,6 +8,8 @@ use App\TeamCategory;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
+use App\Events\TableWasUpdated;
+use App\Events\TableWasImported;
 
 class TeamController extends Controller
 {
@@ -157,6 +159,10 @@ class TeamController extends Controller
 
         $team->save();
 
+        if ($team->save()) {
+            event(new TableWasUpdated($team, $team->name));
+        }
+
         return redirect()->route('admin.teams')->with('status', 'Cambios guardados correctamente en equipo "' . $team->name . '"');
     }
 
@@ -183,6 +189,10 @@ class TeamController extends Controller
             }
 
 	    	$team->save();
+
+            if ($team->save()) {
+                event(new TableWasSaved($team, $team->name));
+            }
 
 	    	return redirect()->route('admin.teams')->with('status', 'Se ha duplicado el equipo "' . $team->name . '" correctamente.');
 	    } else {
@@ -218,6 +228,10 @@ class TeamController extends Controller
                 }
 
 		    	$team->save();
+
+                if ($team->save()) {
+                    event(new TableWasSaved($team, $team->name));
+                }
 		    }
     	}
     	if ($counter > 0) {
@@ -278,26 +292,29 @@ class TeamController extends Controller
 
             if ($data->count()) {
                 foreach ($data as $key => $value) {
-                    // try {
-                        $slug = str_slug($value->name);
-                        $arr[] = ['team_category_id' => $value->team_category_id, 'name' => $value->name, 'logo' => $value->logo, 'slug' => $slug];
-                    // }
-                    // catch (\Exception $e) {
-                        // return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
-                    // }
+                    try {
+                        $team = new Team;
+                        $team->team_category_id = $value->team_category_id;
+                        $team->name = $value->name;
+                        $team->slug = str_slug($value->name);
+
+                        if ($team) {
+                            $team->save();
+                            if ($team->save()) {
+                                event(new TableWasImported($team, $team->name));
+                            }
+                        }
+                    }
+                    catch (\Exception $e) {
+                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
+                    }
                 }
-                if (!empty($arr)) {
-                    // try {
-                        \DB::table('teams')->insert($arr);
-                        return back()->with('status', 'Datos importados correctamente.');
-                    // }
-                    // catch (\Exception $e) {
-                        // return back()->with('error', 'Fallo al importar los datos, el archivo es inválido.');
-                    // }
-                }
+                return back()->with('status', 'Datos importados correctamente.');
+            } else {
+                return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
             }
         }
-        return back()->with('error', 'Fallo al importar los datos, no has cargado ningún archivo válido.');
+        return back()->with('error', 'No has cargado ningún archivo.');
     }
 
 	public function exportFile($type, $filterCategory=null, $filterName=null)

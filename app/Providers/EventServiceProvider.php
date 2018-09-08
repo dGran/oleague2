@@ -21,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         'App\Events\TableWasDeleted' => [
             'App\Listeners\DeleteInAdminLog'
+        ],
+        'App\Events\TableWasUpdated' => [
+            'App\Listeners\UpdateInAdminLog'
+        ],
+        'App\Events\TableWasImported' => [
+            'App\Listeners\ImportInAdminLog'
         ]
     ];
 
