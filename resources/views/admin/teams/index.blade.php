@@ -22,6 +22,7 @@
 
 @section('modal')
     @include('admin.teams.index.filter_modal')
+    @include('admin.teams.index.view_modal')
 @endsection
 
 @section('js')

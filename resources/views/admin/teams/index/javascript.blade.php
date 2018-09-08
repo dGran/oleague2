@@ -141,6 +141,27 @@
         window.location.href=url;
     }
 
+    function edit(element) {
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnEdit'+id).attr("href");
+        if ($(element).is('button')) {
+            window.location.href=url;
+        } else {
+            $(element).attr("href", url);
+        }
+    }
+
+    function view(element) {
+        window.event.preventDefault();
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnView'+id).attr("href");
+        $('#btnView'+id).trigger('click');
+    }
+
     function rowSelect(element) {
         $(element).siblings('.select').find('.mark').trigger('click');
     }
@@ -156,6 +177,13 @@
             if (!$(".rowOptions").is(':visible')) {
                 $(".rowOptions").removeClass('d-none');
                 $(".tableOptions").addClass('d-none');
+            }
+            if ($(".mark:checked").length == 1) {
+                $(".rowOptions-Edit").removeClass('d-none');
+                $(".rowOptions-View").removeClass('d-none');
+            } else {
+                $(".rowOptions-Edit").addClass('d-none');
+                $(".rowOptions-View").addClass('d-none');
             }
         } else {
             if ($(".rowOptions").is(':visible')) {

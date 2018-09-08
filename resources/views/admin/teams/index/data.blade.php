@@ -65,13 +65,17 @@
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
+                            <a class="dropdown-item text-secondary" href="" data-toggle="modal" data-target="#viewModal" id="btnView{{ $team->id }}">
+                                <i class="far fa-eye fa-fw mr-1"></i>
+                                Visualizar
+                            </a>
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.edit', $team->slug) }}" id="btnEdit{{ $team->id }}">
+                                <i class="fas fa-edit fa-fw mr-1"></i>
+                                Editar
+                            </a>
                             <a class="dropdown-item text-secondary" href="{{ route('admin.teams.duplicate', $team->id) }}">
                                 <i class="fas fa-clone fa-fw mr-1"></i>
                                 Duplicar
-                            </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.edit', $team->slug) }}">
-                                <i class="fas fa-edit fa-fw mr-1"></i>
-                                Editar
                             </a>
                             <form id="formDelete{{ $team->id }}" action="{{ route('admin.teams.destroy', $team->id) }}" method="post" class="d-inline">
                                 {{ csrf_field() }}

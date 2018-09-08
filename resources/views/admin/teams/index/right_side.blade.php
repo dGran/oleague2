@@ -1,6 +1,6 @@
 <div class="tableOptions animated fadeIn">
     <a href="{{ route('admin.teams.add') }}" class="btn btn-primary" id="btnAdd">
-        <span>Nuevo equipo</span>
+        <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
@@ -44,9 +44,21 @@
 
 <div class="rowOptions animated fadeIn d-none">
     <a href="" class="btn btn-danger" onclick="destroyMany()">
-        <span>Eliminar</span>
+        <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
+        <li class="rowOptions-Edit list-group-item border-0 px-0 d-none">
+            <a href="" onclick="edit(this)">
+                <span class="fas fa-edit fa-fw mr-1"></span>
+                <span>Editar</span>
+            </a>
+        </li>
+        <li class="rowOptions-View list-group-item border-0 px-0 d-none">
+            <a href="" onclick="view(this)">
+                <span class="far fa-eye fa-fw mr-1"></span>
+                <span>Visualizar</span>
+            </a>
+        </li>
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="duplicateMany()">
                 <span class="fas fa-clone fa-fw mr-1"></span>
