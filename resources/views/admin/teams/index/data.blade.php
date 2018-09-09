@@ -65,19 +65,19 @@
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
-                            <a class="dropdown-item text-secondary" href="" data-toggle="modal" data-target="#viewModal" id="btnView{{ $team->id }}">
+                            <a class="dropdown-item text-secondary" href="" data-toggle="modal" data-target="#viewModal" id="btnView{{ $team->id }}" data-id="{{ $team->id }}">
                                 <i class="far fa-eye fa-fw mr-1"></i>
                                 Visualizar
                             </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.edit', $team->slug) }}" id="btnEdit{{ $team->id }}">
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.edit', $team) }}" id="btnEdit{{ $team->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar
                             </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.duplicate', $team->id) }}">
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.duplicate', [$team, $filterName, $filterCategory, $order, $pagination]) }}">
                                 <i class="fas fa-clone fa-fw mr-1"></i>
                                 Duplicar
                             </a>
-                            <form id="formDelete{{ $team->id }}" action="{{ route('admin.teams.destroy', $team->id) }}" method="post" class="d-inline">
+                            <form id="formDelete{{ $team->id }}" action="{{ route('admin.teams.destroy', $team) }}" method="post" class="d-inline">
                                 {{ csrf_field() }}
                                 {{ method_field('delete') }}
                                 <a href="" class="dropdown-item text-danger" onclick="destroy('{{ $team->id }}', '{{ $team->name }}' )" value="Eliminar">

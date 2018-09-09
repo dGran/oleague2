@@ -4,19 +4,20 @@
     </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.teams.export.file',['type'=>'xls']) }}">
+            {{-- <a href="" onclick="export_file('xls', {{ $order }})"> --}}
+            <a href="" onclick="export_file('xls')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.xls)</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.teams.export.file',['type'=>'xlsx']) }}">
+            <a href="" onclick="export_file('xlsx')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.xlsx)</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.teams.export.file',['type'=>'csv']) }}">
+            <a href="" onclick="export_file('csv')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.csv)</span>
             </a>
@@ -47,16 +48,16 @@
         <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
-        <li class="rowOptions-Edit list-group-item border-0 px-0 d-none">
-            <a href="" onclick="edit(this)">
-                <span class="fas fa-edit fa-fw mr-1"></span>
-                <span>Editar</span>
-            </a>
-        </li>
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
                 <span class="far fa-eye fa-fw mr-1"></span>
                 <span>Visualizar</span>
+            </a>
+        </li>
+        <li class="rowOptions-Edit list-group-item border-0 px-0 d-none">
+            <a href="" onclick="edit(this)">
+                <span class="fas fa-edit fa-fw mr-1"></span>
+                <span>Editar</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
@@ -66,19 +67,19 @@
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.teams.export.file',['type'=>'xls', $filterCategory, $filterName]) }}">
+            <a href="" onclick="export_file_selected('xls')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.xls)</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.teams.export.file',['type'=>'xlsx', $filterCategory, $filterName]) }}">
+            <a href="" onclick="export_file_selected('xlsx')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.xlsx)</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.teams.export.file',['type'=>'csv', $filterCategory, $filterName]) }}">
+            <a href="" onclick="export_file_selected('csv')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.csv)</span>
             </a>

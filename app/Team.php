@@ -9,7 +9,7 @@ class Team extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'team_category_id', 'name', 'logo',
+        'team_category_id', 'name', 'logo', 'slug'
     ];
 
     public function category()

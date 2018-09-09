@@ -22,6 +22,18 @@
         $('.search-input').on("blur", function() {
             $(this).val(filterName);
         });
+
+        $('#viewModal').on('show.bs.modal', function(e) {
+            var id = $(e.relatedTarget).data('id');
+            $.ajax({
+                url: 'equipos/ver/' + id,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('.modal-dialog').html(data);
+            });
+        });
+
     });
 
     function applyDisplay() {
@@ -214,6 +226,33 @@
         $('button').removeAttr("disabled");
     }
 
+    function export_file(type) {
+        window.event.preventDefault();
+
+        swal("Nombre del archivo", {
+            content: "input",
+        })
+        .then((value) => {
+            $(location).attr('href', `equipos/exportar/${value}/` + type + '/' + filterName + '/' + filterCategory + '/' + order);
+        });
+    }
+
+    function export_file_selected(type) {
+        window.event.preventDefault();
+
+        var ids = [];
+        $(".mark:checked").each(function() {
+            ids.push($(this).val());
+        });
+
+        swal("Nombre del archivo", {
+            content: "input",
+        })
+        .then((value) => {
+            $(location).attr('href', `equipos/exportar/${value}/` + type + '/' + filterName + '/' + filterCategory + '/' + order + '/' + ids);
+        });
+    }
+
     function import_file() {
         window.event.preventDefault();
         swal({
@@ -242,10 +281,15 @@
                 $("#import_file").trigger('click');
             }
         });
-
     }
 
     $('#import_file').change(function(){
         $("#frmImport").submit();
+    });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 </script>

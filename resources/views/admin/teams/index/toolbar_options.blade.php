@@ -28,15 +28,15 @@
                 <i class="fas fa-file-export"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="addon-export">
-                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xls']) }}">
+                <a class="dropdown-item text-secondary" href="" onclick="export_file('xls')">
                     <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xls)</span>
                 </a>
-                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xlsx']) }}">
+                <a class="dropdown-item text-secondary" href="" onclick="export_file('xlsx')">
                     <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xlsx)</span>
                 </a>
-                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'csv']) }}">
+                <a class="dropdown-item text-secondary" href="" onclick="export_file('csv')">
                     <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.csv)</span>
                 </a>
@@ -48,11 +48,11 @@
             <button type="button" class="btn btn-danger mr-1" data-toggle="button" onclick="destroyMany()">
                 <i class="fas fa-trash mr-2"></i>Eliminar
             </button>
-            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
-                <i class="fas fa-edit"></i>
-            </button>
             <button type="button" class="rowOptions-View btn btn-outline-secondary input-group-text" data-toggle="button" onclick="view(this)">
                 <i class="fas fa-eye"></i>
+            </button>
+            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
+                <i class="fas fa-edit"></i>
             </button>
             <button type="button" class="btn btn-outline-secondary input-group-text" data-toggle="button" onclick="duplicateMany()">
                 <i class="fas fa-clone"></i>
@@ -61,15 +61,15 @@
                 <i class="fas fa-file-export"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="row-addon-export">
-                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xls']) }}">
+                <a class="dropdown-item text-secondary" href="" onclick="export_file_selected('xls')">
                     <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xls)</span>
                 </a>
-                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'xlsx']) }}">
+                <a class="dropdown-item text-secondary" href="" onclick="export_file_selected('xlsx')">
                     <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.xlsx)</span>
                 </a>
-                <a class="dropdown-item text-secondary" href="{{ route('admin.teams.export.file',['type'=>'csv']) }}">
+                <a class="dropdown-item text-secondary" href="" onclick="export_file_selected('csv')">
                     <span class="fas fa-file-export fa-fw mr-1"></span>
                     <span>Exportar (.csv)</span>
                 </a>
