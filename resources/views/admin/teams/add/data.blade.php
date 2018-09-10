@@ -13,7 +13,10 @@
         <div class="form-group row pt-2">
             <label for="name" class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" autofocus value="{{ old('name') }}">
+                <input type="text" class="form-control {{ $errors->first('name') ? 'invalid' : '' }}" id="name" name="name" placeholder="Nombre" autofocus value="{{ old('name') }}">
+                @if ($errors->first('name'))
+                    <small class="text-danger">{{ $errors->first('name') }}</small>
+                @endif
             </div>
         </div>
         <div class="form-group row">
@@ -40,6 +43,9 @@
                         <label class="custom-file-label" for="logo_field">Selecciona una imagen</label>
                     </div>
                 </div>
+                @if ($errors->first('logo'))
+                    <small class="text-danger d-block">{{ $errors->first('logo') }}</small>
+                @endif
                 <small>min: 48x48 max: 256x256 ratio: 1/1</small>
                 <div class="preview d-none mt-2 border p-3">
                     <figure class="m-0">

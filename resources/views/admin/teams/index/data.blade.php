@@ -14,7 +14,7 @@
 
     </div>
 @else
-    <table class="animated fadeIn">
+    <table class="teams-table animated fadeIn">
         <colgroup>
             <col width="0%" />
             <col width="0%" />
@@ -39,7 +39,7 @@
 
         <tbody>
             @foreach ($teams as $team)
-                <tr class="border-top">
+                <tr class="border-top" data-id="{{ $team->id }}" data-name="{{ $team->name }}">
                     <td class="select">
                         <div class="pretty p-icon p-jelly mr-0">
                             <input type="checkbox" class="mark" value="{{ $team->id }}" name="teamId[]" onchange="showHideRowOptions(this)">
@@ -65,26 +65,22 @@
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
-                            <a class="dropdown-item text-secondary" href="" data-toggle="modal" data-target="#viewModal" id="btnView{{ $team->id }}" data-id="{{ $team->id }}">
+                            <a href="" class="btn-view dropdown-item text-secondary" data-toggle="modal" data-target="#viewModal" id="btnView{{ $team->id }}">
                                 <i class="far fa-eye fa-fw mr-1"></i>
                                 Visualizar
                             </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.edit', $team) }}" id="btnEdit{{ $team->id }}">
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.edit', $team->id) }}" id="btnEdit{{ $team->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar
                             </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.duplicate', [$team, $filterName, $filterCategory, $order, $pagination]) }}">
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.teams.duplicate', $team->id) }}">
                                 <i class="fas fa-clone fa-fw mr-1"></i>
                                 Duplicar
                             </a>
-                            <form id="formDelete{{ $team->id }}" action="{{ route('admin.teams.destroy', $team) }}" method="post" class="d-inline">
-                                {{ csrf_field() }}
-                                {{ method_field('delete') }}
-                                <a href="" class="dropdown-item text-danger" onclick="destroy('{{ $team->id }}', '{{ $team->name }}' )" value="Eliminar">
-                                    <i class="fas fa-trash fa-fw mr-1"></i>
-                                    Eliminar
-                                </a>
-                            </form>
+                            <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
+                                <i class="fas fa-trash fa-fw mr-1"></i>
+                                Eliminar
+                            </a>
                         </div>
                     </td>
                 </tr>
@@ -93,11 +89,12 @@
     </table>
 
     <div class="regs-info clearfix border-top p-3">
-        @if ($pagination == "all")
-            <div class="float-left">Total registros: {{ $teams->total() }}</div>
-        @else
-            <div class="float-left">Registros: {{ $teams->firstItem() }}-{{ $teams->lastItem() }} de {{ $teams->total() }}</div>
-            <div class="float-right">{!! $teams->appends(Request::all())->render() !!}</div>
-        @endif
+        <div class="regs-info2 float-left">Registros: {{ $teams->firstItem() }}-{{ $teams->lastItem() }} de {{ $teams->total() }}</div>
+        <div class="float-right">{!! $teams->appends(Request::all())->render() !!}</div>
     </div>
+
+    <form id="form-delete" action="{{ route('admin.teams.destroy', ':TEAM_ID') }}" method="post">
+        {{ csrf_field() }}
+        {{ method_field('delete') }}
+    </form>
 @endif

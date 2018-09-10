@@ -11,7 +11,9 @@
 				<img src="{{ $team->getLogoFormatted() }}" alt="" width="128">
 			</figure>
 			<h4 class="m-0">{{ $team->name }}</h4>
-			<h5 class="mt-2">{{ $team->category->name }}</h5>
+            @if ($team->category)
+                <h5 class="mt-2">{{ $team->category->name }}</h5>
+            @endif
 		</div>
     </div>
 </div>

@@ -24,7 +24,8 @@
         });
 
         $('#viewModal').on('show.bs.modal', function(e) {
-            var id = $(e.relatedTarget).data('id');
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
             $.ajax({
                 url: 'equipos/ver/' + id,
                 type        : 'GET',
@@ -51,7 +52,7 @@
     function cancelFilterName() {
         window.event.preventDefault();
         $('.filterName').val('');
-        if (filterCategory) {
+        if (filterCategory || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -61,7 +62,7 @@
     function cancelFilterCategory() {
         window.event.preventDefault();
         $('.filterCategory').val('0');
-        if (filterName) {
+        if (filterName || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -72,8 +73,12 @@
         window.location.href = '{{ route("admin.teams") }}';
     }
 
-    function destroy(id, name) {
+    $(".btn-delete").click(function(e) {
         window.event.preventDefault();
+        var row = $(this).parents('tr');
+        var id = row.attr("data-id");
+        var name = row.attr("data-name");
+
         swal({
             title: "¿Estás seguro?",
             text: 'Se va a eliminar el equipo "' + name + '". No se podrán deshacer los cambios!',
@@ -97,10 +102,14 @@
         })
         .then((value) => {
             if (value) {
-                $("#formDelete"+id).submit();
+                var form = $('#form-delete');
+                var url = form.attr('action').replace(':TEAM_ID', id);
+                form.attr('action', url);
+                form.submit();
             }
         });
-    }
+
+    });
 
     function destroyMany() {
         window.event.preventDefault();
@@ -167,6 +176,7 @@
 
     function view(element) {
         window.event.preventDefault();
+
         $(".mark:checked").each(function() {
             id = $(this).val();
         });
@@ -287,9 +297,4 @@
         $("#frmImport").submit();
     });
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 </script>

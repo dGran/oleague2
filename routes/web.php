@@ -35,7 +35,7 @@ Route::put('perfil/{id}', 'ProfileController@update')->name('profileUpdate');
 // Admin Routes
 Route::middleware('auth', 'role:admin')->group(function () {
 
-	Route::get('/admin', 'AdminController@dashboard')->name('admin')->middleware('auth', 'role:admin');
+	Route::get('/admin', 'AdminController@dashboard')->name('admin');
 
 	Route::get('/admin/configuracion_general', 'AdminController@generalSettings')->name('admin.general_settings');
 
@@ -43,13 +43,26 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/equipos', 'TeamController@index')->name('admin.teams');
 	Route::get('/admin/equipos/nuevo', 'TeamController@add')->name('admin.teams.add');
 	Route::post('/admin/equipos/nuevo', 'TeamController@save')->name('admin.teams.save');
-	Route::get('/admin/equipos/{team}', 'TeamController@edit')->name('admin.teams.edit');
-	Route::put('/admin/equipos/{team}', 'TeamController@update')->name('admin.teams.update');
-	Route::get('/admin/equipos/duplicar/{team}', 'TeamController@duplicate')->name('admin.teams.duplicate');
-	Route::delete('/admin/equipos/eliminar/{team}', 'TeamController@destroy')->name('admin.teams.destroy');
-	Route::get('/admin/equipos/duplicar-seleccionados/{ids}', 'TeamController@duplicateMany')->name('admin.teams.duplicate.many');
+	Route::get('/admin/equipos/{id}', 'TeamController@edit')->name('admin.teams.edit');
+	Route::put('/admin/equipos/{id}', 'TeamController@update')->name('admin.teams.update');
+	Route::delete('/admin/equipos/eliminar/{id}', 'TeamController@destroy')->name('admin.teams.destroy');
 	Route::get('/admin/equipos/eliminar-seleccionados/{ids}', 'TeamController@destroyMany')->name('admin.teams.destroy.many');
-	Route::get('/admin/equipos/ver/{team}', 'TeamController@view')->name('admin.teams.view');
+	Route::get('/admin/equipos/ver/{id}', 'TeamController@view')->name('admin.teams.view');
+	Route::get('/admin/equipos/duplicar/{id}', 'TeamController@duplicate')->name('admin.teams.duplicate');
+	Route::get('/admin/equipos/duplicar-seleccionados/{ids}', 'TeamController@duplicateMany')->name('admin.teams.duplicate.many');
 	Route::get('/admin/equipos/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'TeamController@exportFile')->name('admin.teams.export.file');
 	Route::post('/admin/equipos/importar', 'TeamController@importFile')->name('admin.teams.import.file');
+
+	//Teams Categories
+	Route::get('/admin/categorias_equipos', 'TeamCategoryController@index')->name('admin.teams_categories');
+	Route::get('/admin/categorias_equipos/nuevo', 'TeamCategoryController@add')->name('admin.teams_categories.add');
+	Route::post('/admin/categorias_equipos/nuevo', 'TeamCategoryController@save')->name('admin.teams_categories.save');
+	Route::get('/admin/categorias_equipos/{id}', 'TeamCategoryController@edit')->name('admin.teams_categories.edit');
+	Route::put('/admin/categorias_equipos/{id}', 'TeamCategoryController@update')->name('admin.teams_categories.update');
+	Route::delete('/admin/categorias_equipos/eliminar/{id}', 'TeamCategoryController@destroy')->name('admin.teams_categories.destroy');
+	Route::get('/admin/categorias_equipos/eliminar-seleccionados/{ids}', 'TeamCategoryController@destroyMany')->name('admin.teams_categories.destroy.many');
+	Route::get('/admin/categorias_equipos/duplicar/{id}', 'TeamCategoryController@duplicate')->name('admin.teams_categories.duplicate');
+	Route::get('/admin/categorias_equipos/duplicar-seleccionados/{ids}', 'TeamCategoryController@duplicateMany')->name('admin.teams_categories.duplicate.many');
+	Route::get('/admin/categorias_equipos/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'TeamCategoryController@exportFile')->name('admin.teams_categories.export.file');
+	Route::post('/admin/categorias_equipos/importar', 'TeamCategoryController@importFile')->name('admin.teams_categories.import.file');
 });

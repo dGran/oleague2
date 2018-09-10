@@ -63,8 +63,8 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a>
+<li class="item {{ Request::is('admin/categorias_equipos*') ? 'current' : '' }}">
+    <a href="{{ route('admin.teams_categories') }}">
         <span>
             <i class="fas fa-table fa-fw mr-2"></i>
             Categorías de equipos

@@ -21,14 +21,9 @@ class TeamController extends Controller
         $pagination = request()->pagination;
 
         if (!$pagination == null) {
-            if ($pagination == 'all') {
-                $perPage = Team::count();
-
-            } else {
-                $perPage = $pagination;
-            }
+            $perPage = $pagination;
         } else {
-            $perPage = 15;
+            $perPage = 12;
         }
 
         if (!$order) {
@@ -61,7 +56,7 @@ class TeamController extends Controller
             'name.required' => 'El nombre del equipo es obligatorio',
             'name.unique' => 'El nombre del equipo ya existe',
             'team_category_id.required' => 'La categoría de equipo es obligatoria',
-            'logo.dimension' => 'Las dimensiones de la imagen no son válidas'
+            'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
         ]);
 
         $data['slug'] = str_slug(request()->name);
@@ -81,72 +76,150 @@ class TeamController extends Controller
 
         if ($team->save()) {
             event(new TableWasSaved($team, $team->name));
-        }
-
-    	if (request()->no_close) {
-    		return back()->with('status', 'Nuevo equipo registrado correctamente');
-    	}
-
-    	return redirect()->route('admin.teams')->with('status', 'Nuevo equipo registrado correctamente');
-    }
-
-    public function edit(Team $team)
-    {
-        $categories = TeamCategory::orderBy('name', 'asc')->get();
-        return view('admin.teams.edit', compact('team', 'categories'));
-    }
-
-    public function update(Team $team)
-    {
-        $data = request()->validate([
-            'name' => 'required|unique:teams,name,' .$team->id,
-            'team_category_id' => 'required',
-            'logo' => [
-                'image',
-                'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
-            ],
-        ],
-        [
-            'name.required' => 'El nombre del equipo es obligatorio',
-            'name.unique' => 'El nombre del equipo ya existe',
-            'team_category_id.required' => 'La categoría de equipo es obligatoria',
-            'logo.dimension' => 'Las dimensiones de la imagen no son válidas'
-        ]);
-
-        $data['slug'] = str_slug(request()->name);
-
-        if (request()->hasFile('logo')) {
-            $image = request()->file('logo');
-            $name = request()->team_category_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/img/teams');
-            $imagePath = $destinationPath. "/".  $name;
-            if (\File::exists(public_path($team->logo))) {
-               \File::delete(public_path($team->logo));
+            if (request()->no_close) {
+                return back()->with('success', 'Nuevo equipo registrado correctamente');
             }
-            $image->move($destinationPath, $name);
-            $data['logo'] = 'img/teams/' . $name;
+            return redirect()->route('admin.teams')->with('success', 'Nuevo equipo registrado correctamente');
         } else {
-            if (!request()->old_logo) {
-                if ($team->logo) {
-                    if (\File::exists(public_path($team->logo))) {
-                       \File::delete(public_path($team->logo));
+            return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+        }
+    }
+
+    public function edit($id)
+    {
+        $team = Team::find($id);
+        if ($team) {
+            $categories = TeamCategory::orderBy('name', 'asc')->get();
+            return view('admin.teams.edit', compact('team', 'categories'));
+        } else {
+            return back()->with('warning', 'Acción cancelada. El equipo que querías editar ya no existe. Se ha actualizado la lista');
+        }
+    }
+
+    public function update($id)
+    {
+        $team = Team::find($id);
+
+        if ($team) {
+            $data = request()->validate([
+                'name' => 'required|unique:teams,name,' .$team->id,
+                'team_category_id' => 'required',
+                'logo' => [
+                    'image',
+                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                ],
+            ],
+            [
+                'name.required' => 'El nombre del equipo es obligatorio',
+                'name.unique' => 'El nombre del equipo ya existe',
+                'team_category_id.required' => 'La categoría de equipo es obligatoria',
+                'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
+            ]);
+
+            $data['slug'] = str_slug(request()->name);
+
+            if (request()->hasFile('logo')) {
+                $image = request()->file('logo');
+                $name = request()->team_category_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path('/img/teams');
+                $imagePath = $destinationPath. "/".  $name;
+                if (\File::exists(public_path($team->logo))) {
+                   \File::delete(public_path($team->logo));
+                }
+                $image->move($destinationPath, $name);
+                $data['logo'] = 'img/teams/' . $name;
+            } else {
+                if (!request()->old_logo) {
+                    if ($team->logo) {
+                        if (\File::exists(public_path($team->logo))) {
+                           \File::delete(public_path($team->logo));
+                        }
+                        $data['logo'] = '';
                     }
-                    $data['logo'] = '';
                 }
             }
+
+            $team->fill($data);
+            if ($team->isDirty()) {
+                $team->update($data);
+
+                if ($team->update()) {
+                    event(new TableWasUpdated($team, $team->name));
+                    return redirect()->route('admin.teams')->with('success', 'Cambios guardados en equipo "' . $team->name . '" correctamente.');
+                } else {
+                    return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+                }
+            }
+
+            return redirect()->route('admin.teams')->with('info', 'No se han detectado cambios en el equipo "' . $team->name . '".');
+
+        } else {
+            return redirect()->route('admin.teams')->with('warning', 'Acción cancelada. El equipo que estabas editando ya no existe. Se ha actualizado la lista');
         }
 
-        $team->update($data);
-
-        if ($team->update()) {
-            event(new TableWasUpdated($team, $team->name));
-        }
-
-        return redirect()->route('admin.teams')->with('status', 'Cambios guardados correctamente en equipo "' . $team->name . '"');
     }
 
-    public function duplicate(Team $team)
+    public function destroy($id)
     {
+        $team = Team::find($id);
+
+        if ($team) {
+            $message = 'Se ha eliminado el equipo "' . $team->name . '" correctamente.';
+
+            if ($team->isLocalLogo()) {
+                if (\File::exists(public_path($team->logo))) {
+                    \File::delete(public_path($team->logo));
+                }
+            }
+            event(new TableWasDeleted($team, $team->name));
+            $team->delete();
+
+            return redirect()->route('admin.teams')->with('success', $message);
+        } else {
+            $message = 'Acción cancelada. El equipo que querías eliminar ya no existe. Se ha actualizado la lista';
+
+            return back()->with('warning', $message);
+        }
+    }
+
+    public function destroyMany($ids)
+    {
+        $ids=explode(",",$ids);
+        $counter = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $team = Team::find($ids[$i]);
+            if ($team) {
+                $counter = $counter +1;
+                if ($team->isLocalLogo()) {
+                    if (\File::exists(public_path($team->logo))) {
+                        \File::delete(public_path($team->logo));
+                    }
+                }
+                event(new TableWasDeleted($team, $team->name));
+                $team->delete();
+            }
+        }
+        if ($counter > 0) {
+            return redirect()->route('admin.teams')->with('success', 'Se han eliminado los equipos seleccionados correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Los equipos que querías eliminar ya no existen.');
+        }
+    }
+
+    public function view($id) {
+        $team = Team::find($id);
+        if ($team) {
+            return view('admin.teams.index.view', compact('team'))->render();
+        } else {
+            return view('admin.teams.index.view-empty')->render();
+        }
+    }
+
+    public function duplicate($id)
+    {
+        $team = Team::find($id);
+
     	if ($team) {
 	    	$newTeam = $team->replicate();
 	    	$newTeam->name .= " (copia)";
@@ -172,9 +245,9 @@ class TeamController extends Controller
                 event(new TableWasSaved($newTeam, $newTeam->name));
             }
 
-	    	return redirect()->route('admin.teams')->with('status', 'Se ha duplicado el equipo "' . $newTeam->name . '" correctamente.');
+	    	return redirect()->route('admin.teams')->with('success', 'Se ha duplicado el equipo "' . $newTeam->name . '" correctamente.');
 	    } else {
-	    	return back()->with('error', 'Acción cancelada. El equipo que quieres duplicar ya no existe.');
+	    	return back()->with('warning', 'Acción cancelada. El equipo que querías duplicar ya no existe. Se ha actualizado la lista.');
 	    }
     }
 
@@ -213,89 +286,14 @@ class TeamController extends Controller
 		    }
     	}
     	if ($counter > 0) {
-    		return redirect()->route('admin.teams')->with('status', 'Se han duplicado los equipos seleccionados correctamente.');
+    		return redirect()->route('admin.teams')->with('success', 'Se han duplicado los equipos seleccionados correctamente.');
     	} else {
-    		return back()->with('error', 'Acción cancelada. Los equipos que quieres duplicar ya no existen.');
+    		return back()->with('warning', 'Acción cancelada. Los equipos que querías duplicar ya no existen. Se ha actualizado la lista.');
     	}
     }
 
-    public function destroy(Team $team)
+    public function exportFile($filename, $type, $filterName, $filterCategory, $order, $ids = null)
     {
-    	if ($team) {
-	    	$name = $team->name;
-            if ($team->isLocalLogo()) {
-                if (\File::exists(public_path($team->logo))) {
-                    \File::delete(public_path($team->logo));
-                }
-            }
-            event(new TableWasDeleted($team, $team->name));
-	    	$team->delete();
-	    	return redirect()->route('admin.teams')->with('status', 'Se ha eliminado el equipo "' . $name . '" correctamente');
-    	} else {
-    		return back()->with('error', 'Acción cancelada. El equipo que quieres eliminar ya no existe.');
-    	}
-    }
-
-    public function destroyMany($ids)
-    {
-    	$ids=explode(",",$ids);
-    	$counter = 0;
-    	for ($i=0; $i < count($ids); $i++)
-    	{
-	    	$team = Team::find($ids[$i]);
-	    	if ($team) {
-	    		$counter = $counter +1;
-                if ($team->isLocalLogo()) {
-                    if (\File::exists(public_path($team->logo))) {
-                        \File::delete(public_path($team->logo));
-                    }
-                }
-                event(new TableWasDeleted($team, $team->name));
-				$team->delete();
-		    }
-    	}
-    	if ($counter > 0) {
-    		return redirect()->route('admin.teams')->with('status', 'Se han eliminado los equipos seleccionados correctamente.');
-    	} else {
-    		return back()->with('error', 'Acción cancelada. Los equipos que quieres eliminar ya no existen.');
-    	}
-    }
-
-    public function importFile(Request $request)
-    {
-        if ($request->hasFile('import_file')) {
-            $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::load($path)->get();
-
-            if ($data->count()) {
-                foreach ($data as $key => $value) {
-                    try {
-                        $team = new Team;
-                        $team->team_category_id = $value->team_category_id;
-                        $team->name = $value->name;
-                        $team->slug = str_slug($value->name);
-
-                        if ($team) {
-                            $team->save();
-                            if ($team->save()) {
-                                event(new TableWasImported($team, $team->name));
-                            }
-                        }
-                    }
-                    catch (\Exception $e) {
-                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
-                    }
-                }
-                return back()->with('status', 'Datos importados correctamente.');
-            } else {
-                return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
-            }
-        }
-        return back()->with('error', 'No has cargado ningún archivo.');
-    }
-
-	public function exportFile($filename, $type, $filterName, $filterCategory, $order, $ids = null)
-	{
         if (!$order) {
             $order = 'default';
         }
@@ -329,10 +327,45 @@ class TeamController extends Controller
         })->download($type);
     }
 
-    public function view(Team $team) {
-        return view('admin.teams.index.view', compact('team'))->render();
+    public function importFile(Request $request)
+    {
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::load($path)->get();
+
+            if ($data->count()) {
+                foreach ($data as $key => $value) {
+                    try {
+                        $team = new Team;
+                        $team->team_category_id = $value->team_category_id;
+                        $team->name = $value->name;
+                        $team->logo = $value->logo;
+                        $team->slug = str_slug($value->name);
+
+                        if ($team) {
+                            $team->save();
+                            if ($team->save()) {
+                                event(new TableWasImported($team, $team->name));
+                            }
+                        }
+                    }
+                    catch (\Exception $e) {
+                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
+                    }
+                }
+                return back()->with('success', 'Datos importados correctamente.');
+            } else {
+                return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
+            }
+        }
+        return back()->with('error', 'No has cargado ningún archivo.');
     }
 
+
+    /*
+     * HELPERS FUNCTIONS
+     *
+     */
     protected function getOrder($order) {
         $order_ext = [
             'default' => [

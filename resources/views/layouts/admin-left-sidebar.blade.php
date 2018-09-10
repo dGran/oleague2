@@ -87,7 +87,7 @@
                 $(".autohide").fadeTo(1000, 500).slideUp(500, function(){
                     $(".autohide").slideUp(500);
                 });
-            }, 2000);
+            }, 1500);
 
             $('.search-clear').on("click", function() {
                 $('.search-input').val('');

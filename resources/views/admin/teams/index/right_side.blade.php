@@ -159,11 +159,11 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <select name="pagination" class="selectpicker show-tick form-control pagination" onchange="applyDisplay()">
-                <option value="all" {{ $pagination == 'all' ? 'selected' : '' }}>Todos los registros</option>
-                <option value="5" {{ $pagination == '5' ? 'selected' : '' }}>5 registros / pagina</option>
-                <option value="10" {{ $pagination == '10' ? 'selected' : '' }}>10 registros / pagina</option>
-                <option value="15" {{ $pagination == '15' || !$pagination ? 'selected' : '' }}>15 registros / pagina</option>
+                <option value="6" {{ $pagination == '6' ? 'selected' : '' }}>6 registros / pagina</option>
+                <option value="12" {{ $pagination == '12' || !$pagination ? 'selected' : '' }}>12 registros / pagina</option>
                 <option value="20" {{ $pagination == '20' ? 'selected' : '' }}>20 registros / pagina</option>
+                <option value="50" {{ $pagination == '50' ? 'selected' : '' }}>50 registros / pagina</option>
+                <option value="100" {{ $pagination == '100' ? 'selected' : '' }}>100 registros / pagina</option>
             </select>
         </div>
     </div>
