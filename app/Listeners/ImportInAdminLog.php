@@ -24,7 +24,7 @@ class ImportInAdminLog
         $log->table = $table;
         $log->reg_id = $event->reg->id;
         $log->type = "INSERT";
-        $log->description = 'Nuevo equipo importado "' . $event->title . '"';
+        $log->description = 'Nuevo registro importado "' . $event->title . '"';
 
         $log->save();
     }

@@ -24,7 +24,7 @@ class PostInAdminLog
         $log->table = $table;
         $log->reg_id = $event->reg->id;
         $log->type = "INSERT";
-        $log->description = 'Nuevo equipo insertado "' . $event->title . '"';
+        $log->description = 'Nuevo registro insertado "' . $event->title . '"';
 
         $log->save();
     }

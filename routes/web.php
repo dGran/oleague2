@@ -39,6 +39,19 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 	Route::get('/admin/configuracion_general', 'AdminController@generalSettings')->name('admin.general_settings');
 
+	//Teams Categories
+	Route::get('/admin/categorias_equipos', 'TeamCategoryController@index')->name('admin.teams_categories');
+	Route::get('/admin/categorias_equipos/nuevo', 'TeamCategoryController@add')->name('admin.teams_categories.add');
+	Route::post('/admin/categorias_equipos/nuevo', 'TeamCategoryController@save')->name('admin.teams_categories.save');
+	Route::get('/admin/categorias_equipos/{id}', 'TeamCategoryController@edit')->name('admin.teams_categories.edit');
+	Route::put('/admin/categorias_equipos/{id}', 'TeamCategoryController@update')->name('admin.teams_categories.update');
+	Route::delete('/admin/categorias_equipos/eliminar/{id}', 'TeamCategoryController@destroy')->name('admin.teams_categories.destroy');
+	Route::get('/admin/categorias_equipos/eliminar-seleccionados/{ids}', 'TeamCategoryController@destroyMany')->name('admin.teams_categories.destroy.many');
+	Route::get('/admin/categorias_equipos/duplicar/{id}', 'TeamCategoryController@duplicate')->name('admin.teams_categories.duplicate');
+	Route::get('/admin/categorias_equipos/duplicar-seleccionados/{ids}', 'TeamCategoryController@duplicateMany')->name('admin.teams_categories.duplicate.many');
+	Route::get('/admin/categorias_equipos/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'TeamCategoryController@exportFile')->name('admin.teams_categories.export.file');
+	Route::post('/admin/categorias_equipos/importar', 'TeamCategoryController@importFile')->name('admin.teams_categories.import.file');
+
 	//Teams
 	Route::get('/admin/equipos', 'TeamController@index')->name('admin.teams');
 	Route::get('/admin/equipos/nuevo', 'TeamController@add')->name('admin.teams.add');
@@ -53,16 +66,18 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/equipos/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'TeamController@exportFile')->name('admin.teams.export.file');
 	Route::post('/admin/equipos/importar', 'TeamController@importFile')->name('admin.teams.import.file');
 
-	//Teams Categories
-	Route::get('/admin/categorias_equipos', 'TeamCategoryController@index')->name('admin.teams_categories');
-	Route::get('/admin/categorias_equipos/nuevo', 'TeamCategoryController@add')->name('admin.teams_categories.add');
-	Route::post('/admin/categorias_equipos/nuevo', 'TeamCategoryController@save')->name('admin.teams_categories.save');
-	Route::get('/admin/categorias_equipos/{id}', 'TeamCategoryController@edit')->name('admin.teams_categories.edit');
-	Route::put('/admin/categorias_equipos/{id}', 'TeamCategoryController@update')->name('admin.teams_categories.update');
-	Route::delete('/admin/categorias_equipos/eliminar/{id}', 'TeamCategoryController@destroy')->name('admin.teams_categories.destroy');
-	Route::get('/admin/categorias_equipos/eliminar-seleccionados/{ids}', 'TeamCategoryController@destroyMany')->name('admin.teams_categories.destroy.many');
-	Route::get('/admin/categorias_equipos/duplicar/{id}', 'TeamCategoryController@duplicate')->name('admin.teams_categories.duplicate');
-	Route::get('/admin/categorias_equipos/duplicar-seleccionados/{ids}', 'TeamCategoryController@duplicateMany')->name('admin.teams_categories.duplicate.many');
-	Route::get('/admin/categorias_equipos/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'TeamCategoryController@exportFile')->name('admin.teams_categories.export.file');
-	Route::post('/admin/categorias_equipos/importar', 'TeamCategoryController@importFile')->name('admin.teams_categories.import.file');
+	// Players
+	Route::get('/admin/jugadores', 'PlayerController@index')->name('admin.players');
+	Route::get('/admin/jugadores/nuevo', 'PlayerController@add')->name('admin.players.add');
+	Route::post('/admin/jugadores/nuevo', 'PlayerController@save')->name('admin.players.save');
+	Route::get('/admin/jugadores/{id}', 'PlayerController@edit')->name('admin.players.edit');
+	Route::put('/admin/jugadores/{id}', 'PlayerController@update')->name('admin.players.update');
+	Route::delete('/admin/jugadores/eliminar/{id}', 'PlayerController@destroy')->name('admin.players.destroy');
+	Route::get('/admin/jugadores/eliminar-seleccionados/{ids}', 'PlayerController@destroyMany')->name('admin.players.destroy.many');
+	Route::get('/admin/jugadores/ver/{id}', 'PlayerController@view')->name('admin.players.view');
+	Route::get('/admin/jugadores/duplicar/{id}', 'PlayerController@duplicate')->name('admin.players.duplicate');
+	Route::get('/admin/jugadores/duplicar-seleccionados/{ids}', 'PlayerController@duplicateMany')->name('admin.players.duplicate.many');
+	Route::get('/admin/jugadores/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'PlayerController@exportFile')->name('admin.players.export.file');
+	Route::post('/admin/jugadores/importar', 'PlayerController@importFile')->name('admin.players.import.file');
+
 });

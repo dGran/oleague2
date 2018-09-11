@@ -56,6 +56,7 @@ class TeamController extends Controller
             'name.required' => 'El nombre del equipo es obligatorio',
             'name.unique' => 'El nombre del equipo ya existe',
             'team_category_id.required' => 'La categoría de equipo es obligatoria',
+            'logo.image' => 'El archivo debe contener una imagen',
             'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
         ]);
 
@@ -113,6 +114,7 @@ class TeamController extends Controller
                 'name.required' => 'El nombre del equipo es obligatorio',
                 'name.unique' => 'El nombre del equipo ya existe',
                 'team_category_id.required' => 'La categoría de equipo es obligatoria',
+                'logo.image' => 'El archivo debe contener una imagen',
                 'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
             ]);
 

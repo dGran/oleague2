@@ -55,8 +55,8 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a>
+<li class="item {{ Request::is('admin/jugadores*') ? 'current' : '' }}">
+    <a href="{{ route('admin.players') }}">
         <span>
             <i class="fas fa-table fa-fw mr-2"></i>
             Jugadores

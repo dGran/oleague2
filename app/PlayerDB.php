@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TeamCategory extends Model
+class PlayerDB extends Model
 {
+	protected $table = 'players_dbs';
+
 	public $timestamps = false;
 
     protected $fillable = [
@@ -19,14 +21,14 @@ class TeamCategory extends Model
 		}
 	}
 
-    public function teams()
+    public function players()
     {
-        return $this->hasmany('App\Team', 'team_category_id', 'id');
+        return $this->hasmany('App\Player', 'players_db_id', 'id');
     }
 
-    public function hasTeams()
+    public function hasPlayers()
     {
-    	if ($this->teams->count() > 0) {
+    	if ($this->players->count() > 0) {
     		return true;
     	} else {
     		return false;

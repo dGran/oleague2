@@ -24,7 +24,7 @@ class DeleteInAdminLog
         $log->table = $table;
         $log->reg_id = $event->reg->id;
         $log->type = "DELETE";
-        $log->description = 'Equipo "' . $event->title . '" eliminado' ;
+        $log->description = 'Registro "' . $event->title . '" eliminado' ;
 
         $log->save();
     }

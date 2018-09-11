@@ -24,7 +24,7 @@ class UpdateInAdminLog
         $log->table = $table;
         $log->reg_id = $event->reg->id;
         $log->type = "UPDATE";
-        $log->description = 'Equipo "' . $event->title . '" editado' ;
+        $log->description = 'Registro "' . $event->title . '" editado' ;
 
         $log->save();
     }
