@@ -35,6 +35,10 @@
             });
         });
 
+        $("#viewModal").on("hidden.bs.modal", function(){
+            $('.modal-dialog').html("");
+        });
+
     });
 
     function applyDisplay() {
