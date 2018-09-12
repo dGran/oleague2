@@ -81,7 +81,7 @@ class PlayerController extends Controller
         if ($player->save()) {
             event(new TableWasSaved($player, $player->name));
             if (request()->no_close) {
-                return back()->with('success', 'Nuevo equipo registrado correctamente');
+                return back()->with('success', 'Nuevo jugador registrado correctamente');
             }
             return redirect()->route('admin.players')->with('success', 'Nuevo jugador registrado correctamente');
         } else {
@@ -104,10 +104,11 @@ class PlayerController extends Controller
     {
         $player = Player::find($id);
 
+
         if ($player) {
 	        $data = request()->validate([
 	            'name' => 'required',
-	            'player_db_id' => 'required',
+	            'players_db_id' => 'required',
 	            'img' => [
 	                'image',
 	                'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
@@ -115,7 +116,7 @@ class PlayerController extends Controller
 	        ],
 	        [
 	            'name.required' => 'El nombre del jugador es obligatorio',
-	            'player_db_id.required' => 'El player database es obligatorio',
+	            'players_db_id.required' => 'El player database es obligatorio',
 	            'img.image' => 'El archivo debe contener una imagen',
 	            'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
 	        ]);
@@ -232,7 +233,7 @@ class PlayerController extends Controller
             if ($newPlayer->img) {
                 if ($newPlayer->isLocalImg()) {
                     $extension = strstr($newPlayer->img, '.');
-                    $img = 'img/teams/' . $newPlayer->players_db_id . '_' . date('mdYHis') . uniqid() . $extension;
+                    $img = 'img/players/' . $newPlayer->players_db_id . '_' . date('mdYHis') . uniqid() . $extension;
                     $sourceFilePath = public_path() . '/' . $newPlayer->img;
                     $destinationPath = public_path() .'/' . $img;
                     if (\File::exists($sourceFilePath)) {
@@ -249,7 +250,7 @@ class PlayerController extends Controller
                 event(new TableWasSaved($newPlayer, $newPlayer->name));
             }
 
-	    	return redirect()->route('admin.teams')->with('success', 'Se ha duplicado el jugador "' . $newPlayer->name . '" correctamente.');
+	    	return redirect()->route('admin.players')->with('success', 'Se ha duplicado el jugador "' . $newPlayer->name . '" correctamente.');
 	    } else {
 	    	return back()->with('warning', 'Acción cancelada. El jugador que querías duplicar ya no existe. Se ha actualizado la lista.');
 	    }
@@ -340,13 +341,31 @@ class PlayerController extends Controller
             if ($data->count()) {
                 foreach ($data as $key => $value) {
                     try {
+	                	$category = TeamCategory::where('name', '=', $value->league_name)->first();
+	                	if (!$category) {
+	            	        $category = TeamCategory::create([
+	            				'name' => $value->league_name,
+	            				'slug' => str_slug($value->league_name)
+	        				]);
+	                	}
+	                	$team = Team::where('name', '=', $value->team_name)->first();
+	                	if (!$team) {
+					        $team = Team::create([
+					            'team_category_id' => $category->id,
+					            'name' => $value->team_name,
+					            'logo' => '',
+					            'slug' => str_slug($value->team_name)
+					        ]);
+					    }
                         $player = new Player;
                         $player->players_db_id = $value->players_db_id;
                         $player->game_id = $value->game_id;
                         $player->name = $value->name;
                         $player->img = $value->img;
-                        $player->team_name = $value->team_name;
                         $player->nation_name = $value->nation_name;
+                        $player->league_name = $value->league_name;
+                        $player->team_id = $team->id;
+                        $player->team_name = $value->team_name;
                         $player->position = $value->position;
                         $player->height = $value->height;
                         $player->age = $value->age;

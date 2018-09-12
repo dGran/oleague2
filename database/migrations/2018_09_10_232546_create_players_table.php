@@ -18,9 +18,11 @@ class CreatePlayersTable extends Migration
             $table->integer('players_db_id')->unsigned()->index();
             $table->string('game_id')->nullable()->index();
             $table->string('name')->index();
-            $table->string('img');
-            $table->string('team_name')->nullable()->index();
-            $table->string('nation_name')->nullable()->index();
+            $table->string('img')->nullable();
+            $table->string('team_name')->nullable();
+            $table->integer('team_id')->unsigned()->nullable()->index();
+            $table->string('nation_name')->nullable();
+            $table->string('league_name')->nullable();
             $table->string('position')->nullable()->index();
             $table->integer('height')->nullable()->index();
             $table->integer('age')->nullable()->index();

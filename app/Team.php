@@ -58,7 +58,7 @@ class Team extends Model
 				}
 			}
 		} else {
-			$no_logo = asset('img/no-photo.png');
+			$no_logo = asset('img/team_no_image.png');
 			return $no_logo;
 		}
 

@@ -10917,8 +10917,10 @@ body {
   padding: .5em .5em .5em 1em;
 }
 
-.main-content table tbody tr .logo {
+.main-content table tbody tr .logo,
+.main-content table tbody tr .img {
   padding: .5em .25em;
+  text-align: center;
 }
 
 .main-content table tbody tr .name {

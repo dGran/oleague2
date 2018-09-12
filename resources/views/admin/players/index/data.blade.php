@@ -22,6 +22,9 @@
             <col width="0%" />
             <col width="0%" />
             <col width="0%" />
+            <col width="0%" />
+            <col width="0%" />
+            <col width="0%" />
         </colgroup>
 
         <thead>
@@ -36,8 +39,11 @@
                     </div>
                 </th>
                 <th scope="col" colspan="2" class="name" onclick="$('#allMark').trigger('click');">Jugador</th>
+                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Pais</th>
+                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Pos</th>
+                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Altura</th>
+                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Edad</th>
                 <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Media</th>
-                <th scope="col" colspan="2" class="name" onclick="$('#allMark').trigger('click');">Equipo</th>
             </tr>
         </thead>
 
@@ -53,22 +59,31 @@
                             </div>
                         </div>
                     </td>
-                    <td class="logo" onclick="rowSelect(this)">
-                        <img src="{{ $player->getImgFormatted() }}" alt="" width="32">
+                    <td class="img" onclick="rowSelect(this)">
+                        <img src="{{ $player->getImgFormatted() }}" alt="" width="38">
                     </td>
                     <td class="name" onclick="rowSelect(this)">
                         <span>{{ $player->name }}</span>
                         <span class="d-block">
                             @if ($player->playerDb)
-                                <small class="text-black-50 text-uppercase">{{ $player->playerDb->name }}</small>
+                                <small class="text-black-50 text-uppercase">{{ $player->team->name }}</small>
                             @endif
                         </span>
                     </td>
                     <td onclick="rowSelect(this)">
-                        <span>{{ $player->overall_rating }}</span>
+                        <span>{{ $player->nation_name }}</span>
                     </td>
                     <td onclick="rowSelect(this)">
-                        <span>{{ $player->team_name }}</span>
+                        <span>{{ $player->position }}</span>
+                    </td>
+                    <td onclick="rowSelect(this)">
+                        <span>{{ $player->height }}</span>
+                    </td>
+                    <td onclick="rowSelect(this)">
+                        <span>{{ $player->age }}</span>
+                    </td>
+                    <td onclick="rowSelect(this)">
+                        <span>{{ $player->overall_rating }}</span>
                     </td>
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">

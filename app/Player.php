@@ -9,12 +9,17 @@ class Player extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'players_db_id', 'game_id', 'name', 'team_name', 'nation_name', 'position', 'height', 'age', 'overall_rating', 'slug'
+        'players_db_id', 'name', 'img', 'slug'
     ];
 
     public function playerDb()
     {
         return $this->hasOne('App\PlayerDB', 'id', 'players_db_id');
+    }
+
+    public function team()
+    {
+        return $this->hasOne('App\Team', 'id', 'team_id');
     }
 
 	public function scopeName($query, $name)
@@ -42,7 +47,7 @@ class Player extends Model
 		if ($this->img) {
 			$img = $this->img;
 			$local_img = asset($this->img);
-			$broken = asset('img/broken.png');
+			$broken = asset('img/player_no_image.png');
 
 			if ($this->isLocalImg()) {
 				if (file_exists($img)) {
@@ -58,7 +63,7 @@ class Player extends Model
 				}
 			}
 		} else {
-			$no_img = asset('img/no-photo.png');
+			$no_img = asset('img/player_no_image.png');
 			return $no_img;
 		}
 
