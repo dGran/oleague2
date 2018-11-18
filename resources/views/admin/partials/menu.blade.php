@@ -7,7 +7,7 @@
     </a>
 </li>
 <li class="section">
-    competicion
+    LPX
 </li>
 <li class="item">
     <a href="">

@@ -215,7 +215,12 @@
             content: "input",
         })
         .then((value) => {
-            $(location).attr('href', `categorias_equipos/exportar/${value}/` + type + '/' + filterName  + '/' + order);
+            var filename = `${value}`;
+            if (!filename ) {
+                var time = Math.floor(new Date().getTime() / 1000);
+                var filename = 'categorias_equipos_export' + time;
+            }
+            $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order);
         });
     }
 
@@ -231,7 +236,12 @@
             content: "input",
         })
         .then((value) => {
-            $(location).attr('href', `categorias_equipos/exportar/${value}/` + type + '/' + filterName + '/' + order + '/' + ids);
+            var filename = `${value}`;
+            if (!filename ) {
+                var time = Math.floor(new Date().getTime() / 1000);
+                var filename = 'categorias_equipos_export' + time;
+            }
+            $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
         });
     }
 

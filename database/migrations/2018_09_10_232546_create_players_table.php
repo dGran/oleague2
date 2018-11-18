@@ -21,6 +21,7 @@ class CreatePlayersTable extends Migration
             $table->string('img')->nullable();
             $table->string('team_name')->nullable();
             $table->integer('team_id')->unsigned()->nullable()->index();
+            $table->integer('nation_id')->unsigned()->nullable()->index();
             $table->string('nation_name')->nullable();
             $table->string('league_name')->nullable();
             $table->string('position')->nullable()->index();

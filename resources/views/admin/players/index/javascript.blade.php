@@ -247,7 +247,12 @@
             content: "input",
         })
         .then((value) => {
-            $(location).attr('href', `jugadores/exportar/${value}/` + type + '/' + filterName + '/' + filterPlayerDb + '/' + order);
+            var filename = `${value}`;
+            if (!filename ) {
+                var time = Math.floor(new Date().getTime() / 1000);
+                var filename = 'jugadores_export' + time;
+            }
+            $(location).attr('href', 'jugadores/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterPlayerDb + '/' + order);
         });
     }
 
@@ -263,12 +268,17 @@
             content: "input",
         })
         .then((value) => {
-            $(location).attr('href', `jugadores/exportar/${value}/` + type + '/' + filterName + '/' + filterPlayerDb + '/' + order + '/' + ids);
+            var filename = `${value}`;
+            if (!filename ) {
+                var time = Math.floor(new Date().getTime() / 1000);
+                var filename = 'jugadores_export' + time;
+            }
+            $(location).attr('href', 'jugadores/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterPlayerDb + '/' + order + '/' + ids);
         });
     }
 
-    function import_file() {
-        window.event.preventDefault();
+    function import_file(e) {
+        e.preventDefault();
         swal({
             title: "Importar datos",
             text: 'Se van a importar los datos del archivo seleccionado, pulsa continuar y selecciona el archivo que contiene los datos (.xls, .xlsx, .csv).',
@@ -299,6 +309,65 @@
 
     $('#import_file').change(function(){
         $("#frmImport").submit();
+    });
+
+    function import_pesdb_file(e) {
+        e.preventDefault();
+        swal({
+            title: "Atención!!",
+            text: 'Al importar desde PESDB se agregarán jugadores, competiciones, equipos y nacionalidades a la base de datos.',
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Continuar",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                swal({
+                    title: "Importar datos desde PESDB",
+                    text: 'Se van a importar los datos del archivo seleccionado, pulsa continuar y selecciona el archivo que contiene los datos (.xls, .xlsx, .csv).',
+                    buttons: {
+                        cancel: {
+                            text: "Cancelar",
+                            value: null,
+                            visible: true,
+                            className: "btn btn-secondary",
+                            closeModal: true,
+                        },
+                        confirm: {
+                            text: "Continuar",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary",
+                            closeModal: true
+                        }
+                    },
+                    closeOnClickOutside: false,
+                })
+                .then((value) => {
+                    if (value) {
+                        $("#import_pesdb_file").trigger('click');
+                    }
+                });
+            }
+        });
+    }
+
+    $('#import_pesdb_file').change(function(){
+        $("#frmImportPESDB").submit();
     });
 
 </script>

@@ -318,7 +318,7 @@ class TeamController extends Controller
                 ->get()->toArray();
         }
 
-        if (!$filename) {
+        if ($filename == null) {
             $filename = 'equipos_export' . time();
         }
         return \Excel::create($filename, function($excel) use ($teams) {

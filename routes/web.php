@@ -79,5 +79,6 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/jugadores/duplicar-seleccionados/{ids}', 'PlayerController@duplicateMany')->name('admin.players.duplicate.many');
 	Route::get('/admin/jugadores/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'PlayerController@exportFile')->name('admin.players.export.file');
 	Route::post('/admin/jugadores/importar', 'PlayerController@importFile')->name('admin.players.import.file');
+	Route::post('/admin/jugadores/importar_desde_pesdb', 'PlayerController@pesdb_importFile')->name('admin.players.pesdb.import.file');
 
 });

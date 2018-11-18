@@ -247,7 +247,12 @@
             content: "input",
         })
         .then((value) => {
-            $(location).attr('href', `equipos/exportar/${value}/` + type + '/' + filterName + '/' + filterCategory + '/' + order);
+            var filename = `${value}`;
+            if (!filename ) {
+                var time = Math.floor(new Date().getTime() / 1000);
+                var filename = 'equipos_export' + time;
+            }
+            $(location).attr('href', 'equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterCategory + '/' + order);
         });
     }
 
@@ -263,7 +268,12 @@
             content: "input",
         })
         .then((value) => {
-            $(location).attr('href', `equipos/exportar/${value}/` + type + '/' + filterName + '/' + filterCategory + '/' + order + '/' + ids);
+            var filename = `${value}`;
+            if (!filename ) {
+                var time = Math.floor(new Date().getTime() / 1000);
+                var filename = 'equipos_export' + time;
+            }
+            $(location).attr('href', 'equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterCategory + '/' + order + '/' + ids);
         });
     }
 

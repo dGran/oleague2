@@ -71,7 +71,8 @@
                         </span>
                     </td>
                     <td onclick="rowSelect(this)">
-                        <span>{{ $player->nation_name }}</span>
+                        <img class="d-block" src="{{ $player->nation->getImgFormatted() }}" alt="" width="24">
+                        <small>{{ $player->nation_name }}</small>
                     </td>
                     <td onclick="rowSelect(this)">
                         <span>{{ $player->position }}</span>
@@ -122,4 +123,5 @@
         {{ csrf_field() }}
         {{ method_field('delete') }}
     </form>
+
 @endif

@@ -2,6 +2,19 @@
 
 @section('content')
 <div class="container border-left border-right py-3" style="background: #fff">
+
+        <div class="col-12" style="background-image: url('img/banner.png'); background-repeat:no-repeat;
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+background-size:cover;
+background-position:center;">
+            <h1 style="padding: 2em; color: white">Estas buscando un producto</h1>
+            <div class="" style="padding-top: 140px; color: white">
+                Lorem ipsum dolor sit amet, consectetur
+            </div>
+        </div>
+
     <div class="row">
         <div class="col-12 col-sm-4">
 

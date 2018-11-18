@@ -23,7 +23,7 @@
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="" onclick="import_file()">
+            <a href="" onclick="import_file(event)">
                <form
                 id="frmImport"
                     lang="{{ app()->getLocale() }}"
@@ -37,6 +37,24 @@
                     <input type="file" name="import_file" id="import_file" class="d-none">
                     <span class="fas fa-file-import fa-fw mr-1"></span>
                     <span>Importar</span>
+                </form>
+            </a>
+        </li>
+        <li class="list-group-item border-0 px-0">
+            <a href="" onclick="import_pesdb_file(event)">
+               <form
+                id="frmImportPESDB"
+                    lang="{{ app()->getLocale() }}"
+                    role="form"
+                    method="POST"
+                    action="{{ route('admin.players.pesdb.import.file') }}"
+                    enctype="multipart/form-data"
+                    data-toggle="validator"
+                    autocomplete="off">
+                    {{ csrf_field() }}
+                    <input type="file" name="import_pesdb_file" id="import_pesdb_file" class="d-none">
+                    <span class="fas fa-file-import fa-fw mr-1"></span>
+                    <span>Importar desde PESDB</span>
                 </form>
             </a>
         </li>
