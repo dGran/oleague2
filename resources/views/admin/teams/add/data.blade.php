@@ -22,11 +22,21 @@
         <div class="form-group row">
             <label for="team_category_id" class="col-sm-2 col-form-label">Categoría</label>
             <div class="col-sm-10">
-                <select class="selectpicker form-control" name="team_category_id" id="team_category_id" data-size="3">
+                <select class="selectpicker form-control {{ $errors->first('team_category_name') ? 'd-none' : 'd-inline-block' }}" name="team_category_id" id="team_category_id" data-size="3">
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
+
+                <input type="text" class="form-control {{ $errors->first('team_category_name') ? 'd-inline-block' : 'd-none' }}" id="team_category_name" name="team_category_name" placeholder="Nombre de categoría" autofocus value="{{ old('team_category_name') }}">
+                <small class="text-danger">{{ $errors->first('team_category_name') }}</small>
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="new_parent" name="new_parent" {{ $errors->first('team_category_name') ? 'checked = "checked"' : ''}}">
+                    <label class="custom-control-label is-valid" for="new_parent">
+                        <small>Nueva categoría</small>
+                    </label>
+                </div>
             </div>
         </div>
         <div class="form-group row">

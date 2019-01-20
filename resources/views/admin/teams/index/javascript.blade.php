@@ -243,16 +243,36 @@
     function export_file(type) {
         window.event.preventDefault();
 
-        swal("Nombre del archivo", {
+        swal({
+            title: "Exportar todos los registros",
+            text: 'Introduce nombre del archivo (opcional)',
             content: "input",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Continuar",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true
+                }
+            },
         })
         .then((value) => {
-            var filename = `${value}`;
-            if (!filename ) {
-                var time = Math.floor(new Date().getTime() / 1000);
-                var filename = 'equipos_export' + time;
+            if (value) {
+                var filename = `${value}`;
+                if (!filename ) {
+                    var time = Math.floor(new Date().getTime() / 1000);
+                    var filename = 'equipos_export' + time;
+                }
+                $(location).attr('href', 'equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterCategory + '/' + order);
             }
-            $(location).attr('href', 'equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterCategory + '/' + order);
         });
     }
 
@@ -264,16 +284,36 @@
             ids.push($(this).val());
         });
 
-        swal("Nombre del archivo", {
+        swal({
+            title: "Exportar los registros seleccionados",
+            text: 'Introduce nombre del archivo (opcional)',
             content: "input",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Continuar",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true
+                }
+            },
         })
         .then((value) => {
-            var filename = `${value}`;
-            if (!filename ) {
-                var time = Math.floor(new Date().getTime() / 1000);
-                var filename = 'equipos_export' + time;
+            if (value) {
+                var filename = `${value}`;
+                if (!filename ) {
+                    var time = Math.floor(new Date().getTime() / 1000);
+                    var filename = 'equipos_export' + time;
+                }
+                $(location).attr('href', 'equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterCategory + '/' + order + '/' + ids);
             }
-            $(location).attr('href', 'equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + filterCategory + '/' + order + '/' + ids);
         });
     }
 

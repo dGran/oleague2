@@ -20,13 +20,23 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="team_category_id" class="col-sm-2 col-form-label">Players Database</label>
+            <label for="team_category_id" class="col-sm-2 col-form-label">Database</label>
             <div class="col-sm-10">
-                <select class="selectpicker form-control" name="players_db_id" id="players_db_id" data-size="3">
+                <select class="selectpicker form-control {{ $errors->first('players_db_name') ? 'd-none' : 'd-inline-block' }}" name="players_db_id" id="players_db_id" data-size="3">
                     @foreach ($players_dbs as $players_db)
                         <option value="{{ $players_db->id }}">{{ $players_db->name }}</option>
                     @endforeach
                 </select>
+
+                <input type="text" class="form-control {{ $errors->first('players_db_name') ? 'd-inline-block' : 'd-none' }}" id="players_db_name" name="players_db_name" placeholder="Nombre de la database" autofocus value="{{ old('players_db_name') }}">
+                <small class="text-danger">{{ $errors->first('players_db_name') }}</small>
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="new_parent" name="new_parent" {{ $errors->first('players_db_name') ? 'checked = "checked"' : ''}}">
+                    <label class="custom-control-label is-valid" for="new_parent">
+                        <small>Nueva database</small>
+                    </label>
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -51,6 +61,63 @@
                         <img id="img_preview" src="{{ asset('img/no-photo.png') }}" alt="img" width="96">
                     </figure>
                 </div>
+                <small id="img_info"></small>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="overall_rating" class="col-sm-2 col-form-label">Media</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="overall_rating" name="overall_rating" placeholder="Valoración media del jugador" value="{{ old('overall_rating') }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="position" class="col-sm-2 col-form-label">Posición</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="position" name="position" placeholder="Posición" value="{{ old('position') }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="nation_name" class="col-sm-2 col-form-label">Nacionalidad</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="nation_name" name="nation_name" placeholder="Nacionalidad" value="{{ old('nation_name') }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="team_name" class="col-sm-2 col-form-label">Equipo</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="team_name" name="team_name" placeholder="Equipo" value="{{ old('team_name') }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="league_name" class="col-sm-2 col-form-label">Competición</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="league_name" name="league_name" placeholder="Competición" value="{{ old('league_name') }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="height" class="col-sm-2 col-form-label">Altura</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="height" name="height" placeholder="Altura" value="{{ old('height') }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="age" class="col-sm-2 col-form-label">Edad</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="age" name="age" placeholder="Edad" value="{{ old('age') }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="game_id" class="col-sm-2 col-form-label">Game ID</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="game_id" name="game_id" placeholder="Identificador (ID) del jugador en el juego" value="{{ old('game_id') }}">
             </div>
         </div>
 

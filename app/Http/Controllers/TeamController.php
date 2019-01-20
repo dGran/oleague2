@@ -44,21 +44,47 @@ class TeamController extends Controller
 
     public function save()
     {
-        $data = request()->validate([
-            'name' => 'required|unique:teams,name',
-            'team_category_id' => 'required',
-            'logo' => [
-                'image',
-                'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+        if (request()->new_parent) {
+            $data = request()->validate([
+                'name' => 'required|unique:teams,name',
+                'logo' => [
+                    'image',
+                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                ],
+                'team_category_name' => 'required|unique:team_categories,name',
             ],
-        ],
-        [
-            'name.required' => 'El nombre del equipo es obligatorio',
-            'name.unique' => 'El nombre del equipo ya existe',
-            'team_category_id.required' => 'La categoría de equipo es obligatoria',
-            'logo.image' => 'El archivo debe contener una imagen',
-            'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
-        ]);
+            [
+                'name.required' => 'El nombre del equipo es obligatorio',
+                'name.unique' => 'El nombre del equipo ya existe',
+                'team_category_name.required' => 'El nombre de la categoría es obligatorio',
+                'team_category_name.unique' => 'El nombre de la categoría ya existe',
+                'logo.image' => 'El archivo debe contener una imagen',
+                'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
+            ]);
+
+            $category = new TeamCategory;
+            $category->name = request()->team_category_name;
+            $category->slug = str_slug($category->name);
+            $category->save();
+            event(new TableWasSaved($category, $category->name));
+            $data['team_category_id'] = $category->id;
+        } else {
+            $data = request()->validate([
+                'name' => 'required|unique:teams,name',
+                'team_category_id' => 'required',
+                'logo' => [
+                    'image',
+                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                ],
+            ],
+            [
+                'name.required' => 'El nombre del equipo es obligatorio',
+                'name.unique' => 'El nombre del equipo ya existe',
+                'team_category_id.required' => 'La categoría de equipo es obligatoria',
+                'logo.image' => 'El archivo debe contener una imagen',
+                'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
+            ]);
+        }
 
         $data['slug'] = str_slug(request()->name);
 
@@ -102,21 +128,48 @@ class TeamController extends Controller
         $team = Team::find($id);
 
         if ($team) {
-            $data = request()->validate([
-                'name' => 'required|unique:teams,name,' .$team->id,
-                'team_category_id' => 'required',
-                'logo' => [
-                    'image',
-                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+
+            if (request()->new_parent) {
+                $data = request()->validate([
+                    'name' => 'required|unique:teams,name,' .$team->id,
+                    'logo' => [
+                        'image',
+                        'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                    ],
+                    'team_category_name' => 'required|unique:team_categories,name',
                 ],
-            ],
-            [
-                'name.required' => 'El nombre del equipo es obligatorio',
-                'name.unique' => 'El nombre del equipo ya existe',
-                'team_category_id.required' => 'La categoría de equipo es obligatoria',
-                'logo.image' => 'El archivo debe contener una imagen',
-                'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
-            ]);
+                [
+                    'name.required' => 'El nombre del equipo es obligatorio',
+                    'name.unique' => 'El nombre del equipo ya existe',
+                    'team_category_name.required' => 'El nombre de la categoría es obligatorio',
+                    'team_category_name.unique' => 'El nombre de la categoría ya existe',
+                    'logo.image' => 'El archivo debe contener una imagen',
+                    'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
+                ]);
+
+                $category = new TeamCategory;
+                $category->name = request()->team_category_name;
+                $category->slug = str_slug($category->name);
+                $category->save();
+                event(new TableWasSaved($category, $category->name));
+                $data['team_category_id'] = $category->id;
+            } else {
+                $data = request()->validate([
+                    'name' => 'required|unique:teams,name,' .$team->id,
+                    'team_category_id' => 'required',
+                    'logo' => [
+                        'image',
+                        'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                    ],
+                ],
+                [
+                    'name.required' => 'El nombre del equipo es obligatorio',
+                    'name.unique' => 'El nombre del equipo ya existe',
+                    'team_category_id.required' => 'La categoría de equipo es obligatoria',
+                    'logo.image' => 'El archivo debe contener una imagen',
+                    'logo.dimensions' => 'Las dimensiones de la imagen no son válidas'
+                ]);
+            }
 
             $data['slug'] = str_slug(request()->name);
 
@@ -320,6 +373,8 @@ class TeamController extends Controller
 
         if ($filename == null) {
             $filename = 'equipos_export' . time();
+        } else {
+            $filename = str_slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($teams) {
             $excel->sheet('equipos', function($sheet) use ($teams)

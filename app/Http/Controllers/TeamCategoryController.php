@@ -42,7 +42,7 @@ class TeamCategoryController extends Controller
     public function save()
     {
         $data = request()->validate([
-            'name' => 'required|unique:teams,name',
+            'name' => 'required|unique:team_categories,name',
         ],
         [
             'name.required' => 'El nombre de la categoría es obligatorio',
@@ -230,6 +230,8 @@ class TeamCategoryController extends Controller
 
         if (!$filename) {
             $filename = 'categorias_equipos_export' . time();
+        } else {
+            $filename = str_slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($categories) {
             $excel->sheet('categorias_equipos', function($sheet) use ($categories)

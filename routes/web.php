@@ -81,4 +81,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::post('/admin/jugadores/importar', 'PlayerController@importFile')->name('admin.players.import.file');
 	Route::post('/admin/jugadores/importar_desde_pesdb', 'PlayerController@pesdb_importFile')->name('admin.players.pesdb.import.file');
 
+	// Seasons
+	Route::get('/admin/temporadas', 'SeasonController@index')->name('admin.seasons');
+
+
 });

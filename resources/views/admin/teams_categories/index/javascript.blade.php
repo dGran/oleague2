@@ -98,7 +98,7 @@
         disabledActionsButtons();
         swal({
             title: "¿Estás seguro?",
-            text: 'Se van a eliminar las categorías seleccionadas. No se podrán deshacer los cambios!. <br><small>*Las categorías con equipos asociados no se eliminarán</small>',
+            text: 'Se van a eliminar las categorías seleccionadas (las categorías con equipos asociados no se eliminarán). No se podrán deshacer los cambios!.',
             buttons: {
                 confirm: {
                     text: "Sí, estoy seguro",
@@ -211,16 +211,36 @@
     function export_file(type) {
         window.event.preventDefault();
 
-        swal("Nombre del archivo", {
+        swal({
+            title: "Exportar todos los registros",
+            text: 'Introduce nombre del archivo (opcional)',
             content: "input",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Continuar",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true
+                }
+            },
         })
         .then((value) => {
-            var filename = `${value}`;
-            if (!filename ) {
-                var time = Math.floor(new Date().getTime() / 1000);
-                var filename = 'categorias_equipos_export' + time;
+            if (value) {
+                var filename = `${value}`;
+                if (!filename ) {
+                    var time = Math.floor(new Date().getTime() / 1000);
+                    var filename = 'categorias_equipos_export' + time;
+                }
+                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order);
             }
-            $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order);
         });
     }
 
@@ -232,16 +252,36 @@
             ids.push($(this).val());
         });
 
-        swal("Nombre del archivo", {
+        swal({
+            title: "Exportar los registros seleccionados",
+            text: 'Introduce nombre del archivo (opcional)',
             content: "input",
+            buttons: {
+                cancel: {
+                    text: "Cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Continuar",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-primary",
+                    closeModal: true
+                }
+            },
         })
         .then((value) => {
-            var filename = `${value}`;
-            if (!filename ) {
-                var time = Math.floor(new Date().getTime() / 1000);
-                var filename = 'categorias_equipos_export' + time;
+            if (value) {
+                var filename = `${value}`;
+                if (!filename ) {
+                    var time = Math.floor(new Date().getTime() / 1000);
+                    var filename = 'categorias_equipos_export' + time;
+                }
+                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
             }
-            $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
         });
     }
 

@@ -10,6 +10,21 @@
             return false;
         });
 
+        $('#new_parent').change(function(){
+            if ($('#new_parent').is(':checked')) {
+                $('#team_category_id').parent().removeClass('d-inline-block');
+                $('#team_category_id').parent().addClass('d-none');
+                $('#team_category_name').removeClass('d-none');
+                $('#team_category_name').addClass('d-inline-block');
+                $('#team_category_name').focus();
+            } else {
+                $('#team_category_id').parent().removeClass('d-none');
+                $('#team_category_id').parent().addClass('d-inline-block');
+                $('#team_category_name').removeClass('d-inline-block');
+                $('#team_category_name').addClass('d-none');
+            }
+        });
+
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
         // logo preview
         $('#logo_field').change(function(){

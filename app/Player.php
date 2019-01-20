@@ -9,7 +9,7 @@ class Player extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'players_db_id', 'name', 'img', 'slug'
+        'players_db_id', 'game_id', 'name', 'img', 'height', 'age', 'nation_name', 'team_name', 'league_name', 'position', 'overall_rating', 'slug'
     ];
 
     public function playerDb()

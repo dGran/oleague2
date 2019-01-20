@@ -39,11 +39,12 @@
                     </div>
                 </th>
                 <th scope="col" colspan="2" class="name" onclick="$('#allMark').trigger('click');">Jugador</th>
-                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Pais</th>
-                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Pos</th>
-                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Altura</th>
-                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Edad</th>
-                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Media</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');">Pais</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');">Pos</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');">Altura</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');">Edad</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');">Media</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
 
@@ -66,12 +67,11 @@
                         <span>{{ $player->name }}</span>
                         <span class="d-block">
                             @if ($player->playerDb)
-                                <small class="text-black-50 text-uppercase">{{ $player->team->name }}</small>
+                                <small class="text-black-50 text-uppercase">{{ $player->team_name }}</small>
                             @endif
                         </span>
                     </td>
                     <td onclick="rowSelect(this)">
-                        <img class="d-block" src="{{ $player->nation->getImgFormatted() }}" alt="" width="24">
                         <small>{{ $player->nation_name }}</small>
                     </td>
                     <td onclick="rowSelect(this)">

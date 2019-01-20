@@ -8,8 +8,6 @@ use App\PlayerDB;
 
 use App\Team;
 use App\TeamCategory;
-use App\Nation;
-
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -49,20 +47,47 @@ class PlayerController extends Controller
 
     public function save()
     {
-        $data = request()->validate([
-            'name' => 'required',
-            'players_db_id' => 'required',
-            'img' => [
-                'image',
-                'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+        $data = request()->all();
+        if (request()->new_parent) {
+            $data = request()->validate([
+                'name' => 'required',
+                'img' => [
+                    'image',
+                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                ],
+                'players_db_name' => 'required|unique:players_dbs,name',
             ],
-        ],
-        [
-            'name.required' => 'El nombre del jugador es obligatorio',
-            'players_db_id.required' => 'El player database es obligatorio',
-            'img.image' => 'El archivo debe contener una imagen',
-            'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
-        ]);
+            [
+                'name.required' => 'El nombre del jugador es obligatorio',
+                'players_db_name.required' => 'El nombre de la database es obligatorio',
+                'players_db_name.unique' => 'El nombre de la database ya existe',
+                'img.image' => 'El archivo debe contener una imagen',
+                'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
+            ]);
+
+            $database = new PlayerDB;
+            $database->name = request()->players_db_name;
+            $database->slug = str_slug($database->name);
+            $database->save();
+            event(new TableWasSaved($database, $database->name));
+
+            $data['players_db_id'] = $database->id;
+        } else {
+            $data = request()->validate([
+                'name' => 'required',
+                'players_db_id' => 'required',
+                'img' => [
+                    'image',
+                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                ],
+            ],
+            [
+                'name.required' => 'El nombre del jugador es obligatorio',
+                'players_db_id.required' => 'El player database es obligatorio',
+                'img.image' => 'El archivo debe contener una imagen',
+                'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
+            ]);
+        }
 
         $data['slug'] = str_slug(request()->name);
 
@@ -105,22 +130,49 @@ class PlayerController extends Controller
     {
         $player = Player::find($id);
 
-
         if ($player) {
-	        $data = request()->validate([
-	            'name' => 'required',
-	            'players_db_id' => 'required',
-	            'img' => [
-	                'image',
-	                'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
-	            ],
-	        ],
-	        [
-	            'name.required' => 'El nombre del jugador es obligatorio',
-	            'players_db_id.required' => 'El player database es obligatorio',
-	            'img.image' => 'El archivo debe contener una imagen',
-	            'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
-	        ]);
+            $data = request()->all();
+
+            if (request()->new_parent) {
+                $data = request()->validate([
+                    'name' => 'required',
+                    'img' => [
+                        'image',
+                        'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                    ],
+                    'players_db_name' => 'required|unique:players_dbs,name',
+                ],
+                [
+                    'name.required' => 'El nombre del jugador es obligatorio',
+                    'players_db_name.required' => 'El nombre de la database es obligatorio',
+                    'players_db_name.unique' => 'El nombre de la database ya existe',
+                    'img.image' => 'El archivo debe contener una imagen',
+                    'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
+                ]);
+
+                $database = new PlayerDB;
+                $database->name = request()->players_db_name;
+                $database->slug = str_slug($database->name);
+                $database->save();
+                event(new TableWasSaved($database, $database->name));
+
+                $data['players_db_id'] = $database->id;
+            } else {
+                $data = request()->validate([
+                    'name' => 'required',
+                    'players_db_id' => 'required',
+                    'img' => [
+                        'image',
+                        'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                    ],
+                ],
+                [
+                    'name.required' => 'El nombre del jugador es obligatorio',
+                    'players_db_id.required' => 'El player database es obligatorio',
+                    'img.image' => 'El archivo debe contener una imagen',
+                    'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
+                ]);
+            }
 
             $data['slug'] = str_slug(request()->name);
 
@@ -324,6 +376,8 @@ class PlayerController extends Controller
 
         if (!$filename) {
             $filename = 'jugadores_export' . time();
+        } else {
+            $filename = str_slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($players) {
             $excel->sheet('jugadores', function($sheet) use ($players)
@@ -350,8 +404,6 @@ class PlayerController extends Controller
                         $player->img = $value->img;
                         $player->nation_name = $value->nation_name;
                         $player->league_name = $value->league_name;
-                        $player->team_id = $value->team_id;
-                        $player->nation_id = $value->nation_id;
                         $player->team_name = $value->team_name;
                         $player->position = $value->position;
                         $player->height = $value->height;
@@ -388,15 +440,6 @@ class PlayerController extends Controller
                 foreach ($data as $key => $value) {
                     try {
 
-	                	// $nation = new Nation;
-	                	// $nation->name = $value->name;
-                		// $flag = strtoupper(substr($value->name, 0, 3));
-                		// $flag = "http://www.pesmaster.com/pes-2019/graphics/nteamlogos/flag_" . $flag . ".png";
-                		// $nation->img = $flag;
-                		// $nation->slug = str_slug($value->name);
-                		// $nation->save();
-
-
 	                	$category = TeamCategory::where('name', '=', $value->league_name)->first();
 	                	if (!$category) {
 	            	        $category = TeamCategory::create([
@@ -413,25 +456,13 @@ class PlayerController extends Controller
 					            'slug' => str_slug($value->team_name)
 					        ]);
 					    }
-	                	$nation = Nation::where('name', '=', $value->nation_name)->first();
-	                	if (!$nation) {
-	                		$flag = strtoupper(substr($value->nation_name, 0, 3));
-	                		$flag = "http://www.pesmaster.com/pes-2019/graphics/nteamlogos/flag_" . $flag . ".png";
-					        $nation = Nation::create([
-					            'name' => $value->nation_name,
-					            'img' => $flag,
-					            'slug' => str_slug($value->nation_name)
-					        ]);
-					    }
                         $player = new Player;
                         $player->players_db_id = $value->players_db_id;
                         $player->game_id = $value->game_id;
                         $player->name = $value->name;
-                        $player->img = $value->img;
+                        $player->img = 'https://www.pesmaster.com/pes-2019/graphics/players/player_' . $value->game_id . '.png';
                         $player->nation_name = $value->nation_name;
                         $player->league_name = $value->league_name;
-                        $player->team_id = $team->id;
-                        $player->nation_id = $nation->id;
                         $player->team_name = $value->team_name;
                         $player->position = $value->position;
                         $player->height = $value->height;
