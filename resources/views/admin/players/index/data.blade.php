@@ -84,13 +84,13 @@
                         <span>{{ $player->position }}</span>
                     </td>
                     <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
-                        <small>{{ $player->nation_name }}</small>
+                        <small class="text-nowrap">{{ $player->nation_name }}</small>
                     </td>
                     <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
-                        <small>{{ $player->team_name }}</small>
+                        <small class="text-nowrap">{{ $player->team_name }}</small>
                     </td>
                     <td onclick="rowSelect(this)" class="d-none d-xl-table-cell">
-                        <small>{{ $player->league_name }}</small>
+                        <small class="text-nowrap">{{ $player->league_name }}</small>
                     </td>
                     <td onclick="rowSelect(this)" class="d-none d-xl-table-cell">
                         <small class="badge badge-info text-white">{{ $player->playerDb->name }}</small>
