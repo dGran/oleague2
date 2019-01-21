@@ -47,7 +47,6 @@ class PlayerController extends Controller
 
     public function save()
     {
-        $data = request()->all();
         if (request()->new_parent) {
             $data = request()->validate([
                 'name' => 'required',
@@ -71,7 +70,7 @@ class PlayerController extends Controller
             $database->save();
             event(new TableWasSaved($database, $database->name));
 
-            $data['players_db_id'] = $database->id;
+            $players_db_id = $database->id;
         } else {
             $data = request()->validate([
                 'name' => 'required',
@@ -87,8 +86,12 @@ class PlayerController extends Controller
                 'img.image' => 'El archivo debe contener una imagen',
                 'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
             ]);
+
+            $players_db_id = request()->players_db_id;
         }
 
+        $data = request()->all();
+        $data['players_db_id'] = $players_db_id;
         $data['slug'] = str_slug(request()->name);
 
         if (request()->hasFile('img')) {
@@ -131,8 +134,6 @@ class PlayerController extends Controller
         $player = Player::find($id);
 
         if ($player) {
-            $data = request()->all();
-
             if (request()->new_parent) {
                 $data = request()->validate([
                     'name' => 'required',
@@ -156,7 +157,7 @@ class PlayerController extends Controller
                 $database->save();
                 event(new TableWasSaved($database, $database->name));
 
-                $data['players_db_id'] = $database->id;
+                $players_db_id = $database->id;
             } else {
                 $data = request()->validate([
                     'name' => 'required',
@@ -172,8 +173,12 @@ class PlayerController extends Controller
                     'img.image' => 'El archivo debe contener una imagen',
                     'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
                 ]);
+
+                $players_db_id = request()->players_db_id;
             }
 
+            $data = request()->all();
+            $data['players_db_id'] = $players_db_id;
             $data['slug'] = str_slug(request()->name);
 
             if (request()->hasFile('img')) {

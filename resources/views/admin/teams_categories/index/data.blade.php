@@ -78,7 +78,7 @@
         </tbody>
     </table>
 
-    <div class="regs-info clearfix border-top p-3">
+    <div class="regs-info clearfix border-top p-3 px-md-0">
         <div class="regs-info2 float-left">Registros: {{ $categories->firstItem() }}-{{ $categories->lastItem() }} de {{ $categories->total() }}</div>
         <div class="float-right">{!! $categories->appends(Request::all())->render() !!}</div>
     </div>

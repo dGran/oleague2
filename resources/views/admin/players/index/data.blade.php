@@ -18,12 +18,11 @@
         <colgroup>
             <col width="0%" />
             <col width="0%" />
-            <col width="100%" />
+            <col width="100%"/>
             <col width="0%" />
             <col width="0%" />
-            <col width="0%" />
-            <col width="0%" />
-            <col width="0%" />
+            <col class="d-none d-sm-table-cell" width="0%" />
+            <col class="d-none d-sm-table-cell" width="0%" />
             <col width="0%" />
         </colgroup>
 
@@ -39,11 +38,12 @@
                     </div>
                 </th>
                 <th scope="col" colspan="2" class="name" onclick="$('#allMark').trigger('click');">Jugador</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');">Pais</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');">Pos</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');">Altura</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');">Edad</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');">Media</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="text-center">Media</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="text-center">Pos</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell">Pais</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell">Equipo</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-xl-table-cell">Liga</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-xl-table-cell">Database</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
@@ -65,26 +65,35 @@
                     </td>
                     <td class="name" onclick="rowSelect(this)">
                         <span>{{ $player->name }}</span>
-                        <span class="d-block">
-                            @if ($player->playerDb)
-                                <small class="text-black-50 text-uppercase">{{ $player->team_name }}</small>
+                        <small class="d-block d-sm-none text-black-50 text-uppercase">{{ $player->team_name }}</small>
+                        <small class="d-none d-sm-block text-black-50 text-uppercase">
+                            @if ($player->height)
+                                {{ $player->height }} cm
+                                @if ($player->age)
+                                    / {{ $player->age }} años
+                                @endif
+                            @elseif ($player->age)
+                                {{ $player->age }} años
                             @endif
-                        </span>
+                        </small>
                     </td>
-                    <td onclick="rowSelect(this)">
-                        <small>{{ $player->nation_name }}</small>
+                    <td onclick="rowSelect(this)" class="text-center">
+                        <span>{{ $player->overall_rating }}</span>
                     </td>
-                    <td onclick="rowSelect(this)">
+                    <td onclick="rowSelect(this)" class="text-center">
                         <span>{{ $player->position }}</span>
                     </td>
-                    <td onclick="rowSelect(this)">
-                        <span>{{ $player->height }}</span>
+                    <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
+                        <small>{{ $player->nation_name }}</small>
                     </td>
-                    <td onclick="rowSelect(this)">
-                        <span>{{ $player->age }}</span>
+                    <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
+                        <small>{{ $player->team_name }}</small>
                     </td>
-                    <td onclick="rowSelect(this)">
-                        <span>{{ $player->overall_rating }}</span>
+                    <td onclick="rowSelect(this)" class="d-none d-xl-table-cell">
+                        <small>{{ $player->league_name }}</small>
+                    </td>
+                    <td onclick="rowSelect(this)" class="d-none d-xl-table-cell">
+                        <small class="badge badge-info text-white">{{ $player->playerDb->name }}</small>
                     </td>
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
@@ -114,7 +123,7 @@
         </tbody>
     </table>
 
-    <div class="regs-info clearfix border-top p-3">
+    <div class="regs-info clearfix border-top p-3 px-md-0">
         <div class="regs-info2 float-left">Registros: {{ $players->firstItem() }}-{{ $players->lastItem() }} de {{ $players->total() }}</div>
         <div class="float-right">{!! $players->appends(Request::all())->render() !!}</div>
     </div>

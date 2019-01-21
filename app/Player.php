@@ -17,16 +17,6 @@ class Player extends Model
         return $this->hasOne('App\PlayerDB', 'id', 'players_db_id');
     }
 
-    public function team()
-    {
-        return $this->hasOne('App\Team', 'id', 'team_id');
-    }
-
-    public function nation()
-    {
-        return $this->hasOne('App\Nation', 'id', 'nation_id');
-    }
-
 	public function scopeName($query, $name)
 	{
 		if (trim($name) !="") {
