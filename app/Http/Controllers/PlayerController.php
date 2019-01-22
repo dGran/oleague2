@@ -20,6 +20,9 @@ class PlayerController extends Controller
     {
     	$filterName = request()->filterName;
     	$filterPlayerDb = request()->filterPlayerDb;
+        $filterTeam = request()->filterTeam;
+        $filterNation = request()->filterNation;
+        $filterPosition = request()->filterPosition;
         $order = request()->order;
         $pagination = request()->pagination;
 
@@ -34,9 +37,9 @@ class PlayerController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $players = Player::playerDbId($filterPlayerDb)->name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
+        $players = Player::playerDbId($filterPlayerDb)->name($filterName)->teamName($filterTeam)->nationName($filterNation)->position($filterPosition)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
         $players_dbs = PlayerDB::orderBy('name', 'asc')->get();
-    	return view('admin.players.index', compact('players', 'players_dbs', 'filterName', 'filterPlayerDb', 'order', 'pagination'));
+    	return view('admin.players.index', compact('players', 'players_dbs', 'filterName', 'filterPlayerDb', 'filterTeam', 'filterNation', 'filterPosition', 'order', 'pagination'));
     }
 
     public function add()

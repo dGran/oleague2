@@ -31,6 +31,27 @@ class Player extends Model
 		}
 	}
 
+	public function scopeTeamName($query, $teamName)
+	{
+		if (trim($teamName) !="") {
+			$query->where("team_name", "LIKE", "%$teamName%");
+		}
+	}
+
+	public function scopeNationName($query, $nationName)
+	{
+		if (trim($nationName) !="") {
+			$query->where("nation_name", "LIKE", "%$nationName%");
+		}
+	}
+
+	public function scopePosition($query, $position)
+	{
+		if (trim($position) !="") {
+			$query->where("position", "LIKE", "%$position%");
+		}
+	}
+
 	public function isLocalImg() {
 		if (starts_with($this->img, 'img/players/')) {
 			return true;

@@ -112,14 +112,14 @@
     <div class="col">
     <div class="searchbox">
         <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
-        <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off">
+        <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
         <span class="search-clear"><i class="fas fa-times"></i></span>
         </div>
     </div>
 </div>
 
 <div class="mt-4">
-    @if ($filterName || $filterPlayerDb)
+    @if ($filterName || $filterPlayerDb || $filterTeam || $filterNation || $filterPosition)
         <ul class="nav mb-2">
             @if ($filterName)
                 <li class="nav-item">
@@ -131,8 +131,32 @@
             @endif
             @if ($filterPlayerDb)
                 <li class="nav-item">
-                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPLayerDb()">
-                        <span class="r-1">Player Database</span>
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPlayerDb()">
+                        <span class="r-1">Database</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterTeam)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterTeam()">
+                        <span class="r-1">Equipo</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterNation)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterNation()">
+                        <span class="r-1">País</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterPosition)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPosition()">
+                        <span class="r-1">Posición</span>
                         <i class="fas fa-times"></i>
                     </a>
                 </li>
@@ -155,6 +179,28 @@
             </select>
         </div>
     </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterTeam" class="mb-1">Equipo</label>
+            <input class="filterTeam-input form-control mousetrap filterTeam" id="filterTeam" name="filterTeam" type="text" placeholder="Equipo..." value="{{ $filterTeam ? $filterTeam : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterTeam" class="mb-1">País</label>
+            <input class="filterNation-input form-control mousetrap filterNation" id="filterNation" name="filterNation" type="text" placeholder="País..." value="{{ $filterNation ? $filterNation : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterTeam" class="mb-1">Posición</label>
+            <input class="filterPosition-input form-control mousetrap filterPosition" id="filterPosition" name="filterPosition" type="text" placeholder="País..." value="{{ $filterPosition ? $filterPosition : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        </div>
+    </div>
+
 </div>
 
 <div class="mt-4">

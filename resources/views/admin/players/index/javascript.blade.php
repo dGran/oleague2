@@ -1,6 +1,9 @@
 <script>
     var filterName = {!! json_encode($filterName) !!};
     var filterPlayerDb = {!! json_encode($filterPlayerDb) !!};
+    var filterTeam = {!! json_encode($filterTeam) !!};
+    var filterNation = {!! json_encode($filterNation) !!};
+    var filterPosition = {!! json_encode($filterPosition) !!};
     var order = {!! json_encode($order) !!};
     var pagination = {!! json_encode($pagination) !!};
 
@@ -21,6 +24,15 @@
         });
         $('.search-input').on("blur", function() {
             $(this).val(filterName);
+        });
+        $('.filterTeam-input').on("blur", function() {
+            $(this).val(filterTeam);
+        });
+        $('.filterNation-input').on("blur", function() {
+            $(this).val(filterNation);
+        });
+        $('.filterPosition-input').on("blur", function() {
+            $(this).val(filterPosition);
         });
 
         $('#viewModal').on('show.bs.modal', function(e) {
@@ -56,7 +68,7 @@
     function cancelFilterName() {
         window.event.preventDefault();
         $('.filterName').val('');
-        if (filterPlayerDb || order || pagination) {
+        if (filterPlayerDb || filterTeam || filterNation || filterPosition || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -66,7 +78,37 @@
     function cancelFilterPlayerDb() {
         window.event.preventDefault();
         $('.filterPlayerDb').val('0');
-        if (filterName || order || pagination) {
+        if (filterName || filterTeam || filterNation || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterTeam() {
+        window.event.preventDefault();
+        $('.filterTeam').val('');
+        if (filterName || filterPlayerDb || filterNation || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterNation() {
+        window.event.preventDefault();
+        $('.filterNation').val('');
+        if (filterName || filterPlayerDb || filterTeam || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterPosition() {
+        window.event.preventDefault();
+        $('.filterPosition').val('');
+        if (filterName || filterPlayerDb || filterTeam || filterNation || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -75,6 +117,14 @@
 
     function cancelFilters() {
         window.location.href = '{{ route("admin.players") }}';
+    }
+
+    function submitFilterForm() {
+        $('input').keypress(function (e) {
+            if (e.which == 13) {
+                $('.frmFilter').submit();
+            }
+        });
     }
 
     $(".btn-delete").click(function(e) {
