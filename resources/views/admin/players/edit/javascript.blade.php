@@ -25,6 +25,21 @@
             }
         });
 
+        $('#url_img').change(function(){
+            if ($('#url_img').is(':checked')) {
+                $('#img_local').parent().removeClass('d-inline-block');
+                $('#img_local').parent().addClass('d-none');
+                $('#img_link').removeClass('d-none');
+                $('#img_link').addClass('d-inline-block');
+                $('#img_link').focus();
+            } else {
+                $('#img_local').parent().removeClass('d-none');
+                $('#img_local').parent().addClass('d-inline-block');
+                $('#img_link').removeClass('d-inline-block');
+                $('#img_link').addClass('d-none');
+            }
+        });
+
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
         // img preview
         $('#img_field').change(function(){

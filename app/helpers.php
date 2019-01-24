@@ -29,3 +29,19 @@ function validateUrl($url)
 	 } // if parse url
 	 else return false;
 }
+
+function pesdb_player_info_path($id) {
+	return "http://pesdb.net/pes2019/?id=" . $id;
+}
+
+function pesdb_player_img_path($id) {
+	return "http://pesdb.net/pes2019/images/players/" . $id . ".png";
+}
+
+function pesmaster_player_info_path($id) {
+	return "https://www.pesmaster.com/neymar/pes-2019/player/" . $id;
+}
+
+function pesmaster_player_img_path($id) {
+	return "https://www.pesmaster.com/pes-2019/graphics/players/player_" . $id . ".png";
+}

@@ -120,11 +120,11 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a>
+<li class="item {{ Request::is('admin/databases_jugadores*') ? 'current' : '' }}">
+    <a href="{{ route('admin.players_dbs') }}">
         <span>
             <i class="fas fa-table fa-fw mr-2"></i>
-            Players Databases
+            Databases de jugadores
         </span>
     </a>
 </li>

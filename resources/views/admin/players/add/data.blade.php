@@ -43,26 +43,38 @@
             <label for="img" class="col-sm-2 col-form-label">Imagen</label>
 
             <div class="col-sm-10">
-                <div class="input-group mb-1">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-danger d-none" type="button" id="img_remove">Eliminar</button>
+                <div class="d-inline-block">
+                    <div class="input-group mb-1" id="img_local">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-danger d-none" type="button" id="img_remove">Eliminar</button>
+                        </div>
+                         <div class="custom-file">
+                            <input readonly type="file" class="custom-file-input" id="img_field" name="img">
+                            <label class="custom-file-label" for="img_field">Selecciona una imagen</label>
+                        </div>
                     </div>
-                     <div class="custom-file">
-                        <input readonly type="file" class="custom-file-input" id="img_field" name="img">
-                        <label class="custom-file-label" for="img_field">Selecciona una imagen</label>
+                    @if ($errors->first('img'))
+                        <small class="text-danger d-block">{{ $errors->first('img') }}</small>
+                    @endif
+                    <small>min: 48x48 max: 256x256 ratio: 1/1</small>
+                    <div class="preview d-none mt-2 border p-3">
+                        <figure class="m-0">
+                            <img id="img_preview" src="{{ asset('img/no-photo.png') }}" alt="img" width="96">
+                        </figure>
                     </div>
+{{--                     <small id="img_info"></small> --}}
                 </div>
-                @if ($errors->first('img'))
-                    <small class="text-danger d-block">{{ $errors->first('img') }}</small>
-                @endif
-                <small>min: 48x48 max: 256x256 ratio: 1/1</small>
-                <div class="preview d-none mt-2 border p-3">
-                    <figure class="m-0">
-                        <img id="img_preview" src="{{ asset('img/no-photo.png') }}" alt="img" width="96">
-                    </figure>
+
+                <input type="text" class="form-control d-none" id="img_link" name="img_link" placeholder="Url de la imagen" autofocus value="{{ old('img') }}">
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="url_img" name="url_img">
+                    <label class="custom-control-label is-valid" for="url_img">
+                        <small>Url de imagen</small>
+                    </label>
                 </div>
-                <small id="img_info"></small>
             </div>
+
         </div>
 
         <div class="form-group row">

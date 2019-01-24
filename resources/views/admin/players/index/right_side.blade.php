@@ -4,7 +4,6 @@
     </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
-            {{-- <a href="" onclick="export_file('xls', {{ $order }})"> --}}
             <a href="" onclick="export_file('xls')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.xls)</span>
@@ -56,6 +55,24 @@
                     <span class="fas fa-file-import fa-fw mr-1"></span>
                     <span>Importar desde PESDB</span>
                 </form>
+            </a>
+        </li>
+        <li class="list-group-item border-0 px-0">
+            <a href="{{ route('admin.players.link_web_images', 'pesdb') }}">
+                <span class="fas fa-images fa-fw mr-1"></span>
+                <span>Enlazar imágenes (pesdb)</span>
+            </a>
+        </li>
+        <li class="list-group-item border-0 px-0">
+            <a href="{{ route('admin.players.link_web_images', 'pesmaster') }}">
+                <span class="fas fa-images fa-fw mr-1"></span>
+                <span>Enlazar imágenes (pesmaster)</span>
+            </a>
+        </li>
+        <li class="list-group-item border-0 px-0">
+            <a href="{{ route('admin.players.unlink_web_images') }}">
+                <span class="fas fa-images fa-fw mr-1"></span>
+                <span>Desenlazar imágenes</span>
             </a>
         </li>
     </ul>

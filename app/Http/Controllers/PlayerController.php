@@ -97,15 +97,19 @@ class PlayerController extends Controller
         $data['players_db_id'] = $players_db_id;
         $data['slug'] = str_slug(request()->name);
 
-        if (request()->hasFile('img')) {
-            $image = request()->file('img');
-            $name = request()->player_db_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/img/players');
-            $imagePath = $destinationPath. "/".  $name;
-            $image->move($destinationPath, $name);
-            $data['img'] = 'img/players/' . $name;
+        if (request()->url_img) {
+            $data['img'] = request()->img_link;
         } else {
-            $data['img'] = null;
+            if (request()->hasFile('img')) {
+                $image = request()->file('img');
+                $name = request()->player_db_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path('/img/players');
+                $imagePath = $destinationPath. "/".  $name;
+                $image->move($destinationPath, $name);
+                $data['img'] = 'img/players/' . $name;
+            } else {
+                $data['img'] = null;
+            }
         }
 
         $player = Player::create($data);
@@ -184,23 +188,32 @@ class PlayerController extends Controller
             $data['players_db_id'] = $players_db_id;
             $data['slug'] = str_slug(request()->name);
 
-            if (request()->hasFile('img')) {
-                $image = request()->file('img');
-                $name = request()->players_db_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
-                $destinationPath = public_path('/img/players');
-                $imagePath = $destinationPath. "/".  $name;
-                if (\File::exists(public_path($player->img))) {
-                   \File::delete(public_path($player->img));
+            if (request()->url_img) {
+                $data['img'] = request()->img_link;
+                if ($player->img) {
+                    if (\File::exists(public_path($player->img))) {
+                       \File::delete(public_path($player->img));
+                    }
                 }
-                $image->move($destinationPath, $name);
-                $data['img'] = 'img/players/' . $name;
             } else {
-                if (!request()->old_img) {
-                    if ($player->img) {
-                        if (\File::exists(public_path($player->img))) {
-                           \File::delete(public_path($player->img));
+                if (request()->hasFile('img')) {
+                    $image = request()->file('img');
+                    $name = request()->players_db_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $destinationPath = public_path('/img/players');
+                    $imagePath = $destinationPath. "/".  $name;
+                    if (\File::exists(public_path($player->img))) {
+                       \File::delete(public_path($player->img));
+                    }
+                    $image->move($destinationPath, $name);
+                    $data['img'] = 'img/players/' . $name;
+                } else {
+                    if (!request()->old_img) {
+                        if ($player->img) {
+                            if (\File::exists(public_path($player->img))) {
+                               \File::delete(public_path($player->img));
+                            }
+                            $data['img'] = '';
                         }
-                        $data['img'] = '';
                     }
                 }
             }
@@ -495,6 +508,41 @@ class PlayerController extends Controller
             }
         }
         return back()->with('error', 'No has cargado ningún archivo.');
+    }
+
+    public function linkWebImages($www)
+    {
+        if ($www == 'pesdb' || $www == 'pesmaster') {
+            $players = Player::where('game_id', '>', 0)->get();
+            foreach ($players as $player) {
+                if (!$player->isLocalImg()) {
+                    if ($www == 'pesdb') {
+                        $new_image = pesdb_player_img_path($player->game_id);
+                    } else {
+                        $new_image = pesmaster_player_img_path($player->game_id);
+                    }
+                    $player->img = $new_image;
+                    $player->save();
+                }
+            }
+        } else {
+            return back()->with('error', 'No se ha especificado el servidor de imágenes.');
+        }
+
+        return back()->with('success', 'Imágenes enlazadas correctamente.');
+    }
+
+    public function unlinkWebImages()
+    {
+        $players = Player::where('game_id', '>', 0)->get();
+        foreach ($players as $player) {
+            if (!$player->isLocalImg()) {
+                $player->img = '';
+                $player->save();
+            }
+        }
+
+        return back()->with('success', 'Imágenes desenlazadas correctamente.');
     }
 
 

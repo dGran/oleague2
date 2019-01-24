@@ -71,8 +71,8 @@
             </span>
             @if ($player->game_id)
                 <div class="border-top mt-2 pt-2">
-                    <a class="d-block" target="_blank" href="http://pesdb.net/pes2019/?id={{ $player->game_id }}">ver en pesdb.net</a>
-                    <a class="d-block" target="_blank" href="https://www.pesmaster.com/neymar/pes-2019/player/{{ $player->game_id }}">ver en pesmaster.com</a>
+                    <a class="d-block" target="_blank" href="{{ pesdb_player_info_path($player->game_id) }}">+info en pesdb.net</a>
+                    <a class="d-block" target="_blank" href="{{ pesmaster_player_info_path($player->game_id) }}">+info en pesmaster.com</a>
                 </div>
             @endif
 		</div>

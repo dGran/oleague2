@@ -66,6 +66,19 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/equipos/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'TeamController@exportFile')->name('admin.teams.export.file');
 	Route::post('/admin/equipos/importar', 'TeamController@importFile')->name('admin.teams.import.file');
 
+	//Players Databases
+	Route::get('/admin/databases_jugadores', 'PlayerDBController@index')->name('admin.players_dbs');
+	Route::get('/admin/databases_jugadores/nuevo', 'PlayerDBController@add')->name('admin.players_dbs.add');
+	Route::post('/admin/databases_jugadores/nuevo', 'PlayerDBController@save')->name('admin.players_dbs.save');
+	Route::get('/admin/databases_jugadores/{id}', 'PlayerDBController@edit')->name('admin.players_dbs.edit');
+	Route::put('/admin/databases_jugadores/{id}', 'PlayerDBController@update')->name('admin.players_dbs.update');
+	Route::delete('/admin/databases_jugadores/eliminar/{id}', 'PlayerDBController@destroy')->name('admin.players_dbs.destroy');
+	Route::get('/admin/databases_jugadores/eliminar-seleccionados/{ids}', 'PlayerDBController@destroyMany')->name('admin.players_dbs.destroy.many');
+	Route::get('/admin/databases_jugadores/duplicar/{id}', 'PlayerDBController@duplicate')->name('admin.players_dbs.duplicate');
+	Route::get('/admin/databases_jugadores/duplicar-seleccionados/{ids}', 'PlayerDBController@duplicateMany')->name('admin.players_dbs.duplicate.many');
+	Route::get('/admin/databases_jugadores/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'PlayerDBController@exportFile')->name('admin.players_dbs.export.file');
+	Route::post('/admin/databases_jugadores/importar', 'PlayerDBController@importFile')->name('admin.players_dbs.import.file');
+
 	// Players
 	Route::get('/admin/jugadores', 'PlayerController@index')->name('admin.players');
 	Route::get('/admin/jugadores/nuevo', 'PlayerController@add')->name('admin.players.add');
@@ -80,6 +93,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/jugadores/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'PlayerController@exportFile')->name('admin.players.export.file');
 	Route::post('/admin/jugadores/importar', 'PlayerController@importFile')->name('admin.players.import.file');
 	Route::post('/admin/jugadores/importar_desde_pesdb', 'PlayerController@pesdb_importFile')->name('admin.players.pesdb.import.file');
+	Route::get('/admin/jugadores/acciones/enlazar_imagenes/{www}', 'PlayerController@linkWebImages')->name('admin.players.link_web_images');
+	Route::get('/admin/jugadores/acciones/desenlazar_imagenes', 'PlayerController@unlinkWebImages')->name('admin.players.unlink_web_images');
 
 	// Seasons
 	Route::get('/admin/temporadas', 'SeasonController@index')->name('admin.seasons');
