@@ -367,38 +367,4 @@
         });
     }
 
-    function import_file(e) {
-        e.preventDefault();
-        swal({
-            title: "Importar datos",
-            text: 'Se van a importar los datos del archivo seleccionado, pulsa continuar y selecciona el archivo que contiene los datos (.xls, .xlsx, .csv).',
-            buttons: {
-                cancel: {
-                    text: "Cancelar",
-                    value: null,
-                    visible: true,
-                    className: "btn btn-secondary",
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Continuar",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-primary",
-                    closeModal: true
-                }
-            },
-            closeOnClickOutside: false,
-        })
-        .then((value) => {
-            if (value) {
-                $("#import_file").trigger('click');
-            }
-        });
-    }
-
-    $('#import_file').change(function(){
-        $("#frmImport").submit();
-    });
-
 </script>

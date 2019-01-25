@@ -504,49 +504,6 @@ class PlayerController extends Controller
         return redirect()->route('admin.players')->with('error', 'No has cargado ningún archivo.');
     }
 
-    public function importFile(Request $request)
-    {
-        if ($request->hasFile('import_file')) {
-            $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::load($path)->get();
-
-            if ($data->count()) {
-                foreach ($data as $key => $value) {
-                    try {
-
-                        $player = new Player;
-                        $player->players_db_id = $value->players_db_id;
-                        $player->game_id = $value->game_id;
-                        $player->name = $value->name;
-                        $player->img = $value->img;
-                        $player->nation_name = $value->nation_name;
-                        $player->league_name = $value->league_name;
-                        $player->team_name = $value->team_name;
-                        $player->position = $value->position;
-                        $player->height = $value->height;
-                        $player->age = $value->age;
-                        $player->overall_rating = $value->overall_rating;
-                        $player->slug = str_slug($value->name);
-
-                        if ($player) {
-                            $player->save();
-                            if ($player->save()) {
-                                event(new TableWasImported($player, $player->name));
-                            }
-                        }
-                    }
-                    catch (\Exception $e) {
-                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
-                    }
-                }
-                return back()->with('success', 'Datos importados correctamente.');
-            } else {
-                return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
-            }
-        }
-        return back()->with('error', 'No has cargado ningún archivo.');
-    }
-
     public function linkWebImages($www)
     {
         if ($www == 'pesdb' || $www == 'pesmaster') {

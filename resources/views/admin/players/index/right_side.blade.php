@@ -22,27 +22,9 @@
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="" onclick="import_file(event)">
-               <form
-                id="frmImport"
-                    lang="{{ app()->getLocale() }}"
-                    role="form"
-                    method="POST"
-                    action="{{ route('admin.players.import.file') }}"
-                    enctype="multipart/form-data"
-                    data-toggle="validator"
-                    autocomplete="off">
-                    {{ csrf_field() }}
-                    <input type="file" name="import_file" id="import_file" class="d-none">
-                    <span class="fas fa-file-import fa-fw mr-1"></span>
-                    <span>Importar</span>
-                </form>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
             <a href="{{ route('admin.players.import.data') }}">
                 <span class="fas fa-file-import fa-fw mr-1"></span>
-                <span>Importar...</span>
+                <span>Importar</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
