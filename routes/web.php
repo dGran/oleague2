@@ -90,9 +90,10 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/jugadores/ver/{id}', 'PlayerController@view')->name('admin.players.view');
 	Route::get('/admin/jugadores/duplicar/{id}', 'PlayerController@duplicate')->name('admin.players.duplicate');
 	Route::get('/admin/jugadores/duplicar-seleccionados/{ids}', 'PlayerController@duplicateMany')->name('admin.players.duplicate.many');
-	Route::get('/admin/jugadores/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'PlayerController@exportFile')->name('admin.players.export.file');
-	Route::post('/admin/jugadores/importar', 'PlayerController@importFile')->name('admin.players.import.file');
-	Route::post('/admin/jugadores/importar_desde_pesdb', 'PlayerController@pesdb_importFile')->name('admin.players.pesdb.import.file');
+	Route::get('/admin/jugadores/exportar/{filename}/{type}/{filterName}/{filterCategory}/{filterTeam}/{filterNation}/{filterPosition}/{order}/{ids?}', 'PlayerController@exportFile')->name('admin.players.export.file');
+	Route::post('/admin/jugadores/importar/archivo', 'PlayerController@importFile')->name('admin.players.import.file');
+	Route::get('/admin/jugadores/acciones/importar', 'PlayerController@importData')->name('admin.players.import.data');
+	Route::post('/admin/jugadores/acciones/importar', 'PlayerController@importDataSave')->name('admin.players.import.data.save');
 	Route::get('/admin/jugadores/acciones/enlazar_imagenes/{www}', 'PlayerController@linkWebImages')->name('admin.players.link_web_images');
 	Route::get('/admin/jugadores/acciones/desenlazar_imagenes', 'PlayerController@unlinkWebImages')->name('admin.players.unlink_web_images');
 

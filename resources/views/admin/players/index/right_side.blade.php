@@ -40,21 +40,9 @@
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="" onclick="import_pesdb_file(event)">
-               <form
-                id="frmImportPESDB"
-                    lang="{{ app()->getLocale() }}"
-                    role="form"
-                    method="POST"
-                    action="{{ route('admin.players.pesdb.import.file') }}"
-                    enctype="multipart/form-data"
-                    data-toggle="validator"
-                    autocomplete="off">
-                    {{ csrf_field() }}
-                    <input type="file" name="import_pesdb_file" id="import_pesdb_file" class="d-none">
-                    <span class="fas fa-file-import fa-fw mr-1"></span>
-                    <span>Importar desde PESDB</span>
-                </form>
+            <a href="{{ route('admin.players.import.data') }}">
+                <span class="fas fa-file-import fa-fw mr-1"></span>
+                <span>Importar...</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
@@ -71,8 +59,8 @@
         </li>
         <li class="list-group-item border-0 px-0">
             <a href="{{ route('admin.players.unlink_web_images') }}">
-                <span class="fas fa-images fa-fw mr-1"></span>
-                <span>Desenlazar imágenes</span>
+                <span class="fas fa-eraser fa-fw mr-1"></span>
+                <span>Eliminar imágenes enlazadas</span>
             </a>
         </li>
     </ul>

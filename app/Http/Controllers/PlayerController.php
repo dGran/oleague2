@@ -324,7 +324,7 @@ class PlayerController extends Controller
                 event(new TableWasSaved($newPlayer, $newPlayer->name));
             }
 
-	    	return redirect()->route('admin.players')->with('success', 'Se ha duplicado el jugador "' . $newPlayer->name . '" correctamente.');
+	    	return back()->route('admin.players')->with('success', 'Se ha duplicado el jugador "' . $newPlayer->name . '" correctamente.');
 	    } else {
 	    	return back()->with('warning', 'Acción cancelada. El jugador que querías duplicar ya no existe. Se ha actualizado la lista.');
 	    }
@@ -371,7 +371,7 @@ class PlayerController extends Controller
     	}
     }
 
-    public function exportFile($filename, $type, $filterName, $filterPlayerDb, $order, $ids = null)
+    public function exportFile($filename, $type, $filterName, $filterPlayerDb, $filterTeam, $filterNation, $filterPosition, $order, $ids = null)
     {
         if (!$order) {
             $order = 'default';
@@ -380,17 +380,26 @@ class PlayerController extends Controller
 
         if ($filterName == "null") { $filterName =""; }
         if ($filterPlayerDb == "null") { $filterPlayerDb =""; }
+        if ($filterTeam == "null") { $filterTeam =""; }
+        if ($filterNation == "null") { $filterNation =""; }
+        if ($filterPosition == "null") { $filterPosition =""; }
 
         if ($ids) {
             $ids = explode(",",$ids);
             $players = Player::whereIn('id', $ids)
                 ->playerDbId($filterPlayerDb)
                 ->name($filterName)
+                ->teamName($filterTeam)
+                ->nationName($filterNation)
+                ->position($filterPosition)
                 ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
                 ->get()->toArray();
         } else {
             $players = Player::playerDbId($filterPlayerDb)
                 ->name($filterName)
+                ->teamName($filterTeam)
+                ->nationName($filterNation)
+                ->position($filterPosition)
                 ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
                 ->get()->toArray();
         }
@@ -408,18 +417,62 @@ class PlayerController extends Controller
         })->download($type);
     }
 
-    public function importFile(Request $request)
+    public function importData()
+    {
+        $players_dbs = PlayerDB::orderBy('name', 'asc')->get();
+        return view('admin.players.import', compact('players_dbs'));
+    }
+
+    public function importDataSave(Request $request)
     {
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
             $data = \Excel::load($path)->get();
 
+            if (request()->new_parent) {
+                $database = new PlayerDB;
+                $database->name = request()->players_db_name;
+                $database->slug = str_slug($database->name);
+                $database->save();
+                event(new TableWasSaved($database, $database->name));
+
+                $players_db_id = $database->id;
+            } else {
+                $players_db_id = request()->players_db_id;
+            }
+
             if ($data->count()) {
                 foreach ($data as $key => $value) {
                     try {
+                        if (request()->add_categories) {
+                            if ($value->league_name) {
+                                $category = TeamCategory::where('name', '=', $value->league_name)->first();
+                                if (!$category) {
+                                    $category = TeamCategory::create([
+                                        'name' => $value->league_name,
+                                        'slug' => str_slug($value->league_name)
+                                    ]);
+                                    event(new TableWasSaved($category, $category->name));
+                                }
+                            }
+                        }
+                        if (request()->add_teams) {
+                            if ($value->team_name) {
+                                $team = Team::where('name', '=', $value->team_name)->first();
+                                if (!$team) {
+                                    $team = Team::create([
+                                        'team_category_id' => $category->id,
+                                        'name' => $value->team_name,
+                                        'logo' => '',
+                                        'slug' => str_slug($value->team_name)
+                                    ]);
+                                    event(new TableWasSaved($team, $team->name));
+                                }
+                            }
+                        }
 
                         $player = new Player;
-                        $player->players_db_id = $value->players_db_id;
+                        $player->players_db_id = $players_db_id;
                         $player->game_id = $value->game_id;
                         $player->name = $value->name;
                         $player->img = $value->img;
@@ -440,48 +493,32 @@ class PlayerController extends Controller
                         }
                     }
                     catch (\Exception $e) {
-                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
+                        return redirect()->route('admin.players')->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
                     }
                 }
-                return back()->with('success', 'Datos importados correctamente.');
+                return redirect()->route('admin.players')->with('success', 'Datos importados correctamente.');
             } else {
-                return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
+                return redirect()->route('admin.players')->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
             }
         }
-        return back()->with('error', 'No has cargado ningún archivo.');
+        return redirect()->route('admin.players')->with('error', 'No has cargado ningún archivo.');
     }
 
-    public function pesdb_importFile(Request $request)
+    public function importFile(Request $request)
     {
-        if ($request->hasFile('import_pesdb_file')) {
-            $path = $request->file('import_pesdb_file')->getRealPath();
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
             $data = \Excel::load($path)->get();
 
             if ($data->count()) {
                 foreach ($data as $key => $value) {
                     try {
 
-	                	$category = TeamCategory::where('name', '=', $value->league_name)->first();
-	                	if (!$category) {
-	            	        $category = TeamCategory::create([
-	            				'name' => $value->league_name,
-	            				'slug' => str_slug($value->league_name)
-	        				]);
-	                	}
-	                	$team = Team::where('name', '=', $value->team_name)->first();
-	                	if (!$team) {
-					        $team = Team::create([
-					            'team_category_id' => $category->id,
-					            'name' => $value->team_name,
-					            'logo' => '',
-					            'slug' => str_slug($value->team_name)
-					        ]);
-					    }
                         $player = new Player;
                         $player->players_db_id = $value->players_db_id;
                         $player->game_id = $value->game_id;
                         $player->name = $value->name;
-                        $player->img = 'https://www.pesmaster.com/pes-2019/graphics/players/player_' . $value->game_id . '.png';
+                        $player->img = $value->img;
                         $player->nation_name = $value->nation_name;
                         $player->league_name = $value->league_name;
                         $player->team_name = $value->team_name;
