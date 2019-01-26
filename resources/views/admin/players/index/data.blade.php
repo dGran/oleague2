@@ -1,6 +1,6 @@
 @if ($players->count() == 0)
     <div class="text-center border-top py-4">
-        @if ($filterName == null && $filterPlayerDb == null)
+        @if ($filterName == null && $filterPlayerDb == null && $filterTeam == null && $filterNation == null && $filterPosition == null)
             <figure>
                 <img src="{{ asset('img/table-empty.png') }}" alt="" width="72">
             </figure>

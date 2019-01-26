@@ -2,10 +2,10 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.teams.add') }}'" type="button" class="btn btn-primary mr-1" data-toggle="button">
+            <button id="addon-new" onclick="location.href='{{ route('admin.teams.add') }}'" type="button" class="btn btn-primary" data-toggle="button">
                 <i class="fas fa-plus mr-2"></i>Nuevo
             </button>
-            <button id="addon-filter" type="button" class="filter btn input-group-text {{ $filterCategory || $filterName ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
+            <button id="addon-filter" type="button" class="filter btn input-group-text border-left-0 {{ $filterCategory || $filterName ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
                 <i class="fas fa-filter"></i>
             </button>
            <form

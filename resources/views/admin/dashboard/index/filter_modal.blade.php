@@ -1,7 +1,7 @@
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="frmFilter" role="search" method="get" action="{{ route('admin.players') }}">
+            <form id="frmFilter" role="search" method="get" action="{{ route('admin.players_dbs') }}">
                 <div class="modal-header bg-light">
                     <h4 class="m-0">Opciones de tabla</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -19,44 +19,12 @@
                             </h5>
                         </div>
                         <div class="float-right">
-                            @if ($filterName || $filterPlayerDb || $filterTeam || $filterNation || $filterPosition)
+                            @if ($filterName)
                                 <ul class="nav">
                                     @if ($filterName)
                                         <li class="nav-item">
                                             <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterName()">
                                                 <span class="r-1">Nombre</span>
-                                                <i class="fas fa-times"></i>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    @if ($filterPlayerDb)
-                                        <li class="nav-item">
-                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterCategory()">
-                                                <span class="r-1">Database</span>
-                                                <i class="fas fa-times"></i>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    @if ($filterTeam)
-                                        <li class="nav-item">
-                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterTeam()">
-                                                <span class="r-1">Equipo</span>
-                                                <i class="fas fa-times"></i>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    @if ($filterNation)
-                                        <li class="nav-item">
-                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterNation()">
-                                                <span class="r-1">País</span>
-                                                <i class="fas fa-times"></i>
-                                            </a>
-                                        </li>
-                                    @endif
-                                    @if ($filterPosition)
-                                        <li class="nav-item">
-                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPosition()">
-                                                <span class="r-1">Posición</span>
                                                 <i class="fas fa-times"></i>
                                             </a>
                                         </li>
@@ -74,40 +42,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label for="filterCategoryLarge" class="mb-1">Player Database</label>
-                                <select name="filterPlayerDb" id="filterPlayerDbLarge" class="selectpicker form-control filterPlayerDb">
-                                    <option value="">Todas las categorías</option>
-                                    @foreach ($players_dbs as $players_db)
-                                        @if ($players_db->id == $filterPlayerDb)
-                                            <option selected value="{{ $players_db->id }}">{{ $players_db->name }}</option>
-                                        @else
-                                            <option value="{{ $players_db->id }}">{{ $players_db->name }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label for="filterTeam" class="mb-1">Team</label>
-                                <input class="form-control" name="filterTeam" id="filterTeam" type="text" value="{{ $filterTeam ? $filterTeam : '' }}" aria-describedby="filterTeamHelp">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label for="filterNation" class="mb-1">País</label>
-                                <input class="form-control" name="filterNation" id="filterNation" type="text" value="{{ $filterNation ? $filterNation : '' }}" aria-describedby="filterNationHelp">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-12">
-                                <label for="filterPosition" class="mb-1">Posición</label>
-                                <input class="form-control" name="filterPosition" id="filterPosition" type="text" value="{{ $filterPosition ? $filterPosition : '' }}" aria-describedby="filterPositionHelp">
-                            </div>
-                        </div>
                     </div>
 
                     <h5 class="py-2 m-0">
