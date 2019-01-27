@@ -16,8 +16,14 @@ id="frmImport"
         <div class="form-group row pt-2">
             <label for="players_db_id" class="col-sm-2 col-form-label">Archivo</label>
             <div class="col-sm-10">
-                <input type="file" name="import_file" id="import_file" class="form-control">
-                <small>selecciona el archivo que contiene los datos (.xls, .xlsx, .csv)</small>
+                {{-- <input type="file" name="import_file" id="import_file" class="form-control"> --}}
+
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="import_file" name="import_file" aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="import_file">Selecciona archivo (.xls, .xlsx, .csv)</label>
+                    <small id="file_name" class="text-black-50">Ningún archivo cargado</small>
+                </div>
+                <small></small>
             </div>
         </div>
 

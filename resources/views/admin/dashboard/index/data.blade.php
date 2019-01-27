@@ -50,7 +50,7 @@
                             @if ($log->type == "INSERT")
                                 <span class="badge badge-success">INSERT</span>
                             @elseif ($log->type == "UPDATE")
-                                <span class="badge badge-light">UPDATE</span>
+                                <span class="badge badge-secondary">UPDATE</span>
                             @elseif ($log->type == "DELETE")
                                 <span class="badge badge-danger">DELETE</span>
                             @endif

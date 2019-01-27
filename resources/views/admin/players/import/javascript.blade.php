@@ -18,6 +18,12 @@
         $("#frmAdd").submit(function(event) {
             $("#btnSave").attr("disabled", "disabled");
         });
+
+        $('#import_file').change(function(){
+            $("#file_name").removeClass('text-black-50');
+            $("#file_name").addClass('text-success');
+            $("#file_name").text(this.files[0].name);
+        });
     });
 
 </script>
