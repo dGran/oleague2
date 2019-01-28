@@ -18,34 +18,34 @@
 
         <colgroup>
             <col width="0%" />
-            <col width="0%" />
-            <col width="0%"/>
             <col width="100%" />
+            <col width="0%"/>
+            <col width="0%" />
             <col width="0%" />
         </colgroup>
 
         <thead>
             <tr class="border-top">
-                <th scope="col">Fecha</th>
-                <th scope="col">Tabla</th>
-                <th scope="col">Tipo</th>
+                <th scope="col" class="text-center">Fecha</th>
                 <th scope="col">Descripción</th>
-                <th scope="col">Usuario</th>
+                <th scope="col" class="d-none d-sm-table-cell">Tipo</th>
+                <th scope="col" class="d-none d-sm-table-cell">Tabla</th>
+                <th scope="col" class="d-table-cell d-sm-none">Tabla</th>
+                <th scope="col" class="text-center">Usuario</th>
             </tr>
         </thead>
 
         <tbody>
             @foreach ($logs as $log)
                 <tr class="border-top">
-                    <td onclick="rowSelect(this)">
+                    <td class="text-center align-top">
                         <small class="d-block">{{ \Carbon\Carbon::parse($log->created_at)->format('d/m/Y')}}</small>
                         <small>{{ \Carbon\Carbon::parse($log->created_at)->format('H:s')}}</small>
                     </td>
-                    <td onclick="rowSelect(this)">
-                        <span class="d-block text-nowrap">{{ $log->table }}</span>
-                        <small class="d-block text-nowrap">Registro: #{{ $log->reg_id }}</small>
+                    <td class="align-top">
+                        <span>{{ $log->description }}</span>
                     </td>
-                    <td onclick="rowSelect(this)">
+                    <td class="d-none d-sm-table-cell">
                         <span class="text-nowrap">
                             @if ($log->type == "INSERT")
                                 <span class="badge badge-success">INSERT</span>
@@ -56,31 +56,38 @@
                             @endif
                         </span>
                     </td>
-                    <td onclick="rowSelect(this)">
-                        <span>{{ $log->description }}</span>
+                    <td class="d-none d-sm-table-cell">
+                        <small class="d-block text-nowrap">{{ $log->table }}</small>
+                        <small class="d-block text-nowrap">Registro: #{{ $log->reg_id }}</small>
                     </td>
-                    <td onclick="rowSelect(this)">
-                        <span class="text-nowrap">{{ $log->user->name }}</span>
+                    <td class="d-table-cell d-sm-none">
+                        <small class="d-block text-nowrap">{{ $log->table }}</small>
+                        <span class="text-nowrap mt-1">
+                            @if ($log->type == "INSERT")
+                                <span class="badge badge-success">INSERT</span>
+                            @elseif ($log->type == "UPDATE")
+                                <span class="badge badge-secondary">UPDATE</span>
+                            @elseif ($log->type == "DELETE")
+                                <span class="badge badge-danger">DELETE</span>
+                            @endif
+                        </span>
                     </td>
-{{--                     <td class="actions">
-                        <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-                            <i class="fas fa-ellipsis-h text-secondary"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.players_dbs.edit', $log->id) }}" id="btnEdit{{ $log->id }}">
-                                <i class="fas fa-edit fa-fw mr-1"></i>
-                                Editar
+                    <td class="text-center">
+                        @if ($log->user->hasProfile())
+                            <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <figure class="user-img m-0">
+                                    <img src="{{ $log->user->profile->avatar }}" alt="" class="rounded-circle" width="32" data-container="body" data-toggle="popover" data-placement="left" data-content="{{ $log->user->name }}">
+                                </figure>
                             </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.players_dbs.duplicate', $log->id) }}">
-                                <i class="fas fa-clone fa-fw mr-1"></i>
-                                Duplicar
+                        @else
+                            <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <figure class="user-img m-0" data-container="body" data-toggle="popover" data-placement="left" data-content="{{ $log->user->name }}">
+                                    <img src="{{ asset('img/avatars/default.png') }}" alt="" class="rounded-circle" width="32">
+                                </figure>
                             </a>
-                            <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
-                                <i class="fas fa-trash fa-fw mr-1"></i>
-                                Eliminar
-                            </a>
-                        </div>
-                    </td> --}}
+                        @endif
+                        {{-- <small class="text-nowrap">{{ $log->user->name }}</small> --}}
+                    </td>
                 </tr>
             @endforeach
         </tbody>

@@ -1,4 +1,5 @@
 <script>
+    var filterDescription = {!! json_encode($filterDescription) !!};
     var filterUser = {!! json_encode($filterUser) !!};
     var filterTable = {!! json_encode($filterTable) !!};
     var filterType = {!! json_encode($filterType) !!};
@@ -16,8 +17,10 @@
             $('.frmFilter').submit();
         });
         $('.search-input').on("blur", function() {
-            // $(this).val(filterName);
+            $(this).val(filterDescription);
         });
+
+        $('[data-toggle="popover"]').popover();
 
     });
 
@@ -29,10 +32,44 @@
         $('.frmFilter').submit();
     }
 
-    function cancelFilterName() {
+    function applyfilterUser() {
+        $('.frmFilter').submit();
+    }
+
+    function cancelFilterDescription() {
         window.event.preventDefault();
-        $('.filterName').val('');
-        if (order || pagination) {
+        $('.filterDescription').val('');
+        if (filterUser || filterTable || filterType || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterUser() {
+        window.event.preventDefault();
+        $('.filterUser').val('0');
+        if (filterDescription || filterTable || filterType || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterTable() {
+        window.event.preventDefault();
+        $('.filterTable').val('');
+        if (filterDescription || filterUser || filterType || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterType() {
+        window.event.preventDefault();
+        $('.filterType').val('');
+        if (filterDescription || filterUser || filterTable || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -43,8 +80,12 @@
         window.location.href = '{{ route("admin") }}';
     }
 
-    function rowSelect(element) {
-        $(element).siblings('.select').find('.mark').trigger('click');
+    function submitFilterForm() {
+        $('input').keypress(function (e) {
+            if (e.which == 13) {
+                $('.frmFilter').submit();
+            }
+        });
     }
 
     function showHideRowOptions(element) {
@@ -126,48 +167,7 @@
                     var time = Math.floor(new Date().getTime() / 1000);
                     var filename = 'logs_export' + time;
                 }
-                $(location).attr('href', 'databases_jugadores/exportar/' + filename + '/' + type + '/' + filterUser + '/' + filterTeam '/' + filterType '/' + order);
-            }
-        });
-    }
-
-    function export_file_selected(type) {
-        window.event.preventDefault();
-
-        var ids = [];
-        $(".mark:checked").each(function() {
-            ids.push($(this).val());
-        });
-
-        swal({
-            title: "Exportar los registros seleccionados",
-            text: 'Introduce nombre del archivo (opcional)',
-            content: "input",
-            buttons: {
-                cancel: {
-                    text: "Cancelar",
-                    value: null,
-                    visible: true,
-                    className: "btn btn-secondary",
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Continuar",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-primary",
-                    closeModal: true
-                }
-            },
-        })
-        .then((value) => {
-            if (value) {
-                var filename = `${value}`;
-                if (!filename ) {
-                    var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'databases_jugadores_export' + time;
-                }
-                $(location).attr('href', 'databases_jugadores/exportar/' + filename + '/' + type + '/' + filterUser + '/' + filterTable + '/' + filterType + '/' + order + '/' + ids);
+                $(location).attr('href', 'admin/logs/exportar/' + filename + '/' + type + '/' + filterUser + '/' + filterTable + '/' + filterType + '/' + order);
             }
         });
     }

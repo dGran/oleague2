@@ -46,25 +46,79 @@
     <div class="col">
     <div class="searchbox">
         <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
-        <input class="search-input form-control mousetrap filterName" name="filterTable" type="text" placeholder="Nombre de la tabla" value="{{ $filterTable ? $filterTable : '' }}" autocomplete="off">
+        <input class="search-input form-control mousetrap filterDescription" name="filterDescription" type="text" placeholder="Buscar por descripción" value="{{ $filterDescription ? $filterDescription : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
         <span class="search-clear"><i class="fas fa-times"></i></span>
         </div>
     </div>
 </div>
 
 <div class="mt-4">
-{{--     @if ($filterName)
+    @if ($filterDescription || $filterUser || $filterTable || $filterType)
         <ul class="nav mb-2">
-            @if ($filterName)
+            @if ($filterDescription)
                 <li class="nav-item">
-                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterName()">
-                        <span class="r-1">Nombre</span>
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterDescription()">
+                        <span class="r-1">Descripción</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterUser)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterUser()">
+                        <span class="r-1">Usuario</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterTable)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterTable()">
+                        <span class="r-1">Tabla</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterType)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterType()">
+                        <span class="r-1">Tipo</span>
                         <i class="fas fa-times"></i>
                     </a>
                 </li>
             @endif
         </ul>
-    @endif --}}
+    @endif
+    <h4 class="p-2 bg-light">Filtros</h4>
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterUserLarge" class="mb-1">Usuarios</label>
+            <select name="filterUser" id="filterUser" class="selectpicker form-control filterUser" onchange="applyfilterUser()">
+                <option value="">Todas los usuarios</option>
+                @foreach ($adminUsers as $admin)
+                    @if ($admin->id == $filterUser)
+                        <option selected value="{{ $admin->id }}">{{ $admin->name }}</option>
+                    @else
+                        <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterTable" class="mb-1">Tabla</label>
+            <input class="filterTable-input form-control mousetrap filterTable" id="filterTable" name="filterTable" type="text" placeholder="Tabla..." value="{{ $filterTable ? $filterTable : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterType" class="mb-1">Tipo</label>
+            <input class="filterType-input form-control mousetrap filterType" id="filterType" name="filterType" type="text" placeholder="Tipo..." value="{{ $filterType ? $filterType : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        </div>
+    </div>
 </div>
 
 <div class="mt-4">
@@ -75,8 +129,6 @@
                 <option value="default" {{ $order == 'default' ? 'selected' : '' }}>Por defecto</option>
                 <option value="date_desc" {{ $order == 'date_desc' ? 'selected' : '' }} data-icon="fas fa-sort-amount-up">Los últimos al principio</option>
                 <option value="date" {{ $order == 'date' ? 'selected' : '' }} data-icon="fas fa-sort-amount-down">Los últimos al final</option>
-                <option value="name" {{ $order == 'name' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por nombre</option>
-                <option value="name_desc" {{ $order == 'name_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre</option>
             </select>
         </div>
     </div>

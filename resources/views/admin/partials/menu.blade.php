@@ -2,7 +2,7 @@
     <a href="{{ route('admin') }}">
         <span>
             <i class="fas fa-home fa-fw mr-2 mb-1"></i>
-            Dashboard <span class="d-inline badge badge-pill badge-danger ml-1">194.567</span>
+            Dashboard
         </span>
     </a>
 </li>

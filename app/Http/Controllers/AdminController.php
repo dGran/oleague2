@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\AdminLog;
+use App\User;
+use App\Role;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
+    	$filterDescription = request()->filterDescription;
     	$filterUser = request()->filterUser;
         $filterTable = request()->filterTable;
         $filterType = request()->filterType;
@@ -26,8 +29,21 @@ class AdminController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $logs = AdminLog::orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
-    	return view('admin.dashboard.index', compact('logs', 'filterUser', 'filterTable', 'filterType', 'order', 'pagination'));
+        $logs = AdminLog::description($filterDescription)
+        	->userId($filterUser)
+        	->table($filterTable)
+        	->type($filterType)
+        	->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+        	->paginate($perPage);
+
+        $adminUsers = Role::where('name', 'admin')->first()->users()->get();
+
+    	return view('admin.dashboard.index', compact('logs', 'adminUsers', 'filterDescription', 'filterUser', 'filterTable', 'filterType', 'order', 'pagination'));
+    }
+
+    public function exportFile($filename, $type, $filterUser, $filterTable, $filterTyoe, $order, $ids = null)
+    {
+
     }
 
      /*
