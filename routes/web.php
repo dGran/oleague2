@@ -36,7 +36,8 @@ Route::put('perfil/{id}', 'ProfileController@update')->name('profileUpdate');
 Route::middleware('auth', 'role:admin')->group(function () {
 
 	Route::get('/admin', 'AdminController@dashboard')->name('admin');
-	Route::get('/admin/logs/exportar/{filename}/{type}/{filterUser}/{filterTable}/{filterType}/{order}/{ids?}', 'AdminController@exportFile')->name('admin.export.file');
+	Route::get('/admin/logs/exportar/{filename}/{type}/{filterDescription}/{filterUser}/{filterTable}/{filterType}/{order}/{ids?}', 'AdminController@exportFile')->name('admin.export.file');
+	Route::post('/admin/logs/importar', 'AdminController@importFile')->name('admin.import.file');
 
 	Route::get('/admin/configuracion_general', 'AdminController@generalSettings')->name('admin.general_settings');
 

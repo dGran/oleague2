@@ -38,6 +38,12 @@
 					text-align: center;
 					padding: .5em .5em .5em 1em;
 				}
+				.date {
+					padding: .5em .5em .5em 1em;
+				}
+				.user {
+					padding: .5em 1em .5em .5em;
+				}
 			}
 		}
 		tbody {
@@ -62,6 +68,12 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 					white-space: nowrap;
+				}
+				.date {
+					padding: .5em .5em .5em 1em;
+				}
+				.user {
+					padding: .5em 1em .5em .5em;
 				}
 				.actions {
 					padding: .5em;
@@ -135,7 +147,7 @@
 		table {
 			thead {
 				tr {
-					.select {
+					.select, .date, .user {
 						padding: .5em;
 					}
 				}
@@ -143,7 +155,7 @@
 			tbody {
 				tr {
 					&:hover {
-						.name {
+						.name, .description {
 							color: $primary;
 						}
 						.actions {
@@ -152,7 +164,7 @@
 							}
 						}
 					}
-					.select {
+					.select, .date, .user {
 						padding: .5em;
 					}
 					.actions {

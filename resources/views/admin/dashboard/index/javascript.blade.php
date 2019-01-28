@@ -156,7 +156,7 @@
                     value: true,
                     visible: true,
                     className: "btn btn-primary",
-                    closeModal: true
+                    closeModal: true,
                 }
             },
         })
@@ -167,7 +167,7 @@
                     var time = Math.floor(new Date().getTime() / 1000);
                     var filename = 'logs_export' + time;
                 }
-                $(location).attr('href', 'admin/logs/exportar/' + filename + '/' + type + '/' + filterUser + '/' + filterTable + '/' + filterType + '/' + order);
+                $(location).attr('href', 'admin/logs/exportar/' + filename + '/' + type + '/' + filterDescription + '/' + filterUser + '/' + filterTable + '/' + filterType + '/' + order);
             }
         });
     }

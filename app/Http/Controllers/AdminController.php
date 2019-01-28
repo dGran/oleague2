@@ -41,9 +41,47 @@ class AdminController extends Controller
     	return view('admin.dashboard.index', compact('logs', 'adminUsers', 'filterDescription', 'filterUser', 'filterTable', 'filterType', 'order', 'pagination'));
     }
 
-    public function exportFile($filename, $type, $filterUser, $filterTable, $filterTyoe, $order, $ids = null)
+    public function exportFile($filename, $type, $filterDescription, $filterUser, $filterTable, $filterType, $order, $ids = null)
     {
+        if (!$order) {
+            $order = 'default';
+        }
+        $order_ext = $this->getOrder($order);
 
+        if ($filterDescription == "null") { $filterDescription =""; }
+        if ($filterUser == "null") { $filterUser =""; }
+        if ($filterTable == "null") { $filterTable =""; }
+        if ($filterType == "null") { $filterType =""; }
+
+        if ($ids) {
+            $ids = explode(",",$ids);
+            $logs = AdminLog::whereIn('id', $ids)
+            	->description($filterDescription)
+	        	->userId($filterUser)
+	        	->table($filterTable)
+	        	->type($filterType)
+                ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+                ->get()->toArray();
+        } else {
+            $logs = AdminLog::description($filterDescription)
+	        	->userId($filterUser)
+	        	->table($filterTable)
+	        	->type($filterType)
+                ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+                ->get()->toArray();
+        }
+
+        if ($filename == null) {
+            $filename = 'logs_export' . time();
+        } else {
+            $filename = str_slug($filename);
+        }
+        return \Excel::create($filename, function($excel) use ($logs) {
+            $excel->sheet('logs', function($sheet) use ($logs)
+            {
+                $sheet->fromArray($logs);
+            });
+        })->download($type);
     }
 
      /*

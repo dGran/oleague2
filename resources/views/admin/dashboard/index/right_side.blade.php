@@ -1,4 +1,5 @@
 <div class="tableOptions animated fadeIn">
+    <h4>Logs</h4>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="export_file('xls')">
@@ -93,8 +94,8 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <label for="filterUserLarge" class="mb-1">Usuarios</label>
-            <select name="filterUser" id="filterUser" class="selectpicker form-control filterUser" onchange="applyfilterUser()">
-                <option value="">Todas los usuarios</option>
+            <select name="filterUser" id="filterUserLarge" class="selectpicker form-control filterUser" onchange="applyfilterUser()">
+                <option value="">Todos los usuarios</option>
                 @foreach ($adminUsers as $admin)
                     @if ($admin->id == $filterUser)
                         <option selected value="{{ $admin->id }}">{{ $admin->name }}</option>

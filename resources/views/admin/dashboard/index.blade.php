@@ -8,7 +8,7 @@
 
             @include('admin.dashboard.common.notifications')
 
-            {{-- @include('admin.dashboard.index.toolbar_options') --}}
+            @include('admin.dashboard.index.toolbar_options')
 
             @include('admin.dashboard.index.data')
 
@@ -21,7 +21,7 @@
 @endsection
 
 @section('modal')
-    {{-- @include('admin.dashboard.index.filter_modal') --}}
+    @include('admin.dashboard.index.filter_modal')
 @endsection
 
 @section('js')

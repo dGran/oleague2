@@ -1,7 +1,7 @@
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="frmFilter" role="search" method="get" action="{{ route('admin.players_dbs') }}">
+            <form id="frmFilter" role="search" method="get" action="{{ route('admin') }}">
                 <div class="modal-header bg-light">
                     <h4 class="m-0">Opciones de tabla</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -19,12 +19,36 @@
                             </h5>
                         </div>
                         <div class="float-right">
-                            @if ($filterName)
+                            @if ($filterDescription || $filterUser || $filterTable || $filterType)
                                 <ul class="nav">
-                                    @if ($filterName)
+                                    @if ($filterDescription)
                                         <li class="nav-item">
-                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterName()">
-                                                <span class="r-1">Nombre</span>
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterDescription()">
+                                                <span class="r-1">Descripción</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($filterUser)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterUser()">
+                                                <span class="r-1">Usuario</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($filterTable)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterTable()">
+                                                <span class="r-1">Tabla</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($filterType)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterType()">
+                                                <span class="r-1">Tipo</span>
                                                 <i class="fas fa-times"></i>
                                             </a>
                                         </li>
@@ -37,11 +61,40 @@
                     <div class="py-3 border-top">
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <label for="filterName" class="mb-1">Nombre</label>
-                                <input class="form-control" name="filterName" id="filterName" type="text" value="{{ $filterName ? $filterName : '' }}" aria-describedby="filterNameHelp">
+                                <label for="filterDescription" class="mb-1">Descripción</label>
+                                <input class="form-control" name="filterDescription" id="filterDescription" type="text" value="{{ $filterDescription ? $filterDescription : '' }}" aria-describedby="filterDescriptionHelp">
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterUserLarge" class="mb-1">Usuarios</label>
+                                <select name="filterUser" id="filterUserLarge" class="selectpicker form-control filterUser">
+                                    <option value="">Todos los usuarios</option>
+                                    @foreach ($adminUsers as $admin)
+                                        @if ($admin->id == $filterUser)
+                                            <option selected value="{{ $admin->id }}">{{ $admin->name }}</option>
+                                        @else
+                                            <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterTable" class="mb-1">Tabla</label>
+                                <input class="form-control" name="filterTable" id="filterTable" type="text" value="{{ $filterTable ? $filterTable : '' }}" aria-describedby="filterTableHelp">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterType" class="mb-1">Tipo</label>
+                                <input class="form-control" name="filterType" id="filterType" type="text" value="{{ $filterType ? $filterType : '' }}" aria-describedby="filterTypeHelp">
+                            </div>
+                        </div>
                     </div>
 
                     <h5 class="py-2 m-0">

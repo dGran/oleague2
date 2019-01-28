@@ -14,7 +14,7 @@
 
     </div>
 @else
-    <table class="teams-table animated fadeIn">
+    <table class="animated fadeIn">
 
         <colgroup>
             <col width="0%" />
@@ -26,23 +26,23 @@
 
         <thead>
             <tr class="border-top">
-                <th scope="col" class="text-center">Fecha</th>
+                <th scope="col" class="date">Fecha</th>
                 <th scope="col">Descripción</th>
                 <th scope="col" class="d-none d-sm-table-cell">Tipo</th>
                 <th scope="col" class="d-none d-sm-table-cell">Tabla</th>
                 <th scope="col" class="d-table-cell d-sm-none">Tabla</th>
-                <th scope="col" class="text-center">Usuario</th>
+                <th scope="col" class="user"></th>
             </tr>
         </thead>
 
         <tbody>
             @foreach ($logs as $log)
                 <tr class="border-top">
-                    <td class="text-center align-top">
+                    <td class="date align-top">
                         <small class="d-block">{{ \Carbon\Carbon::parse($log->created_at)->format('d/m/Y')}}</small>
                         <small>{{ \Carbon\Carbon::parse($log->created_at)->format('H:s')}}</small>
                     </td>
-                    <td class="align-top">
+                    <td class="description align-top">
                         <span>{{ $log->description }}</span>
                     </td>
                     <td class="d-none d-sm-table-cell">
@@ -72,7 +72,7 @@
                             @endif
                         </span>
                     </td>
-                    <td class="text-center">
+                    <td class="user">
                         @if ($log->user->hasProfile())
                             <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <figure class="user-img m-0">

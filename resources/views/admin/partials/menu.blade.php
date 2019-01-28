@@ -1,17 +1,26 @@
+<li class="section">
+    DASHBOARD
+</li>
+
 <li class="item {{ Request::is('admin') ? 'current' : '' }}">
     <a href="{{ route('admin') }}">
         <span>
-            <i class="fas fa-home fa-fw mr-2 mb-1"></i>
-            Dashboard
+            <i class="fas fa-chart-line fa-fw mr-2 mb-1"></i>
+            Logs
         </span>
     </a>
 </li>
+<li class="item pending">
+    <a href="">
+        <span>
+            <i class="fas fa-plug fa-fw mr-2"></i>
+            Usuarios conectados
+        </span>
+    </a>
+</li>
+
 <li class="section">
     TORNEO
-    <select name="" id="">
-        <option value="">1</option>
-        <option value="">2</option>
-    </select>
 </li>
 <li class="item pending">
     <a href="">
