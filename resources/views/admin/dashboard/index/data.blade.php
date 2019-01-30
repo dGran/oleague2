@@ -86,7 +86,6 @@
                                 </figure>
                             </a>
                         @endif
-                        {{-- <small class="text-nowrap">{{ $log->user->name }}</small> --}}
                     </td>
                 </tr>
             @endforeach

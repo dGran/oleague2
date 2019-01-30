@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+{{ $onlineUsersCount }} usuarios conectados
 <div class="container border-left border-right py-3" style="background: #fff">
 
         <div class="col-12" style="background-image: url('img/banner.png'); background-repeat:no-repeat;

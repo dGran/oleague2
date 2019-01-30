@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Api;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -82,7 +83,18 @@ class HomeController extends Controller
         //     'text' => $text
         // ]);
 
-        return view('home');
+            $users = User::all();
+
+            $onlineUsersCount = 0;
+
+            foreach ( $users as $user )
+            {
+                if($user->isOnline()) {
+                    $onlineUsersCount++;
+                }
+            }
+
+        return view('home', compact('onlineUsersCount'));
     }
 
     public function participants()
