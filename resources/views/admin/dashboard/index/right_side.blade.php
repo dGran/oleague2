@@ -19,24 +19,6 @@
                 <span>Exportar (.csv)</span>
             </a>
         </li>
-{{--         <li class="list-group-item border-0 px-0">
-            <a href="" onclick="import_file()">
-               <form
-                id="frmImport"
-                    lang="{{ app()->getLocale() }}"
-                    role="form"
-                    method="POST"
-                    action="{{ route('admin.players_dbs.import.file') }}"
-                    enctype="multipart/form-data"
-                    data-toggle="validator"
-                    autocomplete="off">
-                    {{ csrf_field() }}
-                    <input type="file" name="import_file" id="import_file" class="d-none">
-                    <span class="fas fa-file-import fa-fw mr-1"></span>
-                    <span>Importar</span>
-                </form>
-            </a>
-        </li> --}}
     </ul>
 </div>
 
@@ -97,10 +79,10 @@
             <select name="filterUser" id="filterUserLarge" class="selectpicker form-control filterUser" onchange="applyfilterUser()">
                 <option value="">Todos los usuarios</option>
                 @foreach ($adminUsers as $admin)
-                    @if ($admin->id == $filterUser)
-                        <option selected value="{{ $admin->id }}">{{ $admin->name }}</option>
+                    @if ($admin->user->id == $filterUser)
+                        <option selected value="{{ $admin->user->id }}">{{ $admin->user->name }}</option>
                     @else
-                        <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                        <option value="{{ $admin->user->id }}">{{ $admin->user->name }}</option>
                     @endif
                 @endforeach
             </select>

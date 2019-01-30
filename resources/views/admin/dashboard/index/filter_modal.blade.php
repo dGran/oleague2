@@ -71,13 +71,13 @@
                                 <label for="filterUserLarge" class="mb-1">Usuarios</label>
                                 <select name="filterUser" id="filterUserLarge" class="selectpicker form-control filterUser">
                                     <option value="">Todos los usuarios</option>
-                                    @foreach ($adminUsers as $admin)
-                                        @if ($admin->id == $filterUser)
-                                            <option selected value="{{ $admin->id }}">{{ $admin->name }}</option>
-                                        @else
-                                            <option value="{{ $admin->id }}">{{ $admin->name }}</option>
-                                        @endif
-                                    @endforeach
+                                        @foreach ($adminUsers as $admin)
+                                            @if ($admin->user->id == $filterUser)
+                                                <option selected value="{{ $admin->user->id }}">{{ $admin->user->name }}</option>
+                                            @else
+                                                <option value="{{ $admin->user->id }}">{{ $admin->user->name }}</option>
+                                            @endif
+                                        @endforeach
                                 </select>
                             </div>
                         </div>

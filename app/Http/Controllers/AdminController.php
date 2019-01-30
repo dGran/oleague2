@@ -36,7 +36,7 @@ class AdminController extends Controller
         	->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
         	->paginate($perPage);
 
-        $adminUsers = Role::where('name', 'admin')->first()->users()->get();
+        $adminUsers = AdminLog::distinct()->select('user_id')->get();
 
     	return view('admin.dashboard.index', compact('logs', 'adminUsers', 'filterDescription', 'filterUser', 'filterTable', 'filterType', 'order', 'pagination'));
     }
