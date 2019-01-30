@@ -88,54 +88,6 @@
         });
     }
 
-    function showHideRowOptions(element) {
-        if ($(element).is(':checked')) {
-            $(element).parents('tr').addClass('selected');
-        } else {
-            $(element).parents('tr').removeClass('selected');
-        }
-
-        if ($(".mark:checked").length > 0) {
-            if (!$(".rowOptions").is(':visible')) {
-                $(".rowOptions").removeClass('d-none');
-                $(".tableOptions").addClass('d-none');
-            }
-            if ($(".mark:checked").length == 1) {
-                $(".rowOptions-Edit").removeClass('d-none');
-                $(".rowOptions-View").removeClass('d-none');
-            } else {
-                $(".rowOptions-Edit").addClass('d-none');
-                $(".rowOptions-View").addClass('d-none');
-            }
-        } else {
-            if ($(".rowOptions").is(':visible')) {
-                $(".rowOptions").addClass('d-none');
-                $(".tableOptions").removeClass('d-none');
-            }
-        }
-    }
-
-    function showHideAllRowOptions() {
-        if ($("#allMark").is(':checked')) {
-            $(".mark").prop('checked', true);
-            $(".mark").parents('tr').addClass('selected');
-        } else {
-            $(".mark").prop('checked', false);
-            $(".mark").parents('tr').removeClass('selected');
-        }
-        showHideRowOptions();
-    }
-
-    function disabledActionsButtons() {
-        $('a').addClass('disabled');
-        $('button').attr("disabled", "disabled");
-    }
-
-    function enabledActionsButtons() {
-        $('a').removeClass('disabled');
-        $('button').removeAttr("disabled");
-    }
-
     function export_file(type) {
         window.event.preventDefault();
 
@@ -171,39 +123,5 @@
             }
         });
     }
-
-    function import_file() {
-        window.event.preventDefault();
-        swal({
-            title: "Importar datos",
-            text: 'Se van a importar los datos del archivo seleccionado, pulsa continuar y selecciona el archivo que contiene los datos (.xls, .xlsx, .csv).',
-            buttons: {
-                cancel: {
-                    text: "Cancelar",
-                    value: null,
-                    visible: true,
-                    className: "btn btn-secondary",
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Continuar",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-primary",
-                    closeModal: true
-                }
-            },
-            closeOnClickOutside: false,
-        })
-        .then((value) => {
-            if (value) {
-                $("#import_file").trigger('click');
-            }
-        });
-    }
-
-    $('#import_file').change(function(){
-        $("#frmImport").submit();
-    });
 
 </script>
