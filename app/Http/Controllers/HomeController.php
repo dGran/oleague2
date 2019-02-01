@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Telegram\Bot\Laravel\Facades\Telegram;
-use Telegram\Bot\Api;
 use App\User;
 
 class HomeController extends Controller
@@ -26,8 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $activity = Telegram::getUpdates();
-        // dd($activity);
 
 // $text = "\xF0\x9F\x92\xB0 Clausulazo!!\n"
 // . "El <b>Zenit (pAdRoNe)</b> paga la clausula de " . '<a href="http://pesdb.net/pes2018/?id=7511">L. Messi</a>' . " que pertenecía al Borussia Dortmund (Angel_el_grande)\n"
@@ -75,24 +71,17 @@ class HomeController extends Controller
 
         // dd($username);
 
-        // $text = "Mensaje de prueba";
+        // $text = "Mensaje de prueba con channel almacenado";
+        // send_telegram_notification($text);
 
-        // Telegram::sendMessage([
-        //     'chat_id' => env('TELEGRAM_CHANNEL_ID'),
-        //     'parse_mode' => 'HTML',
-        //     'text' => $text
-        // ]);
-
-            $users = User::all();
-
-            $onlineUsersCount = 0;
-
-            foreach ( $users as $user )
-            {
-                if($user->isOnline()) {
-                    $onlineUsersCount++;
-                }
+        $users = User::all();
+        $onlineUsersCount = 0;
+        foreach ( $users as $user )
+        {
+            if($user->isOnline()) {
+                $onlineUsersCount++;
             }
+        }
 
         return view('home', compact('onlineUsersCount'));
     }

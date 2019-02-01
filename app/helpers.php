@@ -1,5 +1,9 @@
 <?php
 
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\Api;
+use App\GeneralSetting;
+
 function validateUrl($url)
 {
 	$url = @parse_url($url);
@@ -44,4 +48,12 @@ function pesmaster_player_info_path($id) {
 
 function pesmaster_player_img_path($id) {
 	return "https://www.pesmaster.com/pes-2019/graphics/players/player_" . $id . ".png";
+}
+
+function send_telegram_notification($text) {
+    return Telegram::sendMessage([
+        'chat_id' => env('TELEGRAM_CHANNEL_ID'),
+        'parse_mode' => 'HTML',
+        'text' => $text
+    ]);
 }

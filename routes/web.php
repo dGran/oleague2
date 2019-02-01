@@ -100,6 +100,16 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 	// Seasons
 	Route::get('/admin/temporadas', 'SeasonController@index')->name('admin.seasons');
+	Route::get('/admin/temporadas/nuevo', 'SeasonController@add')->name('admin.seasons.add');
+	Route::post('/admin/temporadas/nuevo', 'SeasonController@save')->name('admin.seasons.save');
+	Route::get('/admin/temporadas/{id}', 'SeasonController@edit')->name('admin.seasons.edit');
+	Route::put('/admin/temporadas/{id}', 'SeasonController@update')->name('admin.seasons.update');
+	Route::delete('/admin/temporadas/eliminar/{id}', 'SeasonController@destroy')->name('admin.seasons.destroy');
+	Route::get('/admin/temporadas/eliminar-seleccionados/{ids}', 'SeasonController@destroyMany')->name('admin.seasons.destroy.many');
+	Route::get('/admin/temporadas/duplicar/{id}', 'SeasonController@duplicate')->name('admin.seasons.duplicate');
+	Route::get('/admin/temporadas/duplicar-seleccionados/{ids}', 'SeasonController@duplicateMany')->name('admin.seasons.duplicate.many');
+	Route::get('/admin/temporadas/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'SeasonController@exportFile')->name('admin.seasons.export.file');
+	Route::post('/admin/temporadas/importar', 'SeasonController@importFile')->name('admin.seasons.import.file');
 
 
 });

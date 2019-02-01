@@ -22,6 +22,14 @@
 <li class="section">
     TORNEO
 </li>
+<li class="item {{ Request::is('admin/temporadas*') ? 'current' : '' }}">
+    <a href="{{ route('admin.seasons') }}">
+        <span>
+            <i class="fas fa-clipboard-list fa-fw mr-2"></i>
+            Temporadas
+        </span>
+    </a>
+</li>
 <li class="item pending">
     <a href="">
         <span>
@@ -81,7 +89,7 @@
 <li class="item pending">
     <a href="">
         <span>
-            <i class="fas fa-book-open fa-fw mr-2"></i>
+            <i class="fas fa-gavel fa-fw mr-2"></i>
             Reglas
         </span>
     </a>
