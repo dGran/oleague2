@@ -5,6 +5,9 @@ use App\User;
 use App\Role;
 use App\VerifyUser;
 
+use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
+
 class UserTableSeeder extends Seeder
 {
     /**
@@ -44,5 +47,15 @@ class UserTableSeeder extends Seeder
             'user_id' => $user->id,
             'token' => str_random(40)
         ]);
+
+        $faker = Faker::create();
+        foreach (range(1,40) as $index) {
+            DB::table('users')->insert([
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'password' => bcrypt('secret'),
+                'verified' => 1,
+            ]);
+        }
     }
 }

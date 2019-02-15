@@ -85,6 +85,15 @@ class User extends Authenticatable
         return false;
     }
 
+    public function avatar()
+    {
+        if ($this->hasProfile()) {
+            return $this->profile->avatar;
+        } else {
+            return asset("img/player_no_image.png");
+        }
+    }
+
     public function isOnline()
     {
         return \Cache::has('user-is-online-' . $this->id);

@@ -1,6 +1,6 @@
 @if ($logs->count() == 0)
     <div class="text-center border-top py-4">
-        @if ($filterUser == null && $filterTable == null && $filterPosition == null)
+        @if ($filterDescription == null && $filterUser == null && $filterTable == null && $filterType == null)
             <figure>
                 <img src="{{ asset('img/table-empty.png') }}" alt="" width="72">
             </figure>

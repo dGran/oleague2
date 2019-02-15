@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Season;
+use App\SeasonParticipant;
+use App\SeasonParticipantCashHistory;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -48,12 +50,50 @@ class SeasonController extends Controller
             'name.unique' => 'El nombre de la temporada ya existe',
         ]);
 
+        $data = request()->all();
         $data['slug'] = str_slug(request()->name);
-
+        $data['num_participants'] = (is_null(request()->num_participants)) ? 0 : request()->num_participants;
+        $data['participant_has_team'] = (is_null(request()->participant_has_team)) ? 0 : 1;
+        $data['use_economy'] = (is_null(request()->use_economy)) ? 0 : 1;
+        if (request()->use_economy) {
+            $data['initial_budget'] = (is_null(request()->initial_budget)) ? 0 : request()->initial_budget;
+        } else {
+            $data['initial_budget'] = 0;
+        }
+        $data['use_rosters'] = (is_null(request()->use_rosters)) ? 0 : 1;
         $season = Season::create($data);
 
         if ($season->save()) {
             event(new TableWasSaved($season, $season->name));
+
+            for ($i=1; $i < $season->num_participants+1; $i++) {
+                $participant = new SeasonParticipant;
+                $participant->name = "Participante " . $i;
+                $participant->season_id = $season->id;
+                $participant->team_id = null;
+                $participant->user_id = null;
+                $participant->budget = $season->initial_budget;
+                $participant->paid_clauses = 0;
+                $participant->clauses_received = 0;
+                $participant->slug = str_slug($participant->name);
+                $participant->save();
+                if ($participant->save()) {
+                    event(new TableWasSaved($participant, $participant->name));
+                }
+
+                if (request()->use_economy) {
+                    $cash_history = new SeasonParticipantCashHistory;
+                    $cash_history->participant_id = $participant->id;
+                    $cash_history->description = "Presupuesto inicial";
+                    $cash_history->amount = $season->initial_budget;
+                    $cash_history->movement = "E";
+                    $cash_history->save();
+                    if ($cash_history->save()) {
+                        event(new TableWasSaved($cash_history, $cash_history->description));
+                    }
+                }
+            }
+
             if (request()->no_close) {
                 return back()->with('success', 'Nueva temporada registrada correctamente');
             }
@@ -86,14 +126,45 @@ class SeasonController extends Controller
                 'name.unique' => 'El nombre de la temporada ya existe',
             ]);
 
+            $data = request()->all();
             $data['slug'] = str_slug(request()->name);
-
+            $data['num_participants'] = (is_null(request()->num_participants)) ? 0 : request()->num_participants;
+            $data['participant_has_team'] = (is_null(request()->participant_has_team)) ? 0 : 1;
+            $data['use_economy'] = (is_null(request()->use_economy)) ? 0 : 1;
+            $data['initial_budget'] = (is_null(request()->initial_budget)) ? 0 : request()->initial_budget;
+            $data['use_rosters'] = (is_null(request()->use_rosters)) ? 0 : 1;
             $season->fill($data);
             if ($season->isDirty()) {
                 $season->update($data);
 
                 if ($season->update()) {
                     event(new TableWasUpdated($season, $season->name));
+
+                    //detectar si se ha cambiado el numero de participantes
+
+                    // si es mayor dar de alta los nuevos participantes
+                    // si es menor eliminar los sobrantes
+
+                    // luego trabajar con su historial de caja
+
+                    //detectar si ha cambiado el presupuesto inicial
+
+                    $participants = SeasonParticipant::where('season_id', '=', $season->id);
+                    foreach ($participants as $participant) {
+                        $participant->name = "Participante " . $i;
+                        $participant->season_id = $season->id;
+                        $participant->team_id = null;
+                        $participant->user_id = null;
+                        $participant->budget = $season->initial_budget;
+                        $participant->paid_clauses = 0;
+                        $participant->clauses_received = 0;
+                        $participant->slug = str_slug($participant->name);
+                        $participant->save();
+                        if ($participant->save()) {
+                            event(new TableWasSaved($participant, $participant->name));
+                        }
+                    }
+
                     return redirect()->route('admin.seasons')->with('success', 'Cambios guardados en la temporada "' . $season->name . '" correctamente.');
                 } else {
                     return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');

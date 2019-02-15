@@ -11,8 +11,8 @@
 
     <div class="table-form-content col-12 col-lg-8 col-xl-6 p-md-3 animated fadeIn">
         <div class="form-group row pt-2">
-            <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-            <div class="col-sm-10">
+            <label for="name" class="col-sm-3 col-form-label">Nombre</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control {{ $errors->first('name') ? 'invalid' : '' }}" id="name" name="name" placeholder="Nombre" autofocus value="{{ old('name') }}">
                 @if ($errors->first('name'))
                     <small class="text-danger">{{ $errors->first('name') }}</small>
@@ -20,8 +20,8 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="team_category_id" class="col-sm-2 col-form-label">Categoría</label>
-            <div class="col-sm-10">
+            <label for="team_category_id" class="col-sm-3 col-form-label">Categoría</label>
+            <div class="col-sm-9">
                 <select class="selectpicker form-control {{ $errors->first('team_category_name') ? 'd-none' : 'd-inline-block' }}" name="team_category_id" id="team_category_id" data-size="3">
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -40,9 +40,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="logo" class="col-sm-2 col-form-label">Escudo</label>
+            <label for="logo" class="col-sm-3 col-form-label">Escudo</label>
 
-            <div class="col-sm-10">
+            <div class="col-sm-9">
                 <div class="input-group mb-1">
                     <div class="input-group-prepend">
                         <button class="btn btn-danger d-none" type="button" id="logo_remove">Eliminar</button>

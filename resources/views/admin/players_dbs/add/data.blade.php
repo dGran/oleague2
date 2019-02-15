@@ -11,8 +11,8 @@
 
     <div class="table-form-content col-12 col-lg-8 col-xl-6 p-md-3 animated fadeIn">
         <div class="form-group row pt-2">
-            <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-            <div class="col-sm-10">
+            <label for="name" class="col-sm-3 col-form-label">Nombre</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control {{ $errors->first('name') ? 'invalid' : '' }}" id="name" name="name" placeholder="Nombre" autofocus value="{{ old('name') }}">
                 @if ($errors->first('name'))
                     <small class="text-danger">{{ $errors->first('name') }}</small>

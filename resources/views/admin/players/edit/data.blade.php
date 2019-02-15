@@ -12,8 +12,8 @@
 
     <div class="table-form-content col-12 col-lg-8 col-xl-6 p-md-3 animated fadeIn">
         <div class="form-group row pt-2">
-            <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-            <div class="col-sm-10">
+            <label for="name" class="col-sm-3 col-form-label">Nombre</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" value="{{ old('name', $player->name) }}" autofocus>
                 @if ($errors->first('name'))
                     <small class="text-danger">{{ $errors->first('name') }}</small>
@@ -21,8 +21,8 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="players_db_id" class="col-sm-2 col-form-label">Database</label>
-            <div class="col-sm-10">
+            <label for="players_db_id" class="col-sm-3 col-form-label">Database</label>
+            <div class="col-sm-9">
                 <select class="selectpicker form-control {{ $errors->first('players_db_name') ? 'd-none' : 'd-inline-block' }}" name="players_db_id" id="players_db_id" data-size="3">
                     @foreach ($players_dbs as $players_db)
                         @if ($player->players_db_id == $players_db->id)
@@ -45,9 +45,9 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="img" class="col-sm-2 col-form-label">Imagen</label>
+            <label for="img" class="col-sm-3 col-form-label">Imagen</label>
 
-            <div class="col-sm-10">
+            <div class="col-sm-9">
                 <div class="d-inline-block">
                     <div class="input-group mb-1" id="img_local">
                         <div class="input-group-prepend">
@@ -82,57 +82,57 @@
         </div>
 
         <div class="form-group row">
-            <label for="overall_rating" class="col-sm-2 col-form-label">Media</label>
-            <div class="col-sm-10">
+            <label for="overall_rating" class="col-sm-3 col-form-label">Media</label>
+            <div class="col-sm-9">
                 <input type="number" class="form-control" id="overall_rating" name="overall_rating" placeholder="Valoración media del jugador" value="{{ old('overall_rating', $player->overall_rating) }}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="position" class="col-sm-2 col-form-label">Posición</label>
-            <div class="col-sm-10">
+            <label for="position" class="col-sm-3 col-form-label">Posición</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="position" name="position" placeholder="Posición" value="{{ old('position', $player->position) }}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="nation_name" class="col-sm-2 col-form-label">Nacionalidad</label>
-            <div class="col-sm-10">
+            <label for="nation_name" class="col-sm-3 col-form-label">Nacionalidad</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="nation_name" name="nation_name" placeholder="Nacionalidad" value="{{ old('nation_name', $player->nation_name) }}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="team_name" class="col-sm-2 col-form-label">Equipo</label>
-            <div class="col-sm-10">
+            <label for="team_name" class="col-sm-3 col-form-label">Equipo</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="team_name" name="team_name" placeholder="Equipo" value="{{ old('team_name', $player->team_name) }}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="league_name" class="col-sm-2 col-form-label">Competición</label>
-            <div class="col-sm-10">
+            <label for="league_name" class="col-sm-3 col-form-label">Competición</label>
+            <div class="col-sm-9">
                 <input type="text" class="form-control" id="league_name" name="league_name" placeholder="Competición" value="{{ old('league_name', $player->league_name) }}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="height" class="col-sm-2 col-form-label">Altura</label>
-            <div class="col-sm-10">
+            <label for="height" class="col-sm-3 col-form-label">Altura</label>
+            <div class="col-sm-9">
                 <input type="number" class="form-control" id="height" name="height" placeholder="Altura" value="{{ old('height', $player->height) }}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="age" class="col-sm-2 col-form-label">Edad</label>
-            <div class="col-sm-10">
+            <label for="age" class="col-sm-3 col-form-label">Edad</label>
+            <div class="col-sm-9">
                 <input type="number" class="form-control" id="age" name="age" placeholder="Edad" value="{{ old('age', $player->age) }}">
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="game_id" class="col-sm-2 col-form-label">Game ID</label>
-            <div class="col-sm-10">
+            <label for="game_id" class="col-sm-3 col-form-label">Game ID</label>
+            <div class="col-sm-9">
                 <input type="number" class="form-control" id="game_id" name="game_id" placeholder="Identificador (ID) del jugador en el juego" value="{{ old('game_id', $player->game_id) }}">
             </div>
         </div>

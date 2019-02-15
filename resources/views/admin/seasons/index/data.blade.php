@@ -41,7 +41,7 @@
                 {{-- mantengo la linea comentada por el data-allow-delete, crear un metodo que compruebe si tiene competiciones o participantes o plantillas (cualquier tabla que use su id)....para permitir o no eliminar --}}
                 {{-- <tr class="border-top" data-id="{{ $season->id }}" data-name="{{ $season->name }}" data-allow-delete="{{ $season->teams->count() > 0 ? 0 : 1 }}"> --}}
                 <tr class="border-top" data-id="{{ $season->id }}" data-name="{{ $season->name }}"">
-                    <td class="select">
+                    <td class="select align-top">
                         <div class="pretty p-icon p-jelly mr-0">
                             <input type="checkbox" class="mark" value="{{ $season->id }}" name="teamId[]" onchange="showHideRowOptions(this)">
                             <div class="state p-primary">
@@ -52,8 +52,30 @@
                     </td>
                     <td class="name" onclick="rowSelect(this)">
                         <span>{{ $season->name }}</span>
-{{--                         @if ($season->hasTeams())
-                            <small class="d-block">Equipos: {{ $season->teams->count() }}</small>
+                        @if ($season->hasParticipants())
+                            <small class="d-block">Participantes: {{ $season->participants->count() }}</small>
+                        @endif
+{{--                         @if ($season->use_rosters)
+                            @if ($season->transfers_period)
+                                <small class="badge badge-success text-white d-inline-block">Salarios</small>
+                            @else
+                                <small class="badge badge-secondary text-white d-inline-block">Salarios</small>
+                            @endif
+                            @if ($season->transfers_period)
+                                <small class="badge badge-success text-white d-inline-block">Transfers</small>
+                            @else
+                                <small class="badge badge-secondary text-white d-inline-block">Transfers</small>
+                            @endif
+                            @if ($season->free_players_period)
+                                <small class="badge badge-success text-white d-inline-block">Libres</small>
+                            @else
+                                <small class="badge badge-secondary text-white d-inline-block">Libres</small>
+                            @endif
+                            @if ($season->clausules_period)
+                                <small class="badge badge-success text-white d-inline-block">Claúsulas</small>
+                            @else
+                                <small class="badge badge-secondary text-white d-inline-block">Claúsulas</small>
+                            @endif
                         @endif --}}
                     </td>
                     <td class="actions">

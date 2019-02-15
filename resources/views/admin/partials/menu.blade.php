@@ -38,8 +38,8 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a href="">
+<li class="item {{ Request::is('admin/participantes*') ? 'current' : '' }}">
+    <a href="{{ route('admin.season_participants') }}">
         <span>
             <i class="fas fa-users fa-fw mr-2"></i>
             Participantes
