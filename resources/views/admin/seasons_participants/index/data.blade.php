@@ -18,10 +18,10 @@
         <colgroup>
             <col width="0%" />
             <col width="0%" />
-            <col width="0%" />
-            <col width="0%" />
-            <col width="0%" />
             <col width="100%" />
+            <col width="0%" />
+            <col width="0%" />
+            <col width="0%" />
         </colgroup>
 
         <thead>
@@ -35,8 +35,9 @@
                         </div>
                     </div>
                 </th>
-                <th scope="col" colspan="2" class="name" onclick="$('#allMark').trigger('click');">Usuario</th>
-                <th scope="col" colspan="2" class="name" onclick="$('#allMark').trigger('click');">Equipo</th>
+                <th scope="col" colspan="2" class="" onclick="$('#allMark').trigger('click');">Usuario</th>
+                <th scope="col" colspan="2" class="d-none d-sm-table-cell" onclick="$('#allMark').trigger('click');">Equipo</th>
+                <th scope="col" class="d-none d-xl-table-cell" onclick="$('#allMark').trigger('click');">Temporada</th>
                 <th class="text-right" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
@@ -57,36 +58,50 @@
                     </td>
 
                     @if ($participant->user_id)
-                        <td class="img" onclick="rowSelect(this)">
+                        <td onclick="rowSelect(this)">
                             <img src="{{ $participant->user->avatar() }}" alt="" width="38" class="rounded-circle">
                         </td>
                         <td class="text-nowrap" onclick="rowSelect(this)">
                             {{ $participant->user->name }}
+                            @if ($participant->team_id)
+                                <small class="d-table-cell d-sm-none">{{ $participant->team->name }}</small>
+                            @else
+                                <small class="d-table-cell d-sm-none">Equipo no definido</small>
+                            @endif
                         </td>
                     @else
-                        <td class="img" onclick="rowSelect(this)">
+                        <td onclick="rowSelect(this)">
                             <img src="{{ asset('img/user_unknown.png') }}" alt="" width="38">
                         </td>
                         <td class="text-nowrap" onclick="rowSelect(this)">
                             No definido
+                            @if ($participant->team_id)
+                                <small class="d-table-cell d-sm-none">{{ $participant->team->name }}</small>
+                            @else
+                                <small class="d-table-cell d-sm-none">Equipo no definido</small>
+                            @endif
                         </td>
                     @endif
 
                     @if ($participant->team_id)
-                        <td class="img" onclick="rowSelect(this)">
+                        <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
                             <img src="{{ $participant->team->getLogoFormatted() }}" alt="" width="38">
                         </td>
-                        <td class="text-nowrap"  onclick="rowSelect(this)">
+                        <td class="text-nowrap d-none d-sm-table-cell"  onclick="rowSelect(this)">
                             {{ $participant->team->name }}
                         </td>
                     @else
-                        <td class="img" onclick="rowSelect(this)">
+                        <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
                             <img src="{{ asset('img/team_no_image.png') }}" alt="" width="38">
                         </td>
-                        <td class="text-nowrap" onclick="rowSelect(this)">
+                        <td class="text-nowrap d-none d-sm-table-cell" onclick="rowSelect(this)">
                             No definido
                         </td>
                     @endif
+
+                    <td class="text-nowrap d-none d-xl-table-cell"  onclick="rowSelect(this)">
+                        {{ $participant->season->name }}
+                    </td>
 
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
@@ -96,10 +111,6 @@
                             <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnEdit{{ $participant->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar
-                            </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.duplicate', $participant->id) }}">
-                                <i class="fas fa-clone fa-fw mr-1"></i>
-                                Duplicar
                             </a>
                             <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
                                 <i class="fas fa-trash fa-fw mr-1"></i>

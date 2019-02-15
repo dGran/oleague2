@@ -64,50 +64,52 @@ class SeasonParticipantController extends Controller
     //     }
     // }
 
-    // public function edit($id)
-    // {
-    //     $category = TeamCategory::find($id);
-    //     if ($category) {
-    //         return view('admin.teams_categories.edit', compact('category'));
-    //     } else {
-    //         return back()->with('warning', 'Acción cancelada. La categoría que querías editar ya no existe. Se ha actualizado la lista');
-    //     }
-    // }
+    public function edit($id)
+    {
+        $participant = SeasonParticipant::find($id);
+        $teams = Team::orderBy('name', 'asc')->get();
+        $users = User::orderBy('name', 'asc')->get();
+        if ($participant) {
+            return view('admin.seasons_participants.edit', compact('participant', 'teams', 'users'));
+        } else {
+            return back()->with('warning', 'Acción cancelada. El participante que querías editar ya no existe. Se ha actualizado la lista');
+        }
+    }
 
-    // public function update($id)
-    // {
-    //     $category = TeamCategory::find($id);
+    public function update($id)
+    {
+        $participant = SeasonParticipant::find($id);
 
-    //     if ($category) {
-    //         $data = request()->validate([
-    //             'name' => 'required|unique:team_categories,name,' .$category->id,
-    //         ],
-    //         [
-	   //          'name.required' => 'El nombre de la categoría es obligatorio',
-	   //          'name.unique' => 'El nombre de la categoría ya existe',
-    //         ]);
+        if ($participant) {
+            $data = request()->validate([
+                'name' => 'required',
+            ],
+            [
+	            'name.required' => 'El nombre del participante es obligatorio',
+            ]);
 
-    //         $data['slug'] = str_slug(request()->name);
+            $data = request()->all();
+            $data['slug'] = str_slug(request()->name);
 
-    //         $category->fill($data);
-    //         if ($category->isDirty()) {
-    //             $category->update($data);
+            $participant->fill($data);
+            if ($participant->isDirty()) {
+                $participant->update($data);
 
-    //             if ($category->update()) {
-    //                 event(new TableWasUpdated($category, $category->name));
-    //                 return redirect()->route('admin.teams_categories')->with('success', 'Cambios guardados en la categoría "' . $category->name . '" correctamente.');
-    //             } else {
-    //                 return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
-    //             }
-    //         }
+                if ($participant->update()) {
+                    event(new TableWasUpdated($participant, $participant->name));
+                    return redirect()->route('admin.season_participants')->with('success', 'Cambios guardados en el participante "' . $participant->name . '" correctamente.');
+                } else {
+                    return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+                }
+            }
 
-    //         return redirect()->route('admin.teams_categories')->with('info', 'No se han detectado cambios en la categoría "' . $category->name . '".');
+            return redirect()->route('admin.season_participants')->with('info', 'No se han detectado cambios en el participante "' . $participant->name . '".');
 
-    //     } else {
-    //         return redirect()->route('admin.teams_categories')->with('warning', 'Acción cancelada. La categoría que estabas editando ya no existe. Se ha actualizado la lista');
-    //     }
+        } else {
+            return redirect()->route('admin.season_participants')->with('warning', 'Acción cancelada. El participante que estabas editando ya no existe. Se ha actualizado la lista');
+        }
 
-    // }
+    }
 
     // public function destroy($id)
     // {
