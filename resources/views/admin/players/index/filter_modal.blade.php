@@ -70,7 +70,7 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="filterName" class="mb-1">Nombre</label>
-                                <input class="form-control" name="filterName" id="filterName" type="text" value="{{ $filterName ? $filterName : '' }}" aria-describedby="filterNameHelp">
+                                <input class="form-control" name="filterName" id="filterName" type="text" value="{{ $filterName ? $filterName : '' }}" aria-describedby="filterNameHelp" placeholder="Nombre">
                             </div>
                         </div>
 
@@ -92,20 +92,20 @@
 
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <label for="filterTeam" class="mb-1">Team</label>
-                                <input class="form-control" name="filterTeam" id="filterTeam" type="text" value="{{ $filterTeam ? $filterTeam : '' }}" aria-describedby="filterTeamHelp">
+                                <label for="filterTeam" class="mb-1">Equipo</label>
+                                <input class="form-control" name="filterTeam" id="filterTeam" type="text" value="{{ $filterTeam ? $filterTeam : '' }}" aria-describedby="filterTeamHelp" placeholder="Equipo">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="filterNation" class="mb-1">País</label>
-                                <input class="form-control" name="filterNation" id="filterNation" type="text" value="{{ $filterNation ? $filterNation : '' }}" aria-describedby="filterNationHelp">
+                                <input class="form-control" name="filterNation" id="filterNation" type="text" value="{{ $filterNation ? $filterNation : '' }}" aria-describedby="filterNationHelp" placeholder="País">
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="filterPosition" class="mb-1">Posición</label>
-                                <input class="form-control" name="filterPosition" id="filterPosition" type="text" value="{{ $filterPosition ? $filterPosition : '' }}" aria-describedby="filterPositionHelp">
+                                <input class="form-control" name="filterPosition" id="filterPosition" type="text" value="{{ $filterPosition ? $filterPosition : '' }}" aria-describedby="filterPositionHelp" placeholder="Posición">
                             </div>
                         </div>
                     </div>

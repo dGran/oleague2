@@ -184,7 +184,7 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <label for="filterTeam" class="mb-1">Posición</label>
-            <input class="filterPosition-input form-control mousetrap filterPosition" id="filterPosition" name="filterPosition" type="text" placeholder="País..." value="{{ $filterPosition ? $filterPosition : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+            <input class="filterPosition-input form-control mousetrap filterPosition" id="filterPosition" name="filterPosition" type="text" placeholder="Posición..." value="{{ $filterPosition ? $filterPosition : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
         </div>
     </div>
 
