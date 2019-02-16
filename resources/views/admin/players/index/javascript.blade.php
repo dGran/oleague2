@@ -51,6 +51,23 @@
             $('.modal-dialog').html("");
         });
 
+        $(".link_web_images").click(function(){
+            swal({
+                text: "Enlazando imágenes, por favor espera...",
+                button: false,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+            });
+        });
+
+        $(".unlink_web_images").click(function(){
+            swal({
+                text: "Desenlazando imágenes, por favor espera...",
+                button: false,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+            });
+        });
     });
 
     function applyDisplay() {

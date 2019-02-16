@@ -35,15 +35,15 @@
                     <i class="fas fa-images"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="addon-images">
-                    <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_images', 'pesdb') }}">
+                    <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_images', 'pesdb') }}" class="link_web_images">
                         <span class="fas fa-images fa-fw mr-1"></span>
                         <span>Enlazar imágenes (pesdb)</span>
                     </a>
-                    <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_images', 'pesmaster') }}">
+                    <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_images', 'pesmaster') }}" class="link_web_images">
                         <span class="fas fa-images fa-fw mr-1"></span>
                         <span>Enlazar imágenes (pesmaster)</span>
                     </a>
-                    <a class="dropdown-item text-secondary" href="{{ route('admin.players.unlink_web_images') }}">
+                    <a class="dropdown-item text-secondary" href="{{ route('admin.players.unlink_web_images') }}" class="unlink_web_images">
                         <span class="fas fa-eraser fa-fw mr-1"></span>
                         <span>Eliminar imágenes enlazadas</span>
                     </a>

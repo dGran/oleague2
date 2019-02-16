@@ -72,7 +72,8 @@ class Player extends Model
 					return $broken;
 				}
 			} else {
-				if (validateUrl($img)) {
+				// if (validateUrl($img)) {
+				if (@GetImageSize($img)) {
 					return $img;
 				} else {
 					return $broken;
