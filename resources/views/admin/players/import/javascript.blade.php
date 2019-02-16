@@ -15,8 +15,11 @@
             }
         });
 
-        $("#frmAdd").submit(function(event) {
+        $("#frmImport").submit(function(event) {
+            $("#loading").removeClass('d-none');
+            $("#loading-info").removeClass('d-none');
             $("#btnSave").attr("disabled", "disabled");
+            $("#btnSave").val('Importando, por favor espere..');
         });
 
         $('#import_file').change(function(){
