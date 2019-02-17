@@ -1,4 +1,5 @@
 <script>
+    var filterSeason = {!! json_encode($filterSeason) !!};
     var order = {!! json_encode($order) !!};
     var pagination = {!! json_encode($pagination) !!};
 
@@ -7,18 +8,6 @@
             var url = $("#btnAdd").attr('href');
             $(location).attr('href', url);
             return false;
-        });
-        Mousetrap.bind(['command+f', 'ctrl+f'], function() {
-            $('.search-input').focus();
-            return false;
-        });
-
-        $('.search-clear').on("click", function() {
-            $('.search-input').val('');
-            $('.frmFilter').submit();
-        });
-        $('.search-input').on("blur", function() {
-            $(this).val(filterName);
         });
 
     });
@@ -31,9 +20,13 @@
         $('.frmFilter').submit();
     }
 
-    function cancelFilterName() {
+    function applyfilterSeason() {
+        $('.frmFilter').submit();
+    }
+
+    function cancelFilterSeason() {
         window.event.preventDefault();
-        $('.filterName').val('');
+        $('.filterSeason').val('0');
         if (order || pagination) {
             $('.frmFilter').submit();
         } else {
@@ -52,10 +45,10 @@
         var name = row.attr("data-name");
         var allow_delete = row.attr("data-allow-delete");
 
-        if (allow_delete == 1) {
+        // if (allow_delete == 1) {
             swal({
                 title: "¿Estás seguro?",
-                text: 'Se va a eliminar la categoría "' + name + '". No se podrán deshacer los cambios!',
+                text: 'Se va a eliminar el participante "' + name + '". No se podrán deshacer los cambios!',
                 buttons: {
                     confirm: {
                         text: "Sí, estoy seguro",
@@ -77,18 +70,18 @@
             .then((value) => {
                 if (value) {
                     var form = $('#form-delete');
-                    var url = form.attr('action').replace(':CATEGORY_ID', id);
+                    var url = form.attr('action').replace(':PARTICIPANT_ID', id);
                     form.attr('action', url);
                     form.submit();
                 }
             });
-        } else {
-            swal("La categoría tiene equipos asociados por lo que no se puede eliminar.", {
-                buttons: false,
-                icon: "error",
-                timer: 3000,
-            });
-        }
+        // } else {
+        //     swal("La categoría tiene equipos asociados por lo que no se puede eliminar.", {
+        //         buttons: false,
+        //         icon: "error",
+        //         timer: 3000,
+        //     });
+        // }
 
     });
 
@@ -97,7 +90,7 @@
         disabledActionsButtons();
         swal({
             title: "¿Estás seguro?",
-            text: 'Se van a eliminar las categorías seleccionadas (las categorías con equipos asociados no se eliminarán). No se podrán deshacer los cambios!.',
+            text: 'Se van a eliminar los participantes seleccionados (los participantes con xxxx asociados no se eliminarán). No se podrán deshacer los cambios!.',
             buttons: {
                 confirm: {
                     text: "Sí, estoy seguro",
@@ -122,25 +115,13 @@
                 $(".mark:checked").each(function() {
                     ids.push($(this).val());
                 });
-                var url = '{{ route("admin.teams_categories.destroy.many", ":ids") }}';
+                var url = '{{ route("admin.season_participants.destroy.many", ":ids") }}';
                 url = url.replace(':ids', ids);
                 window.location.href=url;
             } else {
                 enabledActionsButtons();
             }
         });
-    }
-
-    function duplicateMany() {
-        window.event.preventDefault();
-        disabledActionsButtons();
-        var ids = [];
-        $(".mark:checked").each(function() {
-            ids.push($(this).val());
-        });
-        var url = '{{ route("admin.teams_categories.duplicate.many", ":ids") }}';
-        url = url.replace(':ids', ids);
-        window.location.href=url;
     }
 
     function edit(element) {
@@ -236,9 +217,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'categorias_equipos_export' + time;
+                    var filename = 'participantes_export' + time;
                 }
-                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order);
+                $(location).attr('href', 'participantes/exportar/' + filename + '/' + type + '/' + filterSeason + '/' + order);
             }
         });
     }
@@ -277,9 +258,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'categorias_equipos_export' + time;
+                    var filename = 'participantes_export' + time;
                 }
-                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
+                $(location).attr('href', 'participantes/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
             }
         });
     }

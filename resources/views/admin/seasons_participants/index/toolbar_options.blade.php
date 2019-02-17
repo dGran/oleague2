@@ -2,10 +2,10 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.teams_categories.add') }}'" type="button" class="btn btn-primary" data-toggle="button">
-                <i class="fas fa-plus mr-2"></i>Nueva
+            <button id="addon-new" onclick="location.href='{{ route('admin.season_participants.add') }}'" type="button" class="btn btn-primary" data-toggle="button">
+                <i class="fas fa-plus mr-2"></i>Nuevo
             </button>
-            <button id="addon-filter" type="button" class="filter btn input-group-text border-left-0 {{ $filterName ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
+            <button id="addon-filter" type="button" class="filter btn input-group-text border-left-0 {{ $filterSeason ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
                 <i class="fas fa-filter"></i>
             </button>
            <form
@@ -13,7 +13,7 @@
                 lang="{{ app()->getLocale() }}"
                 role="form"
                 method="POST"
-                action="{{ route('admin.teams_categories.import.file') }}"
+                action="{{ route('admin.season_participants.import.file') }}"
                 enctype="multipart/form-data"
                 data-toggle="validator"
                 autocomplete="off">
@@ -50,9 +50,6 @@
             </button>
             <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>
-            </button>
-            <button type="button" class="btn btn-outline-secondary input-group-text" data-toggle="button" onclick="duplicateMany()">
-                <i class="fas fa-clone"></i>
             </button>
             <button id="row-addon-export" type="button" class="btn btn-outline-secondary input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-file-export"></i>

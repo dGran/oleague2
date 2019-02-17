@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\SeasonParticipant;
 use App\User;
 use App\Team;
+use App\Season;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -16,6 +17,7 @@ class SeasonParticipantController extends Controller
 {
     public function index()
     {
+        $filterSeason = request()->filterSeason;
         $order = request()->order;
         $pagination = request()->pagination;
 
@@ -30,8 +32,10 @@ class SeasonParticipantController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $participants = SeasonParticipant::orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
-    	return view('admin.seasons_participants.index', compact('participants', 'order', 'pagination'));
+        $participants = SeasonParticipant::seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
+        $seasons = Season::orderBy('name', 'asc')->get();
+
+    	return view('admin.seasons_participants.index', compact('participants', 'seasons', 'filterSeason', 'order', 'pagination'));
     }
 
     // public function add()
@@ -111,169 +115,127 @@ class SeasonParticipantController extends Controller
 
     }
 
-    // public function destroy($id)
-    // {
-    //     $category = TeamCategory::find($id);
+    public function destroy($id)
+    {
+        $participant = SeasonParticipant::find($id);
 
-    //     if ($category) {
-    //         $message = 'Se ha eliminado la categoría "' . $category->name . '" correctamente.';
+        if ($participant) {
+            $message = 'Se ha eliminado el participante "' . $participant->name . '" correctamente.';
 
-    //         event(new TableWasDeleted($category, $category->name));
-    //         $category->delete();
+            event(new TableWasDeleted($participant, $participant->name));
+            $participant->delete();
 
-    //         return redirect()->route('admin.teams_categories')->with('success', $message);
-    //     } else {
-    //         $message = 'Acción cancelada. La categoría que querías eliminar ya no existe. Se ha actualizado la lista';
-    //         return back()->with('warning', $message);
-    //     }
-    // }
+            return redirect()->route('admin.season_participants')->with('success', $message);
+        } else {
+            $message = 'Acción cancelada. El participante que querías eliminar ya no existe. Se ha actualizado la lista';
+            return back()->with('warning', $message);
+        }
+    }
 
-    // public function destroyMany($ids)
-    // {
-    //     $ids=explode(",",$ids);
-    //     $counter_deleted = 0;
-    //     $counter_no_allow = 0;
-    //     for ($i=0; $i < count($ids); $i++)
-    //     {
-    //         $category = TeamCategory::find($ids[$i]);
-    //         if ($category) {
-    //             if (!$category->hasTeams()) {
-    //                 $counter_deleted = $counter_deleted +1;
-    //                 event(new TableWasDeleted($category, $category->name));
-    //                 $category->delete();
-    //             } else {
-    //                 $counter_no_allow = $counter_no_allow +1;
-    //             }
-    //         }
-    //     }
-    //     if ($counter_deleted > 0) {
-    //         if ($counter_no_allow > 0) {
-    //             return redirect()->route('admin.teams_categories')->with('success', 'Se han eliminado las categorías seleccionadas correctamente excepto las que tienen equipos asociados.');
-    //         } else {
-    //             return redirect()->route('admin.teams_categories')->with('success', 'Se han eliminado las categorías seleccionadas correctamente.');
-    //         }
-    //     } else {
-    //         if ($counter_no_allow > 0) {
-    //             return back()->with('warning', 'Acción cancelada. No es posible eliminar las categorías seleccionadas ya que tienen equipos asociados.');
-    //         } else {
-    //             return back()->with('warning', 'Acción cancelada. La categorías que querías eliminar ya no existen.');
-    //         }
-    //     }
-    // }
+    public function destroyMany($ids)
+    {
+        $ids=explode(",",$ids);
+        $counter_deleted = 0;
+        $counter_no_allow = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $participant = SeasonParticipant::find($ids[$i]);
+            if ($participant) {
+                // if (!$participant->hasTeams()) {
+                    $counter_deleted = $counter_deleted +1;
+                    event(new TableWasDeleted($participant, $participant->name));
+                    $participant->delete();
+                // } else {
+                    // $counter_no_allow = $counter_no_allow +1;
+                // }
+            }
+        }
+        if ($counter_deleted > 0) {
+            // if ($counter_no_allow > 0) {
+                // return redirect()->route('admin.teams_categories')->with('success', 'Se han eliminado las categorías seleccionadas correctamente excepto las que tienen equipos asociados.');
+            // } else {
+                return redirect()->route('admin.season_participants')->with('success', 'Se han eliminado los participantes seleccionados correctamente.');
+            // }
+        } else {
+            // if ($counter_no_allow > 0) {
+                // return back()->with('warning', 'Acción cancelada. No es posible eliminar las categorías seleccionadas ya que tienen equipos asociados.');
+            // } else {
+                return back()->with('warning', 'Acción cancelada. Los participantes que querías eliminar ya no existen.');
+            // }
+        }
+    }
 
-    // public function duplicate($id)
-    // {
-    //     $category = TeamCategory::find($id);
+    public function exportFile($filename, $type, $filterSeason, $order, $ids = null)
+    {
+        if (!$order) {
+            $order = 'default';
+        }
+        $order_ext = $this->getOrder($order);
 
-    // 	if ($category) {
-	   //  	$newCategory = $category->replicate();
-	   //  	$newCategory->name .= " (copia)";
-    //         $newCategory->slug = str_slug($newCategory->name);
+        if ($filterSeason == "null") { $filterSeason =""; }
 
-	   //  	$newCategory->save();
+        if ($ids) {
+            $ids = explode(",",$ids);
+            $participants = SeasonParticipant::whereIn('id', $ids)
+                ->seasonId($filterSeason)
+                ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+                ->get()->toArray();
+        } else {
+            $participants = SeasonParticipant::seasonId($filterSeason)
+                ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+                ->get()->toArray();
+        }
 
-    //         if ($newCategory->save()) {
-    //             event(new TableWasSaved($newCategory, $newCategory->name));
-    //         }
+        if (!$filename) {
+            $filename = 'participantes_export' . time();
+        } else {
+            $filename = str_slug($filename);
+        }
+        return \Excel::create($filename, function($excel) use ($participants) {
+            $excel->sheet('participantes', function($sheet) use ($participants)
+            {
+                $sheet->fromArray($participants);
+            });
+        })->download($type);
+    }
 
-	   //  	return redirect()->route('admin.teams_categories')->with('success', 'Se ha duplicado la categoría "' . $newCategory->name . '" correctamente.');
-	   //  } else {
-	   //  	return back()->with('warning', 'Acción cancelada. La categoría que querías duplicar ya no existe. Se ha actualizado la lista.');
-	   //  }
-    // }
+    public function importFile(Request $request)
+    {
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::load($path)->get();
 
-    // public function duplicateMany($ids)
-    // {
-    // 	$ids=explode(",",$ids);
-    // 	$counter = 0;
-    // 	for ($i=0; $i < count($ids); $i++)
-    // 	{
-	   //  	$original = TeamCategory::find($ids[$i]);
-	   //  	if ($original) {
-	   //  		$counter = $counter +1;
-		  //   	$category = $original->replicate();
-		  //   	$category->name .= " (copia)";
-    //             $category->slug = str_slug($category->name);
+            if ($data->count()) {
+                foreach ($data as $key => $value) {
+                    try {
+                        $participant = new SeasonParticipant;
+                        $participant->name = $value->name;
+                        $participant->season_id = $value->season_id;
+                        $participant->team_id = $value->team_id;
+                        $participant->user_id = $value->user_id;
+                        $participant->budget = $value->budget;
+                        $participant->paid_clauses = $value->paid_clauses;
+                        $participant->clauses_received = $value->clauses_received;
+                        $participant->slug = str_slug($value->name);
 
-		  //   	$category->save();
-
-    //             if ($category->save()) {
-    //                 event(new TableWasSaved($category, $category->name));
-    //             }
-		  //   }
-    // 	}
-    // 	if ($counter > 0) {
-    // 		return redirect()->route('admin.teams_categories')->with('success', 'Se han duplicado las categorías seleccionadas correctamente.');
-    // 	} else {
-    // 		return back()->with('warning', 'Acción cancelada. Las categorías que querías duplicar ya no existen. Se ha actualizado la lista.');
-    // 	}
-    // }
-
-    // public function exportFile($filename, $type, $filterName, $order, $ids = null)
-    // {
-    //     if (!$order) {
-    //         $order = 'default';
-    //     }
-    //     $order_ext = $this->getOrder($order);
-
-    //     if ($filterName == "null") { $filterName =""; }
-
-    //     if ($ids) {
-    //         $ids = explode(",",$ids);
-    //         $categories = TeamCategory::whereIn('id', $ids)
-    //             ->name($filterName)
-    //             ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
-    //             ->get()->toArray();
-    //     } else {
-    //         $categories = TeamCategory::name($filterName)
-    //             ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
-    //             ->get()->toArray();
-    //     }
-
-    //     if (!$filename) {
-    //         $filename = 'categorias_equipos_export' . time();
-    //     } else {
-    //         $filename = str_slug($filename);
-    //     }
-    //     return \Excel::create($filename, function($excel) use ($categories) {
-    //         $excel->sheet('categorias_equipos', function($sheet) use ($categories)
-    //         {
-    //             $sheet->fromArray($categories);
-    //         });
-    //     })->download($type);
-    // }
-
-    // public function importFile(Request $request)
-    // {
-    //     if ($request->hasFile('import_file')) {
-    //         $path = $request->file('import_file')->getRealPath();
-    //         $data = \Excel::load($path)->get();
-
-    //         if ($data->count()) {
-    //             foreach ($data as $key => $value) {
-    //                 try {
-    //                     $category = new TeamCategory;
-    //                     $category->name = $value->name;
-    //                     $category->slug = str_slug($value->name);
-
-    //                     if ($category) {
-    //                         $category->save();
-    //                         if ($category->save()) {
-    //                             event(new TableWasImported($category, $category->name));
-    //                         }
-    //                     }
-    //                 }
-    //                 catch (\Exception $e) {
-    //                     return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
-    //                 }
-    //             }
-    //             return back()->with('success', 'Datos importados correctamente.');
-    //         } else {
-    //             return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
-    //         }
-    //     }
-    //     return back()->with('error', 'No has cargado ningún archivo.');
-    // }
+                        if ($participant) {
+                            $participant->save();
+                            if ($participant->save()) {
+                                event(new TableWasImported($participant, $participant->name));
+                            }
+                        }
+                    }
+                    catch (\Exception $e) {
+                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
+                    }
+                }
+                return back()->with('success', 'Datos importados correctamente.');
+            } else {
+                return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
+            }
+        }
+        return back()->with('error', 'No has cargado ningún archivo.');
+    }
 
 
     /*

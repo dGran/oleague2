@@ -36,4 +36,11 @@ class SeasonParticipant extends Model
     {
         return $this->hasmany('App\SeasonParticipantCashHistory', 'participant_id', 'id');
     }
+
+    public function scopeSeasonId($query, $seasonID)
+    {
+        if (trim($seasonID) !="") {
+            $query->where("season_id", "=", $seasonID);
+        }
+    }
 }

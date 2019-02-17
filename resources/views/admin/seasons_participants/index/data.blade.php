@@ -19,12 +19,14 @@
             <col width="0%" />
             <col width="0%" />
             <col width="100%" />
-            <col width="0%" />
-            <col width="0%" />
+            <col width="0%" class="d-none d-sm-table-cell" />
             <col width="0%" />
         </colgroup>
 
         <thead>
+            <tr class="border-top">
+                <th colspan="5" class="p-3 bg-light">Temporada 5 (cambiar por temporada actual (general_settings)</th>
+            </tr>
             <tr class="border-top">
                 <th scope="col" class="select">
                     <div class="pretty p-icon p-jelly mr-0">
@@ -35,9 +37,8 @@
                         </div>
                     </div>
                 </th>
-                <th scope="col" colspan="2" class="" onclick="$('#allMark').trigger('click');">Usuario</th>
-                <th scope="col" colspan="2" class="d-none d-sm-table-cell" onclick="$('#allMark').trigger('click');">Equipo</th>
-                <th scope="col" class="d-none d-xl-table-cell" onclick="$('#allMark').trigger('click');">Temporada</th>
+                <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Equipo</th>
+                <th scope="col" class="d-none d-sm-table-cell" onclick="$('#allMark').trigger('click');">Usuario</th>
                 <th class="text-right" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
@@ -57,50 +58,36 @@
                         </div>
                     </td>
 
-                    @if ($participant->user_id)
-                        <td onclick="rowSelect(this)">
-                            <img src="{{ $participant->user->avatar() }}" alt="" width="38" class="rounded-circle">
-                        </td>
-                        <td class="text-nowrap" onclick="rowSelect(this)">
-                            {{ $participant->user->name }}
-                            @if ($participant->team_id)
-                                <small class="d-table-cell d-sm-none">{{ $participant->team->name }}</small>
-                            @else
-                                <small class="d-table-cell d-sm-none">Equipo no definido</small>
-                            @endif
-                        </td>
-                    @else
-                        <td onclick="rowSelect(this)">
-                            <img src="{{ asset('img/user_unknown.png') }}" alt="" width="38">
-                        </td>
-                        <td class="text-nowrap" onclick="rowSelect(this)">
-                            No definido
-                            @if ($participant->team_id)
-                                <small class="d-table-cell d-sm-none">{{ $participant->team->name }}</small>
-                            @else
-                                <small class="d-table-cell d-sm-none">Equipo no definido</small>
-                            @endif
-                        </td>
-                    @endif
-
                     @if ($participant->team_id)
-                        <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
-                            <img src="{{ $participant->team->getLogoFormatted() }}" alt="" width="38">
+                        <td onclick="rowSelect(this)">
+                            <img src="{{ $participant->team->getLogoFormatted() }}" alt="" width="32">
                         </td>
-                        <td class="text-nowrap d-none d-sm-table-cell"  onclick="rowSelect(this)">
+                        <td class="text-nowrap"  onclick="rowSelect(this)">
                             {{ $participant->team->name }}
+                            <div class="d-table-cell d-sm-none">
+                                @if ($participant->user_id)
+                                    <small>{{ $participant->user->name }}</small>
+                                @else
+                                    <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                                @endif
+
+                            </div>
                         </td>
                     @else
-                        <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
-                            <img src="{{ asset('img/team_no_image.png') }}" alt="" width="38">
+                        <td onclick="rowSelect(this)">
+                            <img src="{{ asset('img/team_no_image.png') }}" alt="" width="32">
                         </td>
-                        <td class="text-nowrap d-none d-sm-table-cell" onclick="rowSelect(this)">
+                        <td class="text-nowrap" onclick="rowSelect(this)">
                             No definido
                         </td>
                     @endif
 
-                    <td class="text-nowrap d-none d-xl-table-cell"  onclick="rowSelect(this)">
-                        {{ $participant->season->name }}
+                    <td class="text-nowrap d-none d-sm-table-cell" onclick="rowSelect(this)">
+                        @if ($participant->user_id)
+                            {{ $participant->user->name }}
+                        @else
+                            <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                        @endif
                     </td>
 
                     <td class="actions">

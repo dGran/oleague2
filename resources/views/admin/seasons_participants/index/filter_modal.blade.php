@@ -1,7 +1,7 @@
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form id="frmFilter" role="search" method="get" action="{{ route('admin.teams_categories') }}">
+            <form id="frmFilter" role="search" method="get" action="{{ route('admin.season_participants') }}">
                 <div class="modal-header bg-light">
                     <h4 class="m-0">Opciones de tabla</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -19,16 +19,14 @@
                             </h5>
                         </div>
                         <div class="float-right">
-                            @if ($filterName)
+                            @if ($filterSeason)
                                 <ul class="nav">
-                                    @if ($filterName)
-                                        <li class="nav-item">
-                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterName()">
-                                                <span class="r-1">Nombre</span>
-                                                <i class="fas fa-times"></i>
-                                            </a>
-                                        </li>
-                                    @endif
+                                    <li class="nav-item">
+                                        <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterSeason()">
+                                            <span class="r-1">Nombre</span>
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </li>
                                 </ul>
                             @endif
                         </div>
@@ -37,8 +35,17 @@
                     <div class="py-3 border-top">
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <label for="filterName" class="mb-1">Nombre</label>
-                                <input class="form-control" name="filterName" id="filterName" type="text" value="{{ $filterName ? $filterName : '' }}" aria-describedby="filterNameHelp">
+                                <label for="filterSeasonLarge" class="mb-1">Temporadas</label>
+                                <select name="filterSeason" id="filterSeason" class="selectpicker form-control filterSeason">
+                                    <option value="">Todas las temporadas</option>
+                                    @foreach ($seasons as $season)
+                                        @if ($season->id == $filterSeason)
+                                            <option selected value="{{ $season->id }}">{{ $season->name }}</option>
+                                        @else
+                                            <option value="{{ $season->id }}">{{ $season->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 

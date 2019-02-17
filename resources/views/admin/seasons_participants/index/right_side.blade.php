@@ -1,6 +1,6 @@
 <div class="tableOptions animated fadeIn">
-    <a href="{{ route('admin.teams_categories.add') }}" class="btn btn-primary" id="btnAdd">
-        <i class="fas fa-plus mr-2"></i><span>Nueva</span>
+    <a href="{{ route('admin.season_participants.add') }}" class="btn btn-primary" id="btnAdd">
+        <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
@@ -28,7 +28,7 @@
                     lang="{{ app()->getLocale() }}"
                     role="form"
                     method="POST"
-                    action="{{ route('admin.teams_categories.import.file') }}"
+                    action="{{ route('admin.season_participants.import.file') }}"
                     enctype="multipart/form-data"
                     data-toggle="validator"
                     autocomplete="off">
@@ -54,12 +54,6 @@
             </a>
         </li>
         <li class="list-group-item border-0 px-0">
-            <a href="" onclick="duplicateMany()">
-                <span class="fas fa-clone fa-fw mr-1"></span>
-                <span>Duplicar</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
             <a href="" onclick="export_file_selected('xls')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.xls)</span>
@@ -80,32 +74,36 @@
     </ul>
 </div>
 
-<form class="frmFilter" role="search" method="get" action="{{ route('admin.teams_categories') }}">
-
-{{-- search --}}
-<div class="form-group row my-3">
-    <div class="col">
-    <div class="searchbox">
-        <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
-        <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off">
-        <span class="search-clear"><i class="fas fa-times"></i></span>
-        </div>
-    </div>
-</div>
+<form class="frmFilter" role="search" method="get" action="{{ route('admin.season_participants') }}">
 
 <div class="mt-4">
-    @if ($filterName)
+    @if ($filterSeason)
         <ul class="nav mb-2">
-            @if ($filterName)
-                <li class="nav-item">
-                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterName()">
-                        <span class="r-1">Nombre</span>
-                        <i class="fas fa-times"></i>
-                    </a>
-                </li>
-            @endif
+            <li class="nav-item">
+                <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterSeason()">
+                    <span class="r-1">Temporada</span>
+                    <i class="fas fa-times"></i>
+                </a>
+            </li>
         </ul>
     @endif
+    <h4 class="p-2 bg-light">Filtros</h4>
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterSeasonLarge" class="mb-1">Temporadas</label>
+            <select name="filterSeason" id="filterSeasonLarge" class="selectpicker form-control filterSeason" onchange="applyfilterSeason()">
+                <option value="">Todas las temporadas</option>
+                @foreach ($seasons as $season)
+                    @if ($season->id == $filterSeason)
+                        <option selected value="{{ $season->id }}">{{ $season->name }}</option>
+                    @else
+                        <option value="{{ $season->id }}">{{ $season->name }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+    </div>
+
 </div>
 
 <div class="mt-4">

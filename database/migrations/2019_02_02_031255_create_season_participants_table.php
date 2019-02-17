@@ -20,8 +20,8 @@ class CreateSeasonParticipantsTable extends Migration
             $table->integer('team_id')->unsigned()->nullable()->index();
             $table->integer('user_id')->unsigned()->nullable()->index();
             $table->integer('budget')->index()->default(0);
-            $table->integer('paid_clauses');
-            $table->integer('clauses_received');
+            $table->integer('paid_clauses')->default(0);
+            $table->integer('clauses_received')->default(0);
             $table->string('slug');
         });
     }

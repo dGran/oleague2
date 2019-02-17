@@ -119,9 +119,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::put('/admin/participantes/{id}', 'SeasonParticipantController@update')->name('admin.season_participants.update');
 	Route::delete('/admin/participantes/eliminar/{id}', 'SeasonParticipantController@destroy')->name('admin.season_participants.destroy');
 	Route::get('/admin/participantes/eliminar-seleccionados/{ids}', 'SeasonParticipantController@destroyMany')->name('admin.season_participants.destroy.many');
-	Route::get('/admin/participantes/duplicar/{id}', 'SeasonParticipantController@duplicate')->name('admin.season_participants.duplicate');
-	Route::get('/admin/participantes/duplicar-seleccionados/{ids}', 'SeasonParticipantController@duplicateMany')->name('admin.season_participants.duplicate.many');
-	Route::get('/admin/participantes/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'SeasonParticipantController@exportFile')->name('admin.season_participants.export.file');
+	Route::get('/admin/participantes/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonParticipantController@exportFile')->name('admin.season_participants.export.file');
 	Route::post('/admin/participantes/importar', 'SeasonParticipantController@importFile')->name('admin.season_participants.import.file');
 
 

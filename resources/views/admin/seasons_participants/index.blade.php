@@ -8,7 +8,7 @@
 
             @include('admin.seasons_participants.common.notifications')
 
-            {{-- @include('admin.seasons_participants.index.toolbar_options') --}}
+            @include('admin.seasons_participants.index.toolbar_options')
 
             @include('admin.seasons_participants.index.data')
 
@@ -17,11 +17,11 @@
 @endsection
 
 @section('right-side')
-    {{-- @include('admin.seasons_participants.index.right_side') --}}
+    @include('admin.seasons_participants.index.right_side')
 @endsection
 
 @section('modal')
-    {{-- @include('admin.seasons_participants.index.filter_modal') --}}
+    @include('admin.seasons_participants.index.filter_modal')
 @endsection
 
 @section('js')
