@@ -76,17 +76,7 @@
 
 <form class="frmFilter" role="search" method="get" action="{{ route('admin.season_participants') }}">
 
-<div class="mt-4">
-    @if ($filterSeason)
-        <ul class="nav mb-2">
-            <li class="nav-item">
-                <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterSeason()">
-                    <span class="r-1">Temporada</span>
-                    <i class="fas fa-times"></i>
-                </a>
-            </li>
-        </ul>
-    @endif
+<div class="mt-2">
     <h4 class="p-2 bg-light">Filtros</h4>
     <div class="form-group row">
         <div class="col-sm-12">

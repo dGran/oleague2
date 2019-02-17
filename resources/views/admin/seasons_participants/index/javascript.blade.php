@@ -24,20 +24,6 @@
         $('.frmFilter').submit();
     }
 
-    function cancelFilterSeason() {
-        window.event.preventDefault();
-        $('.filterSeason').val('0');
-        if (order || pagination) {
-            $('.frmFilter').submit();
-        } else {
-            cancelFilters();
-        }
-    }
-
-    function cancelFilters() {
-        window.location.href = '{{ route("admin.teams_categories") }}';
-    }
-
     $(".btn-delete").click(function(e) {
         window.event.preventDefault();
         var row = $(this).parents('tr');
@@ -82,6 +68,42 @@
         //         timer: 3000,
         //     });
         // }
+
+    });
+
+    $(".btn-kickout").click(function(e) {
+        window.event.preventDefault();
+        var row = $(this).parents('tr');
+        var id = row.attr("data-id");
+        var name = row.attr("data-name");
+        var user_name = row.attr("data-user-name");
+
+        swal({
+            title: "¿Estás seguro?",
+            text: 'Se va a expulsar el usuario "' + user_name + '" del participante "' + name + '"',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                $(location).attr('href', 'participantes/expulsar/' + id);
+            }
+        });
 
     });
 

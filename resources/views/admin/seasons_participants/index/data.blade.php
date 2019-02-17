@@ -52,7 +52,7 @@
             @foreach ($participants as $participant)
                 {{-- comentamos la linea por el data-allow-delete --}}
                 {{-- <tr class="border-top" data-id="{{ $participant->id }}" data-name="{{ $participant->name }}" data-allow-delete="{{ $participant->teams->count() > 0 ? 0 : 1 }}"> --}}
-                <tr class="border-top" data-id="{{ $participant->id }}" data-name="{{ $participant->name }}">
+                <tr class="border-top" data-id="{{ $participant->id }}" data-name="{{ $participant->name }}" data-user-name="{{ $participant->user_id ? $participant->user->name : '' }}">
                     <td class="select">
                         <div class="pretty p-icon p-jelly mr-0">
                             <input type="checkbox" class="mark" value="{{ $participant->id }}" name="teamId[]" onchange="showHideRowOptions(this)">
@@ -104,6 +104,12 @@
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar
                             </a>
+                            @if ($participant->user_id)
+                                <a href="" class="btn-kickout dropdown-item text-danger" value="Expulsar">
+                                    <i class="fas fa-sign-out-alt fa-fw mr-1"></i>
+                                    Expulsar usuario
+                                </a>
+                            @endif
                             <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
                                 <i class="fas fa-trash fa-fw mr-1"></i>
                                 Eliminar

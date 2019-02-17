@@ -18,18 +18,6 @@
                                 Filtros
                             </h5>
                         </div>
-                        <div class="float-right">
-                            @if ($filterSeason)
-                                <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterSeason()">
-                                            <span class="r-1">Nombre</span>
-                                            <i class="fas fa-times"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            @endif
-                        </div>
                     </div>
 
                     <div class="py-3 border-top">

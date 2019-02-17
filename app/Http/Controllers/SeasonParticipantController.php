@@ -121,6 +121,28 @@ class SeasonParticipantController extends Controller
 
     }
 
+    public function kickout($id)
+    {
+        $participant = SeasonParticipant::find($id);
+
+        if ($participant) {
+
+            $participant->user_id = null;
+            $participant->save();
+
+            if ($participant->update()) {
+                event(new TableWasUpdated($participant, $participant->name));
+                return redirect()->route('admin.season_participants')->with('success', 'Usuario expulsado en el participante "' . $participant->name . '" correctamente.');
+            } else {
+                return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+            }
+
+        } else {
+            return redirect()->route('admin.season_participants')->with('warning', 'Acción cancelada. El participante del que quer querías expulsar al usuario ya no existe. Se ha actualizado la lista');
+        }
+
+    }
+
     public function destroy($id)
     {
         $participant = SeasonParticipant::find($id);
