@@ -3,6 +3,7 @@
 use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Api;
 use App\GeneralSetting;
+use App\Season;
 
 function validateUrl($url)
 {
@@ -56,4 +57,10 @@ function send_telegram_notification($text) {
         'parse_mode' => 'HTML',
         'text' => $text
     ]);
+}
+
+function active_season() {
+	$season_id = GeneralSetting::first()->active_season_id;
+	$season = Season::find($season_id);
+	return $season;
 }

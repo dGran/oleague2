@@ -92,7 +92,6 @@
         <div class="col-sm-12">
             <label for="filterSeasonLarge" class="mb-1">Temporadas</label>
             <select name="filterSeason" id="filterSeasonLarge" class="selectpicker form-control filterSeason" onchange="applyfilterSeason()">
-                <option value="">Todas las temporadas</option>
                 @foreach ($seasons as $season)
                     @if ($season->id == $filterSeason)
                         <option selected value="{{ $season->id }}">{{ $season->name }}</option>

@@ -17,7 +17,13 @@ class SeasonParticipantController extends Controller
 {
     public function index()
     {
-        $filterSeason = request()->filterSeason;
+        if (request()->filterSeason == null) {
+            $filterSeason = active_season()->id;
+        } else {
+            $filterSeason = request()->filterSeason;
+        }
+        $filterSeasonName = Season::find($filterSeason)->name;
+
         $order = request()->order;
         $pagination = request()->pagination;
 
@@ -35,7 +41,7 @@ class SeasonParticipantController extends Controller
         $participants = SeasonParticipant::seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
         $seasons = Season::orderBy('name', 'asc')->get();
 
-    	return view('admin.seasons_participants.index', compact('participants', 'seasons', 'filterSeason', 'order', 'pagination'));
+    	return view('admin.seasons_participants.index', compact('participants', 'seasons', 'filterSeason', 'filterSeasonName', 'order', 'pagination'));
     }
 
     // public function add()

@@ -25,7 +25,12 @@
 
         <thead>
             <tr class="border-top">
-                <th colspan="5" class="p-3 bg-light">Temporada 5 (cambiar por temporada actual (general_settings)</th>
+                <th colspan="5" class="p-3 bg-light">
+                    {{ $filterSeasonName }}
+                    @if ($filterSeason == active_season()->id)
+                        <span class="badge badge-success p-1 ml-2">TEMPORADA ACTIVA</span>
+                    @endif
+                </th>
             </tr>
             <tr class="border-top">
                 <th scope="col" class="select">
