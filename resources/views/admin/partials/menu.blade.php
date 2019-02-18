@@ -46,11 +46,11 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a href="">
+<li class="item {{ Request::is('admin/temporada-jugadores*') ? 'current' : '' }}">
+    <a href="{{ route('admin.season_players') }}">
         <span>
             <i class="fas fa-user-shield fa-fw mr-2"></i>
-            Plantillas
+            Jugadores
         </span>
     </a>
 </li>
@@ -67,22 +67,6 @@
         <span>
             <i class="fas fa-trophy fa-fw mr-2"></i>
             Competición
-        </span>
-    </a>
-</li>
-{{-- <li class="item {{ Request::is('admin/seasons*') ? 'current' : '' }}">
-    <a href="{{ route('admin.seasons') }}">
-        <span>
-            <i class="fas fa-table fa-fw mr-2"></i>
-            Temporadas
-        </span>
-    </a>
-</li> --}}
-<li class="item pending">
-    <a href="">
-        <span>
-            <i class="fas fa-exchange-alt fa-fw mr-2"></i>
-            Traspasos
         </span>
     </a>
 </li>

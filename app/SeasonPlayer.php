@@ -26,4 +26,11 @@ class SeasonPlayer extends Model
     {
         return $this->hasOne('App\SeasonParticipant', 'id', 'participant_id');
     }
+
+    public function scopeSeasonId($query, $seasonID)
+    {
+        if (trim($seasonID) !="") {
+            $query->where("season_id", "=", $seasonID);
+        }
+    }
 }

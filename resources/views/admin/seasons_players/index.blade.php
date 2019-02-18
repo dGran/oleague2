@@ -27,3 +27,4 @@
 @section('js')
     @include('admin.seasons_players.index.javascript')
 @endsection
+

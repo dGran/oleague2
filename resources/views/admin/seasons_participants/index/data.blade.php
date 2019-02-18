@@ -21,12 +21,18 @@
             <col width="100%" />
             <col width="0%" class="d-none d-sm-table-cell" />
             <col width="0%" />
+            @if ($active_season->use_rosters)
+                <col width="0%" />
+            @endif
+            @if ($active_season->use_economy)
+                <col width="0%" />
+            @endif
         </colgroup>
 
         <thead>
             <tr class="border-top">
-                <th colspan="5" class="p-3 bg-light">
-                    {{ $filterSeasonName }}
+                <th colspan="7" class="p-3 bg-light">
+                    {{ $active_season->name }}
                     @if ($filterSeason == active_season()->id)
                         <span class="badge badge-success p-1 ml-2">TEMPORADA ACTIVA</span>
                     @endif
@@ -42,9 +48,20 @@
                         </div>
                     </div>
                 </th>
-                <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Equipo</th>
-                <th scope="col" class="d-none d-sm-table-cell" onclick="$('#allMark').trigger('click');">Usuario</th>
+                @if ($active_season->participant_has_team)
+                    <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell">Equipo</th>
+                    <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="d-table-cell d-sm-none">Participante</th>
+                    <th scope="col" class="d-none d-sm-table-cell" onclick="$('#allMark').trigger('click');">Usuario</th>
+                @else
+                    <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Participante</th>
+                @endif
                 <th class="text-right" onclick="$('#allMark').trigger('click');"></th>
+                @if ($active_season->use_rosters)
+                    <th onclick="$('#allMark').trigger('click');"></th>
+                @endif
+                @if ($active_season->use_economy)
+                    <th onclick="$('#allMark').trigger('click');"></th>
+                @endif
             </tr>
         </thead>
 
@@ -63,43 +80,88 @@
                         </div>
                     </td>
 
-                    @if ($participant->team_id)
-                        <td onclick="rowSelect(this)">
-                            <img src="{{ $participant->team->getLogoFormatted() }}" alt="" width="32">
-                        </td>
-                        <td class="text-nowrap"  onclick="rowSelect(this)">
-                            {{ $participant->team->name }}
-                            <div class="d-table-cell d-sm-none">
-                                @if ($participant->user_id)
-                                    <small>{{ $participant->user->name }}</small>
-                                @else
-                                    <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
-                                @endif
+                    @if ($active_season->participant_has_team)
 
-                            </div>
+                        @if ($participant->team_id)
+                            <td onclick="rowSelect(this)">
+                                <img src="{{ $participant->team->getLogoFormatted() }}" alt="" width="32">
+                            </td>
+                            <td class="text-nowrap name"  onclick="rowSelect(this)">
+                                {{ $participant->team->name }}
+                                <div class="d-table-cell d-sm-none">
+                                    @if ($participant->user_id)
+                                        <small>{{ $participant->user->name }}</small>
+                                    @else
+                                        <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                                    @endif
+
+                                </div>
+                            </td>
+                        @else
+                            <td onclick="rowSelect(this)">
+                                <img src="{{ asset('img/team_no_image.png') }}" alt="" width="32">
+                            </td>
+                            <td class="text-nowrap" onclick="rowSelect(this)">
+                                No definido
+                            </td>
+                        @endif
+
+                        <td class="text-nowrap d-none d-sm-table-cell" onclick="rowSelect(this)">
+                            @if ($participant->user_id)
+                                {{ $participant->user->name }}
+                            @else
+                                <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                            @endif
                         </td>
+
                     @else
-                        <td onclick="rowSelect(this)">
-                            <img src="{{ asset('img/team_no_image.png') }}" alt="" width="32">
-                        </td>
-                        <td class="text-nowrap" onclick="rowSelect(this)">
-                            No definido
-                        </td>
+
+                        @if ($participant->user_id)
+                            <td onclick="rowSelect(this)">
+                                <img src="{{ $participant->user->avatar() }}" alt="" width="32">
+                            </td>
+                            <td class="text-nowrap"  onclick="rowSelect(this)">
+                                {{ $participant->user->name }}
+                            </td>
+                        @else
+                            <td onclick="rowSelect(this)">
+                                <img src="{{ asset('img/user_unknown.png') }}" alt="" width="32">
+                            </td>
+                            <td class="text-nowrap" onclick="rowSelect(this)">
+                                No definido
+                            </td>
+                        @endif
+
                     @endif
 
-                    <td class="text-nowrap d-none d-sm-table-cell" onclick="rowSelect(this)">
-                        @if ($participant->user_id)
-                            {{ $participant->user->name }}
-                        @else
-                            <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
-                        @endif
-                    </td>
+                    @if ($active_season->use_rosters)
+                        <td>
+                            <a href="" style="font-size: 1.25em"><i class="fas fa-user-shield"></i></a>
+                        </td>
+                    @endif
+                    @if ($active_season->use_economy)
+                        <td>
+                            <a href="" style="font-size: 1.25em"><i class="fas fa-piggy-bank"></i></a>
+                        </td>
+                    @endif
 
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
+                            @if ($active_season->use_rosters)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnEdit{{ $participant->id }}">
+                                    <i class="fas fa-user-shield fa-fw mr-1"></i>
+                                    Plantilla
+                                </a>
+                            @endif
+                            @if ($active_season->use_economy)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnEdit{{ $participant->id }}">
+                                    <i class="fas fa-piggy-bank fa-fw mr-1"></i>
+                                    Historial de economía
+                                </a>
+                            @endif
                             <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnEdit{{ $participant->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar

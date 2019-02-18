@@ -124,13 +124,15 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::post('/admin/participantes/importar', 'SeasonParticipantController@importFile')->name('admin.season_participants.import.file');
 
 	// Season Players
-	Route::get('/admin/{season_slug}/jugadores', 'SeasonPlayerController@index')->name('admin.season_players');
-	Route::get('/admin/{season_slug}/jugadores/nuevo', 'SeasonPlayerController@add')->name('admin.season_players.add');
-	Route::post('/admin/{season_slug}/jugadores/nuevo', 'SeasonPlayerController@save')->name('admin.season_players.save');
-	Route::get('/admin/{season_slug}/jugadores/{id}', 'SeasonPlayerController@edit')->name('admin.season_players.edit');
-	Route::put('/admin/{season_slug}/jugadores/{id}', 'SeasonPlayerController@update')->name('admin.season_players.update');
-	Route::delete('/admin/{season_slug}/jugadores/eliminar/{id}', 'SeasonPlayerController@destroy')->name('admin.season_players.destroy');
-	Route::get('/admin/{season_slug}/jugadores/eliminar-seleccionados/{ids}', 'SeasonPlayerController@destroyMany')->name('admin.season_players.destroy.many');
-	Route::get('/admin/{season_slug}/jugadores/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonPlayerController@exportFile')->name('admin.season_players.export.file');
-	Route::post('/admin/{season_slug}/jugadores/importar', 'SeasonPlayerController@importFile')->name('admin.season_players.import.file');
+	Route::get('/admin/temporada-jugadores', 'SeasonPlayerController@index')->name('admin.season_players');
+	Route::get('/admin/temporada-jugadores/importar_test', 'SeasonPlayerController@import_full_roster')->name('admin.season_players.import_test');
+
+	Route::get('/admin/temporada-jugadores/jugadores/nuevo', 'SeasonPlayerController@add')->name('admin.season_players.add');
+	Route::post('/admin/temporada-jugadores/jugadores/nuevo', 'SeasonPlayerController@save')->name('admin.season_players.save');
+	Route::get('/admin/temporada-jugadores/jugadores/{id}', 'SeasonPlayerController@edit')->name('admin.season_players.edit');
+	Route::put('/admin/temporada-jugadores/jugadores/{id}', 'SeasonPlayerController@update')->name('admin.season_players.update');
+	Route::delete('/admin/temporada-jugadores/jugadores/eliminar/{id}', 'SeasonPlayerController@destroy')->name('admin.season_players.destroy');
+	Route::get('/admin/temporada-jugadores/jugadores/eliminar-seleccionados/{ids}', 'SeasonPlayerController@destroyMany')->name('admin.season_players.destroy.many');
+	Route::get('/admin/temporada-jugadores/jugadores/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonPlayerController@exportFile')->name('admin.season_players.export.file');
+	Route::post('/admin/temporada-jugadores/jugadores/importar', 'SeasonPlayerController@importFile')->name('admin.season_players.import.file');
 });

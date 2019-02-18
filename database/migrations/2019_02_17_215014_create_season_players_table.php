@@ -18,7 +18,7 @@ class CreateSeasonPlayersTable extends Migration
             $table->integer("season_id")->unsigned()->index();
             $table->integer("player_id")->unsigned()->index();
             $table->integer("participant_id")->unsigned()->nullable()->index();
-            $table->integer("salary")->default(0.5);
+            $table->decimal("salary")->default(0.5);
             $table->integer("price")->default(5);
             $table->boolean('allow_clause_pay')->default(1);
             $table->boolean('transferable')->default(0)->index();
