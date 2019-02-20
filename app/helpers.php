@@ -60,7 +60,12 @@ function send_telegram_notification($text) {
 }
 
 function active_season() {
-	$season_id = GeneralSetting::first()->active_season_id;
-	$season = Season::find($season_id);
-	return $season;
+	if (DB::table('general_settings')->exists()) {
+		$season_id = GeneralSetting::first()->active_season_id;
+		if ($season_id) {
+			$season = Season::find($season_id);
+			return $season;
+		}
+	}
+	return false;
 }

@@ -38,22 +38,44 @@
         </span>
     </a>
 </li>
-<li class="item {{ Request::is('admin/participantes*') ? 'current' : '' }}">
-    <a href="{{ route('admin.season_participants') }}">
-        <span>
-            <i class="fas fa-users fa-fw mr-2"></i>
-            Participantes
-        </span>
-    </a>
-</li>
-<li class="item {{ Request::is('admin/temporada-jugadores*') ? 'current' : '' }}">
-    <a href="{{ route('admin.season_players') }}">
-        <span>
-            <i class="fas fa-user-shield fa-fw mr-2"></i>
-            Jugadores
-        </span>
-    </a>
-</li>
+@if (active_season())
+    <li class="item {{ Request::is('admin/participantes*') ? 'current' : '' }}">
+        <a href="{{ route('admin.season_participants') }}">
+            <span>
+                <i class="fas fa-users fa-fw mr-2"></i>
+                Participantes
+            </span>
+        </a>
+    </li>
+@else
+    <li class="item pending">
+        <a>
+            <span>
+                <i class="fas fa-users fa-fw mr-2"></i>
+                Participantes
+            </span>
+        </a>
+    </li>
+@endif
+@if (active_season())
+    <li class="item {{ Request::is('admin/temporada-jugadores*') ? 'current' : '' }}">
+        <a href="{{ route('admin.season_players') }}">
+            <span>
+                <i class="fas fa-user-shield fa-fw mr-2"></i>
+                Jugadores
+            </span>
+        </a>
+    </li>
+@else
+    <li class="item pending">
+        <a>
+            <span>
+                <i class="fas fa-user-shield fa-fw mr-2"></i>
+                Jugadores
+            </span>
+        </a>
+    </li>
+@endif
 <li class="item pending">
     <a href="">
         <span>
