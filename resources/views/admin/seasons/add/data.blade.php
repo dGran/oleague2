@@ -49,6 +49,21 @@
             </div>
         </div>
 
+        <div class="form-group row max_min_players">
+            <div class="col-sm-9 offset-md-3">
+                <label for="initial_budget">Mínimo jugadores por plantilla</label>
+                <input type="number" class="form-control" id="min_players" name="min_players" placeholder="Número mínimo de jugadores por plantilla" autofocus value="{{ old('', 0) }}">
+            </div>
+        </div>
+
+
+        <div class="form-group row max_min_players">
+            <div class="col-sm-9 offset-md-3">
+                <label for="initial_budget">Máximo jugadores por plantilla</label>
+                <input type="number" class="form-control" id="max_players" name="max_players" placeholder="Número máximo de jugadores por plantilla" autofocus value="{{ old('', 0) }}">
+            </div>
+        </div>
+
         <div class="form-group row">
             <div class="col-sm-10">
                 <div class="custom-control custom-checkbox">
@@ -60,10 +75,10 @@
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="initial_budget" class="col-sm-3 col-form-label">Presupuesto</label>
-            <div class="col-sm-9">
-                <input type="number" class="form-control" id="initial_budget" name="initial_budget" placeholder="Presupuesto inicial" autofocus value="{{ old('initial_budget') }}">
+        <div class="form-group row initial_budget">
+            <div class="col-sm-9 offset-md-3">
+                <label for="initial_budget">Presupuesto</label>
+                <input type="number" class="form-control" id="initial_budget" name="initial_budget" placeholder="Presupuesto inicial" autofocus value="{{ old('initial_budget', 0) }}">
             </div>
         </div>
 
