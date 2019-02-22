@@ -111,20 +111,17 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/temporadas/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'SeasonController@exportFile')->name('admin.seasons.export.file');
 	Route::post('/admin/temporadas/importar', 'SeasonController@importFile')->name('admin.seasons.import.file');
 
-
-	Route::middleware('activeSeason')->group(function () {
-		// Season Participants
-		Route::get('/admin/participantes', 'SeasonParticipantController@index')->name('admin.season_participants');
-		Route::get('/admin/participantes/nuevo', 'SeasonParticipantController@add')->name('admin.season_participants.add');
-		Route::post('/admin/participantes/nuevo', 'SeasonParticipantController@save')->name('admin.season_participants.save');
-		Route::get('/admin/participantes/{id}', 'SeasonParticipantController@edit')->name('admin.season_participants.edit');
-		Route::put('/admin/participantes/{id}', 'SeasonParticipantController@update')->name('admin.season_participants.update');
-		Route::get('/admin/participantes/expulsar/{id}', 'SeasonParticipantController@kickout')->name('admin.season_participants.kickout');
-		Route::delete('/admin/participantes/eliminar/{id}', 'SeasonParticipantController@destroy')->name('admin.season_participants.destroy');
-		Route::get('/admin/participantes/eliminar-seleccionados/{ids}', 'SeasonParticipantController@destroyMany')->name('admin.season_participants.destroy.many');
-		Route::get('/admin/participantes/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonParticipantController@exportFile')->name('admin.season_participants.export.file');
-		Route::post('/admin/participantes/importar', 'SeasonParticipantController@importFile')->name('admin.season_participants.import.file');
-	});
+	// Season Participants
+	Route::get('/admin/participantes', 'SeasonParticipantController@index')->name('admin.season_participants');
+	Route::get('/admin/participantes/nuevo', 'SeasonParticipantController@add')->name('admin.season_participants.add');
+	Route::post('/admin/participantes/nuevo', 'SeasonParticipantController@save')->name('admin.season_participants.save');
+	Route::get('/admin/participantes/{id}', 'SeasonParticipantController@edit')->name('admin.season_participants.edit');
+	Route::put('/admin/participantes/{id}', 'SeasonParticipantController@update')->name('admin.season_participants.update');
+	Route::get('/admin/participantes/expulsar/{id}', 'SeasonParticipantController@kickout')->name('admin.season_participants.kickout');
+	Route::delete('/admin/participantes/eliminar/{id}', 'SeasonParticipantController@destroy')->name('admin.season_participants.destroy');
+	Route::get('/admin/participantes/eliminar-seleccionados/{ids}', 'SeasonParticipantController@destroyMany')->name('admin.season_participants.destroy.many');
+	Route::get('/admin/participantes/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonParticipantController@exportFile')->name('admin.season_participants.export.file');
+	Route::post('/admin/participantes/importar', 'SeasonParticipantController@importFile')->name('admin.season_participants.import.file');
 
 	// Season Players
 	Route::get('/admin/temporada-jugadores', 'SeasonPlayerController@index')->name('admin.season_players');

@@ -16,7 +16,11 @@ class SeasonPlayerController extends Controller
     public function index()
     {
         if (request()->filterSeason == null) {
-            $filterSeason = active_season()->id;
+            if (active_season()) {
+                $filterSeason = active_season()->id;
+            } else {
+                $filterSeason = Season::all()->last()->id;
+            }
         } else {
             $filterSeason = request()->filterSeason;
         }

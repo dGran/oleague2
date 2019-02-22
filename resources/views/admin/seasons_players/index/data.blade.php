@@ -27,7 +27,7 @@
             <tr class="border-top">
                 <th colspan="9" class="p-3 bg-light">
                     {{ $active_season->name }}
-                    @if ($filterSeason == active_season()->id)
+                    @if (active_season() && $filterSeason == active_season()->id)
                         <span class="badge badge-success p-1 ml-2">TEMPORADA ACTIVA</span>
                     @endif
                 </th>
