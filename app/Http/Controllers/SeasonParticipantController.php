@@ -21,12 +21,16 @@ class SeasonParticipantController extends Controller
             if (active_season()) {
                 $filterSeason = active_season()->id;
             } else {
-                $filterSeason = Season::all()->last()->id;
+                $seasons = Season::all();
+                if ($seasons->isNotEmpty()) {
+                    $filterSeason = $seasons->last()->id;
+                } else {
+                    $filterSeason = '';
+                }
             }
         } else {
             $filterSeason = request()->filterSeason;
         }
-
         $active_season = Season::find($filterSeason);
 
         $order = request()->order;

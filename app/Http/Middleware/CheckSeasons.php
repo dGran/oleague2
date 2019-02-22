@@ -3,8 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Season;
 
-class ActiveSeason
+class CheckSeasons
 {
     /**
      * Handle an incoming request.
@@ -15,9 +16,10 @@ class ActiveSeason
      */
     public function handle($request, Closure $next)
     {
-        if (active_season()) {
+        $seasons = Season::all();
+        if ($seasons->isNotEmpty()) {
             return $next($request);
         }
-        return redirect('admin')->with('warning', 'No existe ninguna temporada activa');
+        return redirect('admin')->with('warning', 'No se puede acceder a la página ya que no existen temporadas');
     }
 }
