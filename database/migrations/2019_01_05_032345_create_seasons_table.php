@@ -21,6 +21,8 @@ class CreateSeasonsTable extends Migration
             $table->boolean('use_economy')->default(1);
             $table->integer('initial_budget')->default(0);
             $table->boolean('use_rosters')->default(1);
+            $table->integer('min_players')->default(0);
+            $table->integer('max_players')->default(0);
             $table->boolean('change_salaries_period')->default(0);
             $table->boolean('transfers_period')->default(0);
             $table->boolean('free_players_period')->default(0);

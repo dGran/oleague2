@@ -2,6 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form id="frmFilter" role="search" method="get" action="{{ route('admin.players') }}">
+                <input type="hidden" name="filtering" value="true"> {{-- field for controller --}}
                 <div class="modal-header bg-light">
                     <h4 class="m-0">Opciones de tabla</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

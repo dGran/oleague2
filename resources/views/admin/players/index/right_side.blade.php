@@ -93,6 +93,7 @@
 </div>
 
 <form class="frmFilter" role="search" method="get" action="{{ route('admin.players') }}">
+<input type="hidden" name="filtering" value="true"> {{-- field for controller --}}
 
 {{-- search --}}
 <div class="form-group row my-3">

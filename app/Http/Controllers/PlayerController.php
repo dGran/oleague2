@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Player;
 use App\PlayerDB;
+use App\AdminFilter;
 
 use App\Team;
 use App\TeamCategory;
@@ -18,13 +19,73 @@ class PlayerController extends Controller
 {
     public function index()
     {
-    	$filterName = request()->filterName;
-    	$filterPlayerDb = request()->filterPlayerDb;
-        $filterTeam = request()->filterTeam;
-        $filterNation = request()->filterNation;
-        $filterPosition = request()->filterPosition;
-        $order = request()->order;
-        $pagination = request()->pagination;
+        $admin = AdminFilter::where('user_id', '=', \Auth::user()->id)->first();
+        if ($admin) {
+            $filterName = request()->filterName;
+            $filterPlayerDb = request()->filterPlayerDb;
+            $filterTeam = request()->filterTeam;
+            $filterNation = request()->filterNation;
+            $filterPosition = request()->filterPosition;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+            if (!$page) {
+                if ($admin->player_page) {
+                    $page = $admin->player_page;
+                }
+            }
+
+            if (!request()->filtering) { // filtering determine when you use the form and exclude the first access
+                if ($admin->player_filterName) {
+                    $filterName = $admin->player_filterName;
+                }
+                if ($admin->player_filterPlayerDb) {
+                    $filterPlayerDb = $admin->player_filterPlayerDb;
+                }
+                if ($admin->player_filterTeam) {
+                    $filterTeam = $admin->player_filterTeam;
+                }
+                if ($admin->player_filterNation) {
+                    $filterNation = $admin->player_filterNation;
+                }
+                if ($admin->player_filterPosition) {
+                    $filterPosition = $admin->player_filterPosition;
+                }
+                if ($admin->player_order) {
+                    $order = $admin->player_order;
+                }
+                if ($admin->player_pagination) {
+                    $pagination = $admin->player_pagination;
+                }
+            }
+        } else {
+            $admin = AdminFilter::create([
+                'user_id' => \Auth::user()->id,
+            ]);
+            $filterName = request()->filterName;
+            $filterPlayerDb = request()->filterPlayerDb;
+            $filterTeam = request()->filterTeam;
+            $filterNation = request()->filterNation;
+            $filterPosition = request()->filterPosition;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+        }
+
+        $adminFilter = AdminFilter::find($admin->id);
+        $adminFilter->player_filterName = $filterName;
+        $adminFilter->player_filterPlayerDb = $filterPlayerDb;
+        $adminFilter->player_filterTeam = $filterTeam;
+        $adminFilter->player_filterNation = $filterNation;
+        $adminFilter->player_filterPosition = $filterPosition;
+        $adminFilter->player_order = $order;
+        $adminFilter->player_pagination = $pagination;
+        $adminFilter->player_page = $page;
+        if ($adminFilter->isDirty() && !$adminFilter->isDirty('player_page')) {
+            $page = 1;
+            $adminFilter->player_page = $page;
+        }
+        $adminFilter->save();
 
         if (!$pagination == null) {
             $perPage = $pagination;
@@ -37,9 +98,16 @@ class PlayerController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $players = Player::playerDbId($filterPlayerDb)->name($filterName)->teamName($filterTeam)->nationName($filterNation)->position($filterPosition)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
+        $players = Player::playerDbId($filterPlayerDb)->name($filterName)->teamName($filterTeam)->nationName($filterNation)->position($filterPosition)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        // for cases after delete register and the page not exists
+        if ($players->count() == 0) {
+            $players = Player::playerDbId($filterPlayerDb)->name($filterName)->teamName($filterTeam)->nationName($filterNation)->position($filterPosition)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page-1);
+            $adminFilter->player_page = $page-1;
+            $adminFilter->save();
+        }
+
         $players_dbs = PlayerDB::orderBy('name', 'asc')->get();
-    	return view('admin.players.index', compact('players', 'players_dbs', 'filterName', 'filterPlayerDb', 'filterTeam', 'filterNation', 'filterPosition', 'order', 'pagination'));
+    	return view('admin.players.index', compact('players', 'players_dbs', 'filterName', 'filterPlayerDb', 'filterTeam', 'filterNation', 'filterPosition', 'order', 'pagination', 'page'));
     }
 
     public function add()
@@ -324,7 +392,7 @@ class PlayerController extends Controller
                 event(new TableWasSaved($newPlayer, $newPlayer->name));
             }
 
-	    	return back()->route('admin.players')->with('success', 'Se ha duplicado el jugador "' . $newPlayer->name . '" correctamente.');
+	    	return redirect()->route('admin.players')->with('success', 'Se ha duplicado el jugador "' . $newPlayer->name . '" correctamente.');
 	    } else {
 	    	return back()->with('warning', 'Acción cancelada. El jugador que querías duplicar ya no existe. Se ha actualizado la lista.');
 	    }
@@ -502,6 +570,37 @@ class PlayerController extends Controller
             }
         }
         return redirect()->route('admin.players')->with('error', 'No has cargado ningún archivo.');
+    }
+
+    public function linkWebImage($id, $www)
+    {
+        if ($www == 'pesdb' || $www == 'pesmaster') {
+            $player = Player::find($id);
+            if (!$player->isLocalImg()) {
+                if ($www == 'pesdb') {
+                    $new_image = pesdb_player_img_path($player->game_id);
+                } else {
+                    $new_image = pesmaster_player_img_path($player->game_id);
+                }
+                $player->img = $new_image;
+                $player->save();
+            }
+        } else {
+            return back()->with('error', 'No se ha especificado el servidor de imágenes.');
+        }
+
+        return back()->with('success', 'Imágen enlazada correctamente del jugador "' . $player->name . '".');
+    }
+
+    public function unlinkWebImage($id)
+    {
+        $player = Player::find($id);
+        if (!$player->isLocalImg()) {
+            $player->img = '';
+            $player->save();
+        }
+
+        return back()->with('success', 'Imágen desenlazada correctamente del jugador "' . $player->name . '".');
     }
 
     public function linkWebImages($www)
