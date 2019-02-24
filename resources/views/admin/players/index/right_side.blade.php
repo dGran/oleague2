@@ -3,48 +3,52 @@
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
     <ul class="list-group border-top mt-3">
-        <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.players.link_web_images', 'pesdb') }}" class="link_web_images">
-                <span class="fas fa-images fa-fw mr-1"></span>
-                <span>Enlazar imágenes (pesdb)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.players.link_web_images', 'pesmaster') }}" class="link_web_images">
-                <span class="fas fa-images fa-fw mr-1"></span>
-                <span>Enlazar imágenes (pesmaster)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="{{ route('admin.players.unlink_web_images') }}" class="unlink_web_images">
-                <span class="fas fa-eraser fa-fw mr-1"></span>
-                <span>Eliminar imágenes enlazadas</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('xls')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.xls)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('xlsx')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.xlsx)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('csv')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.csv)</span>
-            </a>
-        </li>
+        @if ($players->count()>0)
+            <li class="list-group-item border-0 px-0">
+                <a href="{{ route('admin.players.link_web_images', 'pesdb') }}" class="link_web_images">
+                    <span class="fas fa-images fa-fw mr-1"></span>
+                    <span>Enlazar imágenes (pesdb)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="{{ route('admin.players.link_web_images', 'pesmaster') }}" class="link_web_images">
+                    <span class="fas fa-images fa-fw mr-1"></span>
+                    <span>Enlazar imágenes (pesmaster)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="{{ route('admin.players.unlink_web_images') }}" class="unlink_web_images">
+                    <span class="fas fa-eraser fa-fw mr-1"></span>
+                    <span>Eliminar imágenes enlazadas</span>
+                </a>
+            </li>
+        @endif
         <li class="list-group-item border-0 px-0">
             <a href="{{ route('admin.players.import.data') }}">
                 <span class="fas fa-file-import fa-fw mr-1"></span>
                 <span>Importar</span>
             </a>
         </li>
+        @if ($players->count()>0)
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('xls')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xls)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('xlsx')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xlsx)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('csv')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.csv)</span>
+                </a>
+            </li>
+        @endif
     </ul>
 </div>
 

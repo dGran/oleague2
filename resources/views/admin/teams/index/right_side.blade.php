@@ -4,25 +4,6 @@
     </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
-            {{-- <a href="" onclick="export_file('xls', {{ $order }})"> --}}
-            <a href="" onclick="export_file('xls')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.xls)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('xlsx')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.xlsx)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('csv')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.csv)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
             <a href="" onclick="import_file()">
                <form
                 id="frmImport"
@@ -40,6 +21,27 @@
                 </form>
             </a>
         </li>
+        @if ($teams->count()>0)
+            <li class="list-group-item border-0 px-0">
+                {{-- <a href="" onclick="export_file('xls', {{ $order }})"> --}}
+                <a href="" onclick="export_file('xls')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xls)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('xlsx')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xlsx)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('csv')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.csv)</span>
+                </a>
+            </li>
+        @endif
     </ul>
 </div>
 

@@ -2,25 +2,8 @@
     <a href="{{ route('admin.teams_categories.add') }}" class="btn btn-primary" id="btnAdd">
         <i class="fas fa-plus mr-2"></i><span>Nueva</span>
     </a>
+
     <ul class="list-group border-top mt-3">
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('xls')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.xls)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('xlsx')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.xlsx)</span>
-            </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="export_file('csv')">
-                <span class="fas fa-file-export fa-fw mr-1"></span>
-                <span>Exportar (.csv)</span>
-            </a>
-        </li>
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="import_file()">
                <form
@@ -39,6 +22,26 @@
                 </form>
             </a>
         </li>
+        @if ($categories->count()>0)
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('xls')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xls)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('xlsx')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.xlsx)</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="" onclick="export_file('csv')">
+                    <span class="fas fa-file-export fa-fw mr-1"></span>
+                    <span>Exportar (.csv)</span>
+                </a>
+            </li>
+        @endif
     </ul>
 </div>
 
@@ -80,6 +83,7 @@
     </ul>
 </div>
 
+
 <form class="frmFilter" role="search" method="get" action="{{ route('admin.teams_categories') }}">
 <input type="hidden" name="filtering" value="true"> {{-- field for controller --}}
 
@@ -109,7 +113,7 @@
     @endif
 </div>
 
-<div class="mt-4">
+<div>
     <h4 class="p-2 bg-light">Orden</h4>
     <div class="form-group row">
         <div class="col-sm-12">
