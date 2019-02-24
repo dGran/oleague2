@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PlayerDB;
+use App\AdminFilter;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -14,9 +15,49 @@ class PlayerDBController extends Controller
 {
 public function index()
     {
-    	$filterName = request()->filterName;
-        $order = request()->order;
-        $pagination = request()->pagination;
+        $admin = AdminFilter::where('user_id', '=', \Auth::user()->id)->first();
+        if ($admin) {
+            $filterName = request()->filterName;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+            if (!$page) {
+                if ($admin->playerDB_page) {
+                    $page = $admin->playerDB_page;
+                }
+            }
+
+            if (!request()->filtering) { // filtering determine when you use the form and exclude the first access
+                if ($admin->playerDB_filterName) {
+                    $filterName = $admin->playerDB_filterName;
+                }
+                if ($admin->playerDB_order) {
+                    $order = $admin->playerDB_order;
+                }
+                if ($admin->playerDB_pagination) {
+                    $pagination = $admin->playerDB_pagination;
+                }
+            }
+        } else {
+            $admin = AdminFilter::create([
+                'user_id' => \Auth::user()->id,
+            ]);
+            $filterName = request()->filterName;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+        }
+
+        $adminFilter = AdminFilter::find($admin->id);
+        $adminFilter->playerDB_filterName = $filterName;
+        $adminFilter->playerDB_order = $order;
+        $adminFilter->playerDB_pagination = $pagination;
+        $adminFilter->playerDB_page = $page;
+        if ($adminFilter->isDirty() && !$adminFilter->isDirty('playerDB_page')) {
+            $page = 1;
+            $adminFilter->playerDB_page = $page;
+        }
+        $adminFilter->save();
 
         if (!$pagination == null) {
             $perPage = $pagination;
@@ -29,8 +70,19 @@ public function index()
         }
         $order_ext = $this->getOrder($order);
 
-        $databases = PlayerDB::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
-    	return view('admin.players_dbs.index', compact('databases', 'filterName', 'order', 'pagination'));
+        $databases = PlayerDB::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        if ($databases->count() == 0) {
+            if ($page-1 > 0) {
+                $page = $page-1;
+            } else {
+                $page = 1;
+            }
+            $databases = PlayerDB::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            $adminFilter->playerDB_page = $page;
+            $adminFilter->save();
+        }
+
+    	return view('admin.players_dbs.index', compact('databases', 'filterName', 'order', 'pagination', 'page'));
     }
 
     public function add()

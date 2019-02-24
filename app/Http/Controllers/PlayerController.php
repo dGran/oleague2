@@ -101,8 +101,13 @@ class PlayerController extends Controller
         $players = Player::playerDbId($filterPlayerDb)->name($filterName)->teamName($filterTeam)->nationName($filterNation)->position($filterPosition)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
         // for cases after delete register and the page not exists
         if ($players->count() == 0) {
-            $players = Player::playerDbId($filterPlayerDb)->name($filterName)->teamName($filterTeam)->nationName($filterNation)->position($filterPosition)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page-1);
-            $adminFilter->player_page = $page-1;
+            if ($page-1 > 0) {
+                $page = $page-1;
+            } else {
+                $page = 1;
+            }
+            $players = Player::playerDbId($filterPlayerDb)->name($filterName)->teamName($filterTeam)->nationName($filterNation)->position($filterPosition)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            $adminFilter->player_page = $page;
             $adminFilter->save();
         }
 
@@ -584,6 +589,7 @@ class PlayerController extends Controller
                 }
                 $player->img = $new_image;
                 $player->save();
+                event(new TableWasUpdated($player, $player->name));
                 return back()->with('success', 'Imágen enlazada correctamente del jugador "' . $player->name . '".');
             } else {
                 return back()->with('error', 'No se ha enlazado la imágen del jugador, para enlazar es necesario rellenar el campo Game ID.');
@@ -609,6 +615,7 @@ class PlayerController extends Controller
                     }
                     $player->img = $new_image;
                     $player->save();
+                    event(new TableWasUpdated($player, $player->name));
 
                     $counter = $counter +1;
                 }
@@ -627,6 +634,7 @@ class PlayerController extends Controller
         if (!$player->isLocalImg()) {
             $player->img = '';
             $player->save();
+            event(new TableWasUpdated($player, $player->name));
         }
 
         return back()->with('success', 'Imágen desenlazada correctamente del jugador "' . $player->name . '".');
@@ -642,6 +650,7 @@ class PlayerController extends Controller
             if (!$player->isLocalImg()) {
                 $player->img = '';
                 $player->save();
+                event(new TableWasUpdated($player, $player->name));
 
                 $counter = $counter +1;
             }
@@ -666,6 +675,7 @@ class PlayerController extends Controller
                     }
                     $player->img = $new_image;
                     $player->save();
+                    event(new TableWasUpdated($player, $player->name));
                 }
             }
         } else {
@@ -682,6 +692,7 @@ class PlayerController extends Controller
             if (!$player->isLocalImg()) {
                 $player->img = '';
                 $player->save();
+                event(new TableWasUpdated($player, $player->name));
             }
         }
 

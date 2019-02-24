@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Team;
 use App\TeamCategory;
+use App\AdminFilter;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -15,9 +16,49 @@ class TeamCategoryController extends Controller
 {
     public function index()
     {
-    	$filterName = request()->filterName;
-        $order = request()->order;
-        $pagination = request()->pagination;
+        $admin = AdminFilter::where('user_id', '=', \Auth::user()->id)->first();
+        if ($admin) {
+            $filterName = request()->filterName;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+            if (!$page) {
+                if ($admin->teamCategories_page) {
+                    $page = $admin->teamCategories_page;
+                }
+            }
+
+            if (!request()->filtering) { // filtering determine when you use the form and exclude the first access
+                if ($admin->teamCategories_filterName) {
+                    $filterName = $admin->teamCategories_filterName;
+                }
+                if ($admin->teamCategories_order) {
+                    $order = $admin->teamCategories_order;
+                }
+                if ($admin->teamCategories_pagination) {
+                    $pagination = $admin->teamCategories_pagination;
+                }
+            }
+        } else {
+            $admin = AdminFilter::create([
+                'user_id' => \Auth::user()->id,
+            ]);
+            $filterName = request()->filterName;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+        }
+
+        $adminFilter = AdminFilter::find($admin->id);
+        $adminFilter->teamCategories_filterName = $filterName;
+        $adminFilter->teamCategories_order = $order;
+        $adminFilter->teamCategories_pagination = $pagination;
+        $adminFilter->teamCategories_page = $page;
+        if ($adminFilter->isDirty() && !$adminFilter->isDirty('teamCategories_page')) {
+            $page = 1;
+            $adminFilter->teamCategories_page = $page;
+        }
+        $adminFilter->save();
 
         if (!$pagination == null) {
             $perPage = $pagination;
@@ -30,8 +71,18 @@ class TeamCategoryController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $categories = TeamCategory::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
-    	return view('admin.teams_categories.index', compact('categories', 'filterName', 'order', 'pagination'));
+        $categories = TeamCategory::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        if ($categories->count() == 0) {
+            if ($page-1 > 0) {
+                $page = $page-1;
+            } else {
+                $page = 1;
+            }
+            $categories = TeamCategory::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            $adminFilter->teamCategories_page = $page;
+            $adminFilter->save();
+        }
+    	return view('admin.teams_categories.index', compact('categories', 'filterName', 'order', 'pagination', 'page'));
     }
 
     public function add()

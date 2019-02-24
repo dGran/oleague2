@@ -8,7 +8,7 @@ class AdminFilter extends Model
 {
 
     protected $fillable = [
-        'user_id', 'player_filterName', 'player_filterPlayerDb', 'player_filterTeam', 'player_filterNation', 'player_filterPosition', 'player_order', 'player_pagination'
+        'user_id'
     ];
 
     public function user()
