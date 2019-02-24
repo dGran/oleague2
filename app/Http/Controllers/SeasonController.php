@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Season;
 use App\SeasonParticipant;
 use App\SeasonParticipantCashHistory;
+use App\AdminFilter;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -16,9 +17,49 @@ class SeasonController extends Controller
 {
     public function index()
     {
-        $filterName = request()->filterName;
-        $order = request()->order;
-        $pagination = request()->pagination;
+        $admin = AdminFilter::where('user_id', '=', \Auth::user()->id)->first();
+        if ($admin) {
+            $filterName = request()->filterName;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+            if (!$page) {
+                if ($admin->season_page) {
+                    $page = $admin->season_page;
+                }
+            }
+
+            if (!request()->filtering) { // filtering determine when you use the form and exclude the first access
+                if ($admin->season_filterName) {
+                    $filterName = $admin->season_filterName;
+                }
+                if ($admin->season_order) {
+                    $order = $admin->season_order;
+                }
+                if ($admin->season_pagination) {
+                    $pagination = $admin->season_pagination;
+                }
+            }
+        } else {
+            $admin = AdminFilter::create([
+                'user_id' => \Auth::user()->id,
+            ]);
+            $filterName = request()->filterName;
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+        }
+
+        $adminFilter = AdminFilter::find($admin->id);
+        $adminFilter->season_filterName = $filterName;
+        $adminFilter->season_order = $order;
+        $adminFilter->season_pagination = $pagination;
+        $adminFilter->season_page = $page;
+        if ($adminFilter->isDirty() && !$adminFilter->isDirty('season_page')) {
+            $page = 1;
+            $adminFilter->season_page = $page;
+        }
+        $adminFilter->save();
 
         if (!$pagination == null) {
             $perPage = $pagination;
@@ -31,8 +72,18 @@ class SeasonController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $seasons = Season::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
-        return view('admin.seasons.index', compact('seasons', 'filterName', 'order', 'pagination'));
+        $seasons = Season::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        if ($seasons->count() == 0) {
+            if ($page-1 > 0) {
+                $page = $page-1;
+            } else {
+                $page = 1;
+            }
+            $seasons = Season::name($filterName)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            $adminFilter->season_page = $page;
+            $adminFilter->save();
+        }
+        return view('admin.seasons.index', compact('seasons', 'filterName', 'order', 'pagination', 'page'));
     }
 
     public function add()
