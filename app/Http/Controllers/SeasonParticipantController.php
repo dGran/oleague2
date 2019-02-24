@@ -7,6 +7,7 @@ use App\SeasonParticipant;
 use App\User;
 use App\Team;
 use App\Season;
+use App\AdminFilter;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -17,24 +18,76 @@ class SeasonParticipantController extends Controller
 {
     public function index()
     {
-        if (request()->filterSeason == null) {
-            if (active_season()) {
-                $filterSeason = active_season()->id;
-            } else {
-                $seasons = Season::all();
-                if ($seasons->isNotEmpty()) {
-                    $filterSeason = $seasons->last()->id;
+        $admin = AdminFilter::where('user_id', '=', \Auth::user()->id)->first();
+        if ($admin) {
+            if (request()->filterSeason == null) {
+                if (active_season()) {
+                    $filterSeason = active_season()->id;
                 } else {
-                    $filterSeason = '';
+                    $seasons = Season::all();
+                    if ($seasons->isNotEmpty()) {
+                        $filterSeason = $seasons->last()->id;
+                    } else {
+                        $filterSeason = '';
+                    }
+                }
+            } else {
+                $filterSeason = request()->filterSeason;
+            }
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
+            if (!$page) {
+                if ($admin->seasonParticipants_page) {
+                    $page = $admin->seasonParticipants_page;
+                }
+            }
+
+            if (!request()->filtering) { // filtering determine when you use the form and exclude the first access
+                if ($admin->seasonParticipants_filterSeason) {
+                    $filterSeason = $admin->seasonParticipants_filterSeason;
+                }
+                if ($admin->seasonParticipants_order) {
+                    $order = $admin->seasonParticipants_order;
+                }
+                if ($admin->seasonParticipants_pagination) {
+                    $pagination = $admin->seasonParticipants_pagination;
                 }
             }
         } else {
-            $filterSeason = request()->filterSeason;
+            $admin = AdminFilter::create([
+                'user_id' => \Auth::user()->id,
+            ]);
+            if (request()->filterSeason == null) {
+                if (active_season()) {
+                    $filterSeason = active_season()->id;
+                } else {
+                    $seasons = Season::all();
+                    if ($seasons->isNotEmpty()) {
+                        $filterSeason = $seasons->last()->id;
+                    } else {
+                        $filterSeason = '';
+                    }
+                }
+            } else {
+                $filterSeason = request()->filterSeason;
+            }
+            $order = request()->order;
+            $pagination = request()->pagination;
+            $page = request()->page;
         }
-        $active_season = Season::find($filterSeason);
 
-        $order = request()->order;
-        $pagination = request()->pagination;
+
+        $adminFilter = AdminFilter::find($admin->id);
+        $adminFilter->seasonParticipants_filterSeason = $filterSeason;
+        $adminFilter->seasonParticipants_order = $order;
+        $adminFilter->seasonParticipants_pagination = $pagination;
+        $adminFilter->seasonParticipants_page = $page;
+        if ($adminFilter->isDirty() && !$adminFilter->isDirty('seasonParticipants_page')) {
+            $page = 1;
+            $adminFilter->seasonParticipants_page = $page;
+        }
+        $adminFilter->save();
 
         if (!$pagination == null) {
             $perPage = $pagination;
@@ -47,10 +100,21 @@ class SeasonParticipantController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $participants = SeasonParticipant::seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage);
-        $seasons = Season::orderBy('name', 'asc')->get();
+        $active_season = Season::find($filterSeason);
 
-    	return view('admin.seasons_participants.index', compact('participants', 'seasons', 'filterSeason', 'active_season', 'order', 'pagination'));
+        $participants = SeasonParticipant::seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        $seasons = Season::orderBy('name', 'asc')->get();
+        if ($seasons->count() == 0) {
+            if ($page-1 > 0) {
+                $page = $page-1;
+            } else {
+                $page = 1;
+            }
+            $participants = SeasonParticipant::seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            $adminFilter->seasonParticipants_page = $page;
+            $adminFilter->save();
+        }
+        return view('admin.seasons_participants.index', compact('participants', 'seasons', 'filterSeason', 'active_season', 'order', 'pagination', 'page'));
     }
 
     // public function add()

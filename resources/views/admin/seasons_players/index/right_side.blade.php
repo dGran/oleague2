@@ -75,6 +75,7 @@
 </div>
 
 <form class="frmFilter" role="search" method="get" action="{{ route('admin.season_players') }}">
+<input type="hidden" name="filtering" value="true"> {{-- field for controller --}}
 
 <div class="mt-2">
     <h4 class="p-2 bg-light">Filtros</h4>
