@@ -576,7 +576,7 @@ class PlayerController extends Controller
     {
         if ($www == 'pesdb' || $www == 'pesmaster') {
             $player = Player::find($id);
-            if (!$player->isLocalImg()) {
+            if (!$player->isLocalImg() && $player->game_id) {
                 if ($www == 'pesdb') {
                     $new_image = pesdb_player_img_path($player->game_id);
                 } else {
@@ -584,12 +584,41 @@ class PlayerController extends Controller
                 }
                 $player->img = $new_image;
                 $player->save();
+                return back()->with('success', 'Imágen enlazada correctamente del jugador "' . $player->name . '".');
+            } else {
+                return back()->with('error', 'No se ha enlazado la imágen del jugador, para enlazar es necesario rellenar el campo Game ID.');
             }
         } else {
             return back()->with('error', 'No se ha especificado el servidor de imágenes.');
         }
+    }
 
-        return back()->with('success', 'Imágen enlazada correctamente del jugador "' . $player->name . '".');
+    public function linkWebImageMany($ids, $www)
+    {
+        $ids=explode(",",$ids);
+        $counter = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            if ($www == 'pesdb' || $www == 'pesmaster') {
+                $player = Player::find($ids[$i]);
+                if (!$player->isLocalImg() && $player->game_id) {
+                    if ($www == 'pesdb') {
+                        $new_image = pesdb_player_img_path($player->game_id);
+                    } else {
+                        $new_image = pesmaster_player_img_path($player->game_id);
+                    }
+                    $player->img = $new_image;
+                    $player->save();
+
+                    $counter = $counter +1;
+                }
+            }
+        }
+        if ($counter > 0) {
+            return redirect()->route('admin.players')->with('success', 'Se han enlazado las imágenes de los jugadores (con Game ID) seleccionados correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Los jugadores a los que querías enlazar las imágenes ya no existen. Se ha actualizado la lista.');
+        }
     }
 
     public function unlinkWebImage($id)
@@ -603,12 +632,33 @@ class PlayerController extends Controller
         return back()->with('success', 'Imágen desenlazada correctamente del jugador "' . $player->name . '".');
     }
 
+    public function unlinkWebImageMany($ids)
+    {
+        $ids=explode(",",$ids);
+        $counter = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $player = Player::find($ids[$i]);
+            if (!$player->isLocalImg()) {
+                $player->img = '';
+                $player->save();
+
+                $counter = $counter +1;
+            }
+        }
+        if ($counter > 0) {
+            return redirect()->route('admin.players')->with('success', 'Se han desenlazado las imágenes de los jugadores seleccionados correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Los jugadores a los que querías desenlazar las imágenes ya no existen. Se ha actualizado la lista.');
+        }
+    }
+
     public function linkWebImages($www)
     {
         if ($www == 'pesdb' || $www == 'pesmaster') {
             $players = Player::where('game_id', '>', 0)->get();
             foreach ($players as $player) {
-                if (!$player->isLocalImg()) {
+                if (!$player->isLocalImg() && $player->game_id) {
                     if ($www == 'pesdb') {
                         $new_image = pesdb_player_img_path($player->game_id);
                     } else {
@@ -663,6 +713,30 @@ class PlayerController extends Controller
             ],
             'name_desc' => [
                 'sortField'     => 'name',
+                'sortDirection' => 'desc'
+            ],
+            'overall' => [
+                'sortField'     => 'overall_rating',
+                'sortDirection' => 'asc'
+            ],
+            'overall_desc' => [
+                'sortField'     => 'overall_rating',
+                'sortDirection' => 'desc'
+            ],
+            'age' => [
+                'sortField'     => 'age',
+                'sortDirection' => 'asc'
+            ],
+            'age_desc' => [
+                'sortField'     => 'age',
+                'sortDirection' => 'desc'
+            ],
+            'height' => [
+                'sortField'     => 'height',
+                'sortDirection' => 'asc'
+            ],
+            'height_desc' => [
+                'sortField'     => 'height',
                 'sortDirection' => 'desc'
             ]
         ];

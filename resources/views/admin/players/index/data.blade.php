@@ -113,18 +113,20 @@
                                 <i class="fas fa-clone fa-fw mr-1"></i>
                                 Duplicar
                             </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_image', [$player->id, 'pesdb']) }}">
-                                <i class="fas fa-clone fa-fw mr-1"></i>
-                                Enlazar imágen (pesdb)
-                            </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_image', [$player->id, 'pesmaster']) }}">
-                                <i class="fas fa-clone fa-fw mr-1"></i>
-                                Enlazar imágen (pesmaster)
-                            </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.players.unlink_web_image', [$player->id, 'pesmaster']) }}">
-                                <i class="fas fa-clone fa-fw mr-1"></i>
-                                Eliminar imágen enlazada
-                            </a>
+                            @if (!$player->isLocalImg() && $player->game_id)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_image', [$player->id, 'pesdb']) }}">
+                                    <i class="fas fa-clone fa-fw mr-1"></i>
+                                    Enlazar imágen (pesdb)
+                                </a>
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.players.link_web_image', [$player->id, 'pesmaster']) }}">
+                                    <i class="fas fa-clone fa-fw mr-1"></i>
+                                    Enlazar imágen (pesmaster)
+                                </a>
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.players.unlink_web_image', [$player->id, 'pesmaster']) }}">
+                                    <i class="fas fa-clone fa-fw mr-1"></i>
+                                    Eliminar imágen enlazada
+                                </a>
+                            @endif
                             <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
                                 <i class="fas fa-trash fa-fw mr-1"></i>
                                 Eliminar

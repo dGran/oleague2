@@ -233,6 +233,34 @@
         window.location.href=url;
     }
 
+    function linkImageMany(www) {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        var ids = [];
+        $(".mark:checked").each(function() {
+            ids.push($(this).val());
+        });
+        if (www == 'pesdb') {
+            var url = '{{ route("admin.players.link_web_image.many", [":ids", "pesdb"]) }}';
+        } else {
+            var url = '{{ route("admin.players.link_web_image.many", [":ids", "pesmaster"]) }}';
+        }
+        url = url.replace(':ids', ids);
+        window.location.href=url;
+    }
+
+    function unlinkImageMany() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        var ids = [];
+        $(".mark:checked").each(function() {
+            ids.push($(this).val());
+        });
+        var url = '{{ route("admin.players.unlink_web_image.many", ":ids") }}';
+        url = url.replace(':ids', ids);
+        window.location.href=url;
+    }
+
     function edit(element) {
         $(".mark:checked").each(function() {
             id = $(this).val();
