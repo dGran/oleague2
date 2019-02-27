@@ -19,6 +19,8 @@
             <col width="0%" />
             <col width="100%" />
             <col width="0%" />
+            <col width="0%" />
+            <col width="0%" />
         </colgroup>
 
         <thead>
@@ -32,7 +34,10 @@
                         </div>
                     </div>
                 </th>
-                <th scope="col" colspan="3" class="name" onclick="$('#allMark').trigger('click');">Temporada</th>
+                <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Temporada</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');"></th>
+                <th scope="col" onclick="$('#allMark').trigger('click');"></th>
+                <th scope="col" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
 
@@ -52,6 +57,9 @@
                     </td>
                     <td class="name" onclick="rowSelect(this)">
                         <span>{{ $season->name }}</span>
+                        @if (active_season() && $season->id == active_season()->id)
+                            <span class="badge badge-success p-1 ml-2 d-inline-block">TEMPORADA ACTIVA</span>
+                        @endif
                         @if ($season->hasParticipants())
                             <small class="d-block">Participantes: {{ $season->participants->count() }}</small>
                         @endif
@@ -78,11 +86,38 @@
                             @endif
                         @endif --}}
                     </td>
+                    <td>
+                        @if ($season->use_rosters)
+                            <i class="fas fa-user-shield text-info"></i>
+                        @else
+                            <i class="fas fa-user-shield text-black-50"></i>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($season->use_economy)
+                            <i class="fas fa-piggy-bank text-info"></i>
+                        @else
+                            <i class="fas fa-piggy-bank text-black-50"></i>
+                        @endif
+                    </td>
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
+                            @if (active_season())
+                                @if ($season->id != active_season()->id)
+                                    <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.setActiveSeason', $season->id) }}">
+                                        <i class="fas fa-map-marker-alt fa-fw mr-1"></i>
+                                        Temporada activa
+                                    </a>
+                                @endif
+                            @else
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.setActiveSeason', $season->id) }}">
+                                    <i class="fas fa-map-marker-alt fa-fw mr-1"></i>
+                                        Temporada activa
+                                </a>
+                            @endif
                             <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.edit', $season->id) }}" id="btnEdit{{ $season->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar

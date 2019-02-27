@@ -48,19 +48,16 @@
                 </div>
             </div>
         </div>
-
         <div class="form-group row max_min_players">
             <div class="col-sm-9 offset-sm-3">
                 <label for="initial_budget">Mínimo jugadores por plantilla</label>
-                <input type="number" class="form-control" id="min_players" name="min_players" placeholder="Número mínimo de jugadores por plantilla" autofocus value="{{ old('', 16) }}">
+                <input type="number" class="form-control" id="min_players" name="min_players" placeholder="Número mínimo de jugadores por plantilla" autofocus value="{{ old('min_players', 16) }}">
             </div>
         </div>
-
-
         <div class="form-group row max_min_players">
             <div class="col-sm-9 offset-sm-3">
                 <label for="initial_budget">Máximo jugadores por plantilla</label>
-                <input type="number" class="form-control" id="max_players" name="max_players" placeholder="Número máximo de jugadores por plantilla" autofocus value="{{ old('', 25) }}">
+                <input type="number" class="form-control" id="max_players" name="max_players" placeholder="Número máximo de jugadores por plantilla" autofocus value="{{ old('max_players', 25) }}">
             </div>
         </div>
 
@@ -74,11 +71,21 @@
                 </div>
             </div>
         </div>
-
         <div class="form-group row initial_budget">
             <div class="col-sm-9 offset-sm-3">
-                <label for="initial_budget">Presupuesto</label>
+                <label for="initial_budget">Presupuesto inicial</label>
                 <input type="number" class="form-control" id="initial_budget" name="initial_budget" placeholder="Presupuesto inicial" autofocus value="{{ old('initial_budget', 0) }}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="active_season" name="active_season">
+                    <label class="custom-control-label is-valid" for="active_season">
+                        <span>Temporada activa</span>
+                    </label>
+                </div>
             </div>
         </div>
 

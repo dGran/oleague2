@@ -14,24 +14,24 @@
 
     </div>
 @else
-    <table class="teams-table animated fadeIn">
+    <table class="animated fadeIn">
         <colgroup>
             <col width="0%" />
             <col width="0%" />
             <col width="100%" />
-            <col width="0%" class="d-none d-sm-table-cell" />
-            <col width="0%" />
             @if ($active_season->use_rosters)
                 <col width="0%" />
             @endif
             @if ($active_season->use_economy)
                 <col width="0%" />
+                <col width="0%" />
             @endif
+            <col width="0%" />
         </colgroup>
 
         <thead>
             <tr class="border-top">
-                <th colspan="7" class="p-3 bg-light">
+                <th colspan="8" class="p-3 bg-light">
                     {{ $active_season->name }}
                     @if (active_season() && $filterSeason == active_season()->id)
                         <span class="badge badge-success p-1 ml-2">TEMPORADA ACTIVA</span>
@@ -48,20 +48,15 @@
                         </div>
                     </div>
                 </th>
-                @if ($active_season->participant_has_team)
-                    <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell">Equipo</th>
-                    <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="d-table-cell d-sm-none">Participante</th>
-                    <th scope="col" class="d-none d-sm-table-cell" onclick="$('#allMark').trigger('click');">Usuario</th>
-                @else
-                    <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Participante</th>
-                @endif
-                <th class="text-right" onclick="$('#allMark').trigger('click');"></th>
+                <th scope="col" colspan="3" class="name" onclick="$('#allMark').trigger('click');">Participante</th>
                 @if ($active_season->use_rosters)
                     <th onclick="$('#allMark').trigger('click');"></th>
                 @endif
                 @if ($active_season->use_economy)
+                    <th scope="col" onclick="$('#allMark').trigger('click');" class="text-center"><i class="fas fa-euro-sign"></th>
                     <th onclick="$('#allMark').trigger('click');"></th>
                 @endif
+                <th class="text-right" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
 
@@ -80,70 +75,44 @@
                         </div>
                     </td>
 
-                    @if ($active_season->participant_has_team)
-
-                        @if ($participant->team_id)
-                            <td onclick="rowSelect(this)">
-                                <img src="{{ $participant->team->getLogoFormatted() }}" alt="" width="32">
-                            </td>
-                            <td class="text-nowrap name"  onclick="rowSelect(this)">
-                                {{ $participant->team->name }}
-                                <div class="d-table-cell d-sm-none">
-                                    @if ($participant->user_id)
-                                        <small>{{ $participant->user->name }}</small>
-                                    @else
-                                        <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
-                                    @endif
-
-                                </div>
-                            </td>
-                        @else
-                            <td onclick="rowSelect(this)">
-                                <img src="{{ asset('img/team_no_image.png') }}" alt="" width="32">
-                            </td>
-                            <td class="text-nowrap" onclick="rowSelect(this)">
-                                No definido
-                            </td>
-                        @endif
-
-                        <td class="text-nowrap d-none d-sm-table-cell" onclick="rowSelect(this)">
-                            @if ($participant->user_id)
-                                {{ $participant->user->name }}
-                            @else
+                    <td class="" onclick="rowSelect(this)">
+                        <img src="{{ $participant->logo() }}" alt="" width="32">
+                    </td>
+                    <td class="name" onclick="rowSelect(this)">
+                        <span class="text-uppercase">
+                            @if ($participant->name() == 'none')
                                 <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                            @else
+                                {{ $participant->name() }}
                             @endif
-                        </td>
-
-                    @else
-
-                        @if ($participant->user_id)
-                            <td onclick="rowSelect(this)">
-                                <img src="{{ $participant->user->avatar() }}" alt="" width="32">
-                            </td>
-                            <td class="text-nowrap"  onclick="rowSelect(this)">
-                                {{ $participant->user->name }}
-                            </td>
-                        @else
-                            <td onclick="rowSelect(this)">
-                                <img src="{{ asset('img/user_unknown.png') }}" alt="" width="32">
-                            </td>
-                            <td class="text-nowrap" onclick="rowSelect(this)">
-                                No definido
-                            </td>
-                        @endif
-
-                    @endif
+                        </span>
+                        <br>
+                        <small class="text-black-50 text-uppercase">
+                            @if ($participant->sub_name() == 'none')
+                                <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                            @else
+                                {{ $participant->sub_name() }}
+                            @endif
+                        </small>
+                    </td>
 
                     @if ($active_season->use_rosters)
                         <td>
                             <a href="" style="font-size: 1.25em"><i class="fas fa-user-shield"></i></a>
                         </td>
                     @endif
+
                     @if ($active_season->use_economy)
+                        <td class="text-nowrap text-right" onclick="rowSelect(this)">
+                            {{ $participant->budget_formatted() }}</i>
+                        </td>
                         <td>
-                            <a href="" style="font-size: 1.25em"><i class="fas fa-piggy-bank"></i></a>
+                            <a href="" style="font-size: 1.25em" data-toggle="modal" data-target="#cashHistoryModal" id="btnCashHistory{{ $participant->id }}">
+                                <i class="fas fa-piggy-bank"></i>
+                            </a>
                         </td>
                     @endif
+
 
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">

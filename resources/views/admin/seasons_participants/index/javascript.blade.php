@@ -10,6 +10,22 @@
             return false;
         });
 
+        $('#cashHistoryModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
+            $.ajax({
+                url: 'participantes/historial-de-economia/' + id,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('.modal-dialog').html(data);
+            });
+        });
+
+        $("#cashHistoryModal").on("hidden.bs.modal", function(){
+            $('.modal-dialog').html("");
+        });
+
     });
 
     function applyDisplay() {
@@ -156,6 +172,16 @@
         } else {
             $(element).attr("href", url);
         }
+    }
+
+    function cashHistory(element) {
+        window.event.preventDefault();
+
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnCashHistory'+id).attr("href");
+        $('#btnCashHistory'+id).trigger('click');
     }
 
     function rowSelect(element) {

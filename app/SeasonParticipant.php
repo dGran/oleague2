@@ -27,11 +27,6 @@ class SeasonParticipant extends Model
         return $this->hasOne('App\User', 'id', 'user_id');
     }
 
-    // public function season()
-    // {
-    //     return $this->belongsTo('App\Season', 'season_id');
-    // }
-
     public function cash_history()
     {
         return $this->hasmany('App\SeasonParticipantCashHistory', 'participant_id', 'id');
@@ -43,4 +38,65 @@ class SeasonParticipant extends Model
             $query->where("season_id", "=", $seasonID);
         }
     }
+
+    public function budget() {
+        $budget = 0;
+        foreach ($this->cash_history as $cash_history) {
+            if ($cash_history->movement == 'E') {
+                $budget = $budget + $cash_history->amount;
+            } elseif ($cash_history->movement == 'S') {
+                $budget = $budget - $cash_history->amount;
+            }
+        }
+        return $budget;
+    }
+
+    public function budget_formatted() {
+        return $this->budget() . " M";
+    }
+
+    public function logo() {
+        if ($this->season->participant_has_team) {
+            if ($this->team_id) {
+                return $this->team->getLogoFormatted();
+            } else {
+                return asset('img/team_no_image.png');
+            }
+        } else {
+            if ($this->user_id) {
+                return $this->user->avatar();
+            } else {
+                return asset('img/user_unknown.png');
+            }
+        }
+    }
+
+    public function name() {
+        if ($this->season->participant_has_team) {
+            if ($this->team_id) {
+                return $this->team->name;
+            } else {
+                return "No definido";
+            }
+        } else {
+            if ($this->user_id) {
+                return $this->user->name;
+            } else {
+                return "none";
+            }
+        }
+    }
+
+    public function sub_name() {
+        if ($this->season->participant_has_team) {
+            if ($this->user_id) {
+                return $this->user->name;
+            } else {
+                return "none";
+            }
+        } else {
+            return "";
+        }
+    }
+
 }

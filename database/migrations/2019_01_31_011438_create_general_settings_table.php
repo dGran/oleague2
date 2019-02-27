@@ -14,6 +14,7 @@ class CreateGeneralSettingsTable extends Migration
     public function up()
     {
         Schema::create('general_settings', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('active_season_id')->unsigned()->index();
             $table->string('logo')->nullable();
             $table->string('banner')->nullable();

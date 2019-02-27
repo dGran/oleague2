@@ -40,7 +40,7 @@
                 <tr class="border-top">
                     <td class="date align-top">
                         <small class="d-block">{{ \Carbon\Carbon::parse($log->created_at)->format('d/m/Y')}}</small>
-                        <small>{{ \Carbon\Carbon::parse($log->created_at)->format('H:s')}}</small>
+                        <small>{{ \Carbon\Carbon::parse($log->created_at)->format('H:m:s')}}</small>
                     </td>
                     <td class="description align-top">
                         <span>{{ $log->description }}</span>

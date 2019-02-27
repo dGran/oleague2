@@ -25,6 +25,9 @@ class ImportInAdminLog
         $log->reg_id = $event->reg->id;
         $log->type = "INSERT";
         $log->description = 'Nuevo registro importado "' . $event->title . '"';
+        if ($event->description) {
+            $log->description .= " - " . $event->description;
+        }
 
         $log->save();
     }

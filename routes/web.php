@@ -114,6 +114,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/temporadas/duplicar-seleccionados/{ids}', 'SeasonController@duplicateMany')->name('admin.seasons.duplicate.many');
 	Route::get('/admin/temporadas/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'SeasonController@exportFile')->name('admin.seasons.export.file');
 	Route::post('/admin/temporadas/importar', 'SeasonController@importFile')->name('admin.seasons.import.file');
+	Route::get('/admin/temporadas/marcar-temporada-activa/{id}', 'SeasonController@setActiveSeason')->name('admin.seasons.setActiveSeason');
 
 	Route::middleware('check_seasons')->group(function () {
 		// Season Participants
@@ -127,6 +128,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/participantes/eliminar-seleccionados/{ids}', 'SeasonParticipantController@destroyMany')->name('admin.season_participants.destroy.many');
 		Route::get('/admin/participantes/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonParticipantController@exportFile')->name('admin.season_participants.export.file');
 		Route::post('/admin/participantes/importar', 'SeasonParticipantController@importFile')->name('admin.season_participants.import.file');
+		Route::get('/admin/participantes/historial-de-economia/{id}', 'SeasonParticipantController@cashHistory')->name('admin.season_participants.cash.history');
 
 		// Season Players
 		Route::get('/admin/temporada-jugadores', 'SeasonPlayerController@index')->name('admin.season_players');

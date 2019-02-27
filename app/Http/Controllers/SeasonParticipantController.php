@@ -338,6 +338,14 @@ class SeasonParticipantController extends Controller
         return back()->with('error', 'No has cargado ningún archivo.');
     }
 
+    public function cashHistory($id) {
+        $participant = SeasonParticipant::find($id);
+        if ($participant) {
+            return view('admin.seasons_participants.index.cash_history', compact('participant'))->render();
+        } else {
+            return view('admin.seasons_participants.index.cash_history_empty')->render();
+        }
+    }
 
     /*
      * HELPERS FUNCTIONS
