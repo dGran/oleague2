@@ -76,13 +76,13 @@ class SeasonParticipant extends Model
             if ($this->team_id) {
                 return $this->team->name;
             } else {
-                return "No definido";
+                return "undefined";
             }
         } else {
             if ($this->user_id) {
                 return $this->user->name;
             } else {
-                return "none";
+                return "undefined";
             }
         }
     }
@@ -92,7 +92,7 @@ class SeasonParticipant extends Model
             if ($this->user_id) {
                 return $this->user->name;
             } else {
-                return "none";
+                return "undefined";
             }
         } else {
             return "";
