@@ -202,10 +202,12 @@
             }
             if ($(".mark:checked").length == 1) {
                 $(".rowOptions-Edit").removeClass('d-none');
-                $(".rowOptions-View").removeClass('d-none');
+                $(".rowOptions-CashHistory").removeClass('d-none');
+                $(".rowOptions-Roster").removeClass('d-none');
             } else {
                 $(".rowOptions-Edit").addClass('d-none');
-                $(".rowOptions-View").addClass('d-none');
+                $(".rowOptions-CashHistory").addClass('d-none');
+                $(".rowOptions-Roster").addClass('d-none');
             }
         } else {
             if ($(".rowOptions").is(':visible')) {

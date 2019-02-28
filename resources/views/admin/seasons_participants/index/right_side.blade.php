@@ -55,12 +55,22 @@
                 <span>Editar</span>
             </a>
         </li>
-        <li class="rowOptions-View list-group-item border-0 px-0 d-none">
-            <a href="" onclick="cashHistory(this)">
-                <span class="fas fa-piggy-bank fa-fw mr-1"></span>
-                <span>Historial de economía</span>
-            </a>
-        </li>
+        @if ($active_season->use_economy)
+            <li class="rowOptions-CashHistory list-group-item border-0 px-0 d-none">
+                <a href="" onclick="cashHistory(this)">
+                    <span class="fas fa-piggy-bank fa-fw mr-1"></span>
+                    <span>Historial de economía</span>
+                </a>
+            </li>
+        @endif
+        @if ($active_season->use_rosters)
+            <li class="rowOptions-Roster list-group-item border-0 px-0 d-none">
+                <a href="" onclick="roster(this)">
+                    <span class="fas fa-user-shield fa-fw mr-1"></span>
+                    <span>Plantilla</span>
+                </a>
+            </li>
+        @endif
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="export_file_selected('xls')">
                 <span class="fas fa-file-export fa-fw mr-1"></span>

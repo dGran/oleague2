@@ -92,17 +92,17 @@
 
                     <td></td>
                     @if ($active_season->use_economy)
-                        <td class="text-nowrap">
-                            {{ $participant->budget_formatted() }}
+                        <td class="text-nowrap text-right">
+                            <small>{{ $participant->budget_formatted() }}</small>
                         </td>
                     @endif
 
                     @if ($active_season->use_rosters)
-                        <td class="text-nowrap">
+                        <td class="text-nowrap text-right">
                             @if ($participant->players)
-                                {{ $participant->players->count() }} jug.
+                                <small>{{ $participant->players->count() }} jug.</small>
                             @else
-                                0 jug.
+                                <small>0 jug.</small>
                             @endif
                         </td>
                     @endif
@@ -113,22 +113,22 @@
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
-                            @if ($active_season->use_rosters)
-                                <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnEdit{{ $participant->id }}">
-                                    <i class="fas fa-user-shield fa-fw mr-1"></i>
-                                    Plantilla
-                                </a>
-                            @endif
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnEdit{{ $participant->id }}">
+                                <i class="fas fa-edit fa-fw mr-1"></i>
+                                Editar
+                            </a>
                             @if ($active_season->use_economy)
                                 <a class="dropdown-item text-secondary" href="" data-toggle="modal" data-target="#cashHistoryModal" id="btnCashHistory{{ $participant->id }}"">
                                     <i class="fas fa-piggy-bank fa-fw mr-1"></i>
                                     Historial de economía
                                 </a>
                             @endif
-                            <a class="dropdown-item text-secondary" href="" id="btnEdit{{ $participant->id }}">
-                                <i class="fas fa-edit fa-fw mr-1"></i>
-                                Editar
-                            </a>
+                            @if ($active_season->use_rosters)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnRoster{{ $participant->id }}">
+                                    <i class="fas fa-user-shield fa-fw mr-1"></i>
+                                    Plantilla
+                                </a>
+                            @endif
                             @if ($participant->user_id)
                                 <a href="" class="btn-kickout dropdown-item text-danger" value="Expulsar">
                                     <i class="fas fa-sign-out-alt fa-fw mr-1"></i>
