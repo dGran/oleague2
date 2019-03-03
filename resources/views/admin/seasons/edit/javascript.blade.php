@@ -1,4 +1,7 @@
 <script>
+    var database_id_on_enter = {!! json_encode($season->players_db_id) !!};
+    var user_rosters_on_enter = {!! json_encode($season->use_rosters) !!};
+
     $(function() {
         Mousetrap.bind(['command+s', 'ctrl+s'], function() {
             $("#frmEdit").submit();
@@ -12,6 +15,24 @@
 
         $("#frmEdit").submit(function(event) {
             $("#btnSave").attr("disabled", "disabled");
+
+            if ($("#use_rosters").prop('checked')) {
+                if (database_id_on_enter != $("#players_db_id").val()) {
+                    if ($("#players_db_id").val() > 0) {
+                        $("#loading").removeClass('d-none');
+                        $("#btnSave").val('Eliminando / importando jugadores, por favor espere..');
+                    } else {
+                        $("#loading").removeClass('d-none');
+                        $("#btnSave").val('Eliminando jugadores, por favor espere..');
+                    }
+                }
+            } else {
+                if (user_rosters_on_enter) {
+                    $("#btnSave").val('Eliminando jugadores, por favor espere..');
+                    $("#loading").removeClass('d-none');
+                }
+            }
+
         });
 
         $("#use_economy").click(function(){
@@ -26,11 +47,11 @@
 
         $("#use_rosters").click(function(){
             if( $('#use_rosters').prop('checked') ) {
-                $(".max_min_players").removeClass('d-none');
-                $(".max_min_players").addClass('d-block');
+                $(".roster_options").removeClass('d-none');
+                $(".roster_options").addClass('d-block');
             } else {
-                $(".max_min_players").addClass('d-none');
-                $(".max_min_players").removeClass('d-block');
+                $(".roster_options").addClass('d-none');
+                $(".roster_options").removeClass('d-block');
             }
         });
     });

@@ -9,7 +9,7 @@ class SeasonParticipant extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'name', 'season_id', 'team_id', 'user_id', 'budget', 'paid_clauses', 'clauses_received', 'slug'
+        'season_id', 'team_id', 'user_id', 'paid_clauses', 'clauses_received'
     ];
 
     public function season()
@@ -20,6 +20,11 @@ class SeasonParticipant extends Model
     public function team()
     {
         return $this->hasOne('App\Team', 'id', 'team_id');
+    }
+
+    public function players()
+    {
+        return $this->hasmany('App\SeasonPlayer', 'participant_id', 'id');
     }
 
     public function user()
@@ -53,6 +58,18 @@ class SeasonParticipant extends Model
 
     public function budget_formatted() {
         return $this->budget() . " M";
+    }
+
+    public function salaries() {
+        $salaries = 0;
+        foreach ($this->players as $player) {
+            $salaries = $salaries + $player->salary;
+        }
+        return $salaries;
+    }
+
+    public function salaries_formatted() {
+        return $this->salaries() . " M";
     }
 
     public function logo() {

@@ -74,7 +74,7 @@ id="frmImport"
     <div class="table-form-footer col-12 col-lg-8 col-xl-6 pt-3 px-3 px-md-0">
         <input type="submit" class="btn btn-primary border border-primary" value="Importar" id="btnSave">
         <div class="d-inline-block ml-3">
-            <img id="loading" class="d-none" src="https://2.bp.blogspot.com/-nVHaDMNS3ss/Vn-Luwp__yI/AAAAAAAACtY/ubtsuCnqdvA/s1600/bloggersstand%2Bpage%2Bloading%2Bgif%2Banimated%2Beffect%2Bimage.gif" alt="" width="48">
+            <img id="loading" class="d-none" src="{{ asset('img/loading.gif') }}" alt="" width="48">
         </div>
         <div class="d-block">
             <small id="loading-info" class="d-none">El tiempo del proceso se puede demorar en función de la cantidad de datos a importar.</small>

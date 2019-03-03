@@ -24,6 +24,9 @@
             <label for="num_participants" class="col-sm-3 col-form-label">Participantes</label>
             <div class="col-sm-9">
                 <input type="number" class="form-control" id="num_participants" name="num_participants" placeholder="Número de participantes" autofocus value="{{ old('num_participants', $season->num_participants) }}">
+                <small class="text-info">
+                    <i class="fas fa-info mr-1"></i>Los participantes se crearán / eliminarán automaticamente
+                </small>
             </div>
         </div>
 
@@ -46,15 +49,36 @@
                         <span>Usar plantillas de jugadores</span>
                     </label>
                 </div>
+                <small class="{{ $season->use_rosters ? 'd-block' : 'd-none'}} text-warning">
+                    <i class="fas fa-exclamation-triangle mr-1"></i>Al desmarcar, los jugadores existentes se eliminarán automaticamente
+                </small>
             </div>
         </div>
-        <div class="form-group row max_min_players {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="players_db_id" class="col-form-label">Player Database</label>
+                <select class="selectpicker form-control" name="players_db_id" id="players_db_id" data-size="3" data-live-search="true">
+                    <option value="0">Ninguna</option>
+                    @foreach ($databases as $database)
+                        @if ($database->id == $season->players_db_id)
+                            <option selected value="{{ $database->id }}">{{ $database->name }}</option>
+                        @else
+                            <option value="{{ $database->id }}">{{ $database->name }}</option>
+                        @endif
+                    @endforeach
+                </select>
+                <small class="text-warning">
+                    Al cambiar, los jugadores existentes se eliminarán y se importarán los de la database seleccionada
+                </small>
+            </div>
+        </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
             <div class="col-sm-9 offset-sm-3">
                 <label for="initial_budget">Mínimo jugadores por plantilla</label>
                 <input type="number" class="form-control" id="min_players" name="min_players" placeholder="Número mínimo de jugadores por plantilla" autofocus value="{{ old('min_players', $season->min_players) }}">
             </div>
         </div>
-        <div class="form-group row max_min_players {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
             <div class="col-sm-9 offset-sm-3">
                 <label for="initial_budget">Máximo jugadores por plantilla</label>
                 <input type="number" class="form-control" id="max_players" name="max_players" placeholder="Número máximo de jugadores por plantilla" autofocus value="{{ old('max_players', $season->max_players) }}">
@@ -82,6 +106,12 @@
 
     <div class="table-form-footer col-12 col-lg-8 col-xl-6 pt-3 px-3 px-md-0">
         <input type="submit" class="btn btn-primary border border-primary" value="Guardar" id="btnSave">
+        <div class="d-inline-block ml-3">
+            <img id="loading" class="d-none" src="{{ asset('img/loading.gif') }}" alt="" width="48">
+        </div>
+{{--         <div class="d-block">
+            <small id="loading-info" class="d-none">Importando los jugadores de la database a la temporada</small>
+        </div>    --}}
     </div>
 
 </form>

@@ -3,20 +3,35 @@
     lang="{{ app()->getLocale() }}"
     role="form"
     method="POST"
-    action="{{ route('admin.teams_categories.save') }}"
+    action="{{ route('admin.season_participants.save', $season_id) }}"
     enctype="multipart/form-data"
     data-toggle="validator"
     autocomplete="off">
     {{ csrf_field() }}
 
+    <input type="hidden" name="season_id" value="{{ $season_id }}">
+
     <div class="table-form-content col-12 col-lg-8 col-xl-6 p-md-3 animated fadeIn">
         <div class="form-group row pt-2">
-            <label for="name" class="col-sm-3 col-form-label">Nombre</label>
+            <label for="user_id" class="col-sm-3 col-form-label">Usuario</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control {{ $errors->first('name') ? 'invalid' : '' }}" id="name" name="name" placeholder="Nombre" autofocus value="{{ old('name') }}">
-                @if ($errors->first('name'))
-                    <small class="text-danger">{{ $errors->first('name') }}</small>
-                @endif
+                <select class="selectpicker form-control" name="user_id" id="user_id" data-size="3" data-live-search="true">
+                    <option value="0">Ninguno</option>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="team_id" class="col-sm-3 col-form-label">Equipo</label>
+            <div class="col-sm-9">
+                <select class="selectpicker form-control" name="team_id" id="team_id" data-size="3" data-live-search="true">
+                    <option value="0">Ninguno</option>
+                    @foreach ($teams as $team)
+                        <option value="{{ $team->id }}">{{ $team->name }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>

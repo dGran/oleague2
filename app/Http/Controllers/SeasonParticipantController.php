@@ -45,7 +45,9 @@ class SeasonParticipantController extends Controller
 
             if (!request()->filtering) { // filtering determine when you use the form and exclude the first access
                 if ($admin->seasonParticipants_filterSeason) {
-                    $filterSeason = $admin->seasonParticipants_filterSeason;
+                    if (Season::find($admin->seasonParticipants_filterSeason)) {
+                        $filterSeason = $admin->seasonParticipants_filterSeason;
+                    }
                 }
                 if ($admin->seasonParticipants_order) {
                     $order = $admin->seasonParticipants_order;
@@ -117,41 +119,60 @@ class SeasonParticipantController extends Controller
         return view('admin.seasons_participants.index', compact('participants', 'seasons', 'filterSeason', 'active_season', 'order', 'pagination', 'page'));
     }
 
-    // public function add()
-    // {
-    // 	return view('admin.teams_categories.add');
-    // }
+    public function add($season_id)
+    {
+        $teams = \DB::table("teams")->select('*')
+                ->whereNotIn('id', function($query) use ($season_id) {
+                   $query->select('team_id')->from('season_participants')->whereNotNull('team_id')->where('season_id', '=', $season_id);
+                })
+                ->orderBy('name', 'asc')
+                ->get();
+        $users = \DB::table("users")->select('*')
+                ->whereNotIn('id', function($query) use ($season_id) {
+                   $query->select('user_id')->from('season_participants')->whereNotNull('team_id')->where('season_id', '=', $season_id);
+                })
+                ->orderBy('name', 'asc')
+                ->get();
+    	return view('admin.seasons_participants.add', compact('season_id', 'users', 'teams'));
+    }
 
-    // public function save()
-    // {
-    //     $data = request()->validate([
-    //         'name' => 'required|unique:team_categories,name',
-    //     ],
-    //     [
-    //         'name.required' => 'El nombre de la categoría es obligatorio',
-    //         'name.unique' => 'El nombre de la categoría ya existe',
-    //     ]);
+    public function save()
+    {
+        $data = request()->all();
+        $participant = SeasonParticipant::create($data);
 
-    //     $data['slug'] = str_slug(request()->name);
-
-    //     $category = TeamCategory::create($data);
-
-    //     if ($category->save()) {
-    //         event(new TableWasSaved($category, $category->name));
-    //         if (request()->no_close) {
-    //             return back()->with('success', 'Nueva categoría registrada correctamente');
-    //         }
-    //         return redirect()->route('admin.teams_categories')->with('success', 'Nueva categoría registrada correctamente');
-    //     } else {
-    //         return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
-    //     }
-    // }
+        if ($participant->save()) {
+            event(new TableWasSaved($participant, $participant->name()));
+            $season = Season::find($participant->season_id);
+            if ($season) {
+                $season->num_participants = $season->participants->count();
+                $season->save();
+                event(new TableWasUpdated($season, $season->name, 'Número de participantes, valor ' . $season->num_participants));
+            }
+            if (request()->no_close) {
+                return back()->with('success', 'Nuevo participante registrado correctamente');
+            }
+            return redirect()->route('admin.season_participants')->with('success', 'Nuevo participante registrado correctamente');
+        } else {
+            return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+        }
+    }
 
     public function edit($id)
     {
         $participant = SeasonParticipant::find($id);
-        $teams = Team::orderBy('name', 'asc')->get();
-        $users = User::orderBy('name', 'asc')->get();
+        $teams = \DB::table('teams')->select('*')
+                ->whereNotIn('id', function($query) use ($participant) {
+                   $query->select('team_id')->from('season_participants')->whereNotNull('team_id')->where('season_id', '=', $participant->season_id);
+                })
+                ->orderBy('name', 'asc')
+                ->get();
+        $users = \DB::table("users")->select('*')
+                ->whereNotIn('id', function($query) use ($participant) {
+                   $query->select('user_id')->from('season_participants')->whereNotNull('team_id')->where('season_id', '=', $participant->season_id);
+                })
+                ->orderBy('name', 'asc')
+                ->get();
         if ($participant) {
             return view('admin.seasons_participants.edit', compact('participant', 'teams', 'users'));
         } else {
@@ -164,29 +185,21 @@ class SeasonParticipantController extends Controller
         $participant = SeasonParticipant::find($id);
 
         if ($participant) {
-            $data = request()->validate([
-                'name' => 'required',
-            ],
-            [
-	            'name.required' => 'El nombre del participante es obligatorio',
-            ]);
-
             $data = request()->all();
-            $data['slug'] = str_slug(request()->name);
 
             $participant->fill($data);
             if ($participant->isDirty()) {
                 $participant->update($data);
 
                 if ($participant->update()) {
-                    event(new TableWasUpdated($participant, $participant->name));
-                    return redirect()->route('admin.season_participants')->with('success', 'Cambios guardados en el participante "' . $participant->name . '" correctamente.');
+                    event(new TableWasUpdated($participant, $participant->name()));
+                    return redirect()->route('admin.season_participants')->with('success', 'Cambios guardados en el participante "' . $participant->name() . '" correctamente.');
                 } else {
                     return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
                 }
             }
 
-            return redirect()->route('admin.season_participants')->with('info', 'No se han detectado cambios en el participante "' . $participant->name . '".');
+            return redirect()->route('admin.season_participants')->with('info', 'No se han detectado cambios en el participante "' . $participant->name() . '".');
 
         } else {
             return redirect()->route('admin.season_participants')->with('warning', 'Acción cancelada. El participante que estabas editando ya no existe. Se ha actualizado la lista');
@@ -204,8 +217,8 @@ class SeasonParticipantController extends Controller
             $participant->save();
 
             if ($participant->update()) {
-                event(new TableWasUpdated($participant, $participant->name));
-                return redirect()->route('admin.season_participants')->with('success', 'Usuario expulsado en el participante "' . $participant->name . '" correctamente.');
+                event(new TableWasUpdated($participant, $participant->name()));
+                return redirect()->route('admin.season_participants')->with('success', 'Usuario expulsado en el participante "' . $participant->name() . '" correctamente.');
             } else {
                 return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
             }
@@ -221,10 +234,28 @@ class SeasonParticipantController extends Controller
         $participant = SeasonParticipant::find($id);
 
         if ($participant) {
-            $message = 'Se ha eliminado el participante "' . $participant->name . '" correctamente.';
+            $message = 'Se ha eliminado el participante "' . $participant->name() . '" correctamente.';
 
-            event(new TableWasDeleted($participant, $participant->name));
+            foreach ($participant->cash_history as $cash_history) {
+                event(new TableWasDeleted($cash_history, $cash_history->description));
+                $cash_history->delete();
+            }
+            foreach ($participant->players as $player) {
+                $player->participant_id = NULL;
+                $player->save();
+                if ($player->save()) {
+                    event(new TableWasUpdated($player, $player->player->name, 'Cambio de equipo: Libre'));
+                }
+            }
+            event(new TableWasDeleted($participant, $participant->name()));
             $participant->delete();
+
+            $season = Season::find($participant->season_id);
+            if ($season) {
+                $season->num_participants = $season->participants->count();
+                $season->save();
+                event(new TableWasUpdated($season, $season->name, 'Número de participantes, valor ' . $season->num_participants));
+            }
 
             return redirect()->route('admin.season_participants')->with('success', $message);
         } else {
@@ -244,12 +275,22 @@ class SeasonParticipantController extends Controller
             if ($participant) {
                 // if (!$participant->hasTeams()) {
                     $counter_deleted = $counter_deleted +1;
-                    event(new TableWasDeleted($participant, $participant->name));
+                    foreach ($participant->cash_history as $cash_history) {
+                        event(new TableWasDeleted($cash_history, $cash_history->description));
+                        $cash_history->delete();
+                    }
+                    event(new TableWasDeleted($participant, $participant->name()));
                     $participant->delete();
                 // } else {
                     // $counter_no_allow = $counter_no_allow +1;
                 // }
             }
+        }
+        $season = Season::find($participant->season_id);
+        if ($season) {
+            $season->num_participants = $season->participants->count();
+            $season->save();
+            event(new TableWasUpdated($season, $season->name, 'Número de participantes, valor ' . $season->num_participants));
         }
         if ($counter_deleted > 0) {
             // if ($counter_no_allow > 0) {
@@ -310,19 +351,16 @@ class SeasonParticipantController extends Controller
                 foreach ($data as $key => $value) {
                     try {
                         $participant = new SeasonParticipant;
-                        $participant->name = $value->name;
                         $participant->season_id = $value->season_id;
                         $participant->team_id = $value->team_id;
                         $participant->user_id = $value->user_id;
-                        $participant->budget = $value->budget;
                         $participant->paid_clauses = $value->paid_clauses;
                         $participant->clauses_received = $value->clauses_received;
-                        $participant->slug = str_slug($value->name);
 
                         if ($participant) {
                             $participant->save();
                             if ($participant->save()) {
-                                event(new TableWasImported($participant, $participant->name));
+                                event(new TableWasImported($participant, $participant->name()));
                             }
                         }
                     }
@@ -347,6 +385,15 @@ class SeasonParticipantController extends Controller
         }
     }
 
+    public function roster($id) {
+        $participant = SeasonParticipant::find($id);
+        if ($participant) {
+            return view('admin.seasons_participants.index.roster', compact('participant'))->render();
+        } else {
+            return view('admin.seasons_participants.index.roster_empty')->render();
+        }
+    }
+
     /*
      * HELPERS FUNCTIONS
      *
@@ -365,14 +412,6 @@ class SeasonParticipantController extends Controller
                 'sortField'     => 'id',
                 'sortDirection' => 'desc'
             ],
-            'name' => [
-                'sortField'     => 'name',
-                'sortDirection' => 'asc'
-            ],
-            'name_desc' => [
-                'sortField'     => 'name',
-                'sortDirection' => 'desc'
-            ]
         ];
         return $order_ext[$order];
     }

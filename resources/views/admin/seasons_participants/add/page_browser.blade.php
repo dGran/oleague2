@@ -2,8 +2,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb p-0 m-0 mb-1">
             <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.teams_categories') }}">Categorías de equipos</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.season_participants') }}">Participantes</a></li>
         </ol>
     </nav>
-    <h5 class="text-uppercase m-0">Nueva categoría</h5>
+    <h5 class="text-uppercase m-0">Nuevo participante</h5>
 </div>

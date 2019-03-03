@@ -23,6 +23,7 @@
 @section('modal')
     @include('admin.seasons_participants.index.filter_modal')
     @include('admin.seasons_participants.index.cash_history_modal')
+    @include('admin.seasons_participants.index.roster_modal')
 @endsection
 
 @section('js')

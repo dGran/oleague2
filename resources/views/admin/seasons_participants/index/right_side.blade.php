@@ -1,5 +1,5 @@
 <div class="tableOptions animated fadeIn">
-    <a href="{{ route('admin.season_participants.add') }}" class="btn btn-primary" id="btnAdd">
+    <a href="{{ route('admin.season_participants.add', $active_season->id) }}" class="btn btn-primary" id="btnAdd">
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
     <ul class="list-group border-top mt-3">
@@ -122,8 +122,6 @@
                 <option value="default" {{ $order == 'default' ? 'selected' : '' }}>Por defecto</option>
                 <option value="date_desc" {{ $order == 'date_desc' ? 'selected' : '' }} data-icon="fas fa-sort-amount-up">Los últimos al principio</option>
                 <option value="date" {{ $order == 'date' ? 'selected' : '' }} data-icon="fas fa-sort-amount-down">Los últimos al final</option>
-                <option value="name" {{ $order == 'name' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por nombre</option>
-                <option value="name_desc" {{ $order == 'name_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre</option>
             </select>
         </div>
     </div>

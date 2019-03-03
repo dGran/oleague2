@@ -15,14 +15,11 @@ class CreateSeasonParticipantsTable extends Migration
     {
         Schema::create('season_participants', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->index();
             $table->integer('season_id')->unsigned()->index();
             $table->integer('team_id')->unsigned()->nullable()->index();
             $table->integer('user_id')->unsigned()->nullable()->index();
-            $table->integer('budget')->index()->default(0);
-            $table->integer('paid_clauses')->default(0);
-            $table->integer('clauses_received')->default(0);
-            $table->string('slug');
+            $table->integer('paid_clauses')->default(0)->nullable();
+            $table->integer('clauses_received')->default(0)->nullable();
         });
     }
 

@@ -5,5 +5,5 @@
             <li class="breadcrumb-item"><a href="{{ route('admin.season_participants') }}">Participantes</a></li>
         </ol>
     </nav>
-    <h5 class="text-uppercase m-0">{{ $participant->name }}</h5>
+    <h5 class="text-uppercase m-0">{{ $participant->name() }}</h5>
 </div>

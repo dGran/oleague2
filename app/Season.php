@@ -9,7 +9,7 @@ class Season extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'name', 'slug', 'num_participants', 'participant_has_team', 'use_economy', 'use_rosters', 'min_players', 'max_players', 'initial_budget'
+        'name', 'slug', 'num_participants', 'participant_has_team', 'use_economy', 'use_rosters', 'players_db_id', 'min_players', 'max_players', 'initial_budget'
     ];
 
 	public function scopeName($query, $name)
@@ -31,5 +31,10 @@ class Season extends Model
     	} else {
     		return false;
     	}
+    }
+
+    public function players()
+    {
+        return $this->hasmany('App\SeasonPlayer', 'season_id', 'id');
     }
 }

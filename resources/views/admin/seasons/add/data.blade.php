@@ -24,6 +24,9 @@
             <label for="num_participants" class="col-sm-3 col-form-label">Participantes</label>
             <div class="col-sm-9">
                 <input type="number" class="form-control" id="num_participants" name="num_participants" placeholder="Número de participantes" autofocus value="{{ old('num_participants') }}">
+                <small class="text-info">
+                    <i class="fas fa-info mr-1"></i>Los participantes se crearán automaticamente
+                </small>
             </div>
         </div>
 
@@ -48,15 +51,31 @@
                 </div>
             </div>
         </div>
-        <div class="form-group row max_min_players">
+
+        <div class="form-group row roster_options">
             <div class="col-sm-9 offset-sm-3">
-                <label for="initial_budget">Mínimo jugadores por plantilla</label>
+                <label for="players_db_id" class="col-form-label">Player Database</label>
+                <select class="selectpicker form-control" name="players_db_id" id="players_db_id" data-size="3" data-live-search="true">
+                    <option value="0">Ninguna</option>
+                    @foreach ($databases as $database)
+                        <option value="{{ $database->id }}">{{ $database->name }}</option>
+                    @endforeach
+                </select>
+                <small class="text-info">
+                    <i class="fas fa-info mr-1"></i>Los jugadores se importarán automáticamente
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group row roster_options">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="min_players">Mínimo jugadores por plantilla</label>
                 <input type="number" class="form-control" id="min_players" name="min_players" placeholder="Número mínimo de jugadores por plantilla" autofocus value="{{ old('min_players', 16) }}">
             </div>
         </div>
-        <div class="form-group row max_min_players">
+        <div class="form-group row roster_options">
             <div class="col-sm-9 offset-sm-3">
-                <label for="initial_budget">Máximo jugadores por plantilla</label>
+                <label for="max_players">Máximo jugadores por plantilla</label>
                 <input type="number" class="form-control" id="max_players" name="max_players" placeholder="Número máximo de jugadores por plantilla" autofocus value="{{ old('max_players', 25) }}">
             </div>
         </div>
@@ -93,6 +112,9 @@
 
     <div class="table-form-footer col-12 col-lg-8 col-xl-6 pt-3 px-3 px-md-0">
         <input type="submit" class="btn btn-primary border border-primary" value="Guardar" id="btnSave">
+        <div class="d-inline-block ml-3">
+            <img id="loading" class="d-none" src="{{ asset('img/loading.gif') }}" alt="" width="48">
+        </div>
         <div class="no-close custom-control custom-checkbox mt-2">
             <input type="checkbox" class="custom-control-input" id="no_close" name="no_close">
             <label class="custom-control-label is-valid" for="no_close">Insertar nuevo registro</label>

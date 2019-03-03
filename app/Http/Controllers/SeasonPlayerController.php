@@ -44,7 +44,9 @@ class SeasonPlayerController extends Controller
 
             if (!request()->filtering) { // filtering determine when you use the form and exclude the first access
                 if ($admin->seasonPlayers_filterSeason) {
-                    $filterSeason = $admin->seasonPlayers_filterSeason;
+                    if (Season::find($admin->seasonPlayers_filterSeason)) {
+                        $filterSeason = $admin->seasonPlayers_filterSeason;
+                    }
                 }
                 if ($admin->seasonPlayers_order) {
                     $order = $admin->seasonPlayers_order;
@@ -114,22 +116,6 @@ class SeasonPlayerController extends Controller
             $adminFilter->save();
         }
         return view('admin.seasons_players.index', compact('players', 'seasons', 'filterSeason', 'active_season', 'order', 'pagination', 'page'));
-    }
-
-    public function import_full_roster()
-    {
-    	$players = Player::where('players_db_id', '=', 3)->get();
-
-    	foreach ($players as $player) {
-	        $season_player = SeasonPlayer::create([
-	            'season_id' => active_season()->id,
-	            'player_id' => $player->id,
-	        ]);
-	        event(new TableWasImported($season_player, $player->name . " en " . active_season()->name));
-    	}
-
-    	return redirect()->route('admin.season_players')->with('info', 'Se han importado todos los jugadores de la database seleccionada');
-
     }
 
 

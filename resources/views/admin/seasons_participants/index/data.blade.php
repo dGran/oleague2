@@ -63,7 +63,7 @@
             @foreach ($participants as $participant)
                 {{-- comentamos la linea por el data-allow-delete --}}
                 {{-- <tr class="border-top" data-id="{{ $participant->id }}" data-name="{{ $participant->name }}" data-allow-delete="{{ $participant->teams->count() > 0 ? 0 : 1 }}"> --}}
-                <tr class="border-top" data-id="{{ $participant->id }}" data-name="{{ $participant->name }}" data-user-name="{{ $participant->user_id ? $participant->user->name : '' }}">
+                <tr class="border-top" data-id="{{ $participant->id }}" data-name="{{ $participant->name() }}" data-user-name="{{ $participant->user_id ? $participant->user->name : '' }}">
 
                     <td class="select">
                         <div class="pretty p-icon p-jelly mr-0">
@@ -106,7 +106,6 @@
                             @endif
                         </td>
                     @endif
-                    <td></td>
 
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
@@ -124,7 +123,7 @@
                                 </a>
                             @endif
                             @if ($active_season->use_rosters)
-                                <a class="dropdown-item text-secondary" href="{{ route('admin.season_participants.edit', $participant->id) }}" id="btnRoster{{ $participant->id }}">
+                                <a class="dropdown-item text-secondary" href="" data-toggle="modal" data-target="#rosterModal" id="btnRoster{{ $participant->id }}"">
                                     <i class="fas fa-user-shield fa-fw mr-1"></i>
                                     Plantilla
                                 </a>

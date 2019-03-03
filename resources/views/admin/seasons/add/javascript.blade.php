@@ -12,6 +12,14 @@
 
         $("#frmAdd").submit(function(event) {
             $("#btnSave").attr("disabled", "disabled");
+            if ($("#use_rosters").prop('checked')) {
+                if ($("#players_db_id").val() > 0) {
+                    $("#loading").removeClass('d-none');
+                    $("#btnSave").val('Importando jugadores, por favor espere..');
+                }
+            } else {
+                $("#players_db_id").val(0);
+            }
         });
 
         $("#use_economy").click(function(){
@@ -19,7 +27,7 @@
         });
 
         $("#use_rosters").click(function(){
-            $(".max_min_players").toggleClass('d-none');
+            $(".roster_options").toggleClass('d-none');
         });
     });
 

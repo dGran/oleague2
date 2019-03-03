@@ -26,6 +26,22 @@
             $('.modal-dialog').html("");
         });
 
+        $('#rosterModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
+            $.ajax({
+                url: 'participantes/plantilla/' + id,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('.modal-dialog').html(data);
+            });
+        });
+
+        $("#rosterModal").on("hidden.bs.modal", function(){
+            $('.modal-dialog').html("");
+        });
+
     });
 
     function applyDisplay() {
@@ -180,8 +196,16 @@
         $(".mark:checked").each(function() {
             id = $(this).val();
         });
-        url = $('#btnCashHistory'+id).attr("href");
         $('#btnCashHistory'+id).trigger('click');
+    }
+
+    function roster(element) {
+        window.event.preventDefault();
+
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        $('#btnRoster'+id).trigger('click');
     }
 
     function rowSelect(element) {

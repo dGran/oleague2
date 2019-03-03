@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Season;
-use App\SeasonParticipant;
-use App\SeasonParticipantCashHistory;
 use App\AdminFilter;
 use App\GeneralSetting;
+use App\Season;
+use App\PlayerDB;
+use App\Player;
+use App\SeasonParticipant;
+use App\SeasonParticipantCashHistory;
+use App\SeasonPlayer;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -89,7 +92,8 @@ class SeasonController extends Controller
 
     public function add()
     {
-        return view('admin.seasons.add');
+        $databases = PlayerDB::orderBy('name', 'desc')->get();
+        return view('admin.seasons.add', compact('databases'));
     }
 
     public function save()
@@ -113,6 +117,7 @@ class SeasonController extends Controller
             $data['initial_budget'] = 0;
         }
         $data['use_rosters'] = (is_null(request()->use_rosters)) ? 0 : 1;
+        $data['players_db_id'] = (is_null(request()->players_db_id)) ? 0 : request()->players_db_id;
         $data['min_players'] = (is_null(request()->use_rosters)) ? 0 : request()->min_players;
         $data['max_players'] = (is_null(request()->use_rosters)) ? 0 : request()->max_players;
 
@@ -121,6 +126,11 @@ class SeasonController extends Controller
         if ($season->save()) {
             event(new TableWasSaved($season, $season->name));
             $this->createParticipants($season->num_participants, $season, request()->use_economy);
+
+            if (request()->players_db_id > 0) {
+                $this->importPlayers($season, request()->players_db_id);
+            }
+
 
             if (request()->active_season) {
                 $settings = GeneralSetting::first();
@@ -147,9 +157,10 @@ class SeasonController extends Controller
 
     public function edit($id)
     {
+        $databases = PlayerDB::orderBy('name', 'desc')->get();
         $season = Season::find($id);
         if ($season) {
-            return view('admin.seasons.edit', compact('season'));
+            return view('admin.seasons.edit', compact('season', 'databases'));
         } else {
             return back()->with('warning', 'Acción cancelada. La temporada que querías editar ya no existe. Se ha actualizado la lista');
         }
@@ -181,6 +192,7 @@ class SeasonController extends Controller
             $data['use_rosters'] = (is_null(request()->use_rosters)) ? 0 : 1;
             $data['min_players'] = (is_null(request()->use_rosters)) ? 0 : request()->min_players;
             $data['max_players'] = (is_null(request()->use_rosters)) ? 0 : request()->max_players;
+            $data['players_db_id'] = (is_null(request()->use_rosters)) ? 0 : request()->players_db_id;
 
             // detect if there are changes in the number of participants
             if ($season->num_participants != request()->num_participants) {
@@ -197,42 +209,43 @@ class SeasonController extends Controller
                         $participants_ok_for_delete = SeasonParticipant::where('season_id', '=', $season->id)
                         ->where('user_id', '=', null)
                         ->get();
+                        $num_more_participants_will_delete = $num_leftover_participants - $participants_ok_for_delete->count();
                         if ($participants_ok_for_delete->count() > $num_leftover_participants) {
                             $deleted_par = 0;
                             foreach ($participants_ok_for_delete as $participant) {
                                 if ($deleted_par < $num_leftover_participants) {
-                                    event(new TableWasDeleted($participant->cash_history, $participant->cash_history->description));
-                                    $participant->cash_history->delete();
-                                    event(new TableWasDeleted($participant, $participant->name));
+                                    foreach ($participant->cash_history as $cash_history) {
+                                        event(new TableWasDeleted($cash_history, $cash_history->description));
+                                        $cash_history->delete();
+                                    }
+                                    event(new TableWasDeleted($participant, $participant->name()));
                                     $participant->delete();
                                     $deleted_par++;
                                 }
                             }
                         } else {
-                            $deleted_par = 0;
                             foreach ($participants_ok_for_delete as $participant) {
-                                if ($deleted_par < $num_leftover_participants) {
-                                    event(new TableWasDeleted($participant->cash_history, $participant->cash_history->description));
-                                    $participant->cash_history->delete();
-                                    event(new TableWasDeleted($participant, $participant->name));
+                                foreach ($participant->cash_history as $cash_history) {
+                                    event(new TableWasDeleted($cash_history, $cash_history->description));
+                                    $cash_history->delete();
+                                }
+                                event(new TableWasDeleted($participant, $participant->name()));
+                                $participant->delete();
+                            }
+                            $deleted_par = 0;
+                            foreach ($season->participants as $participant) {
+                                if ($deleted_par < $num_more_participants_will_delete) {
+                                    foreach ($participant->cash_history as $cash_history) {
+                                        event(new TableWasDeleted($cash_history, $cash_history->description));
+                                        $cash_history->delete();
+                                    }
+                                    event(new TableWasDeleted($participant, $participant->name()));
                                     $participant->delete();
                                     $deleted_par++;
                                 }
                             }
-                            $num_more_participants_will_delete = $num_leftover_participants - $participants_ok_for_delete->count();
-                            $deleted_par = 0;
-                            foreach ($season->participants as $participant) {
-                                if ($deleted_par < $num_more_participants_will_delete) {
-                                    event(new TableWasDeleted($participant->cash_history, $participant->cash_history->description));
-                                    $participant->cash_history->delete();
-                                    event(new TableWasDeleted($participant, $participant->name));
-                                    $participant->delete();
-                                    $num_more_participants_will_delete++;
-                                }
-                            }
                         }
                     }
-
                 } else {
                     $this->createParticipants(request()->num_participants, $season, request()->use_economy);
                 }
@@ -240,13 +253,10 @@ class SeasonController extends Controller
 
             // detect if there are changes in economy and initial budget
             if (request()->use_economy) {
-                //comprobar si ya tiene cash history o hay que crearlo
-                foreach ($season->participants as $participant) {
+                // check if you already have cash history or you have to create it
+                $participants = SeasonParticipant::where('season_id', '=', $season->id)->get();
+                foreach ($participants as $participant) {
                     if ($participant->cash_history->count() == 0) {
-                        $participant->budget = request()->initial_budget;
-                        event(new TableWasUpdated($participant, $participant->name, 'Presupuesto editado, valor ' . $participant->budget));
-                        $participant->save();
-
                         $cash_history = new SeasonParticipantCashHistory;
                         $cash_history->participant_id = $participant->id;
                         $cash_history->description = "Presupuesto inicial";
@@ -258,35 +268,37 @@ class SeasonController extends Controller
                         }
                     } else {
                         if ($season->initial_budget != request()->initial_budget) {
-                            foreach ($season->participants as $participant) {
+                            foreach ($participants as $participant) {
                                 $participant->cash_history->first()->amount = request()->initial_budget;
                                 $participant->cash_history->first()->movement = "E";
                                 $participant->cash_history->first()->save();
                                 if ($participant->cash_history->first()->save()) {
                                     event(new TableWasUpdated($participant->cash_history->first(), $participant->cash_history->first()->description));
                                 }
-                                $participant->budget = $participant->budget();
-                                $participant->save();
-                                if ($participant->save()) {
-                                    event(new TableWasUpdated($participant, $participant->name, 'Presupuesto editado, valor ' . $participant->budget));
-                                }
                             }
                         }
                     }
                 }
             } else {
-                foreach ($season->participants as $participant) {
+                $participants = SeasonParticipant::where('season_id', '=', $season->id)->get();
+                foreach ($participants as $participant) {
                     foreach ($participant->cash_history as $cash_history) {
                         $cash_history->delete();
                         if ($cash_history->delete()) {
                             event(new TableWasDeleted($cash_history, $cash_history->description));
                         }
-                        $participant->budget = 0;
-                        $participant->save();
-                        if ($participant->save()) {
-                            event(new TableWasUpdated($participant, $participant->name, 'Presupuesto editado, valor ' . $participant->budget));
-                        }
                     }
+                }
+            }
+
+            if (!request()->use_rosters) {
+                $this->deletePlayers($season);
+            }
+
+            if ($season->players_db_id != request()->players_db_id) {
+                $this->deletePlayers($season);
+                if (request()->players_db_id > 0) {
+                    $this->importPlayers($season, request()->players_db_id);
                 }
             }
 
@@ -317,6 +329,25 @@ class SeasonController extends Controller
         $season = Season::find($id);
 
         if ($season) {
+            // delete season participants and cash_history
+            if ($season->participants) {
+                foreach ($season->participants as $participant) {
+                    foreach ($participant->cash_history as $cash_history) {
+                        event(new TableWasDeleted($cash_history, $cash_history->description));
+                        $cash_history->delete();
+                    }
+                    event(new TableWasDeleted($participant, $participant->name()));
+                    $participant->delete();
+                }
+            }
+            // delete season players
+            if ($season->players) {
+                foreach ($season->players as $player) {
+                    event(new TableWasDeleted($player, $player->name));
+                    $player->delete();
+                }
+            }
+
             $message = 'Se ha eliminado la temporada "' . $season->name . '" correctamente.';
 
             event(new TableWasDeleted($season, $season->name));
@@ -338,9 +369,28 @@ class SeasonController extends Controller
         {
             $season = Season::find($ids[$i]);
             if ($season) {
-                $counter_deleted = 1;
+
+                // delete season participants and cash_history
+                if ($season->participants) {
+                    foreach ($season->participants as $participant) {
+                        foreach ($participant->cash_history as $cash_history) {
+                            event(new TableWasDeleted($cash_history, $cash_history->description));
+                            $cash_history->delete();
+                        }
+                        event(new TableWasDeleted($participant, $participant->name()));
+                        $participant->delete();
+                    }
+                }
+                // delete season players
+                if ($season->players) {
+                    foreach ($season->players as $player) {
+                        event(new TableWasDeleted($player, $player->name));
+                        $player->delete();
+                    }
+                }
                 event(new TableWasDeleted($season, $season->name));
                 $season->delete();
+                $counter_deleted = 1;
                 // if (!$season->hasTeams()) {
                 //     $counter_deleted = $counter_deleted +1;
                 //     event(new TableWasDeleted($season, $season->name));
@@ -530,17 +580,14 @@ class SeasonController extends Controller
     protected function createParticipants($new_participants, $season, $use_economy) {
         for ($i=1; $i < $new_participants+1; $i++) {
             $participant = new SeasonParticipant;
-            $participant->name = "Participante " . $i;
             $participant->season_id = $season->id;
             $participant->team_id = null;
             $participant->user_id = null;
-            $participant->budget = $season->initial_budget;
             $participant->paid_clauses = 0;
             $participant->clauses_received = 0;
-            $participant->slug = str_slug($participant->name);
             $participant->save();
             if ($participant->save()) {
-                event(new TableWasSaved($participant, $participant->name));
+                event(new TableWasSaved($participant, $participant->name()));
             }
 
             if ($use_economy) {
@@ -554,6 +601,26 @@ class SeasonController extends Controller
                     event(new TableWasSaved($cash_history, $cash_history->description));
                 }
             }
+        }
+    }
+
+    protected function importPlayers($season, $players_db_id) {
+        $players = Player::where('players_db_id', '=', $players_db_id)->get();
+
+        foreach ($players as $player) {
+            $season_player = SeasonPlayer::create([
+                'season_id' => $season->id,
+                'player_id' => $player->id,
+            ]);
+            event(new TableWasImported($season_player, $player->name . " en " . $season->name));
+        }
+    }
+
+    protected function deletePlayers($season) {
+        $players = SeasonPlayer::where('season_id', '=', $season->id)->get();
+        foreach ($players as $player) {
+            event(new TableWasDeleted($player, $player->name));
+            $player->delete();
         }
     }
 }

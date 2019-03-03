@@ -119,7 +119,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::middleware('check_seasons')->group(function () {
 		// Season Participants
 		Route::get('/admin/participantes', 'SeasonParticipantController@index')->name('admin.season_participants');
-		Route::get('/admin/participantes/nuevo', 'SeasonParticipantController@add')->name('admin.season_participants.add');
+		Route::get('/admin/participantes/{season_id}/nuevo', 'SeasonParticipantController@add')->name('admin.season_participants.add');
 		Route::post('/admin/participantes/nuevo', 'SeasonParticipantController@save')->name('admin.season_participants.save');
 		Route::get('/admin/participantes/{id}', 'SeasonParticipantController@edit')->name('admin.season_participants.edit');
 		Route::put('/admin/participantes/{id}', 'SeasonParticipantController@update')->name('admin.season_participants.update');
@@ -129,10 +129,10 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/participantes/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonParticipantController@exportFile')->name('admin.season_participants.export.file');
 		Route::post('/admin/participantes/importar', 'SeasonParticipantController@importFile')->name('admin.season_participants.import.file');
 		Route::get('/admin/participantes/historial-de-economia/{id}', 'SeasonParticipantController@cashHistory')->name('admin.season_participants.cash.history');
+		Route::get('/admin/participantes/plantilla/{id}', 'SeasonParticipantController@roster')->name('admin.season_participants.roster');
 
 		// Season Players
 		Route::get('/admin/temporada-jugadores', 'SeasonPlayerController@index')->name('admin.season_players');
-		Route::get('/admin/temporada-jugadores/importar_test', 'SeasonPlayerController@import_full_roster')->name('admin.season_players.import_test');
 
 		Route::get('/admin/temporada-jugadores/jugadores/nuevo', 'SeasonPlayerController@add')->name('admin.season_players.add');
 		Route::post('/admin/temporada-jugadores/jugadores/nuevo', 'SeasonPlayerController@save')->name('admin.season_players.save');
