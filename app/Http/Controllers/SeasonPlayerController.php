@@ -139,11 +139,11 @@ class SeasonPlayerController extends Controller
                 'sortDirection' => 'desc'
             ],
             'name' => [
-                'sortField'     => 'name',
+                'sortField'     => 'players.name',
                 'sortDirection' => 'asc'
             ],
             'name_desc' => [
-                'sortField'     => 'name',
+                'sortField'     => 'players.name',
                 'sortDirection' => 'desc'
             ]
         ];
