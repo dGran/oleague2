@@ -31,10 +31,10 @@
         var name = row.attr("data-name");
         var allow_delete = row.attr("data-allow-delete");
 
-        // if (allow_delete == 1) {
+        if (allow_delete == 1) {
             swal({
                 title: "¿Estás seguro?",
-                text: 'Se va a eliminar el participante "' + name + '". No se podrán deshacer los cambios!',
+                text: 'Se va a eliminar el jugador "' + name + '". No se podrán deshacer los cambios!',
                 buttons: {
                     confirm: {
                         text: "Sí, estoy seguro",
@@ -56,54 +56,18 @@
             .then((value) => {
                 if (value) {
                     var form = $('#form-delete');
-                    var url = form.attr('action').replace(':PARTICIPANT_ID', id);
+                    var url = form.attr('action').replace(':PLAYER_ID', id);
                     form.attr('action', url);
                     form.submit();
                 }
             });
-        // } else {
-        //     swal("La categoría tiene equipos asociados por lo que no se puede eliminar.", {
-        //         buttons: false,
-        //         icon: "error",
-        //         timer: 3000,
-        //     });
-        // }
-
-    });
-
-    $(".btn-kickout").click(function(e) {
-        window.event.preventDefault();
-        var row = $(this).parents('tr');
-        var id = row.attr("data-id");
-        var name = row.attr("data-name");
-        var user_name = row.attr("data-user-name");
-
-        swal({
-            title: "¿Estás seguro?",
-            text: 'Se va a expulsar el usuario "' + user_name + '" del participante "' + name + '"',
-            buttons: {
-                confirm: {
-                    text: "Sí, estoy seguro",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-danger",
-                    closeModal: true
-                },
-                cancel: {
-                    text: "No, cancelar",
-                    value: null,
-                    visible: true,
-                    className: "btn btn-secondary",
-                    closeModal: true,
-                }
-            },
-            closeOnClickOutside: false,
-        })
-        .then((value) => {
-            if (value) {
-                $(location).attr('href', 'participantes/expulsar/' + id);
-            }
-        });
+        } else {
+            swal("El jugador pertenece a un participante por lo que no se puede eliminar.", {
+                buttons: false,
+                icon: "error",
+                timer: 3000,
+            });
+        }
 
     });
 
@@ -112,7 +76,7 @@
         disabledActionsButtons();
         swal({
             title: "¿Estás seguro?",
-            text: 'Se van a eliminar los participantes seleccionados (los participantes con xxxx asociados no se eliminarán). No se podrán deshacer los cambios!.',
+            text: 'Se van a eliminar los jugadores seleccionados (los jugadores perteneciantes de participantes no se eliminarán). No se podrán deshacer los cambios!.',
             buttons: {
                 confirm: {
                     text: "Sí, estoy seguro",
@@ -137,7 +101,7 @@
                 $(".mark:checked").each(function() {
                     ids.push($(this).val());
                 });
-                var url = '{{ route("admin.season_participants.destroy.many", ":ids") }}';
+                var url = '{{ route("admin.season_players.destroy.many", ":ids") }}';
                 url = url.replace(':ids', ids);
                 window.location.href=url;
             } else {

@@ -2,8 +2,8 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb p-0 m-0 mb-1">
             <li class="breadcrumb-item"><a href="{{ route('admin') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.season_participants') }}">Participantes</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.season_players') }}">Jugadores - {{ $player->season->name }}</a></li>
         </ol>
     </nav>
-    <h5 class="text-uppercase m-0">{{ $participant->name }}</h5>
+    <h5 class="text-uppercase m-0">{{ $player->player->name }}</h5>
 </div>

@@ -9,7 +9,7 @@ class SeasonPlayer extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'season_id', 'player_id', 'participant_id', 'salary', 'price'
+        'season_id', 'player_id', 'participant_id', 'salary', 'price', 'active'
     ];
 
     public function season()
@@ -32,5 +32,13 @@ class SeasonPlayer extends Model
         if (trim($seasonID) !="") {
             $query->where("season_id", "=", $seasonID);
         }
+    }
+
+    public function allowDelete()
+    {
+        if ($this->participant_id > 0) {
+            return false;
+        }
+        return true;
     }
 }

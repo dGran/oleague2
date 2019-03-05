@@ -2,7 +2,7 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.season_players.add') }}'" type="button" class="btn btn-primary" data-toggle="button">
+            <button id="addon-new" onclick="location.href='{{ route('admin.season_players.add', $active_season->id) }}'" type="button" class="btn btn-primary" data-toggle="button">
                 <i class="fas fa-plus mr-2"></i>Nuevo
             </button>
             <button id="addon-filter" type="button" class="filter btn input-group-text border-left-0 {{ $filterSeason ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">

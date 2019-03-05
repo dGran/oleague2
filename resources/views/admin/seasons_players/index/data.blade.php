@@ -21,6 +21,7 @@
             <col width="100%" />
             <col width="0%" class="d-none d-sm-table-cell" />
             <col width="0%" />
+            <col width="0%" />
         </colgroup>
 
         <thead>
@@ -44,20 +45,19 @@
                 </th>
                 <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Jugador</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');">Media</th>
-                <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Pos.</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');">Pos.</th>
                 <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell">Equipo</th>
-                <th class="text-right" onclick="$('#allMark').trigger('click');"></th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="text-right">Claúsula</th>
+                <th scope="col" class="text-right" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
 
         <tbody>
             @foreach ($players as $player)
-                {{-- comentamos la linea por el data-allow-delete --}}
-                {{-- <tr class="border-top" data-id="{{ $player->id }}" data-name="{{ $player->name }}" data-allow-delete="{{ $player->teams->count() > 0 ? 0 : 1 }}"> --}}
-                <tr class="border-top" data-id="{{ $player->id }}">
+                <tr class="border-top" data-id="{{ $player->id }}" data-name="{{ $player->player->name }}" data-allow-delete="{{ $player->allowDelete() }}">
                     <td class="select">
                         <div class="pretty p-icon p-jelly mr-0">
-                            <input type="checkbox" class="mark" value="{{ $player->id }}" name="teamId[]" onchange="showHideRowOptions(this)">
+                            <input type="checkbox" class="mark" value="{{ $player->id }}" name="playerId[]" onchange="showHideRowOptions(this)">
                             <div class="state p-primary">
                                 <i class="icon material-icons">done</i>
                                 <label></label>
@@ -69,6 +69,9 @@
                         <img src="{{ $player->player->getImgFormatted() }}" alt="" width="38">
                     </td>
                     <td class="name" onclick="rowSelect(this)">
+                        @if (!$player->active)
+                            <span class="badge badge-danger mr-1">INACTIVO</span>
+                        @endif
                         <span>{{ $player->player->name }}</span>
                         <small class="d-block d-sm-none text-black-50 text-uppercase">
                             @if ($player->participant_id && $player->participant->team_id)
@@ -143,6 +146,10 @@
 
                     @endif
 
+                    <td onclick="rowSelect(this)" class="text-right">
+                        <span>{{ $player->price }}</span>
+                    </td>
+
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                             <i class="fas fa-ellipsis-h text-secondary"></i>
@@ -168,7 +175,7 @@
         <div class="float-right">{!! $players->appends(Request::all())->render() !!}</div>
     </div>
 
-    <form id="form-delete" action="{{ route('admin.season_players.destroy', ':PARTICIPANT_ID') }}" method="post">
+    <form id="form-delete" action="{{ route('admin.season_players.destroy', ':PLAYER_ID') }}" method="post">
         {{ csrf_field() }}
         {{ method_field('delete') }}
     </form>
