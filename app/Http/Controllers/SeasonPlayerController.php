@@ -106,7 +106,7 @@ class SeasonPlayerController extends Controller
 
         $players = SeasonPlayer::select('season_players.*')->join('players', 'players.id', '=', 'season_players.player_id')
         ->seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
-        $seasons = Season::orderBy('name', 'asc')->get();
+        $seasons = Season::where('use_rosters', '=', 1)->orderBy('name', 'asc')->get();
         if ($seasons->count() == 0) {
             if ($page-1 > 0) {
                 $page = $page-1;

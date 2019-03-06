@@ -50,6 +50,12 @@
                                     <option value="default" {{ $order == 'default' ? 'selected' : '' }}>Por defecto</option>
                                     <option value="date_desc" {{ $order == 'date_desc' ? 'selected' : '' }} data-icon="fas fa-sort-amount-up">Los últimos al principio</option>
                                     <option value="date" {{ $order == 'date' ? 'selected' : '' }} data-icon="fas fa-sort-amount-down">Los últimos al final</option>
+                                    @if ($active_season->participant_has_team)
+                                        <option value="team" {{ $order == 'team' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por nombre de equipo</option>
+                                        <option value="team_desc" {{ $order == 'team_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre de equipo</option>
+                                    @endif
+                                    <option value="user" {{ $order == 'user' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por nombre de usuario</option>
+                                    <option value="user_desc" {{ $order == 'user_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre de usuario</option>
                                 </select>
                             </div>
                         </div>

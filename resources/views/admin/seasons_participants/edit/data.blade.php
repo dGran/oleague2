@@ -28,22 +28,24 @@
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="team_id" class="col-sm-3 col-form-label">Equipo</label>
-            <div class="col-sm-9">
-                <select class="selectpicker form-control" name="team_id" id="team_id" data-size="3" data-live-search="true">
-                    @if ($participant->team_id)
-                        <option value="0">Ninguno</option>
-                        <option selected value="{{ $participant->team_id }}">{{ $participant->team->name }}</option>
-                    @else
-                        <option selected value="0">Ninguno</option>
-                    @endif
-                    @foreach ($teams as $team)
-                        <option value="{{ $team->id }}">{{ $team->name }}</option>
-                    @endforeach
-                </select>
+        @if ($participant->season->participant_has_team)
+            <div class="form-group row">
+                <label for="team_id" class="col-sm-3 col-form-label">Equipo</label>
+                <div class="col-sm-9">
+                    <select class="selectpicker form-control" name="team_id" id="team_id" data-size="3" data-live-search="true">
+                        @if ($participant->team_id)
+                            <option value="0">Ninguno</option>
+                            <option selected value="{{ $participant->team_id }}">{{ $participant->team->name }}</option>
+                        @else
+                            <option selected value="0">Ninguno</option>
+                        @endif
+                        @foreach ($teams as $team)
+                            <option value="{{ $team->id }}">{{ $team->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-        </div>
+        @endif
 
     </div>
 

@@ -91,6 +91,8 @@ class SeasonParticipantController extends Controller
         }
         $adminFilter->save();
 
+        $active_season = Season::find($filterSeason);
+
         if (!$pagination == null) {
             $perPage = $pagination;
         } else {
@@ -102,9 +104,27 @@ class SeasonParticipantController extends Controller
         }
         $order_ext = $this->getOrder($order);
 
-        $active_season = Season::find($filterSeason);
 
-        $participants = SeasonParticipant::seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        if ($active_season->participant_has_team) {
+            $participants = SeasonParticipant::
+            leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+            ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+            ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
+            ->seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        } else {
+            if ($order == 'team' || $order == 'team_desc') {
+                if ($order == 'team') {
+                    $order = 'user';
+                } else {
+                    $order = 'user_desc';
+                }
+                $order_ext = $this->getOrder($order);
+            }
+            $participants = SeasonParticipant::
+            leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+            ->select('season_participants.*', 'users.name as user_name')
+            ->seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+        }
         $seasons = Season::orderBy('name', 'asc')->get();
         if ($seasons->count() == 0) {
             if ($page-1 > 0) {
@@ -112,10 +132,30 @@ class SeasonParticipantController extends Controller
             } else {
                 $page = 1;
             }
-            $participants = SeasonParticipant::seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            if ($active_season->participant_has_team) {
+                $participants = SeasonParticipant::
+                leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+                ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+                ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
+                ->seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            } else {
+                if ($order == 'team' || $order == 'team_desc') {
+                    if ($order == 'team') {
+                        $order = 'user';
+                    } else {
+                        $order = 'user_desc';
+                    }
+                    $order_ext = $this->getOrder($order);
+                }
+                $participants = SeasonParticipant::
+                leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+                ->select('season_participants.*', 'users.name as user_name')
+                ->seasonId($filterSeason)->orderBy($order_ext['sortField'], $order_ext['sortDirection'])->paginate($perPage, ['*'], 'page', $page);
+            }
             $adminFilter->seasonParticipants_page = $page;
             $adminFilter->save();
         }
+
         return view('admin.seasons_participants.index', compact('participants', 'seasons', 'filterSeason', 'active_season', 'order', 'pagination', 'page'));
     }
 
@@ -129,11 +169,12 @@ class SeasonParticipantController extends Controller
                 ->get();
         $users = \DB::table("users")->select('*')
                 ->whereNotIn('id', function($query) use ($season_id) {
-                   $query->select('user_id')->from('season_participants')->whereNotNull('team_id')->where('season_id', '=', $season_id);
+                   $query->select('user_id')->from('season_participants')->whereNotNull('user_id')->where('season_id', '=', $season_id);
                 })
                 ->orderBy('name', 'asc')
                 ->get();
-    	return view('admin.seasons_participants.add', compact('season_id', 'users', 'teams'));
+        $season = Season::find($season_id);
+    	return view('admin.seasons_participants.add', compact('season', 'users', 'teams'));
     }
 
     public function save()
@@ -169,7 +210,7 @@ class SeasonParticipantController extends Controller
                 ->get();
         $users = \DB::table("users")->select('*')
                 ->whereNotIn('id', function($query) use ($participant) {
-                   $query->select('user_id')->from('season_participants')->whereNotNull('team_id')->where('season_id', '=', $participant->season_id);
+                   $query->select('user_id')->from('season_participants')->whereNotNull('user_id')->where('season_id', '=', $participant->season_id);
                 })
                 ->orderBy('name', 'asc')
                 ->get();
@@ -410,6 +451,22 @@ class SeasonParticipantController extends Controller
             ],
             'date_desc' => [
                 'sortField'     => 'id',
+                'sortDirection' => 'desc'
+            ],
+            'team' => [
+                'sortField'     => 'team_name',
+                'sortDirection' => 'asc'
+            ],
+            'team_desc' => [
+                'sortField'     => 'team_name',
+                'sortDirection' => 'desc'
+            ],
+            'user' => [
+                'sortField'     => 'user_name',
+                'sortDirection' => 'asc'
+            ],
+            'user_desc' => [
+                'sortField'     => 'user_name',
                 'sortDirection' => 'desc'
             ],
         ];
