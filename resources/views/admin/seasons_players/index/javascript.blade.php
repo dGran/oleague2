@@ -1,5 +1,10 @@
 <script>
+    var filterName = {!! json_encode($filterName) !!};
     var filterSeason = {!! json_encode($filterSeason) !!};
+    var filterParticipant = {!! json_encode($filterParticipant) !!};
+    var filterTeam = {!! json_encode($filterTeam) !!};
+    var filterNation = {!! json_encode($filterNation) !!};
+    var filterPosition = {!! json_encode($filterPosition) !!};
     var order = {!! json_encode($order) !!};
     var pagination = {!! json_encode($pagination) !!};
 
@@ -8,6 +13,43 @@
             var url = $("#btnAdd").attr('href');
             $(location).attr('href', url);
             return false;
+        });
+        Mousetrap.bind(['command+f', 'ctrl+f'], function() {
+            $('.search-input').focus();
+            return false;
+        });
+
+        $('.search-clear').on("click", function() {
+            $('.search-input').val('');
+            $('.frmFilter').submit();
+        });
+        $('.search-input').on("blur", function() {
+            $(this).val(filterName);
+        });
+        $('.filterTeam-input').on("blur", function() {
+            $(this).val(filterTeam);
+        });
+        $('.filterNation-input').on("blur", function() {
+            $(this).val(filterNation);
+        });
+        $('.filterPosition-input').on("blur", function() {
+            $(this).val(filterPosition);
+        });
+
+        $('#viewModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-player-id");
+            $.ajax({
+                url: 'jugadores/ver/' + id,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('.modal-dialog').html(data);
+            });
+        });
+
+        $("#viewModal").on("hidden.bs.modal", function(){
+            $('.modal-dialog').html("");
         });
 
     });
@@ -22,6 +64,72 @@
 
     function applyfilterSeason() {
         $('.frmFilter').submit();
+    }
+
+    function applyfilterParticipant() {
+        $('.frmFilter').submit();
+    }
+
+    function cancelFilterName() {
+        window.event.preventDefault();
+        $('.filterName').val('');
+        if (filterParticipant || filterTeam || filterNation || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterParticipant() {
+        window.event.preventDefault();
+        $('.filterParticipant').val('');
+        if (filterName || filterTeam || filterNation || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterTeam() {
+        window.event.preventDefault();
+        $('.filterTeam').val('');
+        if (filterName || filterParticipant || filterNation || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterNation() {
+        window.event.preventDefault();
+        $('.filterNation').val('');
+        if (filterName || filterParticipant || filterTeam || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterPosition() {
+        window.event.preventDefault();
+        $('.filterPosition').val('');
+        if (filterName || filterParticipant || filterTeam || filterNation || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilters() {
+        window.location.href = '{{ route("admin.season_players") }}';
+    }
+
+    function submitFilterForm() {
+        $('input').keypress(function (e) {
+            if (e.which == 13) {
+                $('.frmFilter').submit();
+            }
+        });
     }
 
     $(".btn-delete").click(function(e) {
@@ -120,6 +228,16 @@
         } else {
             $(element).attr("href", url);
         }
+    }
+
+    function view(element) {
+        window.event.preventDefault();
+
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnView'+id).attr("href");
+        $('#btnView'+id).trigger('click');
     }
 
     function rowSelect(element) {

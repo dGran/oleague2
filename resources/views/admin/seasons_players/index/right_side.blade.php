@@ -3,6 +3,20 @@
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
     <ul class="list-group border-top mt-3">
+        @if ($players->count()>0)
+            <li class="list-group-item border-0 px-0">
+                <a href="{{ route('admin.players.active.all.players', $active_season->id) }}">
+                    <span class="fas fa-toggle-on fa-fw mr-1"></span>
+                    <span>Activar jugadores</span>
+                </a>
+            </li>
+            <li class="list-group-item border-0 px-0">
+                <a href="{{ route('admin.players.desactive.all.players', $active_season->id) }}">
+                    <span class="fas fa-toggle-off fa-fw mr-1"></span>
+                    <span>Desactivar jugadores</span>
+                </a>
+            </li>
+        @endif
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="import_file()">
                <form
@@ -49,6 +63,12 @@
         <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
+        <li class="rowOptions-View list-group-item border-0 px-0 d-none">
+            <a href="" onclick="view(this)">
+                <span class="far fa-eye fa-fw mr-1"></span>
+                <span>Visualizar</span>
+            </a>
+        </li>
         <li class="rowOptions-Edit list-group-item border-0 px-0 d-none">
             <a href="" onclick="edit(this)">
                 <span class="fas fa-edit fa-fw mr-1"></span>
@@ -73,13 +93,81 @@
                 <span>Exportar (.csv)</span>
             </a>
         </li>
+        <li class="list-group-item border-0 px-0">
+            <label for="participant_id">Asignar participante</label>
+            <select class="selectpicker form-control" name="participant_id" id="participant_id" data-size="3" data-live-search="true">
+                <option value="0">LIBRE</option>
+                @foreach ($participants as $participant)
+                    <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
+                @endforeach
+            </select>
+        </li>
+        <li class="list-group-item border-0 px-0">
+            <label for="salary">Editar salario</label>
+            <input type="number" class="form-control" id="salary" name="salary" placeholder="Salario" min="0.5" step="0.5" value="0.5">
+        </li>
     </ul>
 </div>
 
 <form class="frmFilter" role="search" method="get" action="{{ route('admin.season_players') }}">
 <input type="hidden" name="filtering" value="true"> {{-- field for controller --}}
 
-<div class="mt-2">
+{{-- search --}}
+<div class="form-group row my-3">
+    <div class="col">
+    <div class="searchbox">
+        <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
+        <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        <span class="search-clear"><i class="fas fa-times"></i></span>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    @if ($filterName || $filterParticipant || $filterTeam || $filterNation || $filterPosition)
+        <ul class="nav mb-2">
+            @if ($filterName)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterName()">
+                        <span class="r-1">Nombre</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterParticipant)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterParticipant()">
+                        <span class="r-1">Participante</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterTeam)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterTeam()">
+                        <span class="r-1">Equipo</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterNation)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterNation()">
+                        <span class="r-1">País</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterPosition)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPosition()">
+                        <span class="r-1">Posición</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+        </ul>
+    @endif
     <h4 class="p-2 bg-light">Filtros</h4>
     <div class="form-group row">
         <div class="col-sm-12">
@@ -93,6 +181,43 @@
                     @endif
                 @endforeach
             </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterParticipantLarge" class="mb-1">Participantes</label>
+            <select name="filterParticipant" id="filterParticipantLarge" class="selectpicker form-control filterParticipant" onchange="applyfilterParticipant()">
+                <option value="">Todos los participantes</option>
+                @foreach ($participants as $participant)
+                    @if ($participant->id == $filterParticipant)
+                        <option selected value="{{ $participant->id }}">{{ $participant->name() }}</option>
+                    @else
+                        <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterTeam" class="mb-1">Equipo</label>
+            <input class="filterTeam-input form-control mousetrap filterTeam" id="filterTeam" name="filterTeam" type="text" placeholder="Equipo..." value="{{ $filterTeam ? $filterTeam : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterTeam" class="mb-1">País</label>
+            <input class="filterNation-input form-control mousetrap filterNation" id="filterNation" name="filterNation" type="text" placeholder="País..." value="{{ $filterNation ? $filterNation : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterTeam" class="mb-1">Posición</label>
+            <input class="filterPosition-input form-control mousetrap filterPosition" id="filterPosition" name="filterPosition" type="text" placeholder="Posición..." value="{{ $filterPosition ? $filterPosition : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
         </div>
     </div>
 

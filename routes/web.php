@@ -140,6 +140,9 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::put('/admin/temporada-jugadores/jugadores/{id}', 'SeasonPlayerController@update')->name('admin.season_players.update');
 		Route::delete('/admin/temporada-jugadores/jugadores/eliminar/{id}', 'SeasonPlayerController@destroy')->name('admin.season_players.destroy');
 		Route::get('/admin/temporada-jugadores/jugadores/eliminar-seleccionados/{ids}', 'SeasonPlayerController@destroyMany')->name('admin.season_players.destroy.many');
+		// Route::get('/admin/temporada-jugadores/jugadores/ver/{id}', 'SeasonPlayerController@view')->name('admin.season_players.view');
+		Route::get('/admin/temporada-jugadores/jugadores/acciones/activar/{season_id}', 'SeasonPlayerController@activeAllPlayers')->name('admin.players.active.all.players');
+		Route::get('/admin/temporada-jugadores/jugadores/acciones/desactivar/{season_id}', 'SeasonPlayerController@desactiveAllPlayers')->name('admin.players.desactive.all.players');
 
 		Route::get('/admin/temporada-jugadores/jugadores/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonPlayerController@exportFile')->name('admin.season_players.export.file');
 		Route::post('/admin/temporada-jugadores/jugadores/importar', 'SeasonPlayerController@importFile')->name('admin.season_players.import.file');

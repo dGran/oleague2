@@ -22,6 +22,7 @@
 
 @section('modal')
     @include('admin.seasons_players.index.filter_modal')
+    @include('admin.players.index.view_modal')
 @endsection
 
 @section('js')

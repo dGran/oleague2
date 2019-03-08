@@ -32,7 +32,7 @@
                                     @endif
                                     @if ($filterPlayerDb)
                                         <li class="nav-item">
-                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterCategory()">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPlayerDb()">
                                                 <span class="r-1">Database</span>
                                                 <i class="fas fa-times"></i>
                                             </a>
@@ -79,7 +79,7 @@
                             <div class="col-sm-12">
                                 <label for="filterCategoryLarge" class="mb-1">Player Database</label>
                                 <select name="filterPlayerDb" id="filterPlayerDbLarge" class="selectpicker form-control filterPlayerDb">
-                                    <option value="">Todas las categorías</option>
+                                    <option value="">Todas las databases</option>
                                     @foreach ($players_dbs as $players_db)
                                         @if ($players_db->id == $filterPlayerDb)
                                             <option selected value="{{ $players_db->id }}">{{ $players_db->name }}</option>

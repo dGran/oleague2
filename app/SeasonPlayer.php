@@ -34,6 +34,13 @@ class SeasonPlayer extends Model
         }
     }
 
+    public function scopeParticipantId($query, $participantID)
+    {
+        if (trim($participantID) !="") {
+            $query->where("participant_id", "=", $participantID);
+        }
+    }
+
     public function allowDelete()
     {
         if ($this->participant_id > 0) {

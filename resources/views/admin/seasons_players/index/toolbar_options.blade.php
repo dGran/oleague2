@@ -47,8 +47,11 @@
         </div>
 
         <div class="btn-group d-none rowOptions" role="group">
-            <button type="button" class="btn btn-danger mr-1" data-toggle="button" onclick="destroyMany()">
+            <button type="button" class="btn btn-danger" data-toggle="button" onclick="destroyMany()">
                 <i class="fas fa-trash mr-2"></i>Eliminar
+            </button>
+            <button type="button" class="rowOptions-View btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="view(this)">
+                <i class="fas fa-eye"></i>
             </button>
             <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>

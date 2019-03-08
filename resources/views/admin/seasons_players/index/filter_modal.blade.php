@@ -19,9 +19,62 @@
                                 Filtros
                             </h5>
                         </div>
+                        <div class="float-right">
+                            @if ($filterName || $filterParticipant || $filterTeam || $filterNation || $filterPosition)
+                                <ul class="nav">
+                                    @if ($filterName)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterName()">
+                                                <span class="r-1">Nombre</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($filterParticipant)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterParticipant()">
+                                                <span class="r-1">Participante</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($filterTeam)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterTeam()">
+                                                <span class="r-1">Equipo</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($filterNation)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterNation()">
+                                                <span class="r-1">País</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                    @if ($filterPosition)
+                                        <li class="nav-item">
+                                            <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPosition()">
+                                                <span class="r-1">Posición</span>
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            @endif
+                        </div>
                     </div>
 
                     <div class="py-3 border-top">
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterName" class="mb-1">Nombre</label>
+                                <input class="form-control" name="filterName" id="filterName" type="text" value="{{ $filterName ? $filterName : '' }}" aria-describedby="filterNameHelp" placeholder="Nombre">
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="filterSeasonLarge" class="mb-1">Temporadas</label>
@@ -34,6 +87,41 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterParticipantLarge" class="mb-1">Participantes</label>
+                                <select name="filterParticipant" id="filterParticipantLarge" class="selectpicker form-control filterParticipant">
+                                    <option value="">Todos los participantes</option>
+                                    @foreach ($participants as $participant)
+                                        @if ($participant->id == $filterParticipant)
+                                            <option selected value="{{ $participant->id }}">{{ $participant->name() }}</option>
+                                        @else
+                                            <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterTeam" class="mb-1">Equipo</label>
+                                <input class="form-control" name="filterTeam" id="filterTeam" type="text" value="{{ $filterTeam ? $filterTeam : '' }}" aria-describedby="filterTeamHelp" placeholder="Equipo">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterNation" class="mb-1">País</label>
+                                <input class="form-control" name="filterNation" id="filterNation" type="text" value="{{ $filterNation ? $filterNation : '' }}" aria-describedby="filterNationHelp" placeholder="País">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <label for="filterPosition" class="mb-1">Posición</label>
+                                <input class="form-control" name="filterPosition" id="filterPosition" type="text" value="{{ $filterPosition ? $filterPosition : '' }}" aria-describedby="filterPositionHelp" placeholder="Posición">
                             </div>
                         </div>
 
