@@ -259,9 +259,19 @@
             if ($(".mark:checked").length == 1) {
                 $(".rowOptions-Edit").removeClass('d-none');
                 $(".rowOptions-View").removeClass('d-none');
+                var active = $(element).parents('tr').attr("data-active");
+                if (active == 1) {
+                    $(".rowOptions-Activate").addClass('d-none');
+                    $(".rowOptions-Desactivate").removeClass('d-none');
+                } else {
+                    $(".rowOptions-Activate").removeClass('d-none');
+                    $(".rowOptions-Desactivate").addClass('d-none');
+                }
             } else {
                 $(".rowOptions-Edit").addClass('d-none');
                 $(".rowOptions-View").addClass('d-none');
+                $(".rowOptions-Activate").addClass('d-none');
+                $(".rowOptions-Desactivate").addClass('d-none');
             }
         } else {
             if ($(".rowOptions").is(':visible')) {

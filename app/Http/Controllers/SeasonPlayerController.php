@@ -296,6 +296,32 @@ class SeasonPlayerController extends Controller
     //     }
     // }
 
+    public function activate($id)
+    {
+        $player = SeasonPlayer::find($id);
+        if ($player) {
+            $player->active = 1;
+            $player->save();
+            if ($player->save()) {
+                event(new TableWasUpdated($player, $player->player->name, "Jugador activado"));
+            }
+        }
+        return redirect()->route('admin.season_players')->with('success', 'Se han activado todos los jugadores correctamente.');
+    }
+
+    public function desactivate($id)
+    {
+        $player = SeasonPlayer::find($id);
+        if ($player) {
+            $player->active = 0;
+            $player->save();
+            if ($player->save()) {
+                event(new TableWasUpdated($player, $player->player->name, "Jugador desactivado"));
+            }
+        }
+        return redirect()->route('admin.season_players')->with('success', 'Se han activado todos los jugadores correctamente.');
+    }
+
     public function activeAllPlayers($season_id)
     {
         $players = SeasonPlayer::where('season_id', '=', $season_id)->where('active', '=', 0)->get();

@@ -54,7 +54,7 @@
 
         <tbody>
             @foreach ($players as $player)
-                <tr class="border-top" data-id="{{ $player->id }}" data-name="{{ $player->player->name }}" data-player-id="{{ $player->player_id }}" data-allow-delete="{{ $player->allowDelete() }}">
+                <tr class="border-top" data-id="{{ $player->id }}" data-name="{{ $player->player->name }}" data-player-id="{{ $player->player_id }}" data-active="{{ $player->active }}" data-allow-delete="{{ $player->allowDelete() }}">
                     <td class="select">
                         <div class="pretty p-icon p-jelly mr-0">
                             <input type="checkbox" class="mark" value="{{ $player->id }}" name="playerId[]" onchange="showHideRowOptions(this)">
@@ -159,6 +159,17 @@
                                 <i class="far fa-eye fa-fw mr-1"></i>
                                 Visualizar
                             </a>
+                            @if ($player->active)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.season_players.desactivate', $player->id) }}" id="btnDesactivate{{ $player->id }}">
+                                    <i class="fas fa-toggle-off fa-fw mr-1"></i>
+                                    Desactivar
+                                </a>
+                            @else
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.season_players.activate', $player->id) }}" id="btnActivate{{ $player->id }}">
+                                    <i class="fas fa-toggle-on fa-fw mr-1"></i>
+                                    Activar
+                                </a>
+                            @endif
                             <a class="dropdown-item text-secondary" href="{{ route('admin.season_players.edit', $player->id) }}" id="btnEdit{{ $player->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar

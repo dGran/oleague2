@@ -3,20 +3,6 @@
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
     <ul class="list-group border-top mt-3">
-        @if ($players->count()>0)
-            <li class="list-group-item border-0 px-0">
-                <a href="{{ route('admin.players.active.all.players', $active_season->id) }}">
-                    <span class="fas fa-toggle-on fa-fw mr-1"></span>
-                    <span>Activar jugadores</span>
-                </a>
-            </li>
-            <li class="list-group-item border-0 px-0">
-                <a href="{{ route('admin.players.desactive.all.players', $active_season->id) }}">
-                    <span class="fas fa-toggle-off fa-fw mr-1"></span>
-                    <span>Desactivar jugadores</span>
-                </a>
-            </li>
-        @endif
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="import_file()">
                <form
@@ -67,6 +53,18 @@
             <a href="" onclick="view(this)">
                 <span class="far fa-eye fa-fw mr-1"></span>
                 <span>Visualizar</span>
+            </a>
+        </li>
+        <li class="rowOptions-Desactivate list-group-item border-0 px-0 d-none">
+            <a href="" onclick="desactivate(this)">
+                <span class="fas fa-toggle-off fa-fw mr-1"></span>
+                <span>Desactivar</span>
+            </a>
+        </li>
+        <li class="rowOptions-Activate list-group-item border-0 px-0 d-none">
+            <a href="" onclick="activate(this)">
+                <span class="fas fa-toggle-on fa-fw mr-1"></span>
+                <span>Activar</span>
             </a>
         </li>
         <li class="rowOptions-Edit list-group-item border-0 px-0 d-none">
