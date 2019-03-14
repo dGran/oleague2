@@ -309,6 +309,29 @@ class SeasonPlayerController extends Controller
         return redirect()->route('admin.season_players')->with('success', 'Se han activado todos los jugadores correctamente.');
     }
 
+    public function activateMany($ids)
+    {
+        $ids=explode(",",$ids);
+        $counter_activated = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $player = SeasonPlayer::find($ids[$i]);
+            if ($player) {
+                if ($player->active == 0) {
+                    $counter_activated = $counter_activated +1;
+                    $player->active = 1;
+                    $player->save();
+                    event(new TableWasUpdated($player, $player->player->name, 'Jugador activado'));
+                }
+            }
+        }
+        if ($counter_activated > 0) {
+            return redirect()->route('admin.season_players')->with('success', 'Se han activado los jugadores seleccionados correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Todos los jugadores seleccionados ya estaban activados.');
+        }
+    }
+
     public function desactivate($id)
     {
         $player = SeasonPlayer::find($id);
@@ -320,6 +343,29 @@ class SeasonPlayerController extends Controller
             }
         }
         return redirect()->route('admin.season_players')->with('success', 'Se han activado todos los jugadores correctamente.');
+    }
+
+    public function desactivateMany($ids)
+    {
+        $ids=explode(",",$ids);
+        $counter_desactivated = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $player = SeasonPlayer::find($ids[$i]);
+            if ($player) {
+                if ($player->active == 1) {
+                    $counter_desactivated = $counter_desactivated +1;
+                    $player->active = 0;
+                    $player->save();
+                    event(new TableWasUpdated($player, $player->player->name, 'Jugador desactivado'));
+                }
+            }
+        }
+        if ($counter_desactivated > 0) {
+            return redirect()->route('admin.season_players')->with('success', 'Se han desactivado los jugadores seleccionados correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Todos los jugadores seleccionados ya estaban desactivados.');
+        }
     }
 
     public function activeAllPlayers($season_id)

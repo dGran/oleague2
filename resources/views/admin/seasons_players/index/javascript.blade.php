@@ -230,6 +230,54 @@
         }
     }
 
+    function activate(element) {
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnActivate'+id).attr("href");
+        if ($(element).is('button')) {
+            window.location.href=url;
+        } else {
+            $(element).attr("href", url);
+        }
+    }
+
+    function activateMany() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        var ids = [];
+        $(".mark:checked").each(function() {
+            ids.push($(this).val());
+        });
+        var url = '{{ route("admin.season_players.activate.many", ":ids") }}';
+        url = url.replace(':ids', ids);
+        window.location.href=url;
+    }
+
+    function desactivate(element) {
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnDesactivate'+id).attr("href");
+        if ($(element).is('button')) {
+            window.location.href=url;
+        } else {
+            $(element).attr("href", url);
+        }
+    }
+
+    function desactivateMany() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        var ids = [];
+        $(".mark:checked").each(function() {
+            ids.push($(this).val());
+        });
+        var url = '{{ route("admin.season_players.desactivate.many", ":ids") }}';
+        url = url.replace(':ids', ids);
+        window.location.href=url;
+    }
+
     function view(element) {
         window.event.preventDefault();
 
@@ -245,6 +293,7 @@
     }
 
     function showHideRowOptions(element) {
+        $('#num_items').text('Jugadores seleccionados: ' + $(".mark:checked").length);
         if ($(element).is(':checked')) {
             $(element).parents('tr').addClass('selected');
         } else {
@@ -257,9 +306,11 @@
                 $(".tableOptions").addClass('d-none');
             }
             if ($(".mark:checked").length == 1) {
+                $(".rowOptions-ActivateMany").addClass('d-none');
+                $(".rowOptions-DesactivateMany").addClass('d-none');
                 $(".rowOptions-Edit").removeClass('d-none');
                 $(".rowOptions-View").removeClass('d-none');
-                var active = $(element).parents('tr').attr("data-active");
+                var active = $(".mark:checked").parents('tr').attr("data-active");
                 if (active == 1) {
                     $(".rowOptions-Activate").addClass('d-none');
                     $(".rowOptions-Desactivate").removeClass('d-none');
@@ -268,6 +319,8 @@
                     $(".rowOptions-Desactivate").addClass('d-none');
                 }
             } else {
+                $(".rowOptions-ActivateMany").removeClass('d-none');
+                $(".rowOptions-DesactivateMany").removeClass('d-none');
                 $(".rowOptions-Edit").addClass('d-none');
                 $(".rowOptions-View").addClass('d-none');
                 $(".rowOptions-Activate").addClass('d-none');

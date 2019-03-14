@@ -49,12 +49,16 @@
         <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
+        <li class="rowOptions-num_items list-group-item border-0 px-0">
+            <small id="num_items">Elementos seleccionados</small>
+        </li>
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
                 <span class="far fa-eye fa-fw mr-1"></span>
                 <span>Visualizar</span>
             </a>
         </li>
+        {{-- 1 player selected --}}
         <li class="rowOptions-Desactivate list-group-item border-0 px-0 d-none">
             <a href="" onclick="desactivate(this)">
                 <span class="fas fa-toggle-off fa-fw mr-1"></span>
@@ -63,6 +67,19 @@
         </li>
         <li class="rowOptions-Activate list-group-item border-0 px-0 d-none">
             <a href="" onclick="activate(this)">
+                <span class="fas fa-toggle-on fa-fw mr-1"></span>
+                <span>Activar</span>
+            </a>
+        </li>
+        {{-- many players selected --}}
+        <li class="rowOptions-DesactivateMany list-group-item border-0 px-0 d-none">
+            <a href="" onclick="desactivateMany(this)">
+                <span class="fas fa-toggle-off fa-fw mr-1"></span>
+                <span>Desactivar</span>
+            </a>
+        </li>
+        <li class="rowOptions-ActivateMany list-group-item border-0 px-0 d-none">
+            <a href="" onclick="activateMany(this)">
                 <span class="fas fa-toggle-on fa-fw mr-1"></span>
                 <span>Activar</span>
             </a>
