@@ -146,6 +146,9 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/temporada-jugadores/jugadores/desactivar/{id}', 'SeasonPlayerController@desactivate')->name('admin.season_players.desactivate');
 		Route::get('/admin/temporada-jugadores/jugadores/desactivar-seleccionados/{ids}', 'SeasonPlayerController@desactivateMany')->name('admin.season_players.desactivate.many');
 
+		Route::get('/admin/temporada-jugadores/jugadores/resetear/{season_id}', 'SeasonPlayerController@reset')->name('admin.season_players.reset');
+		Route::get('/admin/temporada-jugadores/jugadores/resetear-seleccionados/{ids}', 'SeasonPlayerController@resetMany')->name('admin.season_players.reset.many');
+
 		Route::get('/admin/temporada-jugadores/jugadores/acciones/activar/{season_id}', 'SeasonPlayerController@activeAllPlayers')->name('admin.players.active.all.players');
 		Route::get('/admin/temporada-jugadores/jugadores/acciones/desactivar/{season_id}', 'SeasonPlayerController@desactiveAllPlayers')->name('admin.players.desactive.all.players');
 

@@ -8,6 +8,11 @@
             <button id="addon-filter" type="button" class="filter btn input-group-text border-left-0 {{ $filterSeason ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
                 <i class="fas fa-filter"></i>
             </button>
+            @if ($players->count()>0)
+                <button id="addon-reset" type="button" class="btn input-group-text" data-toggle="button" onclick="reset()">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            @endif
            <form
             id="frmImport"
                 lang="{{ app()->getLocale() }}"
@@ -55,6 +60,25 @@
             </button>
             <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>
+            </button>
+            {{-- 1 player selected --}}
+            <button type="button" class="rowOptions-Desactivate btn btn-outline-secondary input-group-text" data-toggle="button" onclick="desactivate(this)">
+                <i class="fas fa-toggle-off"></i>
+            </button>
+            <button type="button" class="rowOptions-Activate btn btn-outline-secondary input-group-text" data-toggle="button" onclick="activate(this)">
+                <i class="fas fa-toggle-on"></i>
+            </button>
+            {{-- end --}}
+            {{-- many players selected --}}
+            <button type="button" class="rowOptions-DesactivateMany btn btn-outline-secondary input-group-text" data-toggle="button" onclick="desactivateMany(this)">
+                <i class="fas fa-toggle-off"></i>
+            </button>
+            <button type="button" class="rowOptions-ActivateMany btn btn-outline-secondary input-group-text" data-toggle="button" onclick="activateMany(this)">
+                <i class="fas fa-toggle-on"></i>
+            </button>
+            {{-- end --}}
+            <button type="button" class="rowOptions-ResetMany btn input-group-text" data-toggle="button" onclick="resetMany()">
+                <i class="fas fa-sync-alt"></i>
             </button>
             <button id="row-addon-export" type="button" class="btn btn-outline-secondary input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-file-export"></i>

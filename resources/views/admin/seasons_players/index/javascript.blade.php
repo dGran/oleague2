@@ -218,6 +218,79 @@
         });
     }
 
+    function reset() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        swal({
+            title: "¿Estás seguro?",
+            text: 'Se van a liberar y poner los salarios al mínimo de todos los jugadores. No se podrán deshacer los cambios!.',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                url = $('#btnReset').attr("href");
+                window.location.href=url;
+            } else {
+                enabledActionsButtons();
+            }
+        });
+    }
+
+    function resetMany() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        swal({
+            title: "¿Estás seguro?",
+            text: 'Se van a liberar y poner los salarios al mínimo de todos los jugadores seleccionados. No se podrán deshacer los cambios!.',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                var ids = [];
+                $(".mark:checked").each(function() {
+                    ids.push($(this).val());
+                });
+                var url = '{{ route("admin.season_players.reset.many", ":ids") }}';
+                url = url.replace(':ids', ids);
+                window.location.href=url;
+            } else {
+                enabledActionsButtons();
+            }
+        });
+    }
+
     function edit(element) {
         $(".mark:checked").each(function() {
             id = $(this).val();
@@ -293,7 +366,6 @@
     }
 
     function showHideRowOptions(element) {
-        $('#num_items').text('Jugadores seleccionados: ' + $(".mark:checked").length);
         if ($(element).is(':checked')) {
             $(element).parents('tr').addClass('selected');
         } else {
@@ -306,6 +378,7 @@
                 $(".tableOptions").addClass('d-none');
             }
             if ($(".mark:checked").length == 1) {
+                $(".rowOptions-ResetMany").addClass('d-none');
                 $(".rowOptions-ActivateMany").addClass('d-none');
                 $(".rowOptions-DesactivateMany").addClass('d-none');
                 $(".rowOptions-Edit").removeClass('d-none');
@@ -319,6 +392,7 @@
                     $(".rowOptions-Desactivate").addClass('d-none');
                 }
             } else {
+                $(".rowOptions-ResetMany").removeClass('d-none');
                 $(".rowOptions-ActivateMany").removeClass('d-none');
                 $(".rowOptions-DesactivateMany").removeClass('d-none');
                 $(".rowOptions-Edit").addClass('d-none');

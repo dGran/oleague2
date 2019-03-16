@@ -368,6 +368,43 @@ class SeasonPlayerController extends Controller
         }
     }
 
+    public function reset($season_id)
+    {
+        $players = SeasonPlayer::seasonId($season_id)->whereNotNull('participant_id')->orWhere('salary', '!=', '0.5')->get();
+        $counter_reset = 0;
+        foreach ($players as $player) {
+            $player->participant_id = null;
+            $player->salary = 0.5;
+            $player->price = 5;
+            $player->save();
+            event(new TableWasUpdated($player, $player->player->name, 'Jugador reseteado'));
+            $counter_reset++;
+        }
+        if ($counter_reset > 0) {
+            return redirect()->route('admin.season_players')->with('success', 'Se han reseteado todos los jugadores correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Todos los jugadores ya estaban reseteados.');
+        }
+    }
+
+
+    public function resetMany($ids)
+    {
+        $ids=explode(",",$ids);
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $player = SeasonPlayer::find($ids[$i]);
+            if ($player) {
+                $player->participant_id = null;
+                $player->salary = 0.5;
+                $player->price = 5;
+                $player->save();
+                event(new TableWasUpdated($player, $player->player->name, 'Jugador reseteado'));
+            }
+        }
+        return redirect()->route('admin.season_players')->with('success', 'Se han reseteado los jugadores seleccionados correctamente.');
+    }
+
     public function activeAllPlayers($season_id)
     {
         $players = SeasonPlayer::where('season_id', '=', $season_id)->where('active', '=', 0)->get();

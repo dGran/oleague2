@@ -4,6 +4,12 @@
     </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
+            <a href="{{ route('admin.season_players.reset', $filterSeason) }}" onclick="reset()" id="btnReset">
+                <span class="fas fa-sync-alt fa-fw mr-1"></span>
+                <span>Resetar</span>
+            </a>
+        </li>
+        <li class="list-group-item border-0 px-0">
             <a href="" onclick="import_file()">
                <form
                 id="frmImport"
@@ -49,9 +55,6 @@
         <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
-        <li class="rowOptions-num_items list-group-item border-0 px-0">
-            <small id="num_items">Elementos seleccionados</small>
-        </li>
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
                 <span class="far fa-eye fa-fw mr-1"></span>
@@ -88,6 +91,12 @@
             <a href="" onclick="edit(this)">
                 <span class="fas fa-edit fa-fw mr-1"></span>
                 <span>Editar</span>
+            </a>
+        </li>
+        <li class="rowOptions-ResetMany list-group-item border-0 px-0">
+            <a href="" onclick="resetMany()">
+                <span class="fas fa-sync-alt fa-fw mr-1"></span>
+                <span>Resetar</span>
             </a>
         </li>
         <li class="list-group-item border-0 px-0">

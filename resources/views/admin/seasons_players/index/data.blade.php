@@ -20,7 +20,7 @@
             <col width="0%" />
             <col width="100%" />
             <col width="0%" class="d-none d-sm-table-cell" />
-            <col width="0%" />
+            <col width="0%" class="d-none d-sm-table-cell" />
             <col width="0%" />
         </colgroup>
 
@@ -47,7 +47,7 @@
                 <th scope="col" onclick="$('#allMark').trigger('click');">Media</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');">Pos.</th>
                 <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell">Equipo</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');" class="text-right">Claúsula</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="text-right d-none d-sm-table-cell">Claúsula</th>
                 <th scope="col" class="text-right" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
@@ -70,7 +70,7 @@
                     </td>
                     <td class="name" onclick="rowSelect(this)">
                         @if (!$player->active)
-                            <span class="badge badge-danger mr-1">INACTIVO</span>
+                            <span class="badge badge-danger mr-1">OFF</span>
                         @endif
                         <span>{{ $player->player->name }}</span>
                         <small class="d-block d-sm-none text-black-50 text-uppercase">
@@ -146,7 +146,7 @@
 
                     @endif
 
-                    <td onclick="rowSelect(this)" class="text-right">
+                    <td onclick="rowSelect(this)" class="text-right d-none d-sm-table-cell">
                         <span>{{ $player->price }}</span>
                     </td>
 
