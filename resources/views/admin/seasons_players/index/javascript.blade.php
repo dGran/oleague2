@@ -291,6 +291,47 @@
         });
     }
 
+    function transferMany() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        participant_id = $("#participants option:selected").val();
+        swal({
+            title: "¿Estás seguro?",
+            text: 'Se van a asignar los jugadores marcados al participante seleccionado.',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                var ids = [];
+                $(".mark:checked").each(function() {
+                    ids.push($(this).val());
+                });
+                var url = '{{ route("admin.season_players.transfer.many", [":ids", ":participant_id"]) }}';
+                url = url.replace(':ids', ids);
+                url = url.replace(':participant_id', participant_id);
+                window.location.href=url;
+            } else {
+                enabledActionsButtons();
+            }
+        });
+    }
+
     function edit(element) {
         $(".mark:checked").each(function() {
             id = $(this).val();

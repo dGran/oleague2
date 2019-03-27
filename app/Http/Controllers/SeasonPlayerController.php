@@ -405,6 +405,30 @@ class SeasonPlayerController extends Controller
         return redirect()->route('admin.season_players')->with('success', 'Se han reseteado los jugadores seleccionados correctamente.');
     }
 
+    public function transferMany($ids, $participant_id)
+    {
+        $participant = SeasonParticipant::find($participant_id);
+        $ids=explode(",",$ids);
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $player = SeasonPlayer::find($ids[$i]);
+            if ($player) {
+                $player->participant_id = $participant_id;
+                $player->save();
+                if ($participant) {
+                    $text = "Jugador transferido participante " . $participant->name();
+                } else {
+                    $text = "Jugador convertido en agente libre";
+                }
+                event(new TableWasUpdated($player, $player->player->name, $text));
+            }
+        }
+        if ($participant) {
+            return redirect()->route('admin.season_players')->with('success', 'Se han asignado los jugadores seleccionados al participante ' . $participant->name() . ' correctamente.');
+        }
+        return redirect()->route('admin.season_players')->with('success', 'Se han convertido en agentes libres los jugadores seleccionados correctamente.');
+    }
+
     public function activeAllPlayers($season_id)
     {
         $players = SeasonPlayer::where('season_id', '=', $season_id)->where('active', '=', 0)->get();

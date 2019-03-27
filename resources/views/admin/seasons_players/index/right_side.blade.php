@@ -55,6 +55,20 @@
         <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
+
+        <li class="list-group-item border-0 px-0">
+            <label for="participants">Asignar participante</label>
+            <select class="selectpicker form-control" name="participants" id="participants" data-size="3" data-live-search="true">
+                <option value="0">LIBRE</option>
+                @foreach ($participants as $participant)
+                    <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
+                @endforeach
+            </select>
+        </li>
+        <li class="list-group-item px-0 pt-0 border-0 border-bottom">
+            <a href="" onclick="transferMany()" class="btn btn-primary"><i class="fas fa-exchange-alt mr-2"></i>Asignar participante</a>
+        </li>
+
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
                 <span class="far fa-eye fa-fw mr-1"></span>
@@ -116,19 +130,6 @@
                 <span class="fas fa-file-export fa-fw mr-1"></span>
                 <span>Exportar (.csv)</span>
             </a>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <label for="participant_id">Asignar participante</label>
-            <select class="selectpicker form-control" name="participant_id" id="participant_id" data-size="3" data-live-search="true">
-                <option value="0">LIBRE</option>
-                @foreach ($participants as $participant)
-                    <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
-                @endforeach
-            </select>
-        </li>
-        <li class="list-group-item border-0 px-0">
-            <label for="salary">Editar salario</label>
-            <input type="number" class="form-control" id="salary" name="salary" placeholder="Salario" min="0.5" step="0.5" value="0.5">
         </li>
     </ul>
 </div>
