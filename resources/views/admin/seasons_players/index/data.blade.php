@@ -68,16 +68,17 @@
                     <td class="img" onclick="rowSelect(this)">
                         <img src="{{ $player->player->getImgFormatted() }}" alt="" width="38">
                     </td>
-                    <td class="name" onclick="rowSelect(this)">
+                    <td onclick="rowSelect(this)">
                         @if (!$player->active)
                             <span class="badge badge-danger mr-1">OFF</span>
                         @endif
-                        <span>{{ $player->player->name }}</span>
+                        <span class="name">{{ $player->player->name }}</span>
                         <small class="d-block d-sm-none text-black-50 text-uppercase">
                             @if ($player->participant_id && $player->participant->team_id)
                                 {{ $player->participant->team->name }}
                             @else
-                                <span class="font-italic text-info">Libre</span>
+                                <img src="{{ asset('img/free.png') }}" alt="Libre" height="32" style="position: absolute; left: 13em">
+                                <span class="text-warning">Agente libre</span>
                             @endif
                         </small>
                         <small class="d-none d-sm-block text-black-50 text-uppercase">
@@ -119,10 +120,11 @@
                             </td>
                         @else
                             <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
-                                <img src="{{ asset('img/team_no_image.png') }}" alt="" width="32">
+                                {{-- <img src="{{ asset('img/team_no_image.png') }}" alt="" width="32"> --}}
+                                <img src="{{ asset('img/free.png') }}" alt="Libre" height="32">
                             </td>
                             <td class="text-nowrap d-none d-sm-table-cell" onclick="rowSelect(this)">
-                                Libre
+                                <small class="text-warning">Agente libre</small>
                             </td>
                         @endif
 

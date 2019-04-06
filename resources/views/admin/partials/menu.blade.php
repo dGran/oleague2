@@ -62,11 +62,11 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a href="">
+<li class="item {{ Request::is('admin/competiciones*') ? 'current' : '' }}">
+    <a href="{{ route('admin.season_competitions') }}">
         <span>
             <i class="fas fa-trophy fa-fw mr-2"></i>
-            Competición
+            Competiciones
         </span>
     </a>
 </li>
@@ -88,6 +88,14 @@
 </li>
 <li class="section">
     Tablas generales
+</li>
+<li class="item pending">
+    <a>
+        <span>
+            <i class="fas fa-users fa-fw mr-2"></i>
+            Comunidades (89,9 anual - 49,90 semestral - 9,90 mensual - 1 mes de prueba)
+        </span>
+    </a>
 </li>
 <li class="item pending">
     <a>

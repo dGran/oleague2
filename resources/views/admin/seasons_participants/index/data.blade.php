@@ -78,8 +78,8 @@
                     <td class="logo" onclick="rowSelect(this)">
                         <img src="{{ $participant->logo() }}" alt="" width="32">
                     </td>
-                    <td class="name"  onclick="rowSelect(this)">
-                        <span class="text-uppercase">{{ $participant->name() == 'undefined' ? '' : $participant->name() }}</span>
+                    <td onclick="rowSelect(this)">
+                        <span class="name text-uppercase">{{ $participant->name() == 'undefined' ? '' : $participant->name() }}</span>
                         <br>
                         <small class="text-black-50">
                             @if ($participant->sub_name() == 'undefined')

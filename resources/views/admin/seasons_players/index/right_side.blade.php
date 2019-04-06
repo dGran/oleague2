@@ -66,7 +66,7 @@
             </select>
         </li>
         <li class="list-group-item px-0 pt-0 border-0 border-bottom">
-            <a href="" onclick="transferMany()" class="btn btn-primary"><i class="fas fa-exchange-alt mr-2"></i>Asignar participante</a>
+            <a href="" onclick="transferMany()" class="btn btn-primary"><i class="fas fa-exchange-alt mr-2"></i>Asignar / Liberar</a>
         </li>
 
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
@@ -214,6 +214,7 @@
             <label for="filterParticipantLarge" class="mb-1">Participantes</label>
             <select name="filterParticipant" id="filterParticipantLarge" class="selectpicker form-control filterParticipant" onchange="applyfilterParticipant()">
                 <option value="">Todos los participantes</option>
+                <option value="NULL">Agentes libres</option>
                 @foreach ($participants as $participant)
                     @if ($participant->id == $filterParticipant)
                         <option selected value="{{ $participant->id }}">{{ $participant->name() }}</option>

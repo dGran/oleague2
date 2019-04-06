@@ -2,34 +2,28 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.season_players.add', $active_season->id) }}'" type="button" class="btn btn-primary" data-toggle="button">
-                <i class="fas fa-plus mr-2"></i>Nuevo
+            <button id="addon-new" onclick="location.href='{{ route('admin.season_competitions.add') }}'" type="button" class="btn btn-primary" data-toggle="button">
+                <i class="fas fa-plus mr-2"></i>Nueva
             </button>
-            <button id="addon-filter" type="button" class="filter btn input-group-text border-left-0 {{ $filterSeason ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
+            <button id="addon-filter" type="button" class="filter btn input-group-text {{ $filterName ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
                 <i class="fas fa-filter"></i>
             </button>
-            @if ($players->count()>0)
-                <button id="addon-reset" type="button" class="btn input-group-text" data-toggle="button" onclick="reset()">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-            @endif
            <form
             id="frmImport"
                 lang="{{ app()->getLocale() }}"
                 role="form"
                 method="POST"
-                action="{{ route('admin.season_players.import.file') }}"
+                action="{{ route('admin.season_competitions.import.file') }}"
                 enctype="multipart/form-data"
                 data-toggle="validator"
                 autocomplete="off">
                 {{ csrf_field() }}
                 <input type="file" name="import_file" id="import_file" class="d-none">
             </form>
-                <button id="addon-import" type="button" class="btn input-group-text border-left-0" data-toggle="button" onclick="import_file()">
-                    <i class="fas fa-file-import"></i>
-                </button>
-
-            @if ($players->count()>0)
+            <button id="addon-import" type="button" class="btn input-group-text border-left-0" data-toggle="button" onclick="import_file()">
+                <i class="fas fa-file-import"></i>
+            </button>
+            @if ($competitions->count()>0)
                 <button id="addon-export" type="button" class="btn input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-file-export"></i>
                 </button>
@@ -55,30 +49,11 @@
             <button type="button" class="btn btn-danger" data-toggle="button" onclick="destroyMany()">
                 <i class="fas fa-trash mr-2"></i>Eliminar
             </button>
-            <button type="button" class="rowOptions-View btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="view(this)">
-                <i class="fas fa-eye"></i>
-            </button>
-            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
+            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>
             </button>
-            {{-- 1 player selected --}}
-            <button type="button" class="rowOptions-Desactivate btn btn-outline-secondary input-group-text" data-toggle="button" onclick="desactivate(this)">
-                <i class="fas fa-toggle-off"></i>
-            </button>
-            <button type="button" class="rowOptions-Activate btn btn-outline-secondary input-group-text" data-toggle="button" onclick="activate(this)">
-                <i class="fas fa-toggle-on"></i>
-            </button>
-            {{-- end --}}
-            {{-- many players selected --}}
-            <button type="button" class="rowOptions-DesactivateMany btn btn-outline-secondary input-group-text" data-toggle="button" onclick="desactivateMany(this)">
-                <i class="fas fa-toggle-off"></i>
-            </button>
-            <button type="button" class="rowOptions-ActivateMany btn btn-outline-secondary input-group-text" data-toggle="button" onclick="activateMany(this)">
-                <i class="fas fa-toggle-on"></i>
-            </button>
-            {{-- end --}}
-            <button type="button" class="rowOptions-ResetMany btn input-group-text" data-toggle="button" onclick="resetMany()">
-                <i class="fas fa-sync-alt"></i>
+            <button type="button" class="btn btn-outline-secondary input-group-text" data-toggle="button" onclick="duplicateMany()">
+                <i class="fas fa-clone"></i>
             </button>
             <button id="row-addon-export" type="button" class="btn btn-outline-secondary input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-file-export"></i>
@@ -97,16 +72,6 @@
                     <span>Exportar (.csv)</span>
                 </a>
             </div>
-
-        </div>
-        <div class="d-none pt-2 rowOptions" role="group">
-            <select class="selectpicker" name="participants" id="participants" data-size="3" data-live-search="true">
-                <option value="0">LIBRE</option>
-                @foreach ($participants as $participant)
-                    <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
-                @endforeach
-            </select>
-            <a href="" onclick="transferMany()" class="btn btn-outline-secondary input-group-text d-inline-block ml-1"><i class="fas fa-exchange-alt"></i></a>
         </div>
 
     </div> {{-- toolbar --}}
