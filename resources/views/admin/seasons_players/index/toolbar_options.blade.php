@@ -55,6 +55,9 @@
             <button type="button" class="btn btn-danger" data-toggle="button" onclick="destroyMany()">
                 <i class="fas fa-trash mr-2"></i>Eliminar
             </button>
+            <button type="button" class="rowOptions-Assign btn btn-outline-secondary input-group-text border-left-0" data-toggle="modal" data-target="#assignModal">
+                <i class="fas fa-exchange-alt"></i>
+            </button>
             <button type="button" class="rowOptions-View btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="view(this)">
                 <i class="fas fa-eye"></i>
             </button>
@@ -97,18 +100,7 @@
                     <span>Exportar (.csv)</span>
                 </a>
             </div>
-
         </div>
-        <div class="d-none pt-2 rowOptions" role="group">
-            <select class="selectpicker" name="participants" id="participants" data-size="3" data-live-search="true">
-                <option value="0">LIBRE</option>
-                @foreach ($participants as $participant)
-                    <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
-                @endforeach
-            </select>
-            <a href="" onclick="transferMany()" class="btn btn-outline-secondary input-group-text d-inline-block ml-1"><i class="fas fa-exchange-alt"></i></a>
-        </div>
-
     </div> {{-- toolbar --}}
 
 </div> {{-- general-options --}}

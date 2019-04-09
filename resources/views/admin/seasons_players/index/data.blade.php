@@ -44,8 +44,10 @@
                     </div>
                 </th>
                 <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Jugador</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');">Media</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');">Pos.</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell text-center">Media</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-table-cell d-sm-none text-center">Med</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell text-center">Posición</th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-table-cell d-sm-none text-center">Pos</th>
                 <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell">Equipo</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');" class="text-right d-none d-sm-table-cell">Claúsula</th>
                 <th scope="col" class="text-right" onclick="$('#allMark').trigger('click');"></th>
@@ -77,7 +79,7 @@
                             @if ($player->participant_id && $player->participant->team_id)
                                 {{ $player->participant->team->name }}
                             @else
-                                <img src="{{ asset('img/free.png') }}" alt="Libre" height="32" style="position: absolute; left: 13em">
+                                {{-- <img src="{{ asset('img/free.png') }}" alt="Libre" height="32" style="position: absolute; left: 13em"> --}}
                                 <span class="text-warning">Agente libre</span>
                             @endif
                         </small>
@@ -94,11 +96,19 @@
                     </td>
 
                     <td onclick="rowSelect(this)" class="text-center">
-                        <span>{{ $player->player->overall_rating }}</span>
+                        <div style="background: {{ $player->player->getOverallRatingColor() }}; border: 1px solid grey; width: 2.5em" class="rounded p-1">
+                            <span class="font-weight-bold">
+                                <small>{{ $player->player->overall_rating }}</small>
+                            </span>
+                        </div>
                     </td>
 
                     <td onclick="rowSelect(this)" class="text-center">
-                        <span>{{ $player->player->position }}</span>
+                        <div style="background: {{ $player->player->getPositionColor() }}; border: 1px solid grey; width: 2.5em" class="rounded p-1">
+                            <span class="font-weight-bold text-white">
+                                <small>{{ $player->player->position }}</small>
+                            </span>
+                        </div>
                     </td>
 
                     @if ($active_season->participant_has_team)

@@ -294,7 +294,7 @@
     function transferMany() {
         window.event.preventDefault();
         disabledActionsButtons();
-        participant_id = $("#participants option:selected").val();
+        participant_id = $(".participants option:selected").val();
         swal({
             title: "¿Estás seguro?",
             text: 'Se van a asignar los jugadores marcados al participante seleccionado.',
@@ -424,6 +424,7 @@
                 $(".rowOptions-DesactivateMany").addClass('d-none');
                 $(".rowOptions-Edit").removeClass('d-none');
                 $(".rowOptions-View").removeClass('d-none');
+                $(".rowOptions-Assign").addClass('d-none');
                 var active = $(".mark:checked").parents('tr').attr("data-active");
                 if (active == 1) {
                     $(".rowOptions-Activate").addClass('d-none');
@@ -440,6 +441,7 @@
                 $(".rowOptions-View").addClass('d-none');
                 $(".rowOptions-Activate").addClass('d-none');
                 $(".rowOptions-Desactivate").addClass('d-none');
+                $(".rowOptions-Assign").removeClass('d-none');
             }
         } else {
             if ($(".rowOptions").is(':visible')) {

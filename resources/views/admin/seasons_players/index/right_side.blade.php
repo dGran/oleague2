@@ -56,19 +56,12 @@
     </a>
     <ul class="list-group border-top mt-3">
 
-        <li class="list-group-item border-0 px-0">
-            <label for="participants">Asignar participante</label>
-            <select class="selectpicker form-control" name="participants" id="participants" data-size="3" data-live-search="true">
-                <option value="0">LIBRE</option>
-                @foreach ($participants as $participant)
-                    <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
-                @endforeach
-            </select>
+        <li class="rowOptions-Assign list-group-item border-0 px-0 d-none">
+            <a href="" data-toggle="modal" data-target="#assignModal">
+                <span class="fas fa-exchange-alt fa-fw mr-1"></span>
+                <span>Asignar / Liberar</span>
+            </a>
         </li>
-        <li class="list-group-item px-0 pt-0 border-0 border-bottom">
-            <a href="" onclick="transferMany()" class="btn btn-primary"><i class="fas fa-exchange-alt mr-2"></i>Asignar / Liberar</a>
-        </li>
-
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
                 <span class="far fa-eye fa-fw mr-1"></span>

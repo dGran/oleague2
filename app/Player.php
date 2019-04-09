@@ -85,4 +85,30 @@ class Player extends Model
 		}
 
 	}
+
+	public function getPositionColor() {
+		switch ($this->position) {
+		    case ($this->position == "DC") || ($this->position == "SD") || ($this->position == "EI") || ($this->position == "ED"):
+		        return "#be262d";
+		    case ($this->position == "MCD") || ($this->position == "MC") || ($this->position == "MP") || ($this->position == "II") || ($this->position == "ID"):
+		        return "#4c9f20";
+		    case ($this->position == "CT") || ($this->position == "LD") || ($this->position == "LI"):
+		        return "#2269d9";
+		    case "PT":
+		        return "#dba00f";
+		}
+	}
+
+	public function getOverallRatingColor() {
+		switch ($this->overall_rating) {
+		    case ($this->overall_rating >94):
+		        return "#ff0200";
+		    case ($this->overall_rating >89):
+		        return "#ff7f00";
+		    case ($this->overall_rating >79):
+		        return "#ffbe00";
+		    case ($this->overall_rating >74):
+		        return "#ffff00";
+		}
+	}
 }
