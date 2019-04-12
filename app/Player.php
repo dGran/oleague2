@@ -99,6 +99,15 @@ class Player extends Model
 		}
 	}
 
+	public function getPositionFormatted() {
+		$content = "<div style='background: ". $this->getPositionColor() . "; border: 1px solid grey; width: 2.25em' class='rounded p-1'>
+            <span class='font-weight-bold text-white'>
+                <small>" . $this->position . "</small>
+            </span>
+        </div>";
+        return $content;
+	}
+
 	public function getOverallRatingColor() {
 		switch ($this->overall_rating) {
 		    case ($this->overall_rating >94):
@@ -110,5 +119,20 @@ class Player extends Model
 		    case ($this->overall_rating >74):
 		        return "#ffff00";
 		}
+	}
+
+	public function getOverallRatingFormatted() {
+		if ($this->overall_rating >89) {
+			$text_color = 'text-white';
+		} else {
+			$text_color = 'text-muted';
+		}
+		$color = $this->getOverallRatingColor();
+		$content = "<div style='background: " . $color . "; border: 1px solid grey; width: 2.25em' class='rounded p-1'>
+            <span class='font-weight-bold " . $text_color . "'>
+                <small>" . $this->overall_rating . "</small>
+            </span>
+        </div>";
+        return $content;
 	}
 }

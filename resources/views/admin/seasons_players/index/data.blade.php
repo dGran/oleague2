@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </th>
-                <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Jugador</th>
+                <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');" class="name">Jugador</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell text-center">Media</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');" class="d-table-cell d-sm-none text-center">Med</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell text-center">Posición</th>
@@ -70,11 +70,11 @@
                     <td class="img" onclick="rowSelect(this)">
                         <img src="{{ $player->player->getImgFormatted() }}" alt="" width="38">
                     </td>
-                    <td onclick="rowSelect(this)">
+                    <td onclick="rowSelect(this)" class="name">
                         @if (!$player->active)
                             <span class="badge badge-danger mr-1">OFF</span>
                         @endif
-                        <span class="name">{{ $player->player->name }}</span>
+                        <span>{{ $player->player->name }}</span>
                         <small class="d-block d-sm-none text-black-50 text-uppercase">
                             @if ($player->participant_id && $player->participant->team_id)
                                 {{ $player->participant->team->name }}
@@ -96,19 +96,11 @@
                     </td>
 
                     <td onclick="rowSelect(this)" class="text-center">
-                        <div style="background: {{ $player->player->getOverallRatingColor() }}; border: 1px solid grey; width: 2.5em" class="rounded p-1">
-                            <span class="font-weight-bold">
-                                <small>{{ $player->player->overall_rating }}</small>
-                            </span>
-                        </div>
+                        {!! $player->player->getOverallRatingFormatted() !!}
                     </td>
 
                     <td onclick="rowSelect(this)" class="text-center">
-                        <div style="background: {{ $player->player->getPositionColor() }}; border: 1px solid grey; width: 2.5em" class="rounded p-1">
-                            <span class="font-weight-bold text-white">
-                                <small>{{ $player->player->position }}</small>
-                            </span>
-                        </div>
+                        {!! $player->player->getPositionFormatted() !!}
                     </td>
 
                     @if ($active_season->participant_has_team)

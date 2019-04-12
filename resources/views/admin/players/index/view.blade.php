@@ -25,14 +25,14 @@
 			<h4 class="m-0">{{ $player->name }}</h4>
             <h5 class="m-0 p-2"><strong class="d-block">
                 @if ($player->overall_rating)
-                    {{ $player->overall_rating }}
-                    @if ($player->position)
-                        / {{ $player->position }}
-                    @endif
-                @else
-                    @if ($player->position)
-                        {{ $player->position }}
-                    @endif
+                    <div class="d-inline-block">
+                        {!! $player->getOverallRatingFormatted() !!}
+                    </div>
+                @endif
+                @if ($player->position)
+                    <div class="d-inline-block">
+                        {!! $player->getPositionFormatted() !!}
+                    </div>
                 @endif
             </strong></h5>
             <span class="d-block">

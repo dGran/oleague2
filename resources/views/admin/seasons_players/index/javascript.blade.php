@@ -44,12 +44,12 @@
                 type        : 'GET',
                 datatype    : 'html',
             }).done(function(data){
-                $('.modal-dialog').html(data);
+                $('#modal-dialog-view').html(data);
             });
         });
 
         $("#viewModal").on("hidden.bs.modal", function(){
-            $('.modal-dialog').html("");
+            $('#modal-dialog-view').html("");
         });
 
     });
