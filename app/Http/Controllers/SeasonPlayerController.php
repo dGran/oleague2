@@ -157,7 +157,7 @@ class SeasonPlayerController extends Controller
         $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
         ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
         ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
-        ->where('players.position', 'LIKE', '%' . $filterPosition . '%');
+        ->where('players.position', '=', $filterPosition);
         if ($filterActive == 1) {
             $players->where('active', '=', $filterActive);
         }
@@ -183,7 +183,7 @@ class SeasonPlayerController extends Controller
             $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
             ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
             ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
-            ->where('players.position', 'LIKE', '%' . $filterPosition . '%');
+            ->where('players.position', '=', $filterPosition);
             if ($filterActive == 1) {
                 $players->where('active', '=', $filterActive);
             }
