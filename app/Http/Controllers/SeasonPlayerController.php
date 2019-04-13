@@ -150,8 +150,11 @@ class SeasonPlayerController extends Controller
 
         $players = SeasonPlayer::select('season_players.*')
         ->join('players', 'players.id', '=', 'season_players.player_id')
-        ->seasonId($filterSeason)->participantId($filterParticipant)
-        ->where('players.name', 'LIKE', '%' . $filterName . '%')
+        ->seasonId($filterSeason);
+        if ($filterParticipant >= 0) {
+            $players = $players->participantId($filterParticipant);
+        }
+        $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
         ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
         ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
         ->where('players.position', 'LIKE', '%' . $filterPosition . '%');
@@ -171,9 +174,13 @@ class SeasonPlayerController extends Controller
             } else {
                 $page = 1;
             }
-            $players = SeasonPlayer::select('season_players.*')->join('players', 'players.id', '=', 'season_players.player_id')
-            ->seasonId($filterSeason)->participantId($filterParticipant)
-            ->where('players.name', 'LIKE', '%' . $filterName . '%')
+            $players = SeasonPlayer::select('season_players.*')
+            ->join('players', 'players.id', '=', 'season_players.player_id')
+            ->seasonId($filterSeason);
+            if ($filterParticipant >= 0) {
+                $players = $players->participantId($filterParticipant);
+            }
+            $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
             ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
             ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
             ->where('players.position', 'LIKE', '%' . $filterPosition . '%');

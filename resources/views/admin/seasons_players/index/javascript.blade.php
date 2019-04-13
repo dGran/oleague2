@@ -83,7 +83,7 @@
 
     function cancelFilterParticipant() {
         window.event.preventDefault();
-        $('.filterParticipant').val('');
+        $('.filterParticipant').val('-1');
         if (filterName || filterTeam || filterNation || filterPosition || order || pagination) {
             $('.frmFilter').submit();
         } else {

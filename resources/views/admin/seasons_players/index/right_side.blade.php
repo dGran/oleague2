@@ -142,7 +142,7 @@
 </div>
 
 <div class="mt-4">
-    @if ($filterName || $filterParticipant || $filterTeam || $filterNation || $filterPosition)
+    @if ($filterName || $filterParticipant >= 0 || $filterTeam || $filterNation || $filterPosition)
         <ul class="nav mb-2">
             @if ($filterName)
                 <li class="nav-item">
@@ -152,7 +152,7 @@
                     </a>
                 </li>
             @endif
-            @if ($filterParticipant)
+            @if ($filterParticipant >= 0)
                 <li class="nav-item">
                     <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterParticipant()">
                         <span class="r-1">Participante</span>
@@ -206,14 +206,10 @@
         <div class="col-sm-12">
             <label for="filterParticipantLarge" class="mb-1">Participantes</label>
             <select name="filterParticipant" id="filterParticipantLarge" class="selectpicker form-control filterParticipant" onchange="applyfilterParticipant()">
-                <option value="">Todos los participantes</option>
-                <option value="NULL">Agentes libres</option>
+                <option {{ $filterParticipant == -1 ? 'selected' : '' }} value="-1">Todos los participantes</option>
+                <option {{ $filterParticipant == 0 ? 'selected' : '' }} value="0">Agentes libres</option>
                 @foreach ($participants as $participant)
-                    @if ($participant->id == $filterParticipant)
-                        <option selected value="{{ $participant->id }}">{{ $participant->name() }}</option>
-                    @else
-                        <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
-                    @endif
+                    <option {{ $participant->id == $filterParticipant ? 'selected' : '' }} value="{{ $participant->id }}">{{ $participant->name() }}</option>
                 @endforeach
             </select>
         </div>
