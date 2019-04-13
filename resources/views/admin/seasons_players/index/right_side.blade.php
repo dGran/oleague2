@@ -240,6 +240,18 @@
         </div>
     </div>
 
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="filterActiveLong" name="filterActive" {{ $filterActive ? 'checked = "checked"' : ''}} onclick="$('.frmFilter').submit();">
+                <label class="custom-control-label is-valid" for="filterActiveLong">
+                    <span>Ocultar inactivos</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 <div class="mt-4">

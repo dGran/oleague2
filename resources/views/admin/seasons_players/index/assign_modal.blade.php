@@ -9,7 +9,7 @@
             </div>
 
             <div class="modal-body">
-				<label for="participants">Asignar participante</label>
+				<label for="participants">Participante</label>
 				<select class="selectpicker form-control participants" id="participants" data-size="3" data-live-search="true">
 				    <option value="0">LIBRE</option>
 				    @foreach ($participants as $participant)

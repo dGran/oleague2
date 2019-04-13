@@ -5,6 +5,7 @@
     var filterTeam = {!! json_encode($filterTeam) !!};
     var filterNation = {!! json_encode($filterNation) !!};
     var filterPosition = {!! json_encode($filterPosition) !!};
+    var filterActive = {!! json_encode($filterActive) !!};
     var order = {!! json_encode($order) !!};
     var pagination = {!! json_encode($pagination) !!};
 
@@ -295,41 +296,15 @@
         window.event.preventDefault();
         disabledActionsButtons();
         participant_id = $(".participants option:selected").val();
-        swal({
-            title: "¿Estás seguro?",
-            text: 'Se van a asignar los jugadores marcados al participante seleccionado.',
-            buttons: {
-                confirm: {
-                    text: "Sí, estoy seguro",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-danger",
-                    closeModal: true
-                },
-                cancel: {
-                    text: "No, cancelar",
-                    value: null,
-                    visible: true,
-                    className: "btn btn-secondary",
-                    closeModal: true,
-                }
-            },
-            closeOnClickOutside: false,
-        })
-        .then((value) => {
-            if (value) {
-                var ids = [];
-                $(".mark:checked").each(function() {
-                    ids.push($(this).val());
-                });
-                var url = '{{ route("admin.season_players.transfer.many", [":ids", ":participant_id"]) }}';
-                url = url.replace(':ids', ids);
-                url = url.replace(':participant_id', participant_id);
-                window.location.href=url;
-            } else {
-                enabledActionsButtons();
-            }
+
+        var ids = [];
+        $(".mark:checked").each(function() {
+            ids.push($(this).val());
         });
+        var url = '{{ route("admin.season_players.transfer.many", [":ids", ":participant_id"]) }}';
+        url = url.replace(':ids', ids);
+        url = url.replace(':participant_id', participant_id);
+        window.location.href=url;
     }
 
     function edit(element) {

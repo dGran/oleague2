@@ -189,6 +189,8 @@
         </tbody>
     </table>
 
+    filteractive {{$filterActive}}
+
     <div class="regs-info clearfix border-top p-3 px-md-0">
         <div class="regs-info2 float-left">Registros: {{ $players->firstItem() }}-{{ $players->lastItem() }} de {{ $players->total() }}</div>
         <div class="float-right">{!! $players->appends(Request::all())->render() !!}</div>

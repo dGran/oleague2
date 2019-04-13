@@ -51,6 +51,7 @@ class CreateAdminFiltersTable extends Migration
             $table->string("seasonPlayers_filterTeam")->nullable();
             $table->string("seasonPlayers_filterNation")->nullable();
             $table->string("seasonPlayers_filterPosition")->nullable();
+            $table->string("seasonPlayers_filterActive")->nullable();
             $table->string("seasonPlayers_order")->nullable();
             $table->string("seasonPlayers_pagination")->nullable();
             $table->string("seasonPlayers_page")->nullable();

@@ -124,6 +124,16 @@
                                 <input class="form-control" name="filterPosition" id="filterPosition" type="text" value="{{ $filterPosition ? $filterPosition : '' }}" aria-describedby="filterPositionHelp" placeholder="Posición">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="filterActive" name="filterActive" {{ $filterActive ? 'checked = "checked"' : ''}}>
+                                    <label class="custom-control-label is-valid" for="filterActive">
+                                        <span>Ocultar inactivos</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 

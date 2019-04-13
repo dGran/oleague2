@@ -39,6 +39,11 @@ class SeasonPlayerController extends Controller
             $filterTeam = request()->filterTeam;
             $filterNation = request()->filterNation;
             $filterPosition = request()->filterPosition;
+            if (request()->filterActive) {
+                $filterActive = 1;
+            } else {
+                $filterActive = 0;
+            }
             $order = request()->order;
             $pagination = request()->pagination;
             $page = request()->page;
@@ -69,6 +74,9 @@ class SeasonPlayerController extends Controller
                 if ($admin->seasonPlayers_filterPosition) {
                     $filterPosition = $admin->seasonPlayers_filterPosition;
                 }
+                if ($admin->seasonPlayers_filterActive) {
+                    $filterActive = $admin->seasonPlayers_filterActive;
+                }
                 if ($admin->seasonPlayers_order) {
                     $order = $admin->seasonPlayers_order;
                 }
@@ -98,7 +106,12 @@ class SeasonPlayerController extends Controller
             $filterName = request()->filterName;
             $filterTeam = request()->filterTeam;
             $filterNation = request()->filterNation;
-            $filterPosition = request()->filtePositione;
+            $filterPosition = request()->filterPosition;
+            if (request()->filterActive) {
+                $filterActive = 1;
+            } else {
+                $filterActive = 0;
+            }
             $order = request()->order;
             $pagination = request()->pagination;
             $page = request()->page;
@@ -112,6 +125,7 @@ class SeasonPlayerController extends Controller
         $adminFilter->seasonPlayers_filterTeam = $filterTeam;
         $adminFilter->seasonPlayers_filterNation = $filterNation;
         $adminFilter->seasonPlayers_filterPosition = $filterPosition;
+        $adminFilter->seasonPlayers_filterActive = $filterActive;
         $adminFilter->seasonPlayers_order = $order;
         $adminFilter->seasonPlayers_pagination = $pagination;
         $adminFilter->seasonPlayers_page = $page;
@@ -140,8 +154,11 @@ class SeasonPlayerController extends Controller
         ->where('players.name', 'LIKE', '%' . $filterName . '%')
         ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
         ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
-        ->where('players.position', 'LIKE', '%' . $filterPosition . '%')
-        ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+        ->where('players.position', 'LIKE', '%' . $filterPosition . '%');
+        if ($filterActive == 1) {
+            $players->where('active', '=', $filterActive);
+        }
+        $players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
         ->orderBy('players.name', 'asc')
         ->paginate($perPage, ['*'], 'page', $page);
 
@@ -159,14 +176,17 @@ class SeasonPlayerController extends Controller
             ->where('players.name', 'LIKE', '%' . $filterName . '%')
             ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
             ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
-            ->where('players.position', 'LIKE', '%' . $filterPosition . '%')
-            ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+            ->where('players.position', 'LIKE', '%' . $filterPosition . '%');
+            if ($filterActive == 1) {
+                $players->where('active', '=', $filterActive);
+            }
+            $players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
             ->orderBy('players.name', 'asc')
             ->paginate($perPage, ['*'], 'page', $page);
             $adminFilter->seasonPlayers_page = $page;
             $adminFilter->save();
         }
-        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'active_season', 'order', 'pagination', 'page'));
+        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'filterActive', 'active_season', 'order', 'pagination', 'page'));
     }
 
     public function add($season_id)
