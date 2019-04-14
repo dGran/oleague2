@@ -33,9 +33,6 @@
         $('.filterNation-input').on("blur", function() {
             $(this).val(filterNation);
         });
-        $('.filterPosition-input').on("blur", function() {
-            $(this).val(filterPosition);
-        });
 
         $('#viewModal').on('show.bs.modal', function(e) {
             var row = $(e.relatedTarget).parents('tr');
@@ -68,6 +65,10 @@
     }
 
     function applyfilterParticipant() {
+        $('.frmFilter').submit();
+    }
+
+    function applyfilterPosition() {
         $('.frmFilter').submit();
     }
 

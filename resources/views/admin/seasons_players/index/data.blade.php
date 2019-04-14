@@ -132,7 +132,7 @@
 
                     @else
 
-                        @if ($player->participant->user_id)
+                        @if ($player->participant_id && $player->participant->user_id)
                             <td onclick="rowSelect(this)" class="d-none d-sm-table-cell">
                                 <img src="{{ $player->participant->user->avatar() }}" alt="" width="32">
                             </td>

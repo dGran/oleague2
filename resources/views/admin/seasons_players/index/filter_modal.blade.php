@@ -117,8 +117,13 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
-                                <label for="filterPosition" class="mb-1">Posición</label>
-                                <input class="form-control" name="filterPosition" id="filterPosition" type="text" value="{{ $filterPosition ? $filterPosition : '' }}" aria-describedby="filterPositionHelp" placeholder="Posición">
+                                <label for="filterPosition" class="mb-1">Posiciones</label>
+                                <select name="filterPosition" id="filterPosition" class="selectpicker form-control filterPosition">
+                                    <option value="">Todas las posiciones</option>
+                                    @foreach ($positions as $pos)
+                                        <option {{ $pos->position == $filterPosition ? 'selected' : '' }} value="{{ $pos->position }}">{{ $pos->position }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -149,6 +154,8 @@
                                     <option value="name_desc" {{ $order == 'name_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre</option>
                                     <option value="overall" {{ $order == 'overall' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por media</option>
                                     <option value="overall_desc" {{ $order == 'overall_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por media</option>
+                                    <option value="position" {{ $order == 'position' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por posición</option>
+                                    <option value="position_desc" {{ $order == 'position_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por posición</option>
                                     <option value="age" {{ $order == 'age' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por edad</option>
                                     <option value="age_desc" {{ $order == 'age_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por edad</option>
                                     <option value="height" {{ $order == 'height' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por altura</option>

@@ -18,6 +18,8 @@ class SeasonPlayerController extends Controller
 {
     public function index()
     {
+        if (request()->filterParticipant == NULL) { request()->filterParticipant = 0; }
+
         $admin = AdminFilter::where('user_id', '=', \Auth::user()->id)->first();
         if ($admin) {
             if (request()->filterSeason == null) {
@@ -148,6 +150,8 @@ class SeasonPlayerController extends Controller
 
         $active_season = Season::find($filterSeason);
 
+
+
         $players = SeasonPlayer::select('season_players.*')
         ->join('players', 'players.id', '=', 'season_players.player_id')
         ->seasonId($filterSeason);
@@ -156,8 +160,10 @@ class SeasonPlayerController extends Controller
         }
         $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
         ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
-        ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
-        ->where('players.position', '=', $filterPosition);
+        ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%');
+        if ($filterPosition != NULL) {
+            $players = $players->where('players.position', '=', $filterPosition);
+        }
         if ($filterActive == 1) {
             $players->where('active', '=', $filterActive);
         }
@@ -165,9 +171,21 @@ class SeasonPlayerController extends Controller
         ->orderBy('players.name', 'asc')
         ->paginate($perPage, ['*'], 'page', $page);
 
-        $seasons = Season::where('use_rosters', '=', 1)->orderBy('name', 'asc')->get();
-        $participants = SeasonParticipant::where('season_id', '=', $filterSeason)->get();
 
+        $positions = Player::select('position')->distinct()->orderBy('position', 'asc')->get();
+        if (Season::find($filterSeason)->participant_has_team) {
+            $participants = SeasonParticipant::
+            leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+            ->select('season_participants.*', 'teams.name as team_name')
+            ->seasonId($filterSeason)->orderBy('team_name', 'asc')->get();
+        } else {
+            $participants = SeasonParticipant::
+            leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+            ->select('season_participants.*', 'users.name as user_name')
+            ->seasonId($filterSeason)->orderBy('user_name', 'asc')->get();
+        }
+
+        $seasons = Season::where('use_rosters', '=', 1)->orderBy('name', 'asc')->get();
         if ($seasons->count() == 0) {
             if ($page-1 > 0) {
                 $page = $page-1;
@@ -182,8 +200,10 @@ class SeasonPlayerController extends Controller
             }
             $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
             ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
-            ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%')
-            ->where('players.position', '=', $filterPosition);
+            ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%');
+            if ($filterPosition != NULL) {
+                $players = $players->where('players.position', '=', $filterPosition);
+            }
             if ($filterActive == 1) {
                 $players->where('active', '=', $filterActive);
             }
@@ -193,7 +213,7 @@ class SeasonPlayerController extends Controller
             $adminFilter->seasonPlayers_page = $page;
             $adminFilter->save();
         }
-        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'filterActive', 'active_season', 'order', 'pagination', 'page'));
+        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'positions', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'filterActive', 'active_season', 'order', 'pagination', 'page'));
     }
 
     public function add($season_id)
@@ -515,6 +535,14 @@ class SeasonPlayerController extends Controller
             ],
             'overall_desc' => [
                 'sortField'     => 'players.overall_rating',
+                'sortDirection' => 'desc'
+            ],
+            'position' => [
+                'sortField'     => 'players.position',
+                'sortDirection' => 'asc'
+            ],
+            'position_desc' => [
+                'sortField'     => 'players.position',
                 'sortDirection' => 'desc'
             ],
             'age' => [

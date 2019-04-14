@@ -231,8 +231,13 @@
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <label for="filterTeam" class="mb-1">Posición</label>
-            <input class="filterPosition-input form-control mousetrap filterPosition" id="filterPosition" name="filterPosition" type="text" placeholder="Posición..." value="{{ $filterPosition ? $filterPosition : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+            <label for="filterPositionLarge" class="mb-1">Posiciones</label>
+            <select name="filterPosition" id="filterPositionLarge" class="selectpicker form-control filterPosition" onchange="applyfilterPosition()">
+                <option value="">Todas las posiciones</option>
+                @foreach ($positions as $pos)
+                    <option {{ $pos->position == $filterPosition ? 'selected' : '' }} value="{{ $pos->position }}">{{ $pos->position }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 
@@ -262,6 +267,8 @@
                 <option value="name_desc" {{ $order == 'name_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre</option>
                 <option value="overall" {{ $order == 'overall' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por media</option>
                 <option value="overall_desc" {{ $order == 'overall_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por media</option>
+                <option value="position" {{ $order == 'position' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por posición</option>
+                <option value="position_desc" {{ $order == 'position_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por posición</option>
                 <option value="age" {{ $order == 'age' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por edad</option>
                 <option value="age_desc" {{ $order == 'age_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por edad</option>
                 <option value="height" {{ $order == 'height' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por altura</option>
