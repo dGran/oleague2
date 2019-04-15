@@ -46,8 +46,8 @@
         $("#viewModal").on("hidden.bs.modal", function(){
             $('#modal-dialog-view').html("");
         });
-
     });
+
 
     function applyfilters() {
         $('.frmFilter').submit();
@@ -227,6 +227,12 @@
         })
         .then((value) => {
             if (value) {
+                swal({
+                    text: "Reseteando todos los jugadores, por favor espera...",
+                    button: false,
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
+                });
                 url = $('#btnReset').attr("href");
                 window.location.href=url;
             } else {
@@ -264,6 +270,12 @@
                 var ids = [];
                 $(".mark:checked").each(function() {
                     ids.push($(this).val());
+                });
+                swal({
+                    text: "Reseteando los jugadores seleccionados, por favor espera...",
+                    button: false,
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
                 });
                 var url = '{{ route("admin.season_players.reset.many", ":ids") }}';
                 url = url.replace(':ids', ids);
