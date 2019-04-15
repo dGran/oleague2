@@ -106,13 +106,23 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="filterTeam" class="mb-1">Equipo</label>
-                                <input class="form-control" name="filterTeam" id="filterTeam" type="text" value="{{ $filterTeam ? $filterTeam : '' }}" aria-describedby="filterTeamHelp" placeholder="Equipo">
+                                <select name="filterTeam" id="filterTeam" class="selectpicker form-control filterTeam" data-live-search="true" data-size="5">
+                                    <option value="">Todas los equipos</option>
+                                    @foreach ($teams as $team)
+                                        <option {{ $team->team_name == $filterTeam ? 'selected' : '' }} value="{{ $team->team_name }}">{{ $team->team_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <label for="filterNation" class="mb-1">País</label>
-                                <input class="form-control" name="filterNation" id="filterNation" type="text" value="{{ $filterNation ? $filterNation : '' }}" aria-describedby="filterNationHelp" placeholder="País">
+                                <select name="filterNation" id="filterNation" class="selectpicker form-control filterNation" data-live-search="true" data-size="5">
+                                    <option value="">Todas los paises</option>
+                                    @foreach ($nations as $nation)
+                                        <option {{ $nation->nation_name == $filterNation ? 'selected' : '' }} value="{{ $nation->nation_name }}">{{ $nation->nation_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">

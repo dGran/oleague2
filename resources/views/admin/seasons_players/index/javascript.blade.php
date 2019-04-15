@@ -30,9 +30,6 @@
         $('.filterTeam-input').on("blur", function() {
             $(this).val(filterTeam);
         });
-        $('.filterNation-input').on("blur", function() {
-            $(this).val(filterNation);
-        });
 
         $('#viewModal').on('show.bs.modal', function(e) {
             var row = $(e.relatedTarget).parents('tr');
@@ -52,23 +49,7 @@
 
     });
 
-    function applyDisplay() {
-        $('.frmFilter').submit();
-    }
-
-    function applyOrder() {
-        $('.frmFilter').submit();
-    }
-
-    function applyfilterSeason() {
-        $('.frmFilter').submit();
-    }
-
-    function applyfilterParticipant() {
-        $('.frmFilter').submit();
-    }
-
-    function applyfilterPosition() {
+    function applyfilters() {
         $('.frmFilter').submit();
     }
 

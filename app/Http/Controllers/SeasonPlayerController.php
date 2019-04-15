@@ -158,9 +158,13 @@ class SeasonPlayerController extends Controller
         if ($filterParticipant >= 0) {
             $players = $players->participantId($filterParticipant);
         }
-        $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
-        ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
-        ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%');
+        $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%');
+        if ($filterTeam != NULL) {
+            $players = $players->where('players.team_name', '=', $filterTeam);
+        }
+        if ($filterNation != NULL) {
+            $players = $players->where('players.nation_name', '=', $filterNation);
+        }
         if ($filterPosition != NULL) {
             $players = $players->where('players.position', '=', $filterPosition);
         }
@@ -172,7 +176,9 @@ class SeasonPlayerController extends Controller
         ->paginate($perPage, ['*'], 'page', $page);
 
 
-        $positions = Player::select('position')->distinct()->orderBy('position', 'asc')->get();
+        $positions = Player::select('position')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('position', 'asc')->get();
+        $nations = Player::select('nation_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('nation_name', 'asc')->get();
+        $teams = Player::select('team_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('team_name', 'asc')->get();
         if (Season::find($filterSeason)->participant_has_team) {
             $participants = SeasonParticipant::
             leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
@@ -198,9 +204,13 @@ class SeasonPlayerController extends Controller
             if ($filterParticipant >= 0) {
                 $players = $players->participantId($filterParticipant);
             }
-            $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%')
-            ->where('players.team_name', 'LIKE', '%' . $filterTeam . '%')
-            ->where('players.nation_name', 'LIKE', '%' . $filterNation . '%');
+            $players = $players->where('players.name', 'LIKE', '%' . $filterName . '%');
+            if ($filterTeam != NULL) {
+                $players = $players->where('players.team_name', '=', $filterTeam);
+            }
+            if ($filterNation != NULL) {
+                $players = $players->where('players.nation_name', '=', $filterNation);
+            }
             if ($filterPosition != NULL) {
                 $players = $players->where('players.position', '=', $filterPosition);
             }
@@ -213,7 +223,7 @@ class SeasonPlayerController extends Controller
             $adminFilter->seasonPlayers_page = $page;
             $adminFilter->save();
         }
-        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'positions', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'filterActive', 'active_season', 'order', 'pagination', 'page'));
+        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'teams', 'nations', 'positions', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'filterActive', 'active_season', 'order', 'pagination', 'page'));
     }
 
     public function add($season_id)
@@ -417,10 +427,10 @@ class SeasonPlayerController extends Controller
 
     public function reset($season_id)
     {
-        $players = SeasonPlayer::seasonId($season_id)->whereNotNull('participant_id')->orWhere('salary', '!=', '0.5')->get();
+        $players = SeasonPlayer::seasonId($season_id)->where('participant_id', '>', 0)->orWhereNull('participant_id')->orWhere('salary', '!=', '0.5')->get();
         $counter_reset = 0;
         foreach ($players as $player) {
-            $player->participant_id = null;
+            $player->participant_id = 0;
             $player->salary = 0.5;
             $player->price = 5;
             $player->save();
@@ -442,7 +452,7 @@ class SeasonPlayerController extends Controller
         {
             $player = SeasonPlayer::find($ids[$i]);
             if ($player) {
-                $player->participant_id = null;
+                $player->participant_id = 0;
                 $player->salary = 0.5;
                 $player->price = 5;
                 $player->save();

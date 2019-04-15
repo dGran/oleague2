@@ -190,7 +190,7 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <label for="filterSeasonLarge" class="mb-1">Temporadas</label>
-            <select name="filterSeason" id="filterSeasonLarge" class="selectpicker form-control filterSeason" onchange="applyfilterSeason()">
+            <select name="filterSeason" id="filterSeasonLarge" class="selectpicker form-control filterSeason" onchange="applyfilters()">
                 @foreach ($seasons as $season)
                     @if ($season->id == $filterSeason)
                         <option selected value="{{ $season->id }}">{{ $season->name }}</option>
@@ -205,7 +205,7 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <label for="filterParticipantLarge" class="mb-1">Participantes</label>
-            <select name="filterParticipant" id="filterParticipantLarge" class="selectpicker form-control filterParticipant" onchange="applyfilterParticipant()">
+            <select name="filterParticipant" id="filterParticipantLarge" class="selectpicker form-control filterParticipant" onchange="applyfilters()">
                 <option {{ $filterParticipant == -1 ? 'selected' : '' }} value="-1">Todos los participantes</option>
                 <option {{ $filterParticipant == 0 ? 'selected' : '' }} value="0">Agentes libres</option>
                 @foreach ($participants as $participant)
@@ -218,21 +218,31 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <label for="filterTeam" class="mb-1">Equipo</label>
-            <input class="filterTeam-input form-control mousetrap filterTeam" id="filterTeam" name="filterTeam" type="text" placeholder="Equipo..." value="{{ $filterTeam ? $filterTeam : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+            <select name="filterTeam" id="filterTeam" class="selectpicker form-control filterTeam" onchange="applyfilters()" data-live-search="true" data-size="5">
+                <option value="">Todas los equipos</option>
+                @foreach ($teams as $team)
+                    <option {{ $team->team_name == $filterTeam ? 'selected' : '' }} value="{{ $team->team_name }}">{{ $team->team_name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <label for="filterTeam" class="mb-1">País</label>
-            <input class="filterNation-input form-control mousetrap filterNation" id="filterNation" name="filterNation" type="text" placeholder="País..." value="{{ $filterNation ? $filterNation : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
+            <label for="filterNation" class="mb-1">País</label>
+            <select name="filterNation" id="filterNation" class="selectpicker form-control filterNation" onchange="applyfilters()" data-live-search="true" data-size="5">
+                <option value="">Todas los paises</option>
+                @foreach ($nations as $nation)
+                    <option {{ $nation->nation_name == $filterNation ? 'selected' : '' }} value="{{ $nation->nation_name }}">{{ $nation->nation_name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <label for="filterPositionLarge" class="mb-1">Posiciones</label>
-            <select name="filterPosition" id="filterPositionLarge" class="selectpicker form-control filterPosition" onchange="applyfilterPosition()">
+            <label for="filterPositionLarge" class="mb-1">Posición</label>
+            <select name="filterPosition" id="filterPositionLarge" class="selectpicker form-control filterPosition" onchange="applyfilters()">
                 <option value="">Todas las posiciones</option>
                 @foreach ($positions as $pos)
                     <option {{ $pos->position == $filterPosition ? 'selected' : '' }} value="{{ $pos->position }}">{{ $pos->position }}</option>
@@ -244,7 +254,7 @@
     <div class="form-group row">
         <div class="col-sm-12">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="filterActiveLong" name="filterActive" {{ $filterActive ? 'checked = "checked"' : ''}} onclick="$('.frmFilter').submit();">
+                <input type="checkbox" class="custom-control-input" id="filterActiveLong" name="filterActive" {{ $filterActive ? 'checked = "checked"' : ''}} onclick="applyfilters()">
                 <label class="custom-control-label is-valid" for="filterActiveLong">
                     <span>Ocultar inactivos</span>
                 </label>
@@ -259,7 +269,7 @@
     <h4 class="p-2 bg-light">Orden</h4>
     <div class="form-group row">
         <div class="col-sm-12">
-            <select name="order" class="selectpicker show-tick form-control order" onchange="applyOrder()">
+            <select name="order" class="selectpicker show-tick form-control order" onchange="applyfilters()">
                 <option value="default" {{ $order == 'default' ? 'selected' : '' }}>Por defecto</option>
                 <option value="date_desc" {{ $order == 'date_desc' ? 'selected' : '' }} data-icon="fas fa-sort-amount-up">Los últimos al principio</option>
                 <option value="date" {{ $order == 'date' ? 'selected' : '' }} data-icon="fas fa-sort-amount-down">Los últimos al final</option>
@@ -282,7 +292,7 @@
     <h4 class="p-2 bg-light">Visualización</h4>
     <div class="form-group row">
         <div class="col-sm-12">
-            <select name="pagination" class="selectpicker show-tick form-control pagination" onchange="applyDisplay()">
+            <select name="pagination" class="selectpicker show-tick form-control pagination" onchange="applyfilters()">
                 <option value="6" {{ $pagination == '6' ? 'selected' : '' }}>6 registros / pagina</option>
                 <option value="12" {{ $pagination == '12' || !$pagination ? 'selected' : '' }}>12 registros / pagina</option>
                 <option value="20" {{ $pagination == '20' ? 'selected' : '' }}>20 registros / pagina</option>
