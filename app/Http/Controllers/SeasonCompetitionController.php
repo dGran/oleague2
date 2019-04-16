@@ -172,6 +172,208 @@ class SeasonCompetitionController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        $competition = SeasonCompetition::find($id);
+        if ($competition) {
+            return view('admin.seasons_competitions.edit', compact('competition'));
+        } else {
+            return back()->with('warning', 'Acción cancelada. La competición que querías editar ya no existe. Se ha actualizado la lista');
+        }
+    }
+
+    public function update($id)
+    {
+        $competition = SeasonCompetition::find($id);
+
+        if ($competition) {
+            $data = request()->validate([
+                'name' => 'required',
+                'img' => [
+                    'image',
+                    'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+                ],
+            ],
+            [
+                'name.required' => 'El nombre de la competición es obligatorio',
+                'img.image' => 'El archivo debe contener una imagen',
+                'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
+            ]);
+
+            $data = request()->all();
+            $data['slug'] = str_slug(request()->name);
+
+            if (request()->url_img) {
+                $data['img'] = request()->img_link;
+                if ($competition->img) {
+                    if (\File::exists(public_path($competition->img))) {
+                       \File::delete(public_path($competition->img));
+                    }
+                }
+            } else {
+                if (request()->hasFile('img')) {
+                    $image = request()->file('img');
+                    $name = date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $destinationPath = public_path('/img/competitions');
+                    $imagePath = $destinationPath. "/".  $name;
+                    if (\File::exists(public_path($competition->img))) {
+                       \File::delete(public_path($competition->img));
+                    }
+                    $image->move($destinationPath, $name);
+                    $data['img'] = 'img/competitions/' . $name;
+                } else {
+                    if (!request()->old_img) {
+                        if ($competitions->img) {
+                            if (\File::exists(public_path($competition->img))) {
+                               \File::delete(public_path($competition->img));
+                            }
+                            $data['img'] = '';
+                        }
+                    }
+                }
+            }
+
+            $competition->fill($data);
+            if ($competition->isDirty()) {
+                $competition->update($data);
+
+                if ($competition->update()) {
+                    event(new TableWasUpdated($competition, $competition->name));
+                    return redirect()->route('admin.season_competitions')->with('success', 'Cambios guardados en la competición "' . $competition->name . '" correctamente.');
+                } else {
+                    return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+                }
+            }
+
+            return redirect()->route('admin.season_competitions')->with('info', 'No se han detectado cambios en la competición "' . $competition->name . '".');
+
+        } else {
+            return redirect()->route('admin.season_competitions')->with('warning', 'Acción cancelada. La competición que estabas editando ya no existe. Se ha actualizado la lista');
+        }
+    }
+
+    public function destroy($id)
+    {
+        $competition = SeasonCompetition::find($id);
+
+        if ($competition) {
+            $message = 'Se ha eliminado la competición "' . $competition->name . '" correctamente.';
+
+            if ($competition->isLocalImg()) {
+                if (\File::exists(public_path($competition->img))) {
+                    \File::delete(public_path($competition->img));
+                }
+            }
+            event(new TableWasDeleted($competition, $competition->name));
+            $competition->delete();
+
+            return redirect()->route('admin.season_competitions')->with('success', $message);
+        } else {
+            $message = 'Acción cancelada. La competición que querías eliminar ya no existe. Se ha actualizado la lista';
+            return back()->with('warning', $message);
+        }
+    }
+
+    public function destroyMany($ids)
+    {
+        $ids=explode(",",$ids);
+        $counter = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $competition = SeasonCompetition::find($ids[$i]);
+            if ($competition) {
+                $counter = $counter +1;
+                if ($competition->isLocalImg()) {
+                    if (\File::exists(public_path($competition->img))) {
+                        \File::delete(public_path($competition->img));
+                    }
+                }
+                event(new TableWasDeleted($competition, $competition->name));
+                $competition->delete();
+            }
+        }
+        if ($counter > 0) {
+            return redirect()->route('admin.season_competitions')->with('success', 'Se han eliminado las competiciones seleccionados correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Las competiciones que querías eliminar ya no existen.');
+        }
+    }
+
+    public function duplicate($id)
+    {
+        $competition = SeasonCompetition::find($id);
+
+        if ($competition) {
+            $NewCompetition = $competition->replicate();
+            $NewCompetition->name .= " (copia)";
+            $NewCompetition->slug = str_slug($NewCompetition->name);
+
+            if ($NewCompetition->img) {
+                if ($NewCompetition->isLocalImg()) {
+                    $extension = strstr($NewCompetition->img, '.');
+                    $img = 'img/competitions/' . date('mdYHis') . uniqid() . $extension;
+                    $sourceFilePath = public_path() . '/' . $NewCompetition->img;
+                    $destinationPath = public_path() .'/' . $img;
+                    if (\File::exists($sourceFilePath)) {
+                        \File::copy($sourceFilePath,$destinationPath);
+                    }
+
+                    $NewCompetition->img = $img;
+                }
+            }
+
+            $NewCompetition->save();
+
+            if ($NewCompetition->save()) {
+                event(new TableWasSaved($NewCompetition, $NewCompetition->name));
+            }
+
+            return redirect()->route('admin.season_competitions')->with('success', 'Se ha duplicado la competición "' . $NewCompetition->name . '" correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. La competición que querías duplicar ya no existe. Se ha actualizado la lista.');
+        }
+    }
+
+    public function duplicateMany($ids)
+    {
+        $ids=explode(",",$ids);
+        $counter = 0;
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $original = SeasonCompetition::find($ids[$i]);
+            if ($original) {
+                $counter = $counter +1;
+                $competition = $original->replicate();
+                $competition->name .= " (copia)";
+                $competition->slug = str_slug($competition->name);
+
+                if ($competition->img) {
+                    if ($competition->isLocalImg()) {
+                        $extension = strstr($competition->img, '.');
+                        $img = 'img/competitions/' . date('mdYHis') . uniqid() . $extension;
+                        $sourceFilePath = public_path() . '/' . $competition->img;
+                        $destinationPath = public_path() .'/' . $img;
+                        if (\File::exists($sourceFilePath)) {
+                            \File::copy($sourceFilePath,$destinationPath);
+                        }
+
+                        $competition->img = $img;
+                    }
+                }
+                $competition->save();
+
+                if ($competition->save()) {
+                    event(new TableWasSaved($competition, $competition->name));
+                }
+            }
+        }
+        if ($counter > 0) {
+            return redirect()->route('admin.season_competitions')->with('success', 'Se han duplicado las competiciones seleccionados correctamente.');
+        } else {
+            return back()->with('warning', 'Acción cancelada. Las competiciones que querías duplicar ya no existen. Se ha actualizado la lista.');
+        }
+    }
+
 
     /*
      * HELPERS FUNCTIONS

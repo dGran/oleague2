@@ -160,12 +160,15 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		// Season Competitions
 		Route::get('/admin/competiciones', 'SeasonCompetitionController@index')->name('admin.season_competitions');
 		Route::get('/admin/competiciones/{season_id}/nuevo', 'SeasonCompetitionController@add')->name('admin.season_competitions.add');
-
 		Route::post('/admin/competiciones/nuevo', 'SeasonCompetitionController@save')->name('admin.season_competitions.save');
 		Route::get('/admin/competiciones/{id}', 'SeasonCompetitionController@edit')->name('admin.season_competitions.edit');
 		Route::put('/admin/competiciones/{id}', 'SeasonCompetitionController@update')->name('admin.season_competitions.update');
 		Route::delete('/admin/competiciones/eliminar/{id}', 'SeasonCompetitionController@destroy')->name('admin.season_competitions.destroy');
 		Route::get('/admin/competiciones/eliminar-seleccionados/{ids}', 'SeasonCompetitionController@destroyMany')->name('admin.season_competitions.destroy.many');
+		Route::get('/admin/competiciones/duplicar/{id}', 'SeasonCompetitionController@duplicate')->name('admin.season_competitions.duplicate');
+		Route::get('/admin/competiciones/duplicar-seleccionados/{ids}', 'SeasonCompetitionController@duplicateMany')->name('admin.season_competitions.duplicate.many');
+
+
 		Route::get('/admin/competiciones/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonCompetitionController@exportFile')->name('admin.season_competitions.export.file');
 		Route::post('/admin/competiciones/importar', 'SeasonCompetitionController@importFile')->name('admin.season_competitions.import.file');
 	});

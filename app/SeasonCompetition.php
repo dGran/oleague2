@@ -12,6 +12,11 @@ class SeasonCompetition extends Model
         'season_id', 'name', 'img', 'slug'
     ];
 
+    public function season()
+    {
+        return $this->hasOne('App\Season', 'id', 'season_id');
+    }
+
     public function scopeSeasonId($query, $seasonID)
     {
         if (trim($seasonID) !="") {
@@ -47,7 +52,7 @@ class SeasonCompetition extends Model
                 }
             }
         } else {
-            $no_img = asset('img/player_no_image.png');
+            $no_img = asset('img/no-photo.png');
             return $no_img;
         }
 

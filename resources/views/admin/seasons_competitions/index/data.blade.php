@@ -65,7 +65,7 @@
                     </td>
                     <td onclick="rowSelect(this)">
                         <span class="name">{{ $competition->name }}</span>
-                        <small class="d-block">16 participantes</small>
+                        <small class="d-block">[PENDING:: num de participantes]</small>
                     </td>
                     <td>
                         <a href="" class="btn btn-primary">Fases</a>
@@ -79,10 +79,10 @@
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar
                             </a>
-                            {{-- <a class="dropdown-item text-secondary" href="{{ route('admin.season_competitions.duplicate', $competition->id) }}">
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.season_competitions.duplicate', $competition->id) }}">
                                 <i class="fas fa-clone fa-fw mr-1"></i>
                                 Duplicar
-                            </a> --}}
+                            </a>
                             <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
                                 <i class="fas fa-trash fa-fw mr-1"></i>
                                 Eliminar

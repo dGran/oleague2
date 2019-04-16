@@ -1,7 +1,7 @@
 <script>
     $(function() {
         Mousetrap.bind(['command+s', 'ctrl+s'], function() {
-            $("#frmAdd").submit();
+            $("#frmEdit").submit();
             return false;
         });
         Mousetrap.bind(['command+c', 'ctrl+c'], function() {
@@ -67,7 +67,7 @@
         });
 
 
-        $("#frmAdd").submit(function(event) {
+        $("#frmEdit").submit(function(event) {
             $("#btnSave").attr("disabled", "disabled");
         });
     });
