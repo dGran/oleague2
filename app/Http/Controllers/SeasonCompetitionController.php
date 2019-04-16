@@ -7,6 +7,11 @@ use App\AdminFilter;
 use App\Season;
 use App\SeasonCompetition;
 
+use App\Events\TableWasSaved;
+use App\Events\TableWasDeleted;
+use App\Events\TableWasUpdated;
+use App\Events\TableWasImported;
+
 class SeasonCompetitionController extends Controller
 {
     public function index()
@@ -114,6 +119,59 @@ class SeasonCompetitionController extends Controller
         return view('admin.seasons_competitions.index', compact('competitions', 'seasons', 'filterSeason', 'active_season', 'order', 'pagination', 'page'));
     }
 
+    public function add($season_id)
+    {
+        $season_name = Season::find($season_id)->name;
+        return view('admin.seasons_competitions.add', compact('season_id', 'season_name'));
+    }
+
+    public function save()
+    {
+        $data = request()->validate([
+            'name' => 'required',
+            'img' => [
+                'image',
+                'dimensions:max_width=256,max_height=256,ratio=1/1,min_width=48,min_height=48',
+            ],
+        ],
+        [
+            'name.required' => 'El nombre de la competición es obligatorio',
+            'img.image' => 'El archivo debe contener una imagen',
+            'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
+        ]);
+
+        $data = request()->all();
+        $data['season_id'] = request()->season_id;
+        $data['slug'] = str_slug(request()->name);
+
+        if (request()->url_img) {
+            $data['img'] = request()->img_link;
+        } else {
+            if (request()->hasFile('img')) {
+                $image = request()->file('img');
+                $name = date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path('/img/competitions');
+                $imagePath = $destinationPath. "/".  $name;
+                $image->move($destinationPath, $name);
+                $data['img'] = 'img/competitions/' . $name;
+            } else {
+                $data['img'] = null;
+            }
+        }
+
+        $competition = SeasonCompetition::create($data);
+
+        if ($competition->save()) {
+            event(new TableWasSaved($competition, $competition->name));
+            if (request()->no_close) {
+                return back()->with('success', 'Nueva competición registrada correctamente');
+            }
+            return redirect()->route('admin.season_competitions')->with('success', 'Nueva competición registrada correctamente');
+        } else {
+            return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+        }
+    }
+
 
     /*
      * HELPERS FUNCTIONS
@@ -134,11 +192,11 @@ class SeasonCompetitionController extends Controller
                 'sortDirection' => 'desc'
             ],
             'name' => [
-                'sortField'     => 'team_name',
+                'sortField'     => 'name',
                 'sortDirection' => 'asc'
             ],
             'name_desc' => [
-                'sortField'     => 'team_name',
+                'sortField'     => 'name',
                 'sortDirection' => 'desc'
             ],
         ];

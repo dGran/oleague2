@@ -17,7 +17,7 @@ class CreateSeasonCompetitionsTable extends Migration
             $table->increments('id');
             $table->integer("season_id")->unsigned()->index();
             $table->string('name')->index();
-            $table->string('logo')->nullable();
+            $table->string('img')->nullable();
             $table->string('slug');
         });
     }

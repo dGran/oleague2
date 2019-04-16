@@ -25,6 +25,14 @@
 
         <thead>
             <tr class="border-top">
+                <th scope="col" colspan="8" class="p-3 bg-light">
+                    {{ $active_season->name }}
+                    @if (active_season() && $filterSeason == active_season()->id)
+                        <span class="badge badge-success p-1 ml-2">TEMPORADA ACTIVA</span>
+                    @endif
+                </th>
+            </tr>
+            <tr class="border-top">
                 <th scope="col" class="select">
                     <div class="pretty p-icon p-jelly mr-0">
                         <input type="checkbox" id="allMark" onchange="showHideAllRowOptions()">
@@ -53,7 +61,7 @@
                         </div>
                     </td>
                     <td onclick="rowSelect(this)">
-                        <img src="{{ $competition->logo }}" alt="" width="38">
+                        <img src="{{ $competition->getImgFormatted() }}" alt="" width="38">
                     </td>
                     <td onclick="rowSelect(this)">
                         <span class="name">{{ $competition->name }}</span>

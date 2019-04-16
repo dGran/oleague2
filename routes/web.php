@@ -160,6 +160,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		// Season Competitions
 		Route::get('/admin/competiciones', 'SeasonCompetitionController@index')->name('admin.season_competitions');
 		Route::get('/admin/competiciones/{season_id}/nuevo', 'SeasonCompetitionController@add')->name('admin.season_competitions.add');
+
 		Route::post('/admin/competiciones/nuevo', 'SeasonCompetitionController@save')->name('admin.season_competitions.save');
 		Route::get('/admin/competiciones/{id}', 'SeasonCompetitionController@edit')->name('admin.season_competitions.edit');
 		Route::put('/admin/competiciones/{id}', 'SeasonCompetitionController@update')->name('admin.season_competitions.update');
