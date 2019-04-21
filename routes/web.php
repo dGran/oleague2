@@ -171,5 +171,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 		Route::get('/admin/competiciones/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonCompetitionController@exportFile')->name('admin.season_competitions.export.file');
 		Route::post('/admin/competiciones/importar', 'SeasonCompetitionController@importFile')->name('admin.season_competitions.import.file');
+
+		// Season Competitions Phases
+		Route::get('/admin/competiciones/{slug}/fases', 'SeasonCompetitionPhaseController@index')->name('admin.season_competitions_phases');
 	});
 });

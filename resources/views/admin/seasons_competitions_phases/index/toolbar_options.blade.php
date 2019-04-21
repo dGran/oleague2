@@ -2,10 +2,10 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.season_competitions.add', $active_season->id) }}'" type="button" class="btn btn-primary" data-toggle="button">
+            <button id="addon-new" onclick="location.href='{{ route('admin.season_competitions.add') }}'" type="button" class="btn btn-primary" data-toggle="button">
                 <i class="fas fa-plus mr-2"></i>Nueva
             </button>
-            <button id="addon-filter" type="button" class="filter btn input-group-text" data-toggle="modal" data-target="#filterModal">
+            <button id="addon-filter" type="button" class="filter btn input-group-text {{ $filterName ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
                 <i class="fas fa-filter"></i>
             </button>
            <form
@@ -49,10 +49,7 @@
             <button type="button" class="btn btn-danger" data-toggle="button" onclick="destroyMany()">
                 <i class="fas fa-trash mr-2"></i>Eliminar
             </button>
-            <button type="button" class="rowOptions-Phases btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="phases(this)">
-                <i class="fas fa-chart-pie"></i>
-            </button>
-            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
+            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>
             </button>
             <button type="button" class="btn btn-outline-secondary input-group-text" data-toggle="button" onclick="duplicateMany()">

@@ -8,7 +8,7 @@
 
             @include('admin.seasons_competitions.common.notifications')
 
-            {{-- @include('admin.seasons_competitions.index.toolbar_options') --}}
+            @include('admin.seasons_competitions.index.toolbar_options')
 
             @include('admin.seasons_competitions.index.data')
 
@@ -21,7 +21,7 @@
 @endsection
 
 @section('modal')
-    {{-- @include('admin.seasons_competitions.index.filter_modal') --}}
+    @include('admin.seasons_competitions.index.filter_modal')
 @endsection
 
 @section('js')

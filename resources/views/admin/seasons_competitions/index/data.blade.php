@@ -19,7 +19,7 @@
             <col width="0%" />
             <col width="0%" />
             <col width="100%" />
-            <col width="0%" />
+            <col width="0%" class="d-none d-sm-table-cell"/>
             <col width="0%" />
         </colgroup>
 
@@ -50,7 +50,7 @@
         <tbody>
             @foreach ($competitions as $competition)
                 {{-- <tr class="border-top" data-id="{{ $competition->id }}" data-name="{{ $competition->name }}" data-allow-delete="{{ $competition->teams->count() > 0 ? 0 : 1 }}"> --}}
-                <tr class="border-top" data-id="{{ $competition->id }}" data-name="{{ $competition->name }}">
+                <tr class="border-top" data-id="{{ $competition->id }}" data-name="{{ $competition->name }}" data-slug="{{ $competition->slug }}">
                     <td class="select">
                         <div class="pretty p-icon p-jelly mr-0">
                             <input type="checkbox" class="mark" value="{{ $competition->id }}" name="competitionId[]" onchange="showHideRowOptions(this)">
@@ -65,16 +65,22 @@
                     </td>
                     <td onclick="rowSelect(this)">
                         <span class="name">{{ $competition->name }}</span>
-                        <small class="d-block">[PENDING:: num de participantes]</small>
                     </td>
-                    <td>
-                        <a href="" class="btn btn-primary">Fases</a>
+                    <td class="d-none d-sm-table-cell">
+                        <a href="{{ route('admin.season_competitions_phases', $competition->slug) }}" class="btn btn-light border" id="btnPhases{{ $competition->id }}">
+                            <i class="fas fa-chart-pie fa-fw mr-1"></i>
+                            Fases
+                        </a>
                     </td>
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
+                            <a class="dropdown-item text-secondary d-block d-sm-none" href="{{ route('admin.season_competitions_phases', $competition->slug) }}" id="btnPhases{{ $competition->id }}">
+                                <i class="fas fa-chart-pie fa-fw mr-1"></i>
+                                Fases
+                            </a>
                             <a class="dropdown-item text-secondary" href="{{ route('admin.season_competitions.edit', $competition->id) }}" id="btnEdit{{ $competition->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar

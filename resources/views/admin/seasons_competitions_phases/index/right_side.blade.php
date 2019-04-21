@@ -1,8 +1,8 @@
 <div class="tableOptions animated fadeIn">
-    <a href="{{ route('admin.season_competitions.add', $active_season->id) }}" class="btn btn-primary" id="btnAdd">
+{{--     <a href="{{ route('admin.season_competitions.add', $active_season->id) }}" class="btn btn-primary" id="btnAdd">
         <i class="fas fa-plus mr-2"></i><span>Nueva</span>
     </a>
-
+ --}}
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="import_file()">
@@ -22,7 +22,7 @@
                 </form>
             </a>
         </li>
-        @if ($competitions->count()>0)
+        @if ($phases->count()>0)
             <li class="list-group-item border-0 px-0">
                 <a href="" onclick="export_file('xls')">
                     <span class="fas fa-file-export fa-fw mr-1"></span>
@@ -50,12 +50,6 @@
         <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
-        <li class="rowOptions-Phases list-group-item border-0 px-0 d-none">
-            <a href="" onclick="phases(this)">
-                <span class="fas fa-chart-pie fa-fw mr-1"></span>
-                <span>Fases</span>
-            </a>
-        </li>
         <li class="rowOptions-Edit list-group-item border-0 px-0 d-none">
             <a href="" onclick="edit(this)">
                 <span class="fas fa-edit fa-fw mr-1"></span>
@@ -107,7 +101,7 @@
 <div class="mt-2">
     <h4 class="p-2 bg-light">Filtros</h4>
     <div class="form-group row">
-        <div class="col-sm-12">
+{{--         <div class="col-sm-12">
             <label for="filterSeasonLarge" class="mb-1">Temporadas</label>
             <select name="filterSeason" id="filterSeasonLarge" class="selectpicker form-control filterSeason" onchange="applyfilterSeason()">
                 @foreach ($seasons as $season)
@@ -118,7 +112,7 @@
                     @endif
                 @endforeach
             </select>
-        </div>
+        </div> --}}
     </div>
 </div>
 

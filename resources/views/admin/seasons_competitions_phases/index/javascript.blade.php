@@ -1,37 +1,11 @@
 <script>
-    var filterSeason = {!! json_encode($filterSeason) !!};
-    var order = {!! json_encode($order) !!};
-    var pagination = {!! json_encode($pagination) !!};
-
     $(function() {
         Mousetrap.bind(['command+a', 'ctrl+a'], function() {
             var url = $("#btnAdd").attr('href');
             $(location).attr('href', url);
             return false;
         });
-        Mousetrap.bind(['command+f', 'ctrl+f'], function() {
-            $('.search-input').focus();
-            return false;
-        });
-
-        $('.search-clear').on("click", function() {
-            $('.search-input').val('');
-            $('.frmFilter').submit();
-        });
-
     });
-
-    function applyDisplay() {
-        $('.frmFilter').submit();
-    }
-
-    function applyOrder() {
-        $('.frmFilter').submit();
-    }
-
-    function cancelFilters() {
-        window.location.href = '{{ route("admin.teams_categories") }}';
-    }
 
     $(".btn-delete").click(function(e) {
         window.event.preventDefault();
@@ -143,19 +117,6 @@
         }
     }
 
-    function phases(element) {
-        $(".mark:checked").each(function() {
-            id = $(this).val();
-        });
-        url = $('#btnPhases'+id).attr("href");
-        if ($(element).is('button')) {
-            window.location.href=url;
-        } else {
-            $(element).attr("href", url);
-        }
-    }
-
-
     function rowSelect(element) {
         $(element).siblings('.select').find('.mark').trigger('click');
     }
@@ -174,10 +135,10 @@
             }
             if ($(".mark:checked").length == 1) {
                 $(".rowOptions-Edit").removeClass('d-none');
-                $(".rowOptions-Phases").removeClass('d-none');
+                $(".rowOptions-View").removeClass('d-none');
             } else {
                 $(".rowOptions-Edit").addClass('d-none');
-                $(".rowOptions-Phases").addClass('d-none');
+                $(".rowOptions-View").addClass('d-none');
             }
         } else {
             if ($(".rowOptions").is(':visible')) {
@@ -237,9 +198,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'season_competitions_export' + time;
+                    var filename = 'categorias_equipos_export' + time;
                 }
-                $(location).attr('href', 'competiciones/exportar/' + filename + '/' + type + '/' + filterSeason + '/' + order);
+                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order);
             }
         });
     }
@@ -278,9 +239,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'season_competitions_export' + time;
+                    var filename = 'categorias_equipos_export' + time;
                 }
-                $(location).attr('href', 'competiciones/exportar/' + filename + '/' + type + '/' + filterSeason + '/' + order + '/' + ids);
+                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
             }
         });
     }

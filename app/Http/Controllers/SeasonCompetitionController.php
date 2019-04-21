@@ -223,7 +223,7 @@ class SeasonCompetitionController extends Controller
                     $data['img'] = 'img/competitions/' . $name;
                 } else {
                     if (!request()->old_img) {
-                        if ($competitions->img) {
+                        if ($competition->img) {
                             if (\File::exists(public_path($competition->img))) {
                                \File::delete(public_path($competition->img));
                             }
@@ -372,6 +372,74 @@ class SeasonCompetitionController extends Controller
         } else {
             return back()->with('warning', 'Acción cancelada. Las competiciones que querías duplicar ya no existen. Se ha actualizado la lista.');
         }
+    }
+
+    public function exportFile($filename, $type, $filterSeason, $order, $ids = null)
+    {
+        if (!$order) {
+            $order = 'default';
+        }
+        $order_ext = $this->getOrder($order);
+
+        if ($filterSeason == "null") { $filterSeason =""; }
+
+        if ($ids) {
+            $ids = explode(",",$ids);
+            $competitions = SeasonCompetition::whereIn('id', $ids)
+                ->where('season_id', '=', $filterSeason)
+                ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+                ->get()->toArray();
+        } else {
+            $competitions = SeasonCompetition::where('season_id', '=', $filterSeason)
+                ->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+                ->get()->toArray();
+        }
+
+        if (!$filename) {
+            $filename = 'season_competitions_export' . time();
+        } else {
+            $filename = str_slug($filename);
+        }
+        return \Excel::create($filename, function($excel) use ($competitions) {
+            $excel->sheet('season_competitions', function($sheet) use ($competitions)
+            {
+                $sheet->fromArray($competitions);
+            });
+        })->download($type);
+    }
+
+    public function importFile(Request $request)
+    {
+        if ($request->hasFile('import_file')) {
+            $path = $request->file('import_file')->getRealPath();
+            $data = \Excel::load($path)->get();
+
+            if ($data->count()) {
+                foreach ($data as $key => $value) {
+                    try {
+                        $competition = new SeasonCompetition;
+                        $competition->season_id = $value->season_id;
+                        $competition->name = $value->name;
+                        $competition->img = $value->img;
+                        $competition->slug = str_slug($value->name);
+
+                        if ($competition) {
+                            $competition->save();
+                            if ($competition->save()) {
+                                event(new TableWasImported($competition, $competition->name));
+                            }
+                        }
+                    }
+                    catch (\Exception $e) {
+                        return back()->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
+                    }
+                }
+                return back()->with('success', 'Datos importados correctamente.');
+            } else {
+                return back()->with('error', 'Fallo al importar los datos, el archivo no contiene datos.');
+            }
+        }
+        return back()->with('error', 'No has cargado ningún archivo.');
     }
 
 
