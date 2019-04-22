@@ -13,6 +13,7 @@
             <col width="100%" />
             <col width="0%" />
             <col width="0%" />
+            <col width="0%" class="d-none d-sm-table-cell" />
             <col width="0%" />
         </colgroup>
 
@@ -31,6 +32,7 @@
                 <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Nombre</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');">Modo</th>
                 <th scope="col" onclick="$('#allMark').trigger('click');"><i class="fas fa-users"></i></th>
+                <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell"></th>
                 <th scope="col" onclick="$('#allMark').trigger('click');"></th>
             </tr>
         </thead>
@@ -61,7 +63,7 @@
                         {{ $phase->num_participants }}
                     </td>
                     <td class="d-none d-sm-table-cell">
-                        <a href="{{ route('admin.season_competitions_phases', $competition->slug) }}" class="btn btn-light border" id="btnGroups{{ $competition->id }}">
+                        <a href="{{ route('admin.season_competitions_phases_groups', [$competition->slug, $phase->slug]) }}" class="btn btn-light border" id="btnGroups{{ $competition->id }}">
                             <i class="fas fa-users-cog fa-fw mr-1"></i>
                             Grupos
                         </a>
@@ -71,7 +73,7 @@
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
-                            <a class="dropdown-item text-secondary d-block d-sm-none" href="{{ route('admin.season_competitions_phases', $competition->slug) }}" id="btnGroups{{ $competition->id }}">
+                            <a class="dropdown-item text-secondary d-block d-sm-none" href="{{ route('admin.season_competitions_phases_groups', [$competition->slug, $phase->slug]) }}" id="btnGroups{{ $competition->id }}">
                                 <i class="fas fa-users-cog fa-fw mr-1"></i>
                                 Grupos
                             </a>
