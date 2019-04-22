@@ -43,8 +43,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 	//Teams Categories
 	Route::get('/admin/categorias_equipos', 'TeamCategoryController@index')->name('admin.teams_categories');
-	Route::get('/admin/categorias_equipos/nuevo', 'TeamCategoryController@add')->name('admin.teams_categories.add');
-	Route::post('/admin/categorias_equipos/nuevo', 'TeamCategoryController@save')->name('admin.teams_categories.save');
+	Route::get('/admin/categorias_equipos/nueva', 'TeamCategoryController@add')->name('admin.teams_categories.add');
+	Route::post('/admin/categorias_equipos/nueva', 'TeamCategoryController@save')->name('admin.teams_categories.save');
 	Route::get('/admin/categorias_equipos/{id}', 'TeamCategoryController@edit')->name('admin.teams_categories.edit');
 	Route::put('/admin/categorias_equipos/{id}', 'TeamCategoryController@update')->name('admin.teams_categories.update');
 	Route::delete('/admin/categorias_equipos/eliminar/{id}', 'TeamCategoryController@destroy')->name('admin.teams_categories.destroy');
@@ -104,8 +104,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 	// Seasons
 	Route::get('/admin/temporadas', 'SeasonController@index')->name('admin.seasons');
-	Route::get('/admin/temporadas/nuevo', 'SeasonController@add')->name('admin.seasons.add');
-	Route::post('/admin/temporadas/nuevo', 'SeasonController@save')->name('admin.seasons.save');
+	Route::get('/admin/temporadas/nueva', 'SeasonController@add')->name('admin.seasons.add');
+	Route::post('/admin/temporadas/nueva', 'SeasonController@save')->name('admin.seasons.save');
 	Route::get('/admin/temporadas/{id}', 'SeasonController@edit')->name('admin.seasons.edit');
 	Route::put('/admin/temporadas/{id}', 'SeasonController@update')->name('admin.seasons.update');
 	Route::delete('/admin/temporadas/eliminar/{id}', 'SeasonController@destroy')->name('admin.seasons.destroy');
@@ -160,19 +160,25 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		// Season Competitions
 		Route::get('/admin/competiciones', 'SeasonCompetitionController@index')->name('admin.season_competitions');
 		Route::get('/admin/competiciones/{season_id}/nuevo', 'SeasonCompetitionController@add')->name('admin.season_competitions.add');
-		Route::post('/admin/competiciones/nuevo', 'SeasonCompetitionController@save')->name('admin.season_competitions.save');
+		Route::post('/admin/competiciones/nueva', 'SeasonCompetitionController@save')->name('admin.season_competitions.save');
 		Route::get('/admin/competiciones/{id}', 'SeasonCompetitionController@edit')->name('admin.season_competitions.edit');
 		Route::put('/admin/competiciones/{id}', 'SeasonCompetitionController@update')->name('admin.season_competitions.update');
 		Route::delete('/admin/competiciones/eliminar/{id}', 'SeasonCompetitionController@destroy')->name('admin.season_competitions.destroy');
 		Route::get('/admin/competiciones/eliminar-seleccionados/{ids}', 'SeasonCompetitionController@destroyMany')->name('admin.season_competitions.destroy.many');
 		Route::get('/admin/competiciones/duplicar/{id}', 'SeasonCompetitionController@duplicate')->name('admin.season_competitions.duplicate');
 		Route::get('/admin/competiciones/duplicar-seleccionados/{ids}', 'SeasonCompetitionController@duplicateMany')->name('admin.season_competitions.duplicate.many');
-
-
 		Route::get('/admin/competiciones/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonCompetitionController@exportFile')->name('admin.season_competitions.export.file');
 		Route::post('/admin/competiciones/importar', 'SeasonCompetitionController@importFile')->name('admin.season_competitions.import.file');
 
 		// Season Competitions Phases
 		Route::get('/admin/competiciones/{slug}/fases', 'SeasonCompetitionPhaseController@index')->name('admin.season_competitions_phases');
+		Route::get('/admin/competiciones/{slug}/fases/nueva', 'SeasonCompetitionPhaseController@add')->name('admin.season_competitions_phases.add');
+		Route::post('/admin/competiciones/{slug}/fases/nueva', 'SeasonCompetitionPhaseController@save')->name('admin.season_competitions_phases.save');
+		Route::get('/admin/competiciones/{slug}/fases/{id}', 'SeasonCompetitionPhaseController@edit')->name('admin.season_competitions_phases.edit');
+		Route::put('/admin/competiciones/{slug}/fases/{id}', 'SeasonCompetitionPhaseController@update')->name('admin.season_competitions_phases.update');
+		Route::delete('/admin/competiciones/{slug}/fases/eliminar/{id}', 'SeasonCompetitionPhaseController@destroy')->name('admin.season_competitions_phases.destroy');
+		Route::get('/admin/competiciones/{slug}/fases/eliminar-seleccionados/{ids}', 'SeasonCompetitionPhaseController@destroyMany')->name('admin.season_competitions_phases.destroy.many');
+		Route::get('/admin/competiciones/{slug}/fases/exportar/{filename}/{type}/{ids?}', 'SeasonCompetitionPhaseController@exportFile')->name('admin.season_competitions_phases.export.file');
+		Route::post('/admin/competiciones/{slug}/fases/importar', 'SeasonCompetitionPhaseController@importFile')->name('admin.season_competitions_phases.import.file');
 	});
 });

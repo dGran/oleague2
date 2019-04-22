@@ -160,8 +160,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
                             <a href="" class="btn-view dropdown-item text-secondary" data-toggle="modal" data-target="#viewModal" id="btnView{{ $player->player_id }}">
-                                <i class="far fa-eye fa-fw mr-1"></i>
-                                Visualizar
+                                <i class="fas fa-id-card fa-fw mr-1"></i>
+                                Info
                             </a>
                             @if ($player->active)
                                 <a class="dropdown-item text-secondary" href="{{ route('admin.season_players.desactivate', $player->id) }}" id="btnDesactivate{{ $player->id }}">

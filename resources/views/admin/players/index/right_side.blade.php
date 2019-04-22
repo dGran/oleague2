@@ -59,8 +59,8 @@
     <ul class="list-group border-top mt-3">
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
-                <span class="far fa-eye fa-fw mr-1"></span>
-                <span>Visualizar</span>
+                <span class="fas fa-id-card fa-fw mr-1"></span>
+                <span>Info</span>
             </a>
         </li>
         <li class="rowOptions-Edit list-group-item border-0 px-0 d-none">

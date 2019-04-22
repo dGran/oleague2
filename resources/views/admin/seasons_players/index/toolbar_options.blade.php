@@ -59,7 +59,7 @@
                 <i class="fas fa-exchange-alt"></i>
             </button>
             <button type="button" class="rowOptions-View btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="view(this)">
-                <i class="fas fa-eye"></i>
+                <i class="fas fa-id-card"></i>
             </button>
             <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>

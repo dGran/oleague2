@@ -1,4 +1,6 @@
 <script>
+    var competition_slug = {!! json_encode($competition->slug) !!};
+
     $(function() {
         Mousetrap.bind(['command+a', 'ctrl+a'], function() {
             var url = $("#btnAdd").attr('href');
@@ -17,7 +19,7 @@
         // if (allow_delete == 1) {
             swal({
                 title: "¿Estás seguro?",
-                text: 'Se va a eliminar la competición "' + name + '". No se podrán deshacer los cambios!',
+                text: 'Se va a eliminar la fase "' + name + '". No se podrán deshacer los cambios!',
                 buttons: {
                     confirm: {
                         text: "Sí, estoy seguro",
@@ -39,7 +41,7 @@
             .then((value) => {
                 if (value) {
                     var form = $('#form-delete');
-                    var url = form.attr('action').replace(':COMPETITION_ID', id);
+                    var url = form.attr('action').replace(':PHASE_ID', id);
                     form.attr('action', url);
                     form.submit();
                 }
@@ -59,7 +61,7 @@
         disabledActionsButtons();
         swal({
             title: "¿Estás seguro?",
-            text: 'Se van a eliminar las competiciones seleccionadas. No se podrán deshacer los cambios!.',
+            text: 'Se van a eliminar las fases seleccionadas. No se podrán deshacer los cambios!.',
             buttons: {
                 confirm: {
                     text: "Sí, estoy seguro",
@@ -84,37 +86,14 @@
                 $(".mark:checked").each(function() {
                     ids.push($(this).val());
                 });
-                var url = '{{ route("admin.season_competitions.destroy.many", ":ids") }}';
+                var url = '{{ route("admin.season_competitions_phases.destroy.many", [":slug", ":ids"]) }}';
                 url = url.replace(':ids', ids);
+                url = url.replace(':slug', competition_slug);
                 window.location.href=url;
             } else {
                 enabledActionsButtons();
             }
         });
-    }
-
-    function duplicateMany() {
-        window.event.preventDefault();
-        disabledActionsButtons();
-        var ids = [];
-        $(".mark:checked").each(function() {
-            ids.push($(this).val());
-        });
-        var url = '{{ route("admin.season_competitions.duplicate.many", ":ids") }}';
-        url = url.replace(':ids', ids);
-        window.location.href=url;
-    }
-
-    function edit(element) {
-        $(".mark:checked").each(function() {
-            id = $(this).val();
-        });
-        url = $('#btnEdit'+id).attr("href");
-        if ($(element).is('button')) {
-            window.location.href=url;
-        } else {
-            $(element).attr("href", url);
-        }
     }
 
     function rowSelect(element) {
@@ -135,10 +114,8 @@
             }
             if ($(".mark:checked").length == 1) {
                 $(".rowOptions-Edit").removeClass('d-none');
-                $(".rowOptions-View").removeClass('d-none');
             } else {
                 $(".rowOptions-Edit").addClass('d-none');
-                $(".rowOptions-View").addClass('d-none');
             }
         } else {
             if ($(".rowOptions").is(':visible')) {
@@ -198,9 +175,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'categorias_equipos_export' + time;
+                    var filename = 'season_competitions_phases_export' + time;
                 }
-                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order);
+                $(location).attr('href', 'fases/exportar/' + filename + '/' + type);
             }
         });
     }
@@ -239,9 +216,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'categorias_equipos_export' + time;
+                    var filename = 'season_competitions_phases_export' + time;
                 }
-                $(location).attr('href', 'categorias_equipos/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
+                $(location).attr('href', 'fases/exportar/' + filename + '/' + type + '/' + ids);
             }
         });
     }

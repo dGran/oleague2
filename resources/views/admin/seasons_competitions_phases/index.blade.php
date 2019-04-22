@@ -8,7 +8,7 @@
 
             @include('admin.seasons_competitions_phases.common.notifications')
 
-            {{-- @include('admin.seasons_competitions_phases.index.toolbar_options') --}}
+            @include('admin.seasons_competitions_phases.index.toolbar_options')
 
             @include('admin.seasons_competitions_phases.index.data')
 
@@ -18,10 +18,6 @@
 
 @section('right-side')
     @include('admin.seasons_competitions_phases.index.right_side')
-@endsection
-
-@section('modal')
-    {{-- @include('admin.seasons_competitions_phases.index.filter_modal') --}}
 @endsection
 
 @section('js')

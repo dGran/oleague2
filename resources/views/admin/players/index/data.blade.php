@@ -102,8 +102,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
                             <a href="" class="btn-view dropdown-item text-secondary" data-toggle="modal" data-target="#viewModal" id="btnView{{ $player->id }}">
-                                <i class="far fa-eye fa-fw mr-1"></i>
-                                Visualizar
+                                <i class="fas fa-id-card fa-fw mr-1"></i>
+                                Info
                             </a>
                             <a class="dropdown-item text-secondary" href="{{ route('admin.players.edit', $player->id) }}" id="btnEdit{{ $player->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>

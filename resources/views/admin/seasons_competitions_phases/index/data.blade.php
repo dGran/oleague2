@@ -60,21 +60,24 @@
                     <td onclick="rowSelect(this)" class="text-center">
                         {{ $phase->num_participants }}
                     </td>
-                    <td>
-                        <a href="{{ route('admin.season_competitions_phases', $competition->slug) }}" class="btn btn-primary">Grupos</a>
+                    <td class="d-none d-sm-table-cell">
+                        <a href="{{ route('admin.season_competitions_phases', $competition->slug) }}" class="btn btn-light border" id="btnGroups{{ $competition->id }}">
+                            <i class="fas fa-users-cog fa-fw mr-1"></i>
+                            Grupos
+                        </a>
                     </td>
                     <td class="actions">
                         <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.season_competitions.edit', $phase->id) }}" id="btnEdit{{ $phase->id }}">
+                            <a class="dropdown-item text-secondary d-block d-sm-none" href="{{ route('admin.season_competitions_phases', $competition->slug) }}" id="btnGroups{{ $competition->id }}">
+                                <i class="fas fa-users-cog fa-fw mr-1"></i>
+                                Grupos
+                            </a>
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.season_competitions_phases.edit', [$competition->slug, $phase->id]) }}" id="btnEdit{{ $phase->id }}">
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar
-                            </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.season_competitions.duplicate', $phase->id) }}">
-                                <i class="fas fa-clone fa-fw mr-1"></i>
-                                Duplicar
                             </a>
                             <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
                                 <i class="fas fa-trash fa-fw mr-1"></i>
@@ -88,11 +91,10 @@
     </table>
 
     <div class="regs-info clearfix border-top p-3 px-md-0">
-        <div class="regs-info2 float-left">Registros: {{ $phases->firstItem() }}-{{ $phases->lastItem() }} de {{ $phases->total() }}</div>
-        <div class="float-right">{!! $phases->appends(Request::all())->render() !!}</div>
+        <div class="regs-info2 float-left">Registros: {{ $phases->count() }}</div>
     </div>
 
-    <form id="form-delete" action="{{ route('admin.season_competitions.destroy', ':COMPETITION_ID') }}" method="post">
+    <form id="form-delete" action="{{ route('admin.season_competitions_phases.destroy', [$competition->slug, ':PHASE_ID']) }}" method="post">
         {{ csrf_field() }}
         {{ method_field('delete') }}
     </form>

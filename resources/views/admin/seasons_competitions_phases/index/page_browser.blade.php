@@ -7,6 +7,11 @@
     </nav>
     <div class="d-table">
     	<img src="{{ $competition->getImgFormatted() }}" alt="" width="38" class="d-table-cell align-middle">
-    	<h5 class="text-uppercase m-0 d-table-cell align-middle pl-2">{{ $competition->name }} - Fases</h5>
+    	<h5 class="text-uppercase m-0 d-table-cell align-middle pl-2">
+            <span class="d-none d-sm-inline-block">{{ $competition->name }}</span>
+            <i class="d-none d-sm-inline-block fas fa-angle-double-right text-warning"></i>
+            <span class="">Fases</span>
+            <span class="d-block d-sm-none" style="font-size: 0.5em">{{ $competition->name }}</span>
+        </h5>
     </div>
 </div>

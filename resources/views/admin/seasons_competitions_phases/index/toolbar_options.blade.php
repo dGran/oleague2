@@ -2,18 +2,15 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.season_competitions.add') }}'" type="button" class="btn btn-primary" data-toggle="button">
+            <button id="addon-new" onclick="location.href='{{ route('admin.season_competitions_phases.add', $competition->slug) }}'" type="button" class="btn btn-primary" data-toggle="button">
                 <i class="fas fa-plus mr-2"></i>Nueva
-            </button>
-            <button id="addon-filter" type="button" class="filter btn input-group-text {{ $filterName ? 'active' : '' }}" data-toggle="modal" data-target="#filterModal">
-                <i class="fas fa-filter"></i>
             </button>
            <form
             id="frmImport"
                 lang="{{ app()->getLocale() }}"
                 role="form"
                 method="POST"
-                action="{{ route('admin.season_competitions.import.file') }}"
+                action="{{ route('admin.season_competitions_phases.import.file', $competition->slug) }}"
                 enctype="multipart/form-data"
                 data-toggle="validator"
                 autocomplete="off">
@@ -23,7 +20,7 @@
             <button id="addon-import" type="button" class="btn input-group-text border-left-0" data-toggle="button" onclick="import_file()">
                 <i class="fas fa-file-import"></i>
             </button>
-            @if ($competitions->count()>0)
+            @if ($phases->count()>0)
                 <button id="addon-export" type="button" class="btn input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-file-export"></i>
                 </button>
@@ -51,9 +48,6 @@
             </button>
             <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>
-            </button>
-            <button type="button" class="btn btn-outline-secondary input-group-text" data-toggle="button" onclick="duplicateMany()">
-                <i class="fas fa-clone"></i>
             </button>
             <button id="row-addon-export" type="button" class="btn btn-outline-secondary input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-file-export"></i>

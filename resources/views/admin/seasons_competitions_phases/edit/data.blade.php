@@ -3,7 +3,7 @@
     lang="{{ app()->getLocale() }}"
     role="form"
     method="POST"
-    action="{{ route('admin.season_competitions.update', $competition->id) }}"
+    action="{{ route('admin.season_competitions_phases.update', [$competition->slug, $phase->id]) }}"
     enctype="multipart/form-data"
     data-toggle="validator"
     autocomplete="off">
@@ -11,10 +11,11 @@
     {{ csrf_field() }}
 
     <div class="table-form-content col-12 col-lg-8 col-xl-6 p-md-3 animated fadeIn">
+
         <div class="form-group row pt-2">
             <label for="name" class="col-sm-3 col-form-label">Nombre</label>
             <div class="col-sm-9">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" value="{{ old('name', $competition->name) }}" autofocus>
+                <input type="text" class="form-control {{ $errors->first('name') ? 'invalid' : '' }}" id="name" name="name" placeholder="Nombre" autofocus value="{{ old('name', $phase->name) }}">
                 @if ($errors->first('name'))
                     <small class="text-danger">{{ $errors->first('name') }}</small>
                 @endif
@@ -22,41 +23,23 @@
         </div>
 
         <div class="form-group row">
-            <label for="img" class="col-sm-3 col-form-label">Imagen</label>
-
+            <label for="num_participants" class="col-sm-3 col-form-label">Participantes</label>
             <div class="col-sm-9">
-                <div class="d-inline-block">
-                    <div class="input-group mb-1" id="img_local">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-danger {{ $competition->img ? 'd-inline-block' : 'd-none' }}" type="button" id="img_remove">Eliminar</button>
-                        </div>
-                         <div class="custom-file">
-                            <input type="hidden" name="old_img" id="old_img" value="{{ $competition->img }}">
-                            <input readonly type="file" class="custom-file-input" id="img_field" name="img">
-                            <label class="custom-file-label" for="img_field">Selecciona una imagen</label>
-                        </div>
-                    </div>
-                    @if ($errors->first('img'))
-                        <small class="text-danger d-block">{{ $errors->first('img') }}</small>
-                    @endif
-                    <small>min: 48x48 max: 256x256 ratio: 1/1</small>
-                    <div class="preview mt-2 border p-3 {{ $competition->img ? 'd-block' : 'd-none' }}">
-                        <figure class="m-0">
-                            <img id="img_preview" src="{{ $competition->getImgFormatted() }}" alt="img" width="96">
-                        </figure>
-                    </div>
-                </div>
-
-                <input type="text" class="form-control d-none" id="img_link" name="img_link" placeholder="Url de la imagen" autofocus value="{{ old('img') }}">
-
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="url_img" name="url_img">
-                    <label class="custom-control-label is-valid" for="url_img">
-                        <small>Url de imagen</small>
-                    </label>
-                </div>
+                <input type="number" class="form-control" id="num_participants" name="num_participants" placeholder="Número de participantes" min="2" max="{{ $competition->season->num_participants }}" autofocus value="{{ old('num_participants', $phase->num_participants) }}">
+                <small class="text-info">Máximo participantes: {{ $competition->season->num_participants }}</small>
             </div>
         </div>
+
+        <div class="form-group row">
+            <label for="mode" class="col-sm-3 col-form-label">Participantes</label>
+            <div class="col-sm-9">
+                <select class="selectpicker form-control" name="mode" id="mode">
+                    <option {{ $phase->mode == 'league' ? 'selected' : '' }} value="league">Liga</option>
+                    <option {{ $phase->mode == 'playoffs' ? 'selected' : '' }} value="playoffs">Playoffs</option>
+                </select>
+            </div>
+        </div>
+
     </div>
 
     <div class="table-form-footer col-12 col-lg-8 col-xl-6 pt-3 px-3 px-md-0">

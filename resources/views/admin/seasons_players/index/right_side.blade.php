@@ -64,8 +64,8 @@
         </li>
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
-                <span class="far fa-eye fa-fw mr-1"></span>
-                <span>Visualizar</span>
+                <i class="fas fa-id-card fa-fw mr-1"></i>
+                <span>Info</span>
             </a>
         </li>
         {{-- 1 player selected --}}
