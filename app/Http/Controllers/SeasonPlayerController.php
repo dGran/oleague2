@@ -363,7 +363,7 @@ class SeasonPlayerController extends Controller
                 event(new TableWasUpdated($player, $player->player->name, "Jugador activado"));
             }
         }
-        return redirect()->route('admin.season_players')->with('success', 'Se han activado todos los jugadores correctamente.');
+        return redirect()->route('admin.season_players')->with('success', 'Se ha activado el jugador correctamente.');
     }
 
     public function activateMany($ids)
@@ -399,7 +399,7 @@ class SeasonPlayerController extends Controller
                 event(new TableWasUpdated($player, $player->player->name, "Jugador desactivado"));
             }
         }
-        return redirect()->route('admin.season_players')->with('success', 'Se han activado todos los jugadores correctamente.');
+        return redirect()->route('admin.season_players')->with('success', 'Se ha desactivado el jugador correctamente.');
     }
 
     public function desactivateMany($ids)

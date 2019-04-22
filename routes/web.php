@@ -178,7 +178,22 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::put('/admin/competiciones/{slug}/fases/{id}', 'SeasonCompetitionPhaseController@update')->name('admin.season_competitions_phases.update');
 		Route::delete('/admin/competiciones/{slug}/fases/eliminar/{id}', 'SeasonCompetitionPhaseController@destroy')->name('admin.season_competitions_phases.destroy');
 		Route::get('/admin/competiciones/{slug}/fases/eliminar-seleccionados/{ids}', 'SeasonCompetitionPhaseController@destroyMany')->name('admin.season_competitions_phases.destroy.many');
+		Route::get('/admin/competiciones/{slug}/fases/acciones/activar/{id}', 'SeasonCompetitionPhaseController@activate')->name('admin.season_competitions_phases.activate');
+		Route::get('/admin/competiciones/{slug}/fases/acciones/activar-seleccionados/{ids}', 'SeasonCompetitionPhaseController@activateMany')->name('admin.season_competitions_phases.activate.many');
+		Route::get('/admin/competiciones/{slug}/fases/acciones/desactivar/{id}', 'SeasonCompetitionPhaseController@desactivate')->name('admin.season_competitions_phases.desactivate');
+		Route::get('/admin/competiciones/{slug}/fases/acciones/desactivar-seleccionados/{ids}', 'SeasonCompetitionPhaseController@desactivateMany')->name('admin.season_competitions_phases.desactivate.many');
 		Route::get('/admin/competiciones/{slug}/fases/exportar/{filename}/{type}/{ids?}', 'SeasonCompetitionPhaseController@exportFile')->name('admin.season_competitions_phases.export.file');
 		Route::post('/admin/competiciones/{slug}/fases/importar', 'SeasonCompetitionPhaseController@importFile')->name('admin.season_competitions_phases.import.file');
+
+		// Season Competitions Phases Groups
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/grupos', 'SeasonCompetitionPhaseGroupController@index')->name('admin.season_competitions_phases_groups');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/nuevo', 'SeasonCompetitionPhaseGroupController@add')->name('admin.season_competitions_phases_groups.add');
+		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/nuevo', 'SeasonCompetitionPhaseGroupController@save')->name('admin.season_competitions_phases_groups.save');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/{id}', 'SeasonCompetitionPhaseGroupController@edit')->name('admin.season_competitions_phases_groups.edit');
+		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/{id}', 'SeasonCompetitionPhaseGroupController@update')->name('admin.season_competitions_phases_groups.update');
+		Route::delete('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/eliminar/{id}', 'SeasonCompetitionPhaseGroupController@destroy')->name('admin.season_competitions_phases_groups.destroy');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/eliminar-seleccionados/{ids}', 'SeasonCompetitionPhaseGroupController@destroyMany')->name('admin.season_competitions_phases_groups.destroy.many');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/exportar/{filename}/{type}/{ids?}', 'SeasonCompetitionPhaseGroupController@exportFile')->name('admin.season_competitions_phases_groups.export.file');
+		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/importar', 'SeasonCompetitionPhaseGroupController@importFile')->name('admin.season_competitions_phases_groups.import.file');
 	});
 });
