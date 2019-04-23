@@ -23,13 +23,13 @@
         <div class="form-group row">
             <label for="num_participants" class="col-sm-3 col-form-label">Participantes</label>
             <div class="col-sm-9">
-                <input type="number" class="form-control" id="num_participants" name="num_participants" placeholder="Número de participantes" value="2" min="2" max="{{ $max_participants }}" autofocus value="{{ old('num_participants') }}">
+                <input type="number" class="form-control" id="num_participants" name="num_participants" placeholder="Número de participantes" value="{{ $max_participants }}" min="2" max="{{ $max_participants }}" autofocus value="{{ old('num_participants') }}">
                 <small class="text-info">Máximo participantes: {{ $max_participants }}</small>
             </div>
         </div>
 
         <div class="form-group row">
-            <label for="mode" class="col-sm-3 col-form-label">Participantes</label>
+            <label for="mode" class="col-sm-3 col-form-label">Formato</label>
             <div class="col-sm-9">
                 <select class="selectpicker form-control" name="mode" id="mode">
                     <option value="league">Liga</option>

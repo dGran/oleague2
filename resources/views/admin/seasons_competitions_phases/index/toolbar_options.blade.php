@@ -46,6 +46,9 @@
             <button type="button" class="btn btn-danger" data-toggle="button" onclick="destroyMany()">
                 <i class="fas fa-trash mr-2"></i>Eliminar
             </button>
+            <button type="button" class="rowOptions-Groups btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="groups(this)">
+                <i class="fas fa-users-cog"></i>
+            </button>
             {{-- 1 player selected --}}
             <button type="button" class="rowOptions-Desactivate btn btn-outline-secondary input-group-text" data-toggle="button" onclick="desactivate(this)">
                 <i class="fas fa-toggle-off"></i>
@@ -62,7 +65,7 @@
                 <i class="fas fa-toggle-on"></i>
             </button>
             {{-- end --}}
-            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="edit(this)">
+            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>
             </button>
             <button id="row-addon-export" type="button" class="btn btn-outline-secondary input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -50,6 +50,12 @@
         <i class="fas fa-trash mr-2"></i>Eliminar
     </a>
     <ul class="list-group border-top mt-3">
+        <li class="rowOptions-Groups list-group-item border-0 px-0 d-none">
+            <a href="" onclick="groups(this)">
+                <span class="fas fa-users-cog fa-fw mr-1"></span>
+                <span>Grupos</span>
+            </a>
+        </li>
         {{-- 1 player selected --}}
         <li class="rowOptions-Desactivate list-group-item border-0 px-0 d-none">
             <a href="" onclick="desactivate(this)">

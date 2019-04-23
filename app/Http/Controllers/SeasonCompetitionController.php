@@ -401,7 +401,7 @@ class SeasonCompetitionController extends Controller
             $filename = str_slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($competitions) {
-            $excel->sheet('season_competitions', function($sheet) use ($competitions)
+            $excel->sheet('competiciones', function($sheet) use ($competitions)
             {
                 $sheet->fromArray($competitions);
             });

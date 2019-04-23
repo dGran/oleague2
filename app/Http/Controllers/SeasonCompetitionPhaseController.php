@@ -63,7 +63,7 @@ class SeasonCompetitionPhaseController extends Controller
     {
         $phase = SeasonCompetitionPhase::find($id);
         $competition = SeasonCompetition::where('slug','=', $slug)->firstOrFail();
-        $max_participants = $this->calculateMaxParticipants($competition->id);
+        $max_participants = $this->calculateMaxParticipantsPhase($id, $competition->id);
 
         if ($phase) {
             return view('admin.seasons_competitions_phases.edit', compact('phase', 'competition', 'max_participants'));
@@ -137,7 +137,7 @@ class SeasonCompetitionPhaseController extends Controller
             }
         }
         if ($counter > 0) {
-            return redirect()->route('admin.season_competitions_phases', $slug)->with('success', 'Se han eliminado las fases seleccionados correctamente.');
+            return redirect()->route('admin.season_competitions_phases', $slug)->with('success', 'Se han eliminado las fases seleccionadas correctamente.');
         } else {
             return back()->with('warning', 'Acción cancelada. Las fases que querías eliminar ya no existen.');
         }
@@ -236,7 +236,7 @@ class SeasonCompetitionPhaseController extends Controller
             $filename = str_slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($phases) {
-            $excel->sheet('season_competitions_phases', function($sheet) use ($phases)
+            $excel->sheet('Fases', function($sheet) use ($phases)
             {
                 $sheet->fromArray($phases);
             });
@@ -294,6 +294,19 @@ class SeasonCompetitionPhaseController extends Controller
         	return $competition->season->num_participants;
         }
     }
+
+    protected function calculateMaxParticipantsPhase($phase_id, $competition_id) {
+        $phase = SeasonCompetitionPhase::find($phase_id);
+        if ($phase->order == 1) {
+            return $phase->competition->season->num_participants;
+        } else {
+            $previous_phase = SeasonCompetitionPhase::where('competition_id', '=', $competition_id)->where('order', '=', $phase->order-1)->get()->first()->num_participants;
+            if ($previous_phase) {
+                return $previous_phase;
+            }
+        }
+    }
+
 
     protected function calculateOrder($competition_id) {
         $phases = SeasonCompetitionPhase::where('competition_id', '=', $competition_id)->orderBy('order', 'desc')->get();

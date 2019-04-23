@@ -146,6 +146,30 @@
         window.location.href=url;
     }
 
+    function edit(element) {
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnEdit'+id).attr("href");
+        if ($(element).is('button')) {
+            window.location.href=url;
+        } else {
+            $(element).attr("href", url);
+        }
+    }
+
+    function groups(element) {
+        $(".mark:checked").each(function() {
+            id = $(this).val();
+        });
+        url = $('#btnGroups'+id).attr("href");
+        if ($(element).is('button')) {
+            window.location.href=url;
+        } else {
+            $(element).attr("href", url);
+        }
+    }
+
     function rowSelect(element) {
         $(element).siblings('.select').find('.mark').trigger('click');
     }
@@ -166,6 +190,7 @@
                 $(".rowOptions-ActivateMany").addClass('d-none');
                 $(".rowOptions-DesactivateMany").addClass('d-none');
                 $(".rowOptions-Edit").removeClass('d-none');
+                $(".rowOptions-Groups").removeClass('d-none');
                 var active = $(".mark:checked").parents('tr').attr("data-active");
                 if (active == 1) {
                     $(".rowOptions-Activate").addClass('d-none');
@@ -178,6 +203,7 @@
                 $(".rowOptions-ActivateMany").removeClass('d-none');
                 $(".rowOptions-DesactivateMany").removeClass('d-none');
                 $(".rowOptions-Edit").addClass('d-none');
+                $(".rowOptions-Groups").addClass('d-none');
                 $(".rowOptions-Activate").addClass('d-none');
                 $(".rowOptions-Desactivate").addClass('d-none');
             }

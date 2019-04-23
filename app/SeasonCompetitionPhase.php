@@ -15,4 +15,23 @@ class SeasonCompetitionPhase extends Model
     {
         return $this->hasOne('App\SeasonCompetition', 'id', 'competition_id');
     }
+
+    public function groups()
+    {
+        return $this->hasmany('App\SeasonCompetitionPhaseGroup', 'phase_id', 'id');
+    }
+
+    public function groups_available_participants()
+    {
+        $participants = $this->num_participants;
+        if ($this->groups) {
+            $used_participants = 0;
+            foreach ($this->groups as $group) {
+                $used_participants = $used_participants + $group->num_participants;
+            }
+            return $participants - $used_participants;
+        } else {
+            return $participants;
+        }
+    }
 }

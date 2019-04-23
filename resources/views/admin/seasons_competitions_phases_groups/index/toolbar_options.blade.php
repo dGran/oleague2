@@ -2,15 +2,15 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.season_competitions_phases.add', $competition->slug) }}'" type="button" class="btn btn-primary" data-toggle="button">
-                <i class="fas fa-plus mr-2"></i>Nueva
+            <button id="addon-new" type="button" class="btn btn-primary {{ $phase->groups_available_participants() == 0 ? 'disabled' : '' }}" data-toggle="button">
+                <i class="fas fa-plus mr-2"></i>Nuevo
             </button>
            <form
             id="frmImport"
                 lang="{{ app()->getLocale() }}"
                 role="form"
                 method="POST"
-                action="{{ route('admin.season_competitions_phases.import.file', $competition->slug) }}"
+                action="{{ route('admin.season_competitions_phases_groups.import.file', [$phase->competition->slug, $phase->slug]) }}"
                 enctype="multipart/form-data"
                 data-toggle="validator"
                 autocomplete="off">
@@ -20,7 +20,7 @@
             <button id="addon-import" type="button" class="btn input-group-text border-left-0" data-toggle="button" onclick="import_file()">
                 <i class="fas fa-file-import"></i>
             </button>
-            @if ($phases->count()>0)
+            @if ($groups->count()>0)
                 <button id="addon-export" type="button" class="btn input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-file-export"></i>
                 </button>
@@ -46,23 +46,13 @@
             <button type="button" class="btn btn-danger" data-toggle="button" onclick="destroyMany()">
                 <i class="fas fa-trash mr-2"></i>Eliminar
             </button>
-            {{-- 1 player selected --}}
-            <button type="button" class="rowOptions-Desactivate btn btn-outline-secondary input-group-text" data-toggle="button" onclick="desactivate(this)">
-                <i class="fas fa-toggle-off"></i>
+            <button type="button" class="rowOptions-Participants btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="participants(this)">
+                <i class="fas fa-users-cog"></i>
             </button>
-            <button type="button" class="rowOptions-Activate btn btn-outline-secondary input-group-text" data-toggle="button" onclick="activate(this)">
-                <i class="fas fa-toggle-on"></i>
+            <button type="button" class="rowOptions-Competition btn btn-outline-secondary input-group-text" data-toggle="button" onclick="competition(this)">
+                <i class="fas fa-futbol"></i>
             </button>
-            {{-- end --}}
-            {{-- many players selected --}}
-            <button type="button" class="rowOptions-DesactivateMany btn btn-outline-secondary input-group-text" data-toggle="button" onclick="desactivateMany(this)">
-                <i class="fas fa-toggle-off"></i>
-            </button>
-            <button type="button" class="rowOptions-ActivateMany btn btn-outline-secondary input-group-text" data-toggle="button" onclick="activateMany(this)">
-                <i class="fas fa-toggle-on"></i>
-            </button>
-            {{-- end --}}
-            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text border-left-0" data-toggle="button" onclick="edit(this)">
+            <button type="button" class="rowOptions-Edit btn btn-outline-secondary input-group-text" data-toggle="button" onclick="edit(this)">
                 <i class="fas fa-edit"></i>
             </button>
             <button id="row-addon-export" type="button" class="btn btn-outline-secondary input-group-text dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
