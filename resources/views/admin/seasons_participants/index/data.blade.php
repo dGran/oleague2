@@ -21,7 +21,6 @@
             <col width="100%" />
             @if ($active_season->use_economy)
                 <col width="0%" />
-                <col width="0%" />
             @endif
             @if ($active_season->use_rosters)
                 <col width="0%" />
@@ -48,7 +47,7 @@
                         </div>
                     </div>
                 </th>
-                <th scope="col" colspan="3" onclick="$('#allMark').trigger('click');">Participante</th>
+                <th scope="col" colspan="2" onclick="$('#allMark').trigger('click');">Participante</th>
                 @if ($active_season->use_economy)
                     <th scope="col" onclick="$('#allMark').trigger('click');"><i class="fas fa-piggy-bank" style="font-size: 1.25em"></i></th>
                 @endif
@@ -90,7 +89,6 @@
                         </small>
                     </td>
 
-                    <td></td>
                     @if ($active_season->use_economy)
                         <td class="text-nowrap text-right">
                             <small>{{ $participant->budget_formatted() }}</small>

@@ -195,5 +195,14 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/eliminar-seleccionados/{ids}', 'SeasonCompetitionPhaseGroupController@destroyMany')->name('admin.season_competitions_phases_groups.destroy.many');
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/exportar/{filename}/{type}/{ids?}', 'SeasonCompetitionPhaseGroupController@exportFile')->name('admin.season_competitions_phases_groups.export.file');
 		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/grupos/importar', 'SeasonCompetitionPhaseGroupController@importFile')->name('admin.season_competitions_phases_groups.import.file');
+
+		// Season Competitions Phases Groups Participants
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes', 'SeasonCompetitionPhaseGroupParticipantController@index')->name('admin.season_competitions_phases_groups_participants');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/nuevo', 'SeasonCompetitionPhaseGroupParticipantController@add')->name('admin.season_competitions_phases_groups_participants.add');
+		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/nuevo', 'SeasonCompetitionPhaseGroupParticipantController@save')->name('admin.season_competitions_phases_groups_participants.save');
+		Route::delete('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/eliminar/{id}', 'SeasonCompetitionPhaseGroupParticipantController@destroy')->name('admin.season_competitions_phases_groups_participants.destroy');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/eliminar-seleccionados/{ids}', 'SeasonCompetitionPhaseGroupParticipantController@destroyMany')->name('admin.season_competitions_phases_groups_participants.destroy.many');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/exportar/{filename}/{type}/{ids?}', 'SeasonCompetitionPhaseGroupParticipantController@exportFile')->name('admin.season_competitions_phases_groups_participants.export.file');
+		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/importar', 'SeasonCompetitionPhaseGroupParticipantController@importFile')->name('admin.season_competitions_phases_groups_participants.import.file');
 	});
 });

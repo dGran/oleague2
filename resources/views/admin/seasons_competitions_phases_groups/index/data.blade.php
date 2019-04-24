@@ -55,7 +55,7 @@
                         {{ $group->num_participants }}
                     </td>
                     <td class="d-none d-sm-table-cell">
-                        <a href="" class="btn btn-light border" id="btnParticipants{{ $phase->id }}">
+                        <a href="{{ route('admin.season_competitions_phases_groups_participants', [$phase->competition->slug, $phase->slug, $group->slug]) }}" class="btn btn-light border" id="btnParticipants{{ $phase->id }}">
                             <div class="d-block d-lg-none">
                                 <i class="fas fa-users-cog"></i>
                             </div>
@@ -81,7 +81,7 @@
                             <i class="fas fa-ellipsis-h text-secondary"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right my-1" aria-labelledby="btnRegActions">
-                            <a class="dropdown-item text-secondary d-block d-sm-none" href="" id="btnParticipants{{ $group->id }}">
+                            <a class="dropdown-item text-secondary d-block d-sm-none" href="{{ route('admin.season_competitions_phases_groups_participants', [$phase->competition->slug, $phase->slug, $group->slug]) }}" id="btnParticipants{{ $group->id }}">
                                 <i class="fas fa-users-cog fa-fw mr-1"></i>
                                 Participantes
                             </a>
