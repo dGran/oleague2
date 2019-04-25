@@ -28,7 +28,7 @@
                     </div>
                 </th>
                 <th scope="col" class="name" onclick="$('#allMark').trigger('click');">Nombre</th>
-                <th scope="col" onclick="$('#allMark').trigger('click');"><i class="fas fa-users"></i></th>
+                <th scope="col" onclick="$('#allMark').trigger('click');"><i class="fas fa-users px-3"></i></th>
                 <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell"></th>
                 <th scope="col" onclick="$('#allMark').trigger('click');" class="d-none d-sm-table-cell"></th>
                 <th scope="col" onclick="$('#allMark').trigger('click');"></th>
@@ -52,7 +52,11 @@
                         <span class="name">{{ $group->name }}</span>
                     </td>
                     <td onclick="rowSelect(this)" class="text-center">
-                        {{ $group->num_participants }}
+                        <small>
+                            <span class="{{ $group->participants->count() < $group->num_participants ? 'text-danger' : ''}}">{{ $group->participants->count() }}</span>
+                            /
+                            <span>{{ $group->num_participants }}</span>
+                        </small>
                     </td>
                     <td class="d-none d-sm-table-cell">
                         <a href="{{ route('admin.season_competitions_phases_groups_participants', [$phase->competition->slug, $phase->slug, $group->slug]) }}" class="btn btn-light border" id="btnParticipants{{ $phase->id }}">

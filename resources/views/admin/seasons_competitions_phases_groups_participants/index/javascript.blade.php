@@ -1,10 +1,24 @@
 <script>
+    var competition_slug = {!! json_encode($group->phase->competition->slug) !!};
+    var phase_slug = {!! json_encode($group->phase->slug) !!};
+    var group_slug = {!! json_encode($group->slug) !!};
+
     $(function() {
         Mousetrap.bind(['command+a', 'ctrl+a'], function() {
             var url = $("#btnAdd").attr('href');
             $(location).attr('href', url);
             return false;
         });
+    });
+
+    $('#addon-new').click(function() {
+        if (!$(this).hasClass('disabled')) {
+            var url = '{{ route("admin.season_competitions_phases_groups_participants.add", [":competition_slug", ":phase_slug", ":group_slug"]) }}';
+            url = url.replace(':competition_slug', competition_slug);
+            url = url.replace(':phase_slug', phase_slug);
+            url = url.replace(':group_slug', group_slug);
+            window.location.href=url;
+        }
     });
 
     $(".btn-delete").click(function(e) {
@@ -59,7 +73,7 @@
         disabledActionsButtons();
         swal({
             title: "¿Estás seguro?",
-            text: 'Se van a eliminar los participantes seleccionados (los participantes con xxxx asociados no se eliminarán). No se podrán deshacer los cambios!.',
+            text: 'Se van a eliminar los participantes seleccionados. No se podrán deshacer los cambios!.',
             buttons: {
                 confirm: {
                     text: "Sí, estoy seguro",
@@ -84,8 +98,11 @@
                 $(".mark:checked").each(function() {
                     ids.push($(this).val());
                 });
-                var url = '{{ route("admin.season_participants.destroy.many", ":ids") }}';
+                var url = '{{ route("admin.season_competitions_phases_groups_participants.destroy.many", [":competition_slug", ":phase_slug", ":group_slug", ":ids"]) }}';
                 url = url.replace(':ids', ids);
+                url = url.replace(':competition_slug', competition_slug);
+                url = url.replace(':phase_slug', phase_slug);
+                url = url.replace(':group_slug', group_slug);
                 window.location.href=url;
             } else {
                 enabledActionsButtons();
@@ -172,9 +189,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'participantes_export' + time;
+                    var filename = 'season_competitions_phases_groups_participants_export' + time;
                 }
-                $(location).attr('href', 'participantes/exportar/' + filename + '/' + type + '/' + filterSeason + '/' + order);
+                $(location).attr('href', 'participantes/exportar/' + filename + '/' + type);
             }
         });
     }
@@ -213,9 +230,9 @@
                 var filename = `${value}`;
                 if (!filename ) {
                     var time = Math.floor(new Date().getTime() / 1000);
-                    var filename = 'participantes_export' + time;
+                    var filename = 'season_competitions_phases_groups_participants_export' + time;
                 }
-                $(location).attr('href', 'participantes/exportar/' + filename + '/' + type + '/' + filterName + '/' + order + '/' + ids);
+                $(location).attr('href', 'participantes/exportar/' + filename + '/' + type + '/' + ids);
             }
         });
     }

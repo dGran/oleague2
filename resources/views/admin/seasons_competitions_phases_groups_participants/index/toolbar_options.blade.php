@@ -2,7 +2,7 @@
 
     <div class="btn-toolbar px-3 pb-3 d-block d-md-none" role="toolbar">
         <div class="btn-group tableOptions" role="group">
-            <button id="addon-new" onclick="location.href='{{ route('admin.season_competitions_phases_groups_participants.add', [$group->phase->competition->slug, $group->phase->slug, $group->slug]) }}'" type="button" class="btn btn-primary" data-toggle="button">
+            <button id="addon-new" type="button" class="btn btn-primary {{ $participants->count() >= $group->num_participants ? 'disabled' : '' }}" data-toggle="button">
                 <i class="fas fa-plus mr-2"></i>Nuevo
             </button>
            <form
@@ -17,7 +17,7 @@
                 {{ csrf_field() }}
                 <input type="file" name="import_file" id="import_file" class="d-none">
             </form>
-                <button id="addon-import" type="button" class="btn input-group-text border-left-0" data-toggle="button" onclick="import_file()">
+                <button id="addon-import" type="button" class="btn input-group-text border-left-0 {{ ($participants->count() >= $group->num_participants) ? 'disabled' : '' }}" data-toggle="button" onclick="{{ ($participants->count() < $group->num_participants) ? 'import_file()' : ''}}">
                     <i class="fas fa-file-import"></i>
                 </button>
 

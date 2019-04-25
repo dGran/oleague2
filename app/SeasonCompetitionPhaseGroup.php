@@ -15,4 +15,9 @@ class SeasonCompetitionPhaseGroup extends Model
     {
         return $this->hasOne('App\SeasonCompetitionPhase', 'id', 'phase_id');
     }
+
+    public function participants()
+    {
+        return $this->hasMany('App\SeasonCompetitionPhaseGroupParticipant', 'group_id', 'id');
+    }
 }

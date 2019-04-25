@@ -1,25 +1,30 @@
 <div class="tableOptions animated fadeIn">
-    <a href="{{ route('admin.season_competitions_phases_groups_participants.add', [$group->phase->competition->slug, $group->phase->slug, $group->slug]) }}" class="btn btn-primary" id="btnAdd">
+    <a href="{{ route('admin.season_competitions_phases_groups_participants.add', [$group->phase->competition->slug, $group->phase->slug, $group->slug]) }}" class="btn btn-primary {{ $participants->count() >= $group->num_participants ? 'disabled' : '' }}" id="btnAdd">
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
-            <a href="" onclick="import_file()">
-               <form
-                id="frmImport"
-                    lang="{{ app()->getLocale() }}"
-                    role="form"
-                    method="POST"
-                    action="{{ route('admin.season_participants.import.file', [$group->phase->competition->slug, $group->phase->slug, $group->slug]) }}"
-                    enctype="multipart/form-data"
-                    data-toggle="validator"
-                    autocomplete="off">
-                    {{ csrf_field() }}
-                    <input type="file" name="import_file" id="import_file" class="d-none">
-                    <span class="fas fa-file-import fa-fw mr-1"></span>
-                    <span>Importar</span>
-                </form>
-            </a>
+            @if ($participants->count() >= $group->num_participants)
+                <span class="fas fa-file-import fa-fw mr-1 text-muted"></span>
+                <span class="text-muted">Importar</span>
+            @else
+                <a href="" onclick="import_file()">
+                   <form
+                    id="frmImport"
+                        lang="{{ app()->getLocale() }}"
+                        role="form"
+                        method="POST"
+                        action="{{ route('admin.season_participants.import.file', [$group->phase->competition->slug, $group->phase->slug, $group->slug]) }}"
+                        enctype="multipart/form-data"
+                        data-toggle="validator"
+                        autocomplete="off">
+                        {{ csrf_field() }}
+                        <input type="file" name="import_file" id="import_file" class="d-none">
+                        <span class="fas fa-file-import fa-fw mr-1"></span>
+                        <span>Importar</span>
+                    </form>
+                </a>
+            @endif
         </li>
         @if ($participants->count()>0)
             <li class="list-group-item border-0 px-0">

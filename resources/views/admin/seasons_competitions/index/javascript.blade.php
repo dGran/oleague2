@@ -29,6 +29,10 @@
         $('.frmFilter').submit();
     }
 
+    function applyfilterSeason() {
+        $('.frmFilter').submit();
+    }
+
     function cancelFilters() {
         window.location.href = '{{ route("admin.teams_categories") }}';
     }
