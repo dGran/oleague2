@@ -34,7 +34,19 @@
             @foreach ($participants as $participant)
                 @if (!$participant->participant)
                     <tr class="border-top" data-id="{{ $participant->id }}">
-                        <td colspan=3 class="text-danger">Participante #{{ $participant->id }} - no existe</td>
+                        <td class="select">
+                            <div class="pretty p-icon p-jelly mr-0">
+                                <input type="checkbox" class="mark" value="{{ $participant->id }}" name="teamId[]" onchange="showHideRowOptions(this)">
+                                <div class="state p-primary">
+                                    <i class="icon material-icons">done</i>
+                                    <label></label>
+                                </div>
+                            </div>
+                        </td>
+                        <td onclick="rowSelect(this)" class="text-center text-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </td>
+                        <td onclick="rowSelect(this)" class="text-warning">Participante #{{ $participant->id }} - no existe</td>
                         <td class="actions">
                             <a id="btnRegActions" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
                                 <i class="fas fa-ellipsis-h text-secondary"></i>

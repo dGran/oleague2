@@ -16,6 +16,7 @@
                 <div class="col-sm-9">
                     <select class="selectpicker form-control" name="participant_id" id="participant_id" data-live-search="true">
                         @foreach ($participants as $participant)
+
                             <option value="{{ $participant->id }}">{{ $participant->name() }}</option>
                         @endforeach
                     </select>

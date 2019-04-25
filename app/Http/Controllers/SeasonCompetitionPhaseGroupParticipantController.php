@@ -32,17 +32,14 @@ class SeasonCompetitionPhaseGroupParticipantController extends Controller
     public function add($competition_slug, $phase_slug, $group_slug)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-
-        $participants = SeasonParticipant::where('season_id', '=', $group->phase->competition->season_id)
-        ->whereNotIn('id', function($query) use ($group) {
-           $query->select('participant_id')->from('season_competitions_phases_groups_participants')->whereNotNull('participant_id')->where('group_id', '=', $group->id);
-        })->get();
-
-
-        // $participants = \DB::table("season_participants")->select('*')
-        // ->whereNotIn('id', function($query) use ($group) {
-        //    $query->select('participant_id')->from('season_competitions_phases_groups_participants')->whereNotNull('participant_id')->where('group_id', '=', $group->id);
-        // })->get();
+        $phase_groups = SeasonCompetitionPhaseGroup::where('phase_id', '=', $group->phase_id)->get();
+        $participants = SeasonParticipant::where('season_id', '=', $group->phase->competition->season_id);
+        foreach ($phase_groups as $phase_group) {
+            $participants = $participants->whereNotIn('id', function($query) use ($phase_group) {
+                $query->select('participant_id')->from('season_competitions_phases_groups_participants')->whereNotNull('participant_id')->where('group_id', '=', $phase_group->id);
+            });
+        }
+        $participants = $participants->get();
 
         return view('admin.seasons_competitions_phases_groups_participants.add', compact('group', 'participants'));
     }
@@ -96,9 +93,14 @@ class SeasonCompetitionPhaseGroupParticipantController extends Controller
         {
             $participant = SeasonCompetitionPhaseGroupParticipant::find($ids[$i]);
             if ($participant) {
+                if ($participant->participant) {
+                    $name = $participant->participant->name();
+                } else {
+                    $name = "Participante #" . $participant->id . " - inexistente";
+                }
                 // if (!$participant->hasTeams()) {
                     $counter_deleted = $counter_deleted +1;
-                    event(new TableWasDeleted($participant, $participant->participant->name()));
+                    event(new TableWasDeleted($participant, $name));
                     $participant->delete();
                 // } else {
                     // $counter_no_allow = $counter_no_allow +1;
@@ -117,6 +119,43 @@ class SeasonCompetitionPhaseGroupParticipantController extends Controller
             // } else {
                 return back()->with('warning', 'Acción cancelada. Los participantes que querías eliminar ya no existen.');
             // }
+        }
+    }
+
+    public function raffle($competition_slug, $phase_slug, $group_slug)
+    {
+        $group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+        $free = $group->num_participants - $group->participants->count();
+        if ($free > 0) {
+            $phase_groups = SeasonCompetitionPhaseGroup::where('phase_id', '=', $group->phase_id)->get();
+            for ($i=0; $i < $free; $i++) {
+
+                $participants = SeasonParticipant::where('season_id', '=', $group->phase->competition->season_id);
+                foreach ($phase_groups as $phase_group) {
+                    $participants = $participants->whereNotIn('id', function($query) use ($phase_group) {
+                        $query->select('participant_id')->from('season_competitions_phases_groups_participants')->whereNotNull('participant_id')->where('group_id', '=', $phase_group->id);
+                    });
+                }
+                $participants = $participants->get();
+
+                $free_participants = [];
+                foreach ($participants as $participant) {
+                    array_push($free_participants, $participant->id);
+                }
+
+                $result = array_rand ($free_participants, 1);
+                $group_participant = SeasonCompetitionPhaseGroupParticipant::create([
+                    'group_id' => $group->id,
+                    'participant_id' => $free_participants[$result]
+                ]);
+                // dd($group_participant->id);
+                event(new TableWasSaved($group_participant, $group_participant->participant->name()));
+            }
+
+            return redirect()->route('admin.season_competitions_phases_groups_participants', [$competition_slug, $phase_slug, $group_slug])->with('success', 'Se ha completado el grupo mediante sorteo de participantes correctamente.');
+
+        } else {
+            return back()->with('warning', 'Acción cancelada. El grupo ya está completo.');
         }
     }
 

@@ -5,6 +5,10 @@
             <button id="addon-new" type="button" class="btn btn-primary {{ $participants->count() >= $group->num_participants ? 'disabled' : '' }}" data-toggle="button">
                 <i class="fas fa-plus mr-2"></i>Nuevo
             </button>
+
+            <button id="addon-raffle" type="button" class="btn input-group-text border-left-0 {{ ($participants->count() >= $group->num_participants) ? 'disabled' : '' }}" data-toggle="button" onclick="{{ ($participants->count() < $group->num_participants) ? 'raffle()' : ''}}">
+                <i class="fas fa-dice"></i>
+            </button>
            <form
             id="frmImport"
                 lang="{{ app()->getLocale() }}"
@@ -17,7 +21,7 @@
                 {{ csrf_field() }}
                 <input type="file" name="import_file" id="import_file" class="d-none">
             </form>
-                <button id="addon-import" type="button" class="btn input-group-text border-left-0 {{ ($participants->count() >= $group->num_participants) ? 'disabled' : '' }}" data-toggle="button" onclick="{{ ($participants->count() < $group->num_participants) ? 'import_file()' : ''}}">
+                <button id="addon-import" type="button" class="btn input-group-text {{ ($participants->count() >= $group->num_participants) ? 'disabled' : '' }}" data-toggle="button" onclick="{{ ($participants->count() < $group->num_participants) ? 'import_file()' : ''}}">
                     <i class="fas fa-file-import"></i>
                 </button>
 

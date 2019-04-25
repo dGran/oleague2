@@ -68,6 +68,43 @@
 
     });
 
+    function raffle() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        swal({
+            title: "¿Estás seguro?",
+            text: 'Se van a completar los participantes del grupo por sorteo.',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                var url = '{{ route("admin.season_competitions_phases_groups_participants.raffle", [":competition_slug", ":phase_slug", ":group_slug"]) }}';
+                url = url.replace(':competition_slug', competition_slug);
+                url = url.replace(':phase_slug', phase_slug);
+                url = url.replace(':group_slug', group_slug);
+                window.location.href=url;
+            } else {
+                enabledActionsButtons();
+            }
+        });
+    }
+
     function destroyMany() {
         window.event.preventDefault();
         disabledActionsButtons();
@@ -109,6 +146,7 @@
             }
         });
     }
+
 
     function rowSelect(element) {
         $(element).siblings('.select').find('.mark').trigger('click');

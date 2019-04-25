@@ -5,6 +5,17 @@
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
             @if ($participants->count() >= $group->num_participants)
+                <span class="fas fa-dice fa-fw mr-1"></span>
+                <span>Completar por sorteo</span>
+            @else
+                <a href="" onclick="raffle()">
+                    <span class="fas fa-dice fa-fw mr-1"></span>
+                    <span>Completar por sorteo</span>
+                </a>
+            @endif
+        </li>
+        <li class="list-group-item border-0 px-0">
+            @if ($participants->count() >= $group->num_participants)
                 <span class="fas fa-file-import fa-fw mr-1 text-muted"></span>
                 <span class="text-muted">Importar</span>
             @else
