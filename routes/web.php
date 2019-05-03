@@ -205,5 +205,10 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/sortear-participantes', 'SeasonCompetitionPhaseGroupParticipantController@raffle')->name('admin.season_competitions_phases_groups_participants.raffle');
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/exportar/{filename}/{type}/{ids?}', 'SeasonCompetitionPhaseGroupParticipantController@exportFile')->name('admin.season_competitions_phases_groups_participants.export.file');
 		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/importar', 'SeasonCompetitionPhaseGroupParticipantController@importFile')->name('admin.season_competitions_phases_groups_participants.import.file');
+
+		// Season Competitions Phases Groups Leagues
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/ligas', 'SeasonCompetitionPhaseGroupLeagueController@index')->name('admin.season_competitions_phases_groups_leagues');
+		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/ligas/{id}', 'SeasonCompetitionPhaseGroupLeagueController@save')->name('admin.season_competitions_phases_groups_leagues.save');
+
 	});
 });

@@ -19,10 +19,6 @@ class SeasonCompetitionPhaseGroupParticipantController extends Controller
     public function index($competition_slug, $phase_slug, $group_slug)
     {
 
-    	// estoy adaptando el index de season_participants`
-    	// $competition = SeasonCompetition::where('slug', '=', $competition_slug);
-    	// if ($competition->season->participant_has_team) {
-
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $group->id)->get();
 

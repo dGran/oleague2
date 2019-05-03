@@ -59,7 +59,7 @@
                         </small>
                     </td>
                     <td class="d-none d-sm-table-cell">
-                        <a href="{{ route('admin.season_competitions_phases_groups_participants', [$phase->competition->slug, $phase->slug, $group->slug]) }}" class="btn btn-light border" id="btnParticipants{{ $phase->id }}">
+                        <a href="{{ route('admin.season_competitions_phases_groups_participants', [$phase->competition->slug, $phase->slug, $group->slug]) }}" class="btn btn-light border" id="btnParticipants{{ $group->id }}">
                             <div class="d-block d-lg-none">
                                 <i class="fas fa-users-cog"></i>
                             </div>
@@ -70,7 +70,7 @@
                         </a>
                     </td>
                     <td class="d-none d-sm-table-cell">
-                        <a href="" class="btn btn-light border" id="btnCompetition{{ $phase->id }}">
+                        <a href="{{ route('admin.season_competitions_phases_groups_leagues', [$phase->competition->slug, $phase->slug, $group->slug]) }}" class="btn btn-light border" id="btnCompetition{{ $group->id }}">
                             <div class="d-block d-lg-none">
                                 <i class="fas fa-futbol"></i>
                             </div>
@@ -89,7 +89,7 @@
                                 <i class="fas fa-users-cog fa-fw mr-1"></i>
                                 Participantes
                             </a>
-                            <a class="dropdown-item text-secondary d-block d-sm-none" href="" id="btnCompetition{{ $group->id }}">
+                            <a class="dropdown-item text-secondary d-block d-sm-none" href="{{ route('admin.season_competitions_phases_groups_leagues', [$phase->competition->slug, $phase->slug, $group->slug]) }}" id="btnCompetition{{ $group->id }}">
                                 <i class="fas fa-futbol fa-fw mr-1"></i>
                                 Competición
                             </a>
