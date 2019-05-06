@@ -196,6 +196,20 @@
 @media (min-width: 576px) {
 	.main-content {
 		table {
+			&.calendar {
+				.matches {
+					font-size: 1em;
+					line-height: 1.2em;
+					td {
+						padding: .5em;
+					}
+					.img {
+						img {
+							width: 32px;
+						}
+					}
+				}
+			}
 			&.table {
 				font-size: 1em;
 				line-height: 1.1em;

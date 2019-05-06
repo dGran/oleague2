@@ -117,6 +117,28 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         return view('admin.seasons_competitions_phases_groups_leagues.table', compact('group', 'league', 'table_participants'));
     }
 
+    public function editMatch($competition_slug, $league_slug, $group_slug, $id)
+    {
+    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+        $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
+
+        return view('admin.seasons_competitions_phases_groups_leagues.calendar.match', compact('match', 'group'))->render();
+    }
+
+    public function updateMatch($competition_slug, $league_slug, $group_slug, $id)
+    {
+    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+        $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
+
+        $match->local_score = request()->local_score;
+        $match->visitor_score = request()->visitor_score;
+        $match->save();
+
+        return back()->with('success', 'Resultado registrado correctamente.');
+
+    }
+
+
 
 
 

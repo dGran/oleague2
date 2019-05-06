@@ -3,7 +3,7 @@
     lang="{{ app()->getLocale() }}"
     role="form"
     method="POST"
-    action="{{ route('admin.season_competitions_phases_groups_leagues.save', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $league->id]) }}"
+    action="{{ route('admin.season_competitions_phases_groups_leagues.update_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $league->id]) }}"
     enctype="multipart/form-data"
     data-toggle="validator"
     autocomplete="off">

@@ -35,7 +35,7 @@
 	</form>
 </div>
 
-<div class="table-form-content col-12 animated fadeIn mt-3">
+<div class="table-form-content col-12 animated fadeIn mt-3 p-0 border-0">
 
 	@if ($league->days->count() == 0)
 	    <div class="text-center border-top py-4">
@@ -47,21 +47,20 @@
 	@else
 	    <table class="calendar">
 	        <colgroup>
+	        	<col width="40%" />
 	        	<col width="0%" />
+	        	<col width="20%" />
 	        	<col width="0%" />
-	        	<col width="100%" />
-	            <col width="0%" />
-	            <col width="0%" />
-	            <col width="0%" />
+	            <col width="40%" />
 	        </colgroup>
 			@foreach ($league->days as $day)
-				<tr class="days">
-					<td colspan="7">
+				<tr class="days border">
+					<td colspan="6">
 						<strong class="text-uppercase">Jornada {{ $day->order }}</strong>
 					</td>
 				</tr>
 			    @foreach ($day->matches as $match)
-			    	<tr class="matches">
+			    	<tr class="matches" data-id="{{ $match->id }}">
 				        <td class="text-right">
                             <span class="name text-uppercase">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
                             <small class="text-black-50 d-block">
@@ -77,8 +76,7 @@
                         </td>
 				        <td class="score text-center">
 				        	@if (is_null($match->local_score) && is_null($match->visitor_score))
-				        		{{-- <small>{{ $match->date_limit }}</small> --}}
-				        		<a href="">
+				        		<a href="" data-toggle="modal" data-target="#updateModal">
 					        		<small class="bg-primary rounded px-3 py-1 text-white">
 					        			OPCIONES
 					        		</small>

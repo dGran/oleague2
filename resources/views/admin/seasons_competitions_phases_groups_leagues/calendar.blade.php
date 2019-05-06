@@ -10,16 +10,14 @@
 
             @include('admin.seasons_competitions_phases_groups_leagues.common.notifications')
 
-            {{-- @include('admin.seasons_competitions_phases_groups_leagues.calendar.toolbar_options') --}}
-
             @include('admin.seasons_competitions_phases_groups_leagues.calendar.data')
 
         </div> {{-- col --}}
     </div> {{-- row --}}
 @endsection
 
-@section('right-side')
-    {{-- @include('admin.seasons_competitions_phases_groups_leagues.calendar.right_side') --}}
+@section('modal')
+    @include('admin.seasons_competitions_phases_groups_leagues.calendar.update_modal')
 @endsection
 
 @section('js')
