@@ -9,6 +9,8 @@ use App\SeasonCompetitionPhaseGroupLeague;
 use App\SeasonCompetitionPhaseGroupLeagueDay;
 use App\SeasonCompetitionPhaseGroupLeagueDayMatch;
 
+use Illuminate\Database\Eloquent\Collection;
+
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
@@ -16,20 +18,11 @@ use App\Events\TableWasImported;
 
 class SeasonCompetitionPhaseGroupLeagueController extends Controller
 {
-    public function index($competition_slug, $league_slug, $group_slug)
+    public function index($competition_slug, $phase_slug, $group_slug)
     {
-
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        $league = SeasonCompetitionPhaseGroupLeague::where('group_id', '=', $group->id)->get()->first();
+        $league = $this->check_league($group);
 
-		// $this->generate_days($league->id);
-
-        if (!$league) {
-        	$league = new SeasonCompetitionPhaseGroupLeague;
-        	$league->group_id = $group->id;
-        	$league->save();
-        	$league = SeasonCompetitionPhaseGroupLeague::where('group_id', '=', $group->id)->get()->first();
-        }
         return view('admin.seasons_competitions_phases_groups_leagues.index', compact('group', 'league'));
     }
 
@@ -64,9 +57,87 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         }
     }
 
-    protected function generate_days($league_id)
+    public function calendar($competition_slug, $league_slug, $group_slug)
     {
-    	$second_round = true;
+    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+        $league = $this->check_league($group);
+
+        return view('admin.seasons_competitions_phases_groups_leagues.calendar', compact('group', 'league'));
+    }
+
+    public function calendar_generate($competition_slug, $league_slug, $group_slug)
+    {
+    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+        $league = $this->check_league($group);
+
+        // we check if there are already days and games, if so, we eliminate them before generating
+        if ($league->days->count() > 0) {
+        	foreach ($league->days as $day) {
+				if ($day->matches->count() > 0) {
+					foreach ($day->matches as $match) {
+						$match->delete();
+					}
+				}
+				$day->delete();
+        	}
+        }
+
+		$second_round = request()->second_round ? 1 : 0;
+		$inverse_order = request()->inverse_order ? 1 : 0;
+        $this->generate_days($league->id, $second_round, $inverse_order);
+        // comprobar si funciona cuando los participantes son impares y con otros numeros de participantes pares
+
+        return back()->with('success', 'Se han generado las jornadas de la liga correctamente.');
+    }
+
+    public function table($competition_slug, $league_slug, $group_slug)
+    {
+    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+        $league = $this->check_league($group);
+
+    	$table_participants = collect();
+		$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $league->group->id)->get();
+		foreach ($group_participants as $key => $participant) {
+			$data = $this->get_table_data_participant($league->id, $participant->id);
+			$table_participants->push([
+				'participant' => $participant,
+		        'pj' => $data['pj'],
+		        'pg' => $data['pg'],
+		        'pe' => $data['pe'],
+		        'pp' => $data['pp'],
+		        'ps' => $data['ps'],
+		        'gf' => $data['gf'],
+		        'gc' => $data['gc'],
+		        'avg' => $data['avg'],
+				'pts' => $data['pts'],
+			]);
+		}
+		$table_participants = $table_participants->sortByDesc('gf')->sortByDesc('avg')->sortBy('ps')->sortByDesc('pts');
+
+        return view('admin.seasons_competitions_phases_groups_leagues.table', compact('group', 'league', 'table_participants'));
+    }
+
+
+
+
+    // HELPER FUNCTIONS
+
+    protected function check_league($group)
+    {
+        $league = SeasonCompetitionPhaseGroupLeague::where('group_id', '=', $group->id)->get()->first();
+
+        if (!$league) {
+        	$league = new SeasonCompetitionPhaseGroupLeague;
+        	$league->group_id = $group->id;
+        	$league->save();
+        	$league = SeasonCompetitionPhaseGroupLeague::where('group_id', '=', $group->id)->get()->first();
+        }
+
+        return $league;
+    }
+
+    protected function generate_days($league_id, $second_round, $inverse_order)
+    {
     	$league = SeasonCompetitionPhaseGroupLeague::find($league_id);
 
     	$days = SeasonCompetitionPhaseGroupLeagueDay::where('league_id', '=', $league_id)->orderBy('order', 'desc')->get();
@@ -173,39 +244,121 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	        $next_day++;
 	    }
 
-	    // dd('hasta aqui');
-
-
 		// we created the days and matches of the second round
 	    if ($second_round) {
-	    	for ($i=1; $i < (count($day_to_repeat)+1); $i ++) {
-	    		$copy_day = SeasonCompetitionPhaseGroupLeagueDay::find($day_to_repeat[$i]);
+	    	if ($inverse_order) {
+		    	for ($i=(count($day_to_repeat)); $i > 0; $i --) {
+		    		$copy_day = SeasonCompetitionPhaseGroupLeagueDay::find($day_to_repeat[$i]);
 
-				// first we create the new day
-	    		$day = new SeasonCompetitionPhaseGroupLeagueDay;
-	    		$day->league_id = $league_id;
-	    		$day->order = $next_day;
-	    		$day->save();
+					// first we create the new day
+		    		$day = new SeasonCompetitionPhaseGroupLeagueDay;
+		    		$day->league_id = $league_id;
+		    		$day->order = $next_day;
+		    		$day->save();
 
-				// now we create the matches of the day going through the matches of the day of the first round
-	    		foreach ($copy_day->matches as $copy_match) {
-	    			$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
-	    			$match->day_id = $day->id;
-	    			$match->local_id = $copy_match->visitor_id;
-	    			$match->local_user_id = $copy_match->visitor_user_id;
-	    			$match->visitor_id = $copy_match->local_id;
-	    			$match->visitor_user_id = $copy_match->local_user_id;
-	    			$match->save();
-	    		}
-	    		$next_day++;
+					// now we create the matches of the day going through the matches of the day of the first round
+		    		foreach ($copy_day->matches as $copy_match) {
+		    			$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+		    			$match->day_id = $day->id;
+		    			$match->local_id = $copy_match->visitor_id;
+		    			$match->local_user_id = $copy_match->visitor_user_id;
+		    			$match->visitor_id = $copy_match->local_id;
+		    			$match->visitor_user_id = $copy_match->local_user_id;
+		    			$match->save();
+		    		}
+		    		$next_day++;
+		    	}
+	    	} else {
+		    	for ($i=1; $i < (count($day_to_repeat)+1); $i ++) {
+		    		$copy_day = SeasonCompetitionPhaseGroupLeagueDay::find($day_to_repeat[$i]);
+
+					// first we create the new day
+		    		$day = new SeasonCompetitionPhaseGroupLeagueDay;
+		    		$day->league_id = $league_id;
+		    		$day->order = $next_day;
+		    		$day->save();
+
+					// now we create the matches of the day going through the matches of the day of the first round
+		    		foreach ($copy_day->matches as $copy_match) {
+		    			$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+		    			$match->day_id = $day->id;
+		    			$match->local_id = $copy_match->visitor_id;
+		    			$match->local_user_id = $copy_match->visitor_user_id;
+		    			$match->visitor_id = $copy_match->local_id;
+		    			$match->visitor_user_id = $copy_match->local_user_id;
+		    			$match->save();
+		    		}
+		    		$next_day++;
+		    	}
 	    	}
 	    }
+    }
 
-		dd('fin ida y vuelta');
+    protected function get_table_data_participant($league_id, $participant_id)
+    {
+
+        $matches = SeasonCompetitionPhaseGroupLeagueDay::select('season_competitions_phases_groups_leagues_days.*', 'season_competitions_phases_groups_leagues_days_matches.*')
+        	->join('season_competitions_phases_groups_leagues_days_matches', 'season_competitions_phases_groups_leagues_days_matches.day_id', '=', 'season_competitions_phases_groups_leagues_days.id')
+        	->where('season_competitions_phases_groups_leagues_days_matches.local_id', '=', $participant_id)
+        	->orwhere('season_competitions_phases_groups_leagues_days_matches.visitor_id', '=', $participant_id)
+	        ->get();
+
+	    $data = [
+	    	"pj" => 0,
+	    	"pg" => 0,
+	    	"pe" => 0,
+	    	"pp" => 0,
+	    	"ps" => 0,
+	    	"gf" => 0,
+	    	"gc" => 0,
+	    	"avg" => 0,
+	    	"pts" => 0
+	    ];
+
+	    foreach ($matches as $match) {
+	    	$league = SeasonCompetitionPhaseGroupLeague::find($match->league_id);
+	    	if (!is_null($match->local_score) && !is_null($match->visitor_score))
+	    	{
+	    		$data['pj'] = $data['pj'] + 1;
+
+		    	if ($participant_id == $match->local_id) { //local
+		    		if ($match->local_score > $match->visitor_score) {
+						$data['pg'] = $data['pg'] + 1;
+						$data['pts'] = $data['pts'] + intval($league->win_points);
+		    		} elseif ($match->local_score == $match->visitor_score) {
+		    			$data['pe'] = $data['pe'] + 1;
+		    			$data['pts'] = $data['pts'] + intval($league->draw_points);
+		    		} else {
+		    			$data['pp'] = $data['pp'] + 1;
+		    			$data['pts'] = $data['pts'] + intval($league->lose_points);
+		    		}
+		    		$data['gf'] = $data['gf'] + $match->local_score;
+		    		$data['gc'] = $data['gc'] + $match->visitor_score;
+
+		    	} else { //visitor
+		    		if ($match->visitor_score > $match->local_score) {
+						$data['pg'] = $data['pg'] + 1;
+						$data['pts'] = $data['pts'] + intval($league->win_points);
+		    		} elseif ($match->local_score == $match->visitor_score) {
+		    			$data['pe'] = $data['pe'] + 1;
+		    			$data['pts'] = $data['pts'] + intval($league->draw_points);
+		    		} else {
+		    			$data['pp'] = $data['pp'] + 1;
+		    			$data['pts'] = $data['pts'] + intval($league->lose_points);
+		    		}
+					$data['gf'] = $data['gf'] + $match->visitor_score;
+		    		$data['gc'] = $data['gc'] + $match->local_score;
+		    	}
+
+		    	if ($match->santioned_id && ($participant_id == $match->santioned_id )) {
+					$data['ps'] = $data['ps'] + 1;
+		    	}
 
 
-
-	    redirect("modules.php?name=Torneos&file=pages/torneos/opciones_promotor&op=configurar_fases_grupos_gestion&amp;id_torneo=$id_torneo&amp;id_fase=$id_fase&amp;id_grupo=$id_grupo#base");
+	    	}
+	    }
+	    $data['avg'] = $data['gf'] - $data['gc'];
+	    return $data;
     }
 
 }
