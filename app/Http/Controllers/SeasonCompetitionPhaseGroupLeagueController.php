@@ -138,6 +138,19 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 
     }
 
+    public function resetMatch($competition_slug, $league_slug, $group_slug, $id)
+    {
+    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+        $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
+
+        $match->local_score = null;
+        $match->visitor_score = null;
+        $match->santioned_id = null;
+        $match->save();
+
+        return back()->with('success', 'Resultado reseteado correctamente.');
+    }
+
 
 
 

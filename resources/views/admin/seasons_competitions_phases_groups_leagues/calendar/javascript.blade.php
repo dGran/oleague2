@@ -32,6 +32,51 @@
             $('#modal-dialog-update').html("");
         });
 
+        $("#btnGenerate").click(function(){
+            swal({
+                text: "Generando calendario, por favor espera...",
+                button: false,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+            });
+        });
+
+        $(".btnReset").click(function(e){
+	        window.event.preventDefault();
+	        var row = $(this).parents('tr');
+	        var id = row.attr("data-id");
+	        var name = row.attr("data-name");
+
+	        swal({
+	            title: "¿Estás seguro?",
+	            text: 'Se va a resetear el partido "' + name + '". No se podrán deshacer los cambios!',
+	            buttons: {
+	                confirm: {
+	                    text: "Sí, estoy seguro",
+	                    value: true,
+	                    visible: true,
+	                    className: "btn btn-danger",
+	                    closeModal: true
+	                },
+	                cancel: {
+	                    text: "No, cancelar",
+	                    value: null,
+	                    visible: true,
+	                    className: "btn btn-secondary",
+	                    closeModal: true,
+	                }
+	            },
+	            closeOnClickOutside: false,
+	        })
+	        .then((value) => {
+	            if (value) {
+	                var url = $(this).attr('href');
+	            	$(location).attr('href', url);
+	            }
+	        });
+        })
+
+
     });
 
     function generate() {

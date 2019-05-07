@@ -47,11 +47,11 @@
 	@else
 	    <table class="calendar">
 	        <colgroup>
-	        	<col width="40%" />
+	        	<col width="35%" />
 	        	<col width="0%" />
-	        	<col width="20%" />
+	        	<col width="30%" />
 	        	<col width="0%" />
-	            <col width="40%" />
+	            <col width="35%" />
 	        </colgroup>
 			@foreach ($league->days as $day)
 				<tr class="days border">
@@ -60,7 +60,7 @@
 					</td>
 				</tr>
 			    @foreach ($day->matches as $match)
-			    	<tr class="matches" data-id="{{ $match->id }}">
+			    	<tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
 				        <td class="text-right">
                             <span class="name text-uppercase">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
                             <small class="text-black-50 d-block">
@@ -78,13 +78,16 @@
 				        	@if (is_null($match->local_score) && is_null($match->visitor_score))
 				        		<a href="" data-toggle="modal" data-target="#updateModal">
 					        		<small class="bg-primary rounded px-3 py-1 text-white">
-					        			OPCIONES
+					        			EDITAR
 					        		</small>
 				        		</a>
 				        	@else
 								<span class="bg-light rounded px-3 py-1">
 									{{ $match->local_score }} - {{ $match->visitor_score }}
 								</span>
+								<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $match->id]) }}" class="btnReset">
+									<i class="fas fa-undo-alt ml-1"></i>
+								</a>
 				        	@endif
 				        </td>
                         <td class="img text-left">

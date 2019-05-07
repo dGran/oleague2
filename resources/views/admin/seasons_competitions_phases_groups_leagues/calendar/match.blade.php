@@ -20,16 +20,55 @@
             {{ csrf_field() }}
 
 
-            <div>Jornada {{ $match->day->order }}</div>
-            <div>{{ $match->local_participant->participant->name() }} vs {{ $match->visitor_participant->participant->name() }}</div>
+            <h5 class="border-bottom">Jornada {{ $match->day->order }}</h5>
 
-            <label for="local_score">{{ $match->local_participant->participant->name() }}</label>
-            <input type="number" name="local_score" value="0">
+            <div class="main-content">
+                <table align="center" class="calendar">
+                    <tr class="matches">
+                        <td class="text-right">
+                            <span class="name text-uppercase">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
+                            <small class="text-black-50 d-block">
+                                @if ($match->local_participant->participant->sub_name() == 'undefined')
+                                    <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                                @else
+                                    {{ $match->local_participant->participant->sub_name() }}
+                                @endif
+                            </small>
+                        </td>
+                        <td class="img text-right">
+                            <img src="{{ $match->local_participant->participant->logo() }}" alt="">
+                        </td>
 
-            <label for="visitor_score">{{ $match->visitor_participant->participant->name() }}</label>
-            <input type="number" name="visitor_score" value="0">
+                        <td class="img text-left">
+                            <img src="{{ $match->visitor_participant->participant->logo() }}" alt="">
+                        </td>
+                        <td class="text-left">
+                            <span class="name text-uppercase">{{ $match->visitor_participant->participant->name() == 'undefined' ? '' : $match->visitor_participant->participant->name() }}</span>
+                            <small class="text-black-50 d-block">
+                                @if ($match->visitor_participant->participant->sub_name() == 'undefined')
+                                    <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+                                @else
+                                    {{ $match->visitor_participant->participant->sub_name() }}
+                                @endif
+                            </small>
+                        </td>
 
-            <input type="submit" value="Enviar">
+                    </tr>
+
+                    <tr class="matches">
+                        <td colspan="2">
+                            <input type="number" class="form-control float-right" name="local_score" value="0" min="0" step="1" style="width: 4em">
+                        </td>
+                        <td colspan="2" class="text-left">
+                            <input type="number" class="form-control" name="visitor_score" value="0" min="0" step="1" style="width: 4em">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="border-top mt-2 py-3">
+                <input type="submit" class="btn btn-primary" value="Enviar resultado">
+            </div>
         </form>
     </div>
 </div>
