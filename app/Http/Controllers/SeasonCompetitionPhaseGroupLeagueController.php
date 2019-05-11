@@ -132,10 +132,12 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 
         $match->local_score = request()->local_score;
         $match->visitor_score = request()->visitor_score;
+        if (request()->sanctioned_id > 0) {
+        	$match->sanctioned_id = request()->sanctioned_id;
+        }
         $match->save();
 
         return back()->with('success', 'Resultado registrado correctamente.');
-
     }
 
     public function resetMatch($competition_slug, $league_slug, $group_slug, $id)
@@ -145,7 +147,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 
         $match->local_score = null;
         $match->visitor_score = null;
-        $match->santioned_id = null;
+        $match->sanctioned_id = null;
         $match->save();
 
         return back()->with('success', 'Resultado reseteado correctamente.');
@@ -385,7 +387,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 		    		$data['gc'] = $data['gc'] + $match->local_score;
 		    	}
 
-		    	if ($match->santioned_id && ($participant_id == $match->santioned_id )) {
+		    	if ($match->sanctioned_id && ($participant_id == $match->sanctioned_id )) {
 					$data['ps'] = $data['ps'] + 1;
 		    	}
 

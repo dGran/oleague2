@@ -74,14 +74,67 @@
 	            	$(location).attr('href', url);
 	            }
 	        });
-        })
-
+        });
 
     });
+
+    function sanction_local(id) {
+    	if ($('#chk_local_sanctioned').prop('checked')) {
+    		$("#local_score").val('0');
+    		$('#local_score').prop('readonly', true);
+    		$("#visitor_score").val('3');
+    		$('#visitor_score').prop('readonly', true);
+			$("#sanctioned_id").val(id);
+	    	$('#chk_visitor_sanctioned').prop('disabled', true);
+	    	$('#lb_visitor_sanctioned').addClass('text-muted');
+    	} else {
+    		$("#local_score").val('0');
+    		$('#local_score').prop('readonly', false);
+    		$("#visitor_score").val('0');
+    		$('#visitor_score').prop('readonly', false);
+			$("#sanctioned_id").val(null);
+	    	$('#chk_visitor_sanctioned').prop('disabled', false);
+	    	$('#lb_visitor_sanctioned').removeClass('text-muted');
+    	}
+    }
+
+    function sanction_visitor(id) {
+    	if ($('#chk_visitor_sanctioned').prop('checked')) {
+    		$("#local_score").val('3');
+    		$('#local_score').prop('readonly', true);
+    		$("#visitor_score").val('0');
+    		$('#visitor_score').prop('readonly', true);
+			$("#sanctioned_id").val(id);
+	    	$('#chk_local_sanctioned').prop('disabled', true);
+	    	$('#lb_local_sanctioned').addClass('text-muted');
+    	} else {
+    		$("#local_score").val('0');
+    		$('#local_score').prop('readonly', false);
+    		$("#visitor_score").val('0');
+    		$('#visitor_score').prop('readonly', false);
+			$("#sanctioned_id").val(null);
+	    	$('#chk_local_sanctioned').prop('disabled', false);
+	    	$('#lb_local_sanctioned').removeClass('text-muted');
+    	}
+    }
+
 
     function generate() {
 		window.event.preventDefault();
 		$('#frmGenerate').submit();
+    }
+
+    function sanctioned(local, id) {
+    	window.event.preventDefault();
+    	if (local) {
+    		$("#local_score").val('0');
+    		$("#visitor_score").val('3');
+    	} else {
+    		$("#local_score").val('3');
+    		$("#visitor_score").val('0');
+    	}
+		$("#sanctioned_id").val(id);
+    	console.log('Sancionamos a ' + id);
     }
 
 </script>

@@ -19,6 +19,8 @@
             {{ method_field('PUT') }}
             {{ csrf_field() }}
 
+            <input type="hidden" name="sanctioned_id" id="sanctioned_id">
+
 
             <h5 class="border-bottom">Jornada {{ $match->day->order }}</h5>
 
@@ -26,7 +28,9 @@
                 <table align="center" class="calendar">
                     <tr class="matches">
                         <td class="text-right">
-                            <span class="name text-uppercase">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
+                            <span class="name text-uppercase">
+                                {{ $match->local_participant->participant->name() }}
+                            </span>
                             <small class="text-black-50 d-block">
                                 @if ($match->local_participant->participant->sub_name() == 'undefined')
                                     <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
@@ -35,15 +39,16 @@
                                 @endif
                             </small>
                         </td>
-                        <td class="img text-right">
+                        <td class="img text-center">
                             <img src="{{ $match->local_participant->participant->logo() }}" alt="">
                         </td>
-
-                        <td class="img text-left">
+                        <td class="img text-center">
                             <img src="{{ $match->visitor_participant->participant->logo() }}" alt="">
                         </td>
                         <td class="text-left">
-                            <span class="name text-uppercase">{{ $match->visitor_participant->participant->name() == 'undefined' ? '' : $match->visitor_participant->participant->name() }}</span>
+                            <span class="name text-uppercase">
+                                {{ $match->visitor_participant->participant->name()}}
+                            </span>
                             <small class="text-black-50 d-block">
                                 @if ($match->visitor_participant->participant->sub_name() == 'undefined')
                                     <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
@@ -52,15 +57,30 @@
                                 @endif
                             </small>
                         </td>
-
                     </tr>
 
                     <tr class="matches">
-                        <td colspan="2">
-                            <input type="number" class="form-control float-right" name="local_score" value="0" min="0" step="1" style="width: 4em">
+                        <td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="chk_local_sanctioned" onchange="sanction_local({{ $match->local_id }})">
+                                <label class="custom-control-label pt-1" for="chk_local_sanctioned" id="lb_local_sanctioned">
+                                    Sancionar a {{ $match->local_participant->participant->name() }}
+                                </label>
+                            </div>
                         </td>
-                        <td colspan="2" class="text-left">
-                            <input type="number" class="form-control" name="visitor_score" value="0" min="0" step="1" style="width: 4em">
+                        <td>
+                            <input type="number" class="form-control float-right" name="local_score" id="local_score" value="0" min="0" step="1" style="width: 4em">
+                        </td>
+                        <td class="text-left">
+                            <input type="number" class="form-control" name="visitor_score" id="visitor_score" value="0" min="0" step="1" style="width: 4em">
+                        </td>
+                        <td class="text-left">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="chk_visitor_sanctioned" onchange="sanction_visitor({{ $match->visitor_id }})">
+                                <label class="custom-control-label pt-1" for="chk_visitor_sanctioned" id="lb_visitor_sanctioned">
+                                    Sancionar a {{ $match->visitor_participant->participant->name() }}
+                                </label>
+                            </div>
                         </td>
                     </tr>
                 </table>

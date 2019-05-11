@@ -71,7 +71,7 @@
 				<td class="text-center">
 					{{ $tp['pp'] }}
 				</td>
-				<td class="text-center d-none d-sm-table-cell">
+				<td class="text-center d-none d-sm-table-cell {{ $tp['ps'] > 0 ? 'text-danger' : '' }}">
 					{{ $tp['ps'] }}
 				</td>
 				<td class="text-center d-none d-sm-table-cell">

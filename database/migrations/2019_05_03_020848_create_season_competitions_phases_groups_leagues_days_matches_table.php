@@ -22,7 +22,7 @@ class CreateSeasonCompetitionsPhasesGroupsLeaguesDaysMatchesTable extends Migrat
             $table->integer("visitor_id")->unsigned();
             $table->integer("visitor_user_id")->unsigned();
             $table->integer("visitor_score")->nullable();
-            $table->integer("santioned_id")->unsigned()->nullable();
+            $table->integer("sanctioned_id")->unsigned()->nullable();
             $table->dateTime('date_limit')->nullable();
             $table->boolean('active')->default(false);
 

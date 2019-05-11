@@ -36,7 +36,6 @@
 </div>
 
 <div class="table-form-content col-12 animated fadeIn mt-3 p-0 border-0">
-
 	@if ($league->days->count() == 0)
 	    <div class="text-center border-top py-4">
             <figure>
@@ -63,6 +62,9 @@
 			    	<tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
 				        <td class="text-right">
                             <span class="name text-uppercase">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
+                            @if (($match->sanctioned_id) && ($match->local_id == $match->sanctioned_id))
+                            	<i class="fas fa-exclamation ml-1 text-danger"></i>
+                            @endif
                             <small class="text-black-50 d-block">
                                 @if ($match->local_participant->participant->sub_name() == 'undefined')
                                     <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
@@ -82,7 +84,7 @@
 					        		</small>
 				        		</a>
 				        	@else
-								<span class="bg-light rounded px-3 py-1">
+								<span class="bg-light rounded px-3 py-1 {{ $match->sanctioned_id ? 'border text-danger' : '' }}">
 									{{ $match->local_score }} - {{ $match->visitor_score }}
 								</span>
 								<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $match->id]) }}" class="btnReset">
@@ -94,6 +96,9 @@
                             <img src="{{ $match->visitor_participant->participant->logo() }}" alt="">
                         </td>
 				        <td class="text-left">
+                            @if (($match->sanctioned_id) && ($match->visitor_id == $match->sanctioned_id))
+                            	<i class="fas fa-exclamation mr-1 text-danger"></i>
+                            @endif
                             <span class="name text-uppercase">{{ $match->visitor_participant->participant->name() == 'undefined' ? '' : $match->visitor_participant->participant->name() }}</span>
                             <small class="text-black-50 d-block">
                                 @if ($match->visitor_participant->participant->sub_name() == 'undefined')
