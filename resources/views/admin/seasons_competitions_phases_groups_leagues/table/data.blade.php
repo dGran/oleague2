@@ -1,4 +1,4 @@
-<div class="table-form-content table-results col-12 col-xl-9 animated fadeIn">
+<div class="table-form-content mt-3 table-results col-12 col-xl-9 animated fadeIn">
 
     <table class="table">
         <colgroup>

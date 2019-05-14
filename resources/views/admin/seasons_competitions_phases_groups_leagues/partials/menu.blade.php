@@ -1,4 +1,4 @@
-<ul class="nav nav-pills mb-3 px-3 px-md-0 py-2 border-top border-bottom">
+<ul class="nav nav-pills px-3 px-md-0 py-2 border-top border-bottom bg-light">
     <li class="nav-item">
         <a class="nav-link {{ Route::is('admin.season_competitions_phases_groups_leagues.table') ? 'active' : '' }}" href="{{ route('admin.season_competitions_phases_groups_leagues.table', [$league->group->phase->competition->slug, $league->group->phase->slug, $league->group->slug]) }}">
         	@if (Route::is('admin.season_competitions_phases_groups_leagues.table'))

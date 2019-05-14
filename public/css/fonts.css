@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?mmooqf');
+  src:  url('../fonts/icomoon.eot?mmooqf#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?mmooqf') format('truetype'),
+    url('../fonts/icomoon.woff?mmooqf') format('woff'),
+    url('../fonts/icomoon.svg?mmooqf#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-yellow_card .path1:before {
+  content: "\e905";
+  color: rgb(255, 204, 92);
+}
+.icon-yellow_card .path2:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(198, 156, 109);
+}
+.icon-yellow_card .path3:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-crono:before {
+  content: "\e904";
+}
+.icon-soccer_assist:before {
+  content: "\e901";
+}
+.icon-whistle:before {
+  content: "\e902";
+}
+.icon-tribunal:before {
+  content: "\e903";
+}
+.icon-soccer_card:before {
+  content: "\e900";
+}

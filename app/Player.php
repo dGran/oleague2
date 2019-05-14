@@ -125,7 +125,7 @@ class Player extends Model
 		if ($this->overall_rating >89) {
 			$text_color = 'text-white';
 		} else {
-			$text_color = 'text-muted';
+			$text_color = 'text-dark';
 		}
 		$color = $this->getOverallRatingColor();
 		$content = "<div style='background: " . $color . "; border: 1px solid grey; width: 2.25em' class='rounded p-1'>

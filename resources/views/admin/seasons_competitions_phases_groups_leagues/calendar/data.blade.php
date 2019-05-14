@@ -1,4 +1,4 @@
-<div class="table-form-content px-3 py-1 bg-light col-12 animated fadeIn">
+<div class="table-form-content px-3 col-12 animated fadeIn">
 	<form
 	    id="frmGenerate"
 	    lang="{{ app()->getLocale() }}"
@@ -35,7 +35,7 @@
 	</form>
 </div>
 
-<div class="table-form-content col-12 animated fadeIn mt-3 p-0 border-0">
+<div class="table-form-content col-12 animated fadeIn p-0 border-0">
 	@if ($league->days->count() == 0)
 	    <div class="text-center border-top py-4">
             <figure>
@@ -45,23 +45,23 @@
 	    </div>
 	@else
 	    <table class="calendar">
-	        <colgroup>
-	        	<col width="35%" />
+{{-- 	        <colgroup>
+	        	<col width="50%" />
 	        	<col width="0%" />
-	        	<col width="30%" />
 	        	<col width="0%" />
-	            <col width="35%" />
-	        </colgroup>
+	        	<col width="0%" />
+	            <col width="50%" />
+	        </colgroup> --}}
 			@foreach ($league->days as $day)
 				<tr class="days border">
-					<td colspan="6">
+					<td colspan="6" class="py-2">
 						<strong class="text-uppercase">Jornada {{ $day->order }}</strong>
 					</td>
 				</tr>
 			    @foreach ($day->matches as $match)
 			    	<tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
 				        <td class="text-right">
-                            <span class="name text-uppercase">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
+                            <span class="text-uppercase {{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
                             @if (($match->sanctioned_id) && ($match->local_id == $match->sanctioned_id))
                             	<i class="fas fa-exclamation ml-1 text-danger"></i>
                             @endif
@@ -73,10 +73,10 @@
                                 @endif
                             </small>
 				        </td>
-                        <td class="img text-right">
+                        <td class="img text-right" width="32">
                             <img src="{{ $match->local_participant->participant->logo() }}" alt="">
                         </td>
-				        <td class="score text-center">
+				        <td class="score text-center" width="90">
 				        	@if (is_null($match->local_score) && is_null($match->visitor_score))
 				        		<a href="" data-toggle="modal" data-target="#updateModal">
 					        		<small class="bg-primary rounded px-3 py-1 text-white">
@@ -87,19 +87,19 @@
 								<span class="bg-light rounded px-3 py-1 {{ $match->sanctioned_id ? 'border text-danger' : '' }}">
 									{{ $match->local_score }} - {{ $match->visitor_score }}
 								</span>
-								<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $match->id]) }}" class="btnReset">
+{{-- 								<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $match->id]) }}" class="btnReset">
 									<i class="fas fa-undo-alt ml-1"></i>
-								</a>
+								</a> --}}
 				        	@endif
 				        </td>
-                        <td class="img text-left">
+                        <td class="img text-left" width="32">
                             <img src="{{ $match->visitor_participant->participant->logo() }}" alt="">
                         </td>
 				        <td class="text-left">
                             @if (($match->sanctioned_id) && ($match->visitor_id == $match->sanctioned_id))
                             	<i class="fas fa-exclamation mr-1 text-danger"></i>
                             @endif
-                            <span class="name text-uppercase">{{ $match->visitor_participant->participant->name() == 'undefined' ? '' : $match->visitor_participant->participant->name() }}</span>
+                            <span class="text-uppercase {{ $match->sanctioned_id && $match->visitor_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->visitor_participant->participant->name() == 'undefined' ? '' : $match->visitor_participant->participant->name() }}</span>
                             <small class="text-black-50 d-block">
                                 @if ($match->visitor_participant->participant->sub_name() == 'undefined')
                                     <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>

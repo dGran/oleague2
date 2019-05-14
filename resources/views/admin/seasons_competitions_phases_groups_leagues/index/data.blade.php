@@ -3,11 +3,12 @@
     lang="{{ app()->getLocale() }}"
     role="form"
     method="POST"
-    action="{{ route('admin.season_competitions_phases_groups_leagues.update_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $league->id]) }}"
+    action="{{ route('admin.season_competitions_phases_groups_leagues.save', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $league->id]) }}"
     enctype="multipart/form-data"
     data-toggle="validator"
     autocomplete="off">
     {{ csrf_field() }}
+    {{ method_field('PUT') }}
 
     <div class="table-form-content col-12 col-md-10 col-xl-8 animated fadeIn">
 
@@ -53,6 +54,48 @@
             </div>
         </div> --}}
 
+
+        @if ($group->phase->competition->season->use_economy)
+            <h5 class="py-3 m-0 border-top"><strong>Economía</strong></h5>
+            <div class="form-group row">
+                <div class="col-6 col-lg-3">
+                    <label for="win_amount"><i class="fas fa-euro-sign mr-2"></i>por victoria</label>
+                    <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Recompensa por victoria" min="0" step=".5" value="{{ old('win_amount', $league ? $league->win_amount : '') }}">
+                </div>
+                <div class="col-6 col-lg-3">
+                    <label for="draw_amount"><i class="fas fa-euro-sign mr-2"></i>por empate</label>
+                    <input type="number" class="form-control" id="draw_amount" name="draw_amount" placeholder="Recompensa por empate" min="0" step=".5" value="{{ old('draw_amount', $league ? $league->draw_amount : '') }}">
+                </div>
+                <div class="col-6 col-lg-3 mt-3 mt-lg-0">
+                    <label for="lose_amount"><i class="fas fa-euro-sign mr-2"></i>por derrota</label>
+                    <input type="number" class="form-control" id="lose_amount" name="lose_amount" placeholder="Recompensa por derrota" min="0" step=".5" value="{{ old('lose_amount', $league ? $league->lose_amount : '') }}">
+                </div>
+                <div class="col-6 col-lg-3 mt-3 mt-lg-0">
+                    <label for="play_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
+                    <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Recompensa por jugar" min="0" step=".5" value="{{ old('play_amount', $league ? $league->play_amount : '') }}">
+                </div>
+            </div>
+        @endif
+
+        <h5 class="pt-3 pb-1 m-0 border-top"><strong>Marcado de zonas</strong></h5>
+        <div class="form-group row">
+            <div class="col-12 col-sm-6">
+                @foreach ($group->participants as $participant)
+                    <label for="zone{{ $loop->iteration }}" class="pt-3">Posición {{ $loop->iteration }}</label>
+                    <select class="selectpicker form-control" name="zone{{ $loop->iteration }}" id="zone{{ $loop->iteration }}">
+                        <option selected value="0">Ninguno</option>
+                        <option value="1">Champions League</option>
+                        <option value="2">Europa League</option>
+                        <option value="3">Ascenso</option>
+                        <option value="4">Descenso</option>
+                    </select>
+                @endforeach
+                <br>
+                crear tabla marcado de zonas para poder editar todas las posiblidades que queramos usar
+            </div>
+
+        </div>
+
         <h5 class="py-3 m-0 border-top"><strong>Estadísticas</strong></h5>
         <div class="form-group row">
             <div class="col-6 col-lg-3">
@@ -83,27 +126,6 @@
             </div>
         </div>
 
-        @if ($group->phase->competition->season->use_economy)
-            <h5 class="py-3 m-0 border-top"><strong>Economía</strong></h5>
-            <div class="form-group row">
-                <div class="col-6 col-lg-3">
-                    <label for="win_amount"><i class="fas fa-euro-sign mr-2"></i>por victoria</label>
-                    <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Recompensa por victoria" min="0" step=".5" value="{{ old('win_amount', $league ? $league->win_amount : '') }}">
-                </div>
-                <div class="col-6 col-lg-3">
-                    <label for="draw_amount"><i class="fas fa-euro-sign mr-2"></i>por empate</label>
-                    <input type="number" class="form-control" id="draw_amount" name="draw_amount" placeholder="Recompensa por empate" min="0" step=".5" value="{{ old('draw_amount', $league ? $league->draw_amount : '') }}">
-                </div>
-                <div class="col-6 col-lg-3 mt-3 mt-lg-0">
-                    <label for="lose_amount"><i class="fas fa-euro-sign mr-2"></i>por derrota</label>
-                    <input type="number" class="form-control" id="lose_amount" name="lose_amount" placeholder="Recompensa por derrota" min="0" step=".5" value="{{ old('lose_amount', $league ? $league->lose_amount : '') }}">
-                </div>
-                <div class="col-6 col-lg-3 mt-3 mt-lg-0">
-                    <label for="play_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
-                    <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Recompensa por jugar" min="0" step=".5" value="{{ old('play_amount', $league ? $league->play_amount : '') }}">
-                </div>
-            </div>
-        @endif
 
     </div>
 

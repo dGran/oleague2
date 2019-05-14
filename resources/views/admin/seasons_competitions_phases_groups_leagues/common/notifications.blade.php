@@ -1,4 +1,4 @@
-<div class="area-notifications px-3 px-md-0">
+<div class="area-notifications px-3 px-md-0 my-2">
 
     @if ($errors->any())
         <div class="alert alert-danger autohide">

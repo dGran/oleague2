@@ -208,7 +208,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 		// Season Competitions Phases Groups Leagues
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion', 'SeasonCompetitionPhaseGroupLeagueController@index')->name('admin.season_competitions_phases_groups_leagues');
-		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/{id}', 'SeasonCompetitionPhaseGroupLeagueController@save')->name('admin.season_competitions_phases_groups_leagues.save');
+		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/{id}', 'SeasonCompetitionPhaseGroupLeagueController@save')->name('admin.season_competitions_phases_groups_leagues.save');
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario', 'SeasonCompetitionPhaseGroupLeagueController@calendar')->name('admin.season_competitions_phases_groups_leagues.calendar');
 		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/generar', 'SeasonCompetitionPhaseGroupLeagueController@calendar_generate')->name('admin.season_competitions_phases_groups_leagues.calendar.generate');
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/clasificacion', 'SeasonCompetitionPhaseGroupLeagueController@table')->name('admin.season_competitions_phases_groups_leagues.table');
