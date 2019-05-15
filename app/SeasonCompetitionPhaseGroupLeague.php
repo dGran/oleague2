@@ -20,4 +20,10 @@ class SeasonCompetitionPhaseGroupLeague extends Model
     {
         return $this->hasMany('App\SeasonCompetitionPhaseGroupLeagueDay', 'league_id', 'id');
     }
+
+    public function table_zones()
+    {
+        return $this->hasMany('App\SeasonCompetitionPhaseGroupLeagueTableZone', 'league_id', 'id');
+    }
+
 }

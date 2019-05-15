@@ -41,6 +41,20 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 	Route::get('/admin/configuracion_general', 'AdminController@generalSettings')->name('admin.general_settings');
 
+	//Games
+	Route::get('/admin/juegos', 'GameController@index')->name('admin.games');
+	Route::get('/admin/juegos/nuevo', 'GameController@add')->name('admin.games.add');
+	Route::post('/admin/juegos/nuevo', 'GameController@save')->name('admin.games.save');
+	Route::get('/admin/juegos/{id}', 'GameController@edit')->name('admin.games.edit');
+	Route::put('/admin/juegos/{id}', 'GameController@update')->name('admin.games.update');
+	Route::delete('/admin/juegos/eliminar/{id}', 'GameController@destroy')->name('admin.games.destroy');
+	Route::get('/admin/juegos/eliminar-seleccionados/{ids}', 'GameController@destroyMany')->name('admin.games.destroy.many');
+	Route::get('/admin/juegos/ver/{id}', 'GameController@view')->name('admin.games.view');
+	Route::get('/admin/juegos/duplicar/{id}', 'GameController@duplicate')->name('admin.games.duplicate');
+	Route::get('/admin/juegos/duplicar-seleccionados/{ids}', 'GameController@duplicateMany')->name('admin.games.duplicate.many');
+	Route::get('/admin/juegos/exportar/{filename}/{type}/{filterName}/{filterCategory}/{order}/{ids?}', 'GameController@exportFile')->name('admin.games.export.file');
+	Route::post('/admin/juegos/importar', 'GameController@importFile')->name('admin.games.import.file');
+
 	//Teams Categories
 	Route::get('/admin/categorias_equipos', 'TeamCategoryController@index')->name('admin.teams_categories');
 	Route::get('/admin/categorias_equipos/nueva', 'TeamCategoryController@add')->name('admin.teams_categories.add');
@@ -101,6 +115,20 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/jugadores/acciones/desenlazar-imagen-seleccionados/{ids}', 'PlayerController@unlinkWebImageMany')->name('admin.players.unlink_web_image.many');
 	Route::get('/admin/jugadores/acciones/enlazar_imagenes/{www}', 'PlayerController@linkWebImages')->name('admin.players.link_web_images');
 	Route::get('/admin/jugadores/acciones/desenlazar_imagenes', 'PlayerController@unlinkWebImages')->name('admin.players.unlink_web_images');
+
+	//Table Zones
+	Route::get('/admin/marcado_de_zonas', 'TableZoneController@index')->name('admin.table_zones');
+	Route::get('/admin/marcado_de_zonas/nuevo', 'TableZoneController@add')->name('admin.table_zones.add');
+	Route::post('/admin/marcado_de_zonas/nuevo', 'TableZoneController@save')->name('admin.table_zones.save');
+	Route::get('/admin/marcado_de_zonas/{id}', 'TableZoneController@edit')->name('admin.table_zones.edit');
+	Route::put('/admin/marcado_de_zonas/{id}', 'TableZoneController@update')->name('admin.table_zones.update');
+	Route::delete('/admin/marcado_de_zonas/eliminar/{id}', 'TableZoneController@destroy')->name('admin.table_zones.destroy');
+	Route::get('/admin/marcado_de_zonas/eliminar-seleccionados/{ids}', 'TableZoneController@destroyMany')->name('admin.table_zones.destroy.many');
+	Route::get('/admin/marcado_de_zonas/ver/{id}', 'TableZoneController@view')->name('admin.table_zones.view');
+	Route::get('/admin/marcado_de_zonas/duplicar/{id}', 'TableZoneController@duplicate')->name('admin.table_zones.duplicate');
+	Route::get('/admin/marcado_de_zonas/duplicar-seleccionados/{ids}', 'TableZoneController@duplicateMany')->name('admin.table_zones.duplicate.many');
+	Route::get('/admin/marcado_de_zonas/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'TableZoneController@exportFile')->name('admin.table_zones.export.file');
+	Route::post('/admin/marcado_de_zonas/importar', 'TableZoneController@importFile')->name('admin.table_zones.import.file');
 
 	// Seasons
 	Route::get('/admin/temporadas', 'SeasonController@index')->name('admin.seasons');

@@ -68,7 +68,7 @@
                 </table>
 
                 <div id="accordion">
-                    <div class="card">
+                    <div class="card mb-1 mt-3">
                         <div class="card-header">
                             <a class="card-title accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#sanctions">Sancionar partido</a>
                         </div>
@@ -205,11 +205,11 @@
 
 
 
-            </div> {{-- main-content --}}
-
             <div class="border-top mt-2 py-3">
                 <input type="submit" class="btn btn-primary" value="Enviar resultado">
             </div>
+
+            </div> {{-- main-content --}}
         </form>
     </div>
 </div>

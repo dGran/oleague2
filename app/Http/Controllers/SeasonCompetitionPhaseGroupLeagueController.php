@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TableZone;
 use App\SeasonCompetitionPhaseGroup;
 use App\SeasonCompetitionPhaseGroupParticipant;
 use App\SeasonCompetitionPhaseGroupLeague;
 use App\SeasonCompetitionPhaseGroupLeagueDay;
 use App\SeasonCompetitionPhaseGroupLeagueDayMatch;
+use App\SeasonCompetitionPhaseGroupLeagueTableZone;
 
 use Illuminate\Database\Eloquent\Collection;
 
@@ -22,8 +24,17 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $league = $this->check_league($group);
+    	$table_zones = TableZone::orderBy('name', 'asc')->get();
+    	if ($league->table_zones->count() == 0) {
+    		foreach ($group->participants as $key => $p) {
+    			$league_table_zone = new SeasonCompetitionPhaseGroupLeagueTableZone;
+    			$league_table_zone->league_id = $league->id;
+    			$league_table_zone->position = $key + 1;
+    			$league_table_zone->save();
+    		}
+    	}
 
-        return view('admin.seasons_competitions_phases_groups_leagues.index', compact('group', 'league'));
+        return view('admin.seasons_competitions_phases_groups_leagues.index', compact('group', 'league', 'table_zones'));
     }
 
     public function save($competition_slug, $phase_slug, $group_slug, $id)
@@ -32,6 +43,18 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         $league = SeasonCompetitionPhaseGroupLeague::find($id);
 
         if ($league) {
+
+        	foreach ($group->participants as $key => $p) {
+        		$pos = $key + 1;
+        		$pos_value = request()->{"position".$pos};
+
+        		$league_table_zone = SeasonCompetitionPhaseGroupLeagueTableZone::where('league_id', '=', $league->id)->where('position', '=', $pos)->first();
+        		if ($league_table_zone) {
+        			$league_table_zone->table_zone_id = $pos_value;
+        			$league_table_zone->save();
+        		}
+        	}
+
             $data = request()->all();
             $data['group_id'] = $group->id;
             $data['stats_mvp'] = request()->stats_mvp ? 1 : 0;
@@ -112,7 +135,31 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 				'pts' => $data['pts'],
 			]);
 		}
-		$table_participants = $table_participants->sortByDesc('gf')->sortByDesc('avg')->sortBy('ps')->sortByDesc('pts');
+
+		$table_participants = $table_participants->sortByDesc('gf')->sortByDesc('avg')->sortBy('ps')->sortByDesc('pts')->values();
+		$table_participants2 = collect();
+			$zones = [];
+			foreach ($league->table_zones as $key => $table_zone) {
+				$zones[$key] = SeasonCompetitionPhaseGroupLeagueTableZone::where('league_id', '=', $league->id)->where('position', '=', $key+1)->first()->table_zone;
+			}
+
+			foreach ($table_participants as $key => $tp) {
+				$table_participants2->push([
+					'participant' => $table_participants[$key]['participant'],
+			        'pj' => $table_participants[$key]['pj'],
+			        'pg' => $table_participants[$key]['pg'],
+			        'pe' => $table_participants[$key]['pe'],
+			        'pp' => $table_participants[$key]['pp'],
+			        'ps' => $table_participants[$key]['ps'],
+			        'gf' => $table_participants[$key]['gf'],
+			        'gc' => $table_participants[$key]['gc'],
+			        'avg' => $table_participants[$key]['avg'],
+			        'pts' => $table_participants[$key]['pts'],
+			        'table_zone' => $zones[$key],
+				]);
+			}
+			$table_participants = $table_participants2;
+		// }
 
         return view('admin.seasons_competitions_phases_groups_leagues.table', compact('group', 'league', 'table_participants'));
     }

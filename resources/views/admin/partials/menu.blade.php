@@ -137,6 +137,22 @@
         </span>
     </a>
 </li>
+<li class="item {{ Request::is('admin/marcado_de_zonas*') ? 'current' : '' }}">
+    <a href="{{ route('admin.table_zones') }}">
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Marcado de zonas
+        </span>
+    </a>
+</li>
+<li class="item {{ Request::is('admin/juegos*') ? 'current' : '' }}">
+    <a href="{{ route('admin.games') }}">
+        <span>
+            <i class="fas fa-table fa-fw mr-2"></i>
+            Juegos
+        </span>
+    </a>
+</li>
 
 <li class="section">
     Notificaciones

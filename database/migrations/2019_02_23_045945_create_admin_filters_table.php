@@ -16,6 +16,10 @@ class CreateAdminFiltersTable extends Migration
         Schema::create('admin_filters', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("user_id")->unsigned()->index();
+            $table->string("game_filterName")->nullable();
+            $table->string("game_order")->nullable();
+            $table->string("game_pagination")->nullable();
+            $table->string("game_page")->nullable();
             $table->string("teamCategories_filterName")->nullable();
             $table->string("teamCategories_order")->nullable();
             $table->string("teamCategories_pagination")->nullable();
@@ -37,6 +41,10 @@ class CreateAdminFiltersTable extends Migration
             $table->string("player_order")->nullable();
             $table->string("player_pagination")->nullable();
             $table->string("player_page")->nullable();
+            $table->string("table_zone_filterName")->nullable();
+            $table->string("table_zone_order")->nullable();
+            $table->string("table_zone_pagination")->nullable();
+            $table->string("table_zone_page")->nullable();
             $table->string("season_filterName")->nullable();
             $table->string("season_order")->nullable();
             $table->string("season_pagination")->nullable();

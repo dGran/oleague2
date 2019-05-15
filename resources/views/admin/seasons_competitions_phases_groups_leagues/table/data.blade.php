@@ -33,12 +33,8 @@
 		@foreach ($table_participants as $tp)
 			<tr>
 				<td class="zones">
-					@if ($loop->iteration < 3)
-						<img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Uefa_champions_league_logo.png" alt="">
-					@elseif ($loop->iteration < 5)
-						<img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b4df844d-29cf-487f-90c9-a64adee0f81e/d2yab2j-799fd838-d1f2-4d53-9278-1a836eb84ed3.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2I0ZGY4NDRkLTI5Y2YtNDg3Zi05MGM5LWE2NGFkZWUwZjgxZVwvZDJ5YWIyai03OTlmZDgzOC1kMWYyLTRkNTMtOTI3OC0xYTgzNmViODRlZDMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.XIwzaDFqOhBGHUymo4cD-feyQqyslu7F-_Psyc5Rb9U" alt="">
-					@elseif ($loop->iteration == 8)
-						<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Red_Arrow_Down.svg/1024px-Red_Arrow_Down.svg.png" alt="">
+					@if ($tp['table_zone'])
+						<img src="{{ asset($tp['table_zone']->getImgFormatted()) }}" alt="">
 					@endif
 
 				</td>

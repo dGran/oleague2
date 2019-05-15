@@ -76,55 +76,57 @@
                 </div>
             </div>
         @endif
-
         <h5 class="pt-3 pb-1 m-0 border-top"><strong>Marcado de zonas</strong></h5>
         <div class="form-group row">
             <div class="col-12 col-sm-6">
-                @foreach ($group->participants as $participant)
-                    <label for="zone{{ $loop->iteration }}" class="pt-3">Posición {{ $loop->iteration }}</label>
-                    <select class="selectpicker form-control" name="zone{{ $loop->iteration }}" id="zone{{ $loop->iteration }}">
+                @foreach ($league->table_zones as $league_table_zone)
+                    <label for="position{{ $loop->iteration }}" class="pt-3">Posición {{ $loop->iteration }}</label>
+                    <select class="selectpicker form-control" name="position{{ $loop->iteration }}" id="position{{ $loop->iteration }}">
                         <option selected value="0">Ninguno</option>
-                        <option value="1">Champions League</option>
-                        <option value="2">Europa League</option>
-                        <option value="3">Ascenso</option>
-                        <option value="4">Descenso</option>
+                        @foreach ($table_zones as $zone)
+                            @if ($league_table_zone->table_zone_id == $zone->id)
+                                <option selected value="{{ $zone->id }}">{{ $zone->name }}</option>
+                            @else
+                                <option value="{{ $zone->id }}">{{ $zone->name }}</option>
+                            @endif
+                        @endforeach
                     </select>
                 @endforeach
-                <br>
-                crear tabla marcado de zonas para poder editar todas las posiblidades que queramos usar
             </div>
 
         </div>
 
-        <h5 class="py-3 m-0 border-top"><strong>Estadísticas</strong></h5>
-        <div class="form-group row">
-            <div class="col-6 col-lg-3">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="stats_mvp" name="stats_mvp" {{ $league && $league->stats_mvp ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="stats_mvp">MVP</label>
-                </div>
+        @if ($group->phase->competition->season->use_rosters)
+            <h5 class="py-3 m-0 border-top"><strong>Estadísticas</strong></h5>
+            <div class="form-group row">
+                <div class="col-6 col-lg-3">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="stats_mvp" name="stats_mvp" {{ $league && $league->stats_mvp ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="stats_mvp">MVP</label>
+                    </div>
 
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="stats_goals" name="stats_goals" {{ $league && $league->stats_goals ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="stats_goals">Goleadores</label>
-                </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="stats_goals" name="stats_goals" {{ $league && $league->stats_goals ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="stats_goals">Goleadores</label>
+                    </div>
 
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="stats_assists" name="stats_assists" {{ $league && $league->stats_assists ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="stats_assists">Asistencias</label>
-                </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="stats_assists" name="stats_assists" {{ $league && $league->stats_assists ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="stats_assists">Asistencias</label>
+                    </div>
 
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="stats_yellow_cards" name="stats_yellow_cards" {{ $league && $league->stats_yellow_cards ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="stats_yellow_cards">Tarjetas Amarillas</label>
-                </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="stats_yellow_cards" name="stats_yellow_cards" {{ $league && $league->stats_yellow_cards ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="stats_yellow_cards">Tarjetas Amarillas</label>
+                    </div>
 
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="stats_red_cards" name="stats_red_cards" {{ $league && $league->stats_red_cards ? 'checked' : '' }}>
-                    <label class="custom-control-label" for="stats_red_cards">Tarjetas Rojas</label>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="stats_red_cards" name="stats_red_cards" {{ $league && $league->stats_red_cards ? 'checked' : '' }}>
+                        <label class="custom-control-label" for="stats_red_cards">Tarjetas Rojas</label>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
 
 
     </div>
