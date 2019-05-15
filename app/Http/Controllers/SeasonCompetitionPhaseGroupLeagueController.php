@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TableZone;
+use App\SeasonPlayer;
+use App\LeagueStat;
 use App\SeasonCompetitionPhaseGroup;
 use App\SeasonCompetitionPhaseGroupParticipant;
 use App\SeasonCompetitionPhaseGroupLeague;
@@ -80,7 +82,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         }
     }
 
-    public function calendar($competition_slug, $league_slug, $group_slug)
+    public function calendar($competition_slug, $phase_slug, $group_slug)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $league = $this->check_league($group);
@@ -88,7 +90,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         return view('admin.seasons_competitions_phases_groups_leagues.calendar', compact('group', 'league'));
     }
 
-    public function calendar_generate($competition_slug, $league_slug, $group_slug)
+    public function calendar_generate($competition_slug, $phase_slug, $group_slug)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $league = $this->check_league($group);
@@ -113,7 +115,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         return back()->with('success', 'Se han generado las jornadas de la liga correctamente.');
     }
 
-    public function table($competition_slug, $league_slug, $group_slug)
+    public function table($competition_slug, $phase_slug, $group_slug)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $league = $this->check_league($group);
@@ -164,7 +166,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         return view('admin.seasons_competitions_phases_groups_leagues.table', compact('group', 'league', 'table_participants'));
     }
 
-    public function editMatch($competition_slug, $league_slug, $group_slug, $id)
+    public function editMatch($competition_slug, $phase_slug, $group_slug, $id)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
@@ -172,7 +174,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         return view('admin.seasons_competitions_phases_groups_leagues.calendar.match', compact('match', 'group'))->render();
     }
 
-    public function updateMatch($competition_slug, $league_slug, $group_slug, $id)
+    public function updateMatch($competition_slug, $phase_slug, $group_slug, $id)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
@@ -184,10 +186,68 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         }
         $match->save();
 
+        if ($match->day->league->has_stats()) {
+    		$local_players = SeasonPlayer::where('participant_id', '=', $match->local_participant->participant->id)->get();
+    		foreach ($local_players as $player) {
+    			if ($match->day->league->stats_goals) {
+        			$goals = request()->{"stats_goals_".$player->id};
+        		}
+    			if ($match->day->league->stats_assists) {
+        			$assists = request()->{"stats_assists_".$player->id};
+        		}
+    			if ($match->day->league->stats_yellow_cards) {
+        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+        		}
+    			if ($match->day->league->stats_red_cards) {
+        			$red_cards = request()->{"stats_red_cards_".$player->id};
+        		}
+    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+    				$stat = new LeagueStat;
+    				$stat->match_id = $match->id;
+    				$stat->day_id = $match->day->id;
+    				$stat->league_id = $match->day->league->id;
+    				$stat->player_id = $player->id;
+    				if ($goals > 0) { $stat->goals = $goals; }
+    				if ($assists > 0) { $stat->assists = $assists; }
+    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+    				$stat->save();
+    			}
+    		}
+
+    		$visitor_players = SeasonPlayer::where('participant_id', '=', $match->visitor_participant->participant->id)->get();
+    		foreach ($visitor_players as $player) {
+    			if ($match->day->league->stats_goals) {
+        			$goals = request()->{"stats_goals_".$player->id};
+        		}
+    			if ($match->day->league->stats_assists) {
+        			$assists = request()->{"stats_assists_".$player->id};
+        		}
+    			if ($match->day->league->stats_yellow_cards) {
+        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+        		}
+    			if ($match->day->league->stats_red_cards) {
+        			$red_cards = request()->{"stats_red_cards_".$player->id};
+        		}
+    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+    				$stat = new LeagueStat;
+    				$stat->match_id = $match->id;
+    				$stat->day_id = $match->day->id;
+    				$stat->league_id = $match->day->league->id;
+    				$stat->player_id = $player->id;
+    				if ($goals > 0) { $stat->goals = $goals; }
+    				if ($assists > 0) { $stat->assists = $assists; }
+    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+    				$stat->save();
+    			}
+    		}
+        }
+
         return back()->with('success', 'Resultado registrado correctamente.');
     }
 
-    public function resetMatch($competition_slug, $league_slug, $group_slug, $id)
+    public function resetMatch($competition_slug, $phase_slug, $group_slug, $id)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
@@ -198,6 +258,18 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         $match->save();
 
         return back()->with('success', 'Resultado reseteado correctamente.');
+    }
+
+    public function stats($competition_slug, $phase_slug, $group_slug)
+    {
+    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
+    	$league = $this->check_league($group);
+    	$stats_goals = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('goals')->orderBy('goals', 'desc')->get();
+    	$stats_assists = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('assists')->orderBy('assists', 'desc')->get();
+    	$stats_yellow_cards = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('yellow_cards')->orderBy('yellow_cards', 'desc')->get();
+    	$stats_red_cards = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('red_cards')->orderBy('red_cards', 'desc')->get();
+
+        return view('admin.seasons_competitions_phases_groups_leagues.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league'));
     }
 
 

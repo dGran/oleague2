@@ -69,11 +69,11 @@
 
                 <div id="accordion">
                     <div class="card mb-1 mt-3">
-                        <div class="card-header">
-                            <a class="card-title accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#sanctions">Sancionar partido</a>
+                        <div class="card-header p-0 m-0 border-bottom-0">
+                            <a class="card-title accordion-toggle d-block m-0 px-3 py-2" data-toggle="collapse" data-parent="#accordion" href="#sanctions">Sancionar partido</a>
                         </div>
 
-                        <div class="card-collapse collapse in" id="sanctions">
+                        <div class="card-collapse collapse in border-top" id="sanctions">
                             <div class="card-body">
                                 <div class="d-block">
                                     <div class="pretty p-pulse p-default p-round p-fill text-right">
@@ -105,111 +105,148 @@
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="card-header">
-                            <a class="card-title accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#stats">Estadísticas</a>
-                        </div>
+                    @if ($match->day->league->group->phase->competition->season->use_rosters)
+                        <div class="card">
+                        <div class="card-header p-0 m-0 border-bottom-0">
+                                <a class="card-title accordion-toggle d-block m-0 px-3 py-2 {{ !$match->day->league->has_stats() ? 'disabled' : '' }}" data-toggle="collapse" data-parent="#accordion" href="#stats">Estadísticas</a>
+                            </div>
 
-                        <div class="card-collapse collapse" id="stats" >
-                            <div class="card-body">
-                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                {{-- <ul class="nav nav-tabs" id="myTab" role="tablist"> --}}
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="local-tab" data-toggle="tab" href="#local" role="tab" aria-controls="local" aria-selected="true">{{ $match->local_participant->participant->name() }}</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="visitor-tab" data-toggle="tab" href="#visitor" role="tab" aria-controls="visitor" aria-selected="false">{{ $match->visitor_participant->participant->name() }}</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="local" role="tabpanel" aria-labelledby="local-tab">
-                                        <table class="table">
-                                            <tr>
-                                                <td></td>
-                                                <td class="text-center">
-                                                    <small class="d-block">Goles</small>
-                                                    <i class="fas fa-futbol"></i>
-                                                </td>
-                                                <td class="text-center">
-                                                    <small class="d-block">Asis.</small>
-                                                    <i class="icon-soccer_assist"></i>
-                                                </td>
-                                                <td class="text-center">
-                                                    <small class="d-block">Amarilla</small>
-                                                    <i class="icon-soccer_card text-warning"></i>
-                                                </td>
-                                                <td class="text-center">
-                                                    <small class="d-block">Roja</small>
-                                                    <i class="icon-soccer_card text-danger"></i>
-                                                </td>
-                                            </tr>
-                                            @foreach ($match->local_participant->participant->players as $player)
+                            <div class="card-collapse collapse border-top" id="stats" >
+                                <div class="card-body">
+                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="local-tab" data-toggle="tab" href="#local" role="tab" aria-controls="local" aria-selected="true">{{ $match->local_participant->participant->name() }}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="visitor-tab" data-toggle="tab" href="#visitor" role="tab" aria-controls="visitor" aria-selected="false">{{ $match->visitor_participant->participant->name() }}</a>
+                                        </li>
+                                        @if ($match->day->league->stats_mvp)
+                                            <li class="nav-item">
+                                                <a class="nav-link" id="mvp-tab" data-toggle="tab" href="#mvp" role="tab" aria-controls="mvp" aria-selected="false">MVP</a>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+
+                                        <div class="tab-pane fade show active" id="local" role="tabpanel" aria-labelledby="local-tab">
+                                            <table class="table">
                                                 <tr>
-                                                    <td width="100%">
-                                                        <img src="{{ $player->player->getImgFormatted() }}" alt="" width="24">
-                                                        <small>{{ $player->player->name }}</small>
+                                                    <td></td>
+                                                    <td class="text-center">
+                                                        <small class="d-block">Goles</small>
+                                                        <i class="fas fa-futbol"></i>
                                                     </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em">
+                                                    <td class="text-center">
+                                                        <small class="d-block">Asis.</small>
+                                                        <i class="icon-soccer_assist"></i>
                                                     </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em">
+                                                    <td class="text-center">
+                                                        <small class="d-block">Amarilla</small>
+                                                        <i class="icon-soccer_card text-warning"></i>
                                                     </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em">
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em">
+                                                    <td class="text-center">
+                                                        <small class="d-block">Roja</small>
+                                                        <i class="icon-soccer_card text-danger"></i>
                                                     </td>
                                                 </tr>
-                                            @endforeach
-                                        </table>
-                                    </div>
-                                    <div class="tab-pane fade" id="visitor" role="tabpanel" aria-labelledby="visitor-tab">
-                                        <table>
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <small>Cantidad</small>
-                                                </td>
-                                            </tr>
-                                            @foreach ($match->visitor_participant->participant->players as $player)
+                                                @foreach ($match->local_participant->participant->players as $player)
+                                                    <tr>
+                                                        <td width="100%">
+                                                            <img src="{{ $player->player->getImgFormatted() }}" alt="" width="24">
+                                                            <small>{{ $player->player->name }}</small>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_goals ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_assists ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_yellow_cards ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_red_cards ? 'disabled' : '' }}>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div> {{-- tab-pane --}}
+
+                                        <div class="tab-pane fade show" id="visitor" role="tabpanel" aria-labelledby="visitor-tab">
+                                            <table class="table">
                                                 <tr>
-                                                    <td>
-                                                        <img src="{{ $player->player->getImgFormatted() }}" alt="" width="24">
-                                                        <small>{{ $player->player->name }}</small>
+                                                    <td></td>
+                                                    <td class="text-center">
+                                                        <small class="d-block">Goles</small>
+                                                        <i class="fas fa-futbol"></i>
                                                     </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3.5em; padding: 0.25em 0.5em">
+                                                    <td class="text-center">
+                                                        <small class="d-block">Asis.</small>
+                                                        <i class="icon-soccer_assist"></i>
                                                     </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3.5em; padding: 0.25em 0.5em">
+                                                    <td class="text-center">
+                                                        <small class="d-block">Amarilla</small>
+                                                        <i class="icon-soccer_card text-warning"></i>
                                                     </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3.5em; padding: 0.25em 0.5em">
-                                                    </td>
-                                                    <td>
-                                                        <input type="number" class="form-control" style="font-size: 80%; width: 3.5em; padding: 0.25em 0.5em">
+                                                    <td class="text-center">
+                                                        <small class="d-block">Roja</small>
+                                                        <i class="icon-soccer_card text-danger"></i>
                                                     </td>
                                                 </tr>
-                                            @endforeach
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
+                                                @foreach ($match->visitor_participant->participant->players as $player)
+                                                    <tr>
+                                                        <td width="100%">
+                                                            <img src="{{ $player->player->getImgFormatted() }}" alt="" width="24">
+                                                            <small>{{ $player->player->name }}</small>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_goals ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_assists ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_yellow_cards ? 'disabled' : '' }}>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_red_cards ? 'disabled' : '' }}>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div> {{-- tab-pane --}}
 
-                </div>
+                                        <div class="tab-pane fade" id="mvp" role="tabpanel" aria-labelledby="mvp-tab">
+                                            <select class="form-control" name="stats_mvp" id="stats_mvp" data-live-search="true" data-width="auto">
+                                                <option value="0">Ninguno</option>
+                                                <optgroup label="{{ $match->local_participant->participant->name() }}">
+                                                @foreach ($match->local_participant->participant->players as $player)
+                                                    <option value="{{ $player->id }}">{{ $player->player->name }}</option>
+                                                @endforeach
+                                                </optgroup>
+                                                <optgroup label="{{ $match->visitor_participant->participant->name() }}">
+                                                @foreach ($match->visitor_participant->participant->players as $player)
+                                                    <option value="{{ $player->id }}">{{ $player->player->name }}</option>
+                                                @endforeach
+                                                </optgroup>
+                                            </select>
+                                        </div>  {{-- tab-pane --}}
 
+                                    </div> {{-- tab-content --}}
 
+                                </div> {{-- card-body --}}
+                            </div> {{-- stats --}}
+                        </div> {{-- card --}}
+                    @endif
+
+                </div> {{-- accordion --}}
+
+            </div> {{-- main-content --}}
 
             <div class="border-top mt-2 py-3">
                 <input type="submit" class="btn btn-primary" value="Enviar resultado">
             </div>
 
-            </div> {{-- main-content --}}
         </form>
-    </div>
-</div>
+    </div> {{-- modal-body --}}
+</div> {{-- modal-content --}}

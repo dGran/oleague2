@@ -25,6 +25,7 @@
                 datatype    : 'html',
             }).done(function(data){
                 $('#modal-dialog-update').html(data);
+                $('#stats_mvp').selectpicker('refresh');
             });
         });
 
