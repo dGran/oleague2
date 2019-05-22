@@ -70,7 +70,7 @@
                         </a>
                     </td>
                     <td class="d-none d-sm-table-cell">
-                        <a href="{{ route('admin.season_competitions_phases_groups_leagues', [$phase->competition->slug, $phase->slug, $group->slug]) }}" class="btn btn-light border" id="btnCompetition{{ $group->id }}">
+                        <a href="{{ $phase->mode = 'league' ? route('admin.season_competitions_phases_groups_leagues', [$phase->competition->slug, $phase->slug, $group->slug]) : route('admin.season_competitions_phases_groups_playoffs', [$phase->competition->slug, $phase->slug, $group->slug]) }}" class="btn btn-light border" id="btnCompetition{{ $group->id }}">
                             <div class="d-block d-lg-none">
                                 <i class="fas fa-futbol"></i>
                             </div>

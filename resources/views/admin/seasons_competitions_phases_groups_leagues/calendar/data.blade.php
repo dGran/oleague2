@@ -44,7 +44,7 @@
             Actualmente no existen partidos
 	    </div>
 	@else
-	    <table class="calendar">
+	    <table class="table calendar">
 {{-- 	        <colgroup>
 	        	<col width="50%" />
 	        	<col width="0%" />
@@ -54,7 +54,7 @@
 	        </colgroup> --}}
 			@foreach ($league->days as $day)
 				<tr class="days border">
-					<td colspan="6" class="py-2">
+					<td colspan="6" class="p-2">
 						<strong class="text-uppercase">Jornada {{ $day->order }}</strong>
 					</td>
 				</tr>

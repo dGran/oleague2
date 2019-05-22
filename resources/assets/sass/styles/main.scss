@@ -256,6 +256,80 @@ main {
 			}
 		}
 	}
+	.player-card {
+background: rgba(226,226,226,1);
+background: -moz-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(226,226,226,1)), color-stop(50%, rgba(219,219,219,1)), color-stop(51%, rgba(209,209,209,1)), color-stop(100%, rgba(254,254,254,1)));
+background: -webkit-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: -o-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: -ms-linear-gradient(left, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: linear-gradient(to right, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=1 );
+
+		width: 140px;
+		height: 90px;
+		border-radius: 12px;
+		position: relative;
+		display: table-cell;
+		border: 1px solid #fff;
+		&.defense {
+			background: rgba(217,101,69,1);
+			background: -moz-linear-gradient(left, rgba(217,101,69,1) 0%, rgba(217,127,104,1) 50%, rgba(207,73,42,1) 51%, rgba(207,77,48,1) 71%, rgba(201,80,59,1) 100%);
+			background: -webkit-gradient(left top, right top, color-stop(0%, rgba(217,101,69,1)), color-stop(50%, rgba(217,127,104,1)), color-stop(51%, rgba(207,73,42,1)), color-stop(71%, rgba(207,77,48,1)), color-stop(100%, rgba(201,80,59,1)));
+			background: -webkit-linear-gradient(left, rgba(217,101,69,1) 0%, rgba(217,127,104,1) 50%, rgba(207,73,42,1) 51%, rgba(207,77,48,1) 71%, rgba(201,80,59,1) 100%);
+			background: -o-linear-gradient(left, rgba(217,101,69,1) 0%, rgba(217,127,104,1) 50%, rgba(207,73,42,1) 51%, rgba(207,77,48,1) 71%, rgba(201,80,59,1) 100%);
+			background: -ms-linear-gradient(left, rgba(217,101,69,1) 0%, rgba(217,127,104,1) 50%, rgba(207,73,42,1) 51%, rgba(207,77,48,1) 71%, rgba(201,80,59,1) 100%);
+			background: linear-gradient(to right, rgba(217,101,69,1) 0%, rgba(217,127,104,1) 50%, rgba(207,73,42,1) 51%, rgba(207,77,48,1) 71%, rgba(201,80,59,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d96545', endColorstr='#c9503b', GradientType=1 );
+		}
+		&.clause {
+background: rgba(248,80,50,1);
+background: -moz-linear-gradient(left, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 50%, rgba(246,41,12,1) 51%, rgba(240,47,23,1) 71%, rgba(231,56,39,1) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(248,80,50,1)), color-stop(50%, rgba(241,111,92,1)), color-stop(51%, rgba(246,41,12,1)), color-stop(71%, rgba(240,47,23,1)), color-stop(100%, rgba(231,56,39,1)));
+background: -webkit-linear-gradient(left, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 50%, rgba(246,41,12,1) 51%, rgba(240,47,23,1) 71%, rgba(231,56,39,1) 100%);
+background: -o-linear-gradient(left, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 50%, rgba(246,41,12,1) 51%, rgba(240,47,23,1) 71%, rgba(231,56,39,1) 100%);
+background: -ms-linear-gradient(left, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 50%, rgba(246,41,12,1) 51%, rgba(240,47,23,1) 71%, rgba(231,56,39,1) 100%);
+background: linear-gradient(to right, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 50%, rgba(246,41,12,1) 51%, rgba(240,47,23,1) 71%, rgba(231,56,39,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#e73827', GradientType=1 );
+		}
+		.img {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			width: 110px;
+		}
+		.logo {
+			position: absolute;
+			left: 5px;
+			top: 10px;
+			width: 72px;
+		}
+		.position {
+			position: absolute;
+			left: 10px;
+			top: -5px;
+			font-size: 1.50em;
+			font-weight: bold;
+			color: #fff;
+		}
+		.overall {
+			position: absolute;
+			left: 5px;
+			top: 15px;
+			font-size: 2.25em;
+			font-weight: bold;
+			color: #fff;
+		}
+		.name {
+			position: absolute;
+			left: 5px;
+			bottom: 1px;
+			font-size: .65em;
+			text-transform: uppercase;
+			font-weight: bold;
+			color: yellow;
+		}
+	}
 }
 
 

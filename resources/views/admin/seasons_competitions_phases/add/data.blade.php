@@ -31,7 +31,7 @@
         <div class="form-group row">
             <label for="mode" class="col-sm-3 col-form-label">Formato</label>
             <div class="col-sm-9">
-                <select class="selectpicker form-control" name="mode" id="mode">
+                <select class="selectpicker form-control" name="mode" id="mode" data-container="body">
                     <option value="league">Liga</option>
                     <option value="playoffs">Playoffs</option>
                 </select>

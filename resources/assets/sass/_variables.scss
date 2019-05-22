@@ -89,10 +89,10 @@ $default-border-color:	#ddd;
 // $text-primary: #6A6B6C;
 
 // Body
-$body-bg: #f2f2f2;
+// $body-bg: #fff;
 // $body-bg: #fff;
 $body-bg:                   $white !default;
-$body-color:                $gray-700 !default;
+// $body-color:                $gray-700 !default;
 
 // Links
 //
@@ -111,7 +111,7 @@ $line-height-base: 1.6;
 
 // Borders
 $border-width:                1px !default;
-$border-color:                $gray-100 !default;
+$border-color:                #ddd !default;
 
 // Placeholder
 $input-placeholder-color: $gray-400 !default;

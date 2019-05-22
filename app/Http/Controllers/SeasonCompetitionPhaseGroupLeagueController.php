@@ -264,10 +264,31 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
     	$league = $this->check_league($group);
-    	$stats_goals = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('goals')->orderBy('goals', 'desc')->get();
-    	$stats_assists = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('assists')->orderBy('assists', 'desc')->get();
-    	$stats_yellow_cards = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('yellow_cards')->orderBy('yellow_cards', 'desc')->get();
-    	$stats_red_cards = LeagueStat::where('league_id', '=', $league->id)->whereNotNull('red_cards')->orderBy('red_cards', 'desc')->get();
+
+		$stats_goals = LeagueStat::select('player_id', \DB::raw('SUM(goals) as goals'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('goals')
+            ->groupBy('player_id')
+            ->orderBy('goals', 'desc')
+            ->get();
+		$stats_assists = LeagueStat::select('player_id', \DB::raw('SUM(assists) as assists'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('assists')
+            ->groupBy('player_id')
+            ->orderBy('assists', 'desc')
+            ->get();
+		$stats_yellow_cards = LeagueStat::select('player_id', \DB::raw('SUM(yellow_cards) as yellow_cards'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('yellow_cards')
+            ->groupBy('player_id')
+            ->orderBy('yellow_cards', 'desc')
+            ->get();
+		$stats_red_cards = LeagueStat::select('player_id', \DB::raw('SUM(red_cards) as red_cards'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('red_cards')
+            ->groupBy('player_id')
+            ->orderBy('red_cards', 'desc')
+            ->get();
 
         return view('admin.seasons_competitions_phases_groups_leagues.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league'));
     }

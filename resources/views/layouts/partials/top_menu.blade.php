@@ -5,14 +5,17 @@
                 <i class="fas fa-bars" id="btn-menu"></i>
             </div>
             <div class="col d-none d-md-inline-block">
-                <figure class="logo d-none d-lg-inline-block">
-                    <img src="{{ asset('img/logo.png') }}" alt="logo">
-                </figure>
-                <h1>
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <figure class="logo d-none d-lg-inline-block">
+                        <img src="{{ asset('img/logo.png') }}" alt="logo">
+                    </figure>
+                    LigasPesXbox
+                </a>
+{{--                 <h1>
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
-                </h1>
+                </h1> --}}
             </div>
             <div class="col-auto d-none d-md-inline-block">
                 <nav>
@@ -24,7 +27,10 @@
             <div class="col-auto d-inline-block d-md-none">
                 <h1>
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        <figure class="logo">
+                            <img src="{{ asset('img/logo.png') }}" alt="logo">
+                        </figure>
+                        LigasPesXbox
                     </a>
                 </h1>
             </div>
