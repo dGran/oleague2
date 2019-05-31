@@ -15,7 +15,18 @@ class CreatePlayoffsTable extends Migration
     {
         Schema::create('playoffs', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer("group_id")->unsigned();
+
+            $table->boolean("predefined_rounds")->default(true);
+            $table->integer("rounds")->nullable();
+
+            $table->boolean("stats_mvp")->default(false);
+            $table->boolean("stats_goals")->default(false);
+            $table->boolean("stats_assists")->default(false);
+            $table->boolean("stats_yellow_cards")->default(false);
+            $table->boolean("stats_red_cards")->default(false);
+
+            $table->index('group_id', 'group_id_index');
         });
     }
 

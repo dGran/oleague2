@@ -235,26 +235,29 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/participantes/importar', 'SeasonCompetitionPhaseGroupParticipantController@importFile')->name('admin.season_competitions_phases_groups_participants.import.file');
 
 		// Season Competitions Phases Groups Leagues
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion', 'SeasonCompetitionPhaseGroupLeagueController@index')->name('admin.season_competitions_phases_groups_leagues');
-		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/{id}', 'SeasonCompetitionPhaseGroupLeagueController@save')->name('admin.season_competitions_phases_groups_leagues.save');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario', 'SeasonCompetitionPhaseGroupLeagueController@calendar')->name('admin.season_competitions_phases_groups_leagues.calendar');
-		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/generar', 'SeasonCompetitionPhaseGroupLeagueController@calendar_generate')->name('admin.season_competitions_phases_groups_leagues.calendar.generate');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/clasificacion', 'SeasonCompetitionPhaseGroupLeagueController@table')->name('admin.season_competitions_phases_groups_leagues.table');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/partido/{id}', 'SeasonCompetitionPhaseGroupLeagueController@editMatch')->name('admin.season_competitions_phases_groups_leagues.edit_match');
-		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/partido/{id}', 'SeasonCompetitionPhaseGroupLeagueController@updateMatch')->name('admin.season_competitions_phases_groups_leagues.update_match');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/partido/{id}/reset', 'SeasonCompetitionPhaseGroupLeagueController@resetMatch')->name('admin.season_competitions_phases_groups_leagues.reset_match');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/estadisticas', 'SeasonCompetitionPhaseGroupLeagueController@stats')->name('admin.season_competitions_phases_groups_leagues.stats');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga', 'SeasonCompetitionPhaseGroupLeagueController@index')->name('admin.season_competitions_phases_groups_leagues');
+		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/{id}', 'SeasonCompetitionPhaseGroupLeagueController@save')->name('admin.season_competitions_phases_groups_leagues.save');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/calendario', 'SeasonCompetitionPhaseGroupLeagueController@calendar')->name('admin.season_competitions_phases_groups_leagues.calendar');
+		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/calendario/generar', 'SeasonCompetitionPhaseGroupLeagueController@calendar_generate')->name('admin.season_competitions_phases_groups_leagues.calendar.generate');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/clasificacion', 'SeasonCompetitionPhaseGroupLeagueController@table')->name('admin.season_competitions_phases_groups_leagues.table');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/calendario/partido/{id}', 'SeasonCompetitionPhaseGroupLeagueController@editMatch')->name('admin.season_competitions_phases_groups_leagues.edit_match');
+		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/calendario/partido/{id}', 'SeasonCompetitionPhaseGroupLeagueController@updateMatch')->name('admin.season_competitions_phases_groups_leagues.update_match');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/calendario/partido/{id}/reset', 'SeasonCompetitionPhaseGroupLeagueController@resetMatch')->name('admin.season_competitions_phases_groups_leagues.reset_match');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/estadisticas', 'SeasonCompetitionPhaseGroupLeagueController@stats')->name('admin.season_competitions_phases_groups_leagues.stats');
 
 		// Season Competitions Phases Groups PlayOffs
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion', 'SeasonCompetitionPhaseGroupLeagueController@index')->name('admin.season_competitions_phases_groups_leagues');
-		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/{id}', 'SeasonCompetitionPhaseGroupLeagueController@save')->name('admin.season_competitions_phases_groups_leagues.save');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario', 'SeasonCompetitionPhaseGroupLeagueController@calendar')->name('admin.season_competitions_phases_groups_leagues.calendar');
-		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/generar', 'SeasonCompetitionPhaseGroupLeagueController@calendar_generate')->name('admin.season_competitions_phases_groups_leagues.calendar.generate');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/clasificacion', 'SeasonCompetitionPhaseGroupLeagueController@table')->name('admin.season_competitions_phases_groups_leagues.table');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/partido/{id}', 'SeasonCompetitionPhaseGroupLeagueController@editMatch')->name('admin.season_competitions_phases_groups_leagues.edit_match');
-		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/partido/{id}', 'SeasonCompetitionPhaseGroupLeagueController@updateMatch')->name('admin.season_competitions_phases_groups_leagues.update_match');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/calendario/partido/{id}/reset', 'SeasonCompetitionPhaseGroupLeagueController@resetMatch')->name('admin.season_competitions_phases_groups_leagues.reset_match');
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/competicion/estadisticas', 'SeasonCompetitionPhaseGroupLeagueController@stats')->name('admin.season_competitions_phases_groups_leagues.stats');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs', 'PlayOffController@index')->name('admin.season_competitions_phases_groups_playoffs');
+
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/sortear-emparejamientos/{round_id}', 'PlayOffController@generate_clashes')->name('admin.season_competitions_phases_groups_playoffs.generate_clashes');
+
+		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/{id}', 'PlayOffController@save')->name('admin.season_competitions_phases_groups_playoffs.save');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/rondas', 'PlayOffController@rounds')->name('admin.season_competitions_phases_groups_playoffs.rounds');
+		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/calendario/generar', 'PlayOffController@calendar_generate')->name('admin.season_competitions_phases_groups_playoffs.calendar.generate');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/clasificacion', 'PlayOffController@table')->name('admin.season_competitions_phases_groups_playoffs.table');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/calendario/partido/{id}', 'PlayOffController@editMatch')->name('admin.season_competitions_phases_groups_playoffs.edit_match');
+		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/calendario/partido/{id}', 'PlayOffController@updateMatch')->name('admin.season_competitions_phases_groups_playoffs.update_match');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/calendario/partido/{id}/reset', 'PlayOffController@resetMatch')->name('admin.season_competitions_phases_groups_playoffs.reset_match');
+		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/estadisticas', 'PlayOffController@stats')->name('admin.season_competitions_phases_groups_playoffs.stats');
 
 	});
 });
