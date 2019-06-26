@@ -106,6 +106,13 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 				$day->delete();
         	}
         }
+        // we check if the league has stats and we eliminate them
+        if ($league->has_stats()) {
+            $stats = LeagueStat::where('league_id', '=', $league->id)->get();
+            foreach ($stats as $stat) {
+                $stat->delete();
+            }
+        }
 
 		$second_round = request()->second_round ? 1 : 0;
 		$inverse_order = request()->inverse_order ? 1 : 0;
@@ -191,16 +198,24 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     		foreach ($local_players as $player) {
     			if ($match->day->league->stats_goals) {
         			$goals = request()->{"stats_goals_".$player->id};
-        		}
+        		} else {
+                    $goals = 0;
+                }
     			if ($match->day->league->stats_assists) {
         			$assists = request()->{"stats_assists_".$player->id};
-        		}
+                } else {
+                    $assists = 0;
+                }
     			if ($match->day->league->stats_yellow_cards) {
         			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
-        		}
+                } else {
+                    $yellow_cards = 0;
+                }
     			if ($match->day->league->stats_red_cards) {
         			$red_cards = request()->{"stats_red_cards_".$player->id};
-        		}
+                } else {
+                    $red_cards = 0;
+                }
     			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
     				$stat = new LeagueStat;
     				$stat->match_id = $match->id;
@@ -219,16 +234,24 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     		foreach ($visitor_players as $player) {
     			if ($match->day->league->stats_goals) {
         			$goals = request()->{"stats_goals_".$player->id};
-        		}
+                } else {
+                    $goals = 0;
+                }
     			if ($match->day->league->stats_assists) {
         			$assists = request()->{"stats_assists_".$player->id};
-        		}
+                } else {
+                    $assists = 0;
+                }
     			if ($match->day->league->stats_yellow_cards) {
         			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
-        		}
+                } else {
+                    $yellow_cards = 0;
+                }
     			if ($match->day->league->stats_red_cards) {
         			$red_cards = request()->{"stats_red_cards_".$player->id};
-        		}
+                } else {
+                    $red_cards = 0;
+                }
     			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
     				$stat = new LeagueStat;
     				$stat->match_id = $match->id;

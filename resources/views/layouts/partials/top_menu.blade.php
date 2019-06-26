@@ -1,7 +1,7 @@
 <section class="top-menu">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col d-inline-block d-md-none">
+            <div class="col d-inline-block d-md-none slide-in-fwd-left">
                 <i class="fas fa-bars" id="btn-menu"></i>
             </div>
             <div class="col d-none d-md-inline-block">
@@ -26,7 +26,7 @@
             </div>
             <div class="col-auto d-inline-block d-md-none">
                 <h1>
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand bounce-in-bck" href="{{ url('/') }}">
                         <figure class="logo">
                             <img src="{{ asset('img/logo.png') }}" alt="logo">
                         </figure>
@@ -42,7 +42,7 @@
                             <a href="{{ route('login') }}">Iniciar sesión</a> / <a href="{{ route('register') }}">Registrarse</a>
                         </div>
                         <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <figure class="user-img ml-3">
+                            <figure class="user-img ml-3 slide-in-fwd-right">
                                 <img src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
                             </figure>
                         </a>
@@ -50,13 +50,13 @@
                         @if (auth()->user()->hasProfile())
                             <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <figure class="user-img">
-                                    <img src="{{ auth()->user()->profile->avatar }}" alt="" class="rounded-circle">
+                                    <img src="{{ auth()->user()->profile->avatar }}" alt="" class="rounded-circle slide-in-fwd-right">
                                 </figure>
                             </a>
                         @else
                             <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <figure class="user-img">
-                                    <img src="{{ asset('img/avatars/default.png') }}" alt="" class="rounded-circle">
+                                    <img src="{{ asset('img/avatars/default.png') }}" alt="" class="rounded-circle slide-in-fwd-right">
                                 </figure>
                             </a>
                         @endif

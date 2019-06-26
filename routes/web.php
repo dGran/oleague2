@@ -20,6 +20,9 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 
 // Home Routes
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('clubs', 'HomeController@clubs')->name('clubs');
+Route::get('clubs/{slug}', 'HomeController@club')->name('club');
+Route::get('clubs/{slug}/plantilla', 'HomeController@clubRoster')->name('club.roster');
 Route::get('participantes', 'HomeController@participants')->name('participants');
 Route::get('competiciones', 'HomeController@competitions')->name('competitions');
 Route::get('competiciones/competicion', 'HomeController@competition')->name('competition');

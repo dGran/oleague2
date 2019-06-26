@@ -40,7 +40,7 @@ class PlayOffController extends Controller
         	$playoff = PlayOff::where('group_id', '=', $group->id)->get()->first();
         }
 
-        if ($playoff->rounds->count() == 0) {
+        if ($playoff->rounds && $playoff->rounds->count() == 0) {
         	$this->generate_rounds($playoff);
         }
 
@@ -100,7 +100,7 @@ class PlayOffController extends Controller
 				$part++;
 				$second_clash->local_id = $group_participants[$part]->id;
 				// $second_clash->local_id = $group_participants[$part]->user->id;
-				$second_clash->second_match = 1;
+				$second_clash->return_match = 1;
 				$second_clash->save();
 				$part++;
 			}

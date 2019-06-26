@@ -1,207 +1,259 @@
 @extends('layouts.app')
 
+@section('style')
+    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+@endsection
+
 @section('content')
 
 {{-- {{ $onlineUsersCount }} usuarios conectados --}}
+
+<div class="cover-page-wrap fade-in">
+
+    <div class="cover-page-container">
+
+        <div class="logos">
+            <img class="logo_game bounce-in-left" src="img/logo_pes2020.png" alt="">
+            <img class="logo_platform bounce-in-right" src="img/logo_xboxone.png" alt="">
+        </div>
+
+{{--         <div class="buttons p-4 text-center">
+            <a href="" class="btn btn-success">Registrate</a>
+            <a href="" class="btn btn-danger">Registrate</a>
+        </div> --}}
+
+        <p class="bounce-in-bck" style="text-align: center; padding-left: 1em; padding-right: 1em; padding-top: 320px; color: #00d4e4; font-size: 1.25em; font-weight: bold)">
+            <span style="text-shadow: 0 0 20px #ed1e79;">Torneos y campeonatos online<br>Pro Evolution Soccer - Xbox One</span>
+        </p>
+
+    </div>
+</div>
+
+{{-- <div class="container-fluid" style="overflow-x: hidden;">
+          <nav class="tabbable">
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+              <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+              <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+              <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+              <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+            </div>
+          </nav>
+          <div class="tab-content pt-2" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Home</div>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Profile</div>
+            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Contact</div>
+          </div>
+        </div> --}}
+
+
 <div class="container">
 
     <div class="row">
-        <div class="col-12 col-md-4">
-            <ul style="list-style: none; margin:0; padding: 0;">
-                <li class="border-top py-2 d-inline-block" style="display: table;">
-                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-bottom p-0 border">
-                        <figure style="position: absolute; left: -6px; top: -6px; padding: 4px; background: #fff;" class="rounded">
-                            <img src="https://4.bp.blogspot.com/-pzhf1Bwj0BU/WVQLiFBRvKI/AAAAAAABKO8/0tVqRhP4Lhok-RWxXIw13sIFteRmpbTIgCLcBGAs/s1600/FC%2BBarcelona128x.png" alt="" width="22">
-                        </figure>
+        <div class="col-12">
+{{--             <img src="https://www.mundodeportivo.com/r/GODO/MD/p6/Barca/Imagenes/2019/03/13/Recortada/img_rguillamet_20190313-224453_imagenes_md_otras_fuentes_champions-03-klvB-U461014157231diG-980x554@MundoDeportivo-Web.jpg" class="img-fluid" alt="" width="450"> --}}
+            <ul style="list-style: none; margin:0; padding: 0;" class="puff-in-tl">
 
-                        <img src="http://pesdb.net/pes2018/images/players/player_34881.png" alt="C. Ronaldo firma por el PSG" style="width: 100%; height: auto" class="pt-2">
-                        <div style="font-weight: 200; font-size: 10px; background: #f0f3fb" class="p-1">
-                            <img src="https://image.flaticon.com/icons/png/128/330/330597.png" alt="" width="16">
-                            DC / Media: 92
-                        </div>
-                        <div style="position: absolute; left: -10px; top: 80px; font-size: 11px; background: #09baab; padding: 0 5px; color: #fff; -webkit-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.75);
--moz-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.75);
-box-shadow: 4px 4px 5px -2px rgba(0,0,0,0.75); opacity: .75">
-                            CLAUSULAZO
-                        </div>
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
+
+                        <img src="img/microphone.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
+                        <small class="text-white" style="text-shadow: 0 0 20px #ed1e79;">Luizao</small>
                     </figure>
                     <div style="display: table-cell; padding-left: 8px;" class="align-top">
                         <ul style="list-style: none; margin:0; padding: 0">
                             <li>
-                                <span style="display: block; font-weight: 200; font-size: 11px">
-                                    FICHAJES - F.C.BARCELONA
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    RUEDA DE PRENSA - AJAX
                                 </span>
-                                <span style="display: block; font-size: 17px; font-weight: 500; line-height: 20px">
-                                    L. Suarez nuevo jugador del F.C.Barcelona
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                    "Konami me trolea"
                                 </span>
-                                <span style="display: block; font-size: 13px; font-weight: 200; line-height: 18px" class="mt-1">
-                                    Tras pago de clausula de 250 millones al Valencia
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    El técnico del Ajax explota y carga contra los desarrolladores de Konami. "Es muy injusto querer hacer cosas y no poder"
                                 </span>
                             </li>
                         </ul>
                     </div>
                 </li>
-            </div>
 
-            <div class="col-12 col-md-4">
 
-                <li class="border-top py-2 d-inline-block" style="display: table;">
-                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative" class="m-0 text-center align-bottom p-0 border">
-                        <figure style="position: absolute; left: -6px; top: -6px; padding: 4px; background: #fff;" class="rounded">
-                            <img src="https://2.bp.blogspot.com/-upfp9O0Prs4/WVkuKG3-BhI/AAAAAAABLN4/w1VNRlhmWvEvov1v40QAq1PtDPpYkZuegCLcBGAs/s1600/FC%2BZenit128x.png" alt="" width="22">
-                        </figure>
-                        <img src="http://pesdb.net/pes2018/images/players/player_60550.png" alt="C. Ronaldo firma por el PSG" style="width: 100%; height: auto" class="pt-2">
-                        <div style="font-weight: 200; font-size: 10px; background: #f0f3fb" class="p-1">
-                            <img src="http://icons.iconarchive.com/icons/wikipedia/flags/128/FR-France-Flag-icon.png" alt="" width="16">
-                            ED / Media: 78
-                        </div>
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
+
+                        <img src="https://seeklogo.com/images/F/FC_Barcelona-logo-D941E13B46-seeklogo.com.png" alt="" style="position:absolute; left: 10px; top: 0; width: 50px; height: auto" class="rounded">
+<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Flamengo_FC_%28Alegrete%29_-_3.png" alt="" style="position: absolute; right: 10px; top: 15px; width: 50px; height: auto" class="rounded">
+
+
+
                     </figure>
                     <div style="display: table-cell; padding-left: 8px;" class="align-top">
                         <ul style="list-style: none; margin:0; padding: 0">
                             <li>
-                                <span style="display: block; font-weight: 200; font-size: 11px">
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    COPA NORTE - FINAL
+                                </span>
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                    FC Barcelona vs Flamengo
+                                </span>
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    FC Barcelona de Maxi y Flamengo de ferminnn disputarán la final de Copa Norte
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+{{--                 <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    SORTEO DE PACKS
+                                </span>
+                    <img src="http://i61.tinypic.com/wph76.jpg" alt="" class="img-fluid">
+                </li> --}}
+
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
+
+                        <img src="img/winner.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
+                        <small class="text-white" style="text-shadow: 0 0 20px #ed1e79;">pAdRoNe</small>
+                    </figure>
+                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                        <ul style="list-style: none; margin:0; padding: 0">
+                            <li>
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    EUROPA LEAGUE - FINALIZADO
+                                </span>
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                    Zenit campeón
+                                </span>
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    El Zenit de pAdRoNe se proclama campeón del torneo Europa League
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
+
+                        <img src="img/microphone.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
+                        <small class="text-white" style="text-shadow: 0 0 20px #ed1e79;">padronee</small>
+                    </figure>
+                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                        <ul style="list-style: none; margin:0; padding: 0">
+                            <li>
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    RUEDA DE PRENSA - ZENIT
+                                </span>
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                    "Pollito no está en venta"
+                                </span>
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    Es el jugador más valioso del equipo, si alguien lo quiere que pase por caja. Lorem ipsum dolor sit amet, consectetur adipisicing elit
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
+
+                        <img src="img/score.png" alt="" style="padding: .5em; width: 100%; height: auto;" class="rounded">
+                    </figure>
+                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                        <ul style="list-style: none; margin:0; padding: 0">
+                            <li>
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    EUROPA LEAGUE - GRUPO A - JORNADA 3
+                                </span>
+                                <div style="display:table-cell; vertical-align: middle; " class="text-center">
+                                    <div class="d-inline-block">
+                                    <span style="font-size: 12px; font-weight: 500; line-height: 20px; color: #fff;">FLAMENGO</span>
+<span style="font-size: 9px; font-weight: 400; line-height: 10px; color: #fff; display:block">ferminnn</span>
+</div>
+<div class="d-inline-block align-top ml-1">
+                                    <figure class="m-0 text-center align-bottom p-0">
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/orE554NToSkH6nuwofe7Yg_96x96.png" alt="" style="width: 18px; height: auto;">
+                                    </figure>
+                                    </div>
+                                </div>
+                                <div class="px-2" style="display: table-cell; font-size: 17px; font-weight: 500; line-height: 30px; color: #fff; vertical-align: bottom; padding-bottom: 15px">
+                                    2 - 0
+                                </div>
+                                <div style="display:table-cell; vertical-align: middle; " class="text-center">
+<div class="d-inline-block align-top mr-1">
+                                    <figure class="m-0 text-center align-bottom p-0">
+                                    <img src="https://ssl.gstatic.com/onebox/media/sports/logos/orE554NToSkH6nuwofe7Yg_96x96.png" alt="" style="width: 18px; height: auto;">
+                                    </figure>
+                                    </div>
+                                    <div class="d-inline-block">
+                                    <span style="font-size: 12px; font-weight: 500; line-height: 20px; color: #fff;">FLAMENGO</span>
+<span style="font-size: 9px; font-weight: 400; line-height: 10px; color: #fff; display:block">ferminnn</span>
+</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
+
+                        <img src="http://pesdb.net/pes2019/images/players/60550.png" alt="L. Suarez firma por el PSG" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
+                    </figure>
+                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                        <ul style="list-style: none; margin:0; padding: 0">
+                            <li>
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
                                     FICHAJES - ZENIT
                                 </span>
-                                <span style="display: block; font-size: 17px; font-weight: 500; line-height: 20px">
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
                                     A. Saint-Maximin "Pollito" firma por el ZENIT
                                 </span>
-                                <span style="display: block; font-size: 13px; font-weight: 200; line-height: 18px" class="mt-1">
-                                    Se incorpora como agente libre.
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    Se incorpora como agente libre
                                 </span>
                             </li>
                         </ul>
                     </div>
                 </li>
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
 
-
-                <li class="border-top py-2">
-                    <div style="display: block; font-weight: 200; font-size: 11px;" class="clearfix">
-                        <span class="float-left">PARTIDO FINALIZADO</span>
-                        <span class="float-right">ayer, 12:31</span>
-                    </div>
-                    <div style="display: block; background: #e9ecef; border-top: 2px solid #ced4da" class="align-top p-2">
-                        <ul style="list-style: none; margin:0; padding: 0; background: #f8f9fa">
-                            <li style="border: 1px solid #fff; ">
-                                <div style="display: block; font-weight: 500; font-size: 12px; line-height: 24px; border-bottom: 1px solid #e9ecef;" class="clearfix py-1 px-2">
-                                    <img src="https://www.legalgamblingandthelaw.com/images/icons/sports/leagues/uefa-champions-league.png" width="24" class="float-left mr-2">
-                                    <span class="float-left border-left pl-2">CHAMPIONS LEAGUE</span>
-                                    <span class="float-right">Grupo B - Jornada 1</span>
-                                </div>
-                                <div style="display: table; font-size: 11px; font-weight: 200; line-height: 18px; background: #fff; " class="w-100 pt-1">
-                                    <div style="display: table-cell; width: 42%" class="text-right pr-1">
-                                        FLAMENGO
-                                        <img src="https://3.bp.blogspot.com/---SFAGB1KH0/WWPPxu80EBI/AAAAAAABMfg/TqZwGFBY2LEBSg-GkeNEmILZ6ZvxbS7QQCLcBGAs/s1600/Flamengo128x.png" alt="" width="22">
-                                    </div>
-                                    <div style="display: table-cell; width: 16%; padding: 5px 10px; font-size: 13px; font-weight: 500; background: #373737; color: #fff; text-align: center;">
-                                        2 - 2
-                                    </div>
-                                    <div style="display: table-cell; width: 42%" class="text-left pl-1">
-                                        <img src="https://3.bp.blogspot.com/--wb1CxJiWg4/WWPL1O-G64I/AAAAAAABMd0/ABxiPfdXcxQDPL-c0gR4YnGsKXg0BdxfQCLcBGAs/s1600/Botafago128x.png" alt="" width="22">
-                                        BOTAFOGO
-                                    </div>
-                                </div>
-                                <div style="display: table; font-size: 11px; font-weight: 200; line-height: 18px; background: #fff; " class="w-100 pt-1">
-                                    <div style="display: table-cell; width: 42%" class="text-right pr-1">
-                                        Mbappe, C. Ronaldo
-                                        <i class="fas fa-futbol"></i>
-                                    </div>
-                                    <div style="display: table-cell; width: 16%; padding: 5px 10px; font-size: 13px; font-weight: 500; color: #fff; text-align: center;">
-                                    </div>
-                                    <div style="display: table-cell; width: 42%" class="text-left pl-1">
-                                        <i class="fas fa-futbol"></i>
-                                        Benteke (2)
-                                    </div>
-                                </div>
-                                <div style="display: table; font-size: 11px; font-weight: 200; line-height: 18px; background: #fff; " class="w-100">
-                                    <div style="display: table-cell; width: 42%" class="text-right pr-1">
-                                        Hummels
-                                        <i class="fas fa-square" style="color: #fff80b"></i>
-                                    </div>
-                                    <div style="display: table-cell; width: 16%; padding: 5px 10px; font-size: 13px; font-weight: 500; color: #fff; text-align: center;">
-                                    </div>
-                                    <div style="display: table-cell; width: 42%" class="text-left pl-1">
-                                        <i class="fas fa-square" style="color: red"></i>
-                                        Pique
-                                    </div>
-                                </div>
+                        <img src="http://pesdb.net/pes2018/images/players/player_34881.png" alt="L. Suarez firma por el PSG" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
+                    </figure>
+                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                        <ul style="list-style: none; margin:0; padding: 0">
+                            <li>
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    FICHAJES - ZENIT
+                                </span>
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                    A. Saint-Maximin "Pollito" firma por el ZENIT
+                                </span>
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    Se incorpora como agente libre
+                                </span>
                             </li>
                         </ul>
                     </div>
                 </li>
-
-                <li class="border-top py-2">
-                    <div style="display: block; font-weight: 200; font-size: 11px;" class="clearfix">
-                        <span class="float-left">NUEVOS PARTIDOS DISPONIBLES</span>
-                        <span class="float-right">Plazo 1 nov</span>
-                    </div>
-                    <div style="display: block; background: #e9ecef; border-top: 2px solid #ced4da" class="align-top p-2">
-                        <ul style="list-style: none; margin:0; padding: 0; background: #f8f9fa">
-                            <li style="border: 1px solid #fff; ">
-                                <div style="display: block; font-weight: 500; font-size: 12px; line-height: 24px; border-bottom: 1px solid #e9ecef;" class="clearfix py-1 px-2">
-                                    <img src="https://www.legalgamblingandthelaw.com/images/icons/sports/leagues/uefa-champions-league.png" width="24" class="float-left mr-2">
-                                    <span class="float-left border-left pl-2">CHAMPIONS LEAGUE</span>
-                                    <span class="float-right">Grupo B - Jornada 1</span>
-                                </div>
-                                <div style="display: table; font-size: 11px; font-weight: 200; line-height: 18px; background: #fff; border-bottom: 1px solid #e9ecef;" class="w-100">
-                                    <div style="display: table-cell; width: 42%" class="text-right pr-1">
-                                        FLAMENGO
-                                        <img src="https://3.bp.blogspot.com/---SFAGB1KH0/WWPPxu80EBI/AAAAAAABMfg/TqZwGFBY2LEBSg-GkeNEmILZ6ZvxbS7QQCLcBGAs/s1600/Flamengo128x.png" alt="" width="22">
-                                    </div>
-                                    <div style="display: table-cell; width: 16%; padding: 5px 10px; font-size: 13px; font-weight: 500; background: #eb9114; color: #fff; text-align: center;">
-                                        -
-                                    </div>
-                                    <div style="display: table-cell; width: 42%" class="text-left pl-1">
-                                        <img src="https://3.bp.blogspot.com/--wb1CxJiWg4/WWPL1O-G64I/AAAAAAABMd0/ABxiPfdXcxQDPL-c0gR4YnGsKXg0BdxfQCLcBGAs/s1600/Botafago128x.png" alt="" width="22">
-                                        BOTAFOGO
-                                    </div>
-                                </div>
-                                <div style="display: table; font-size: 11px; font-weight: 200; line-height: 18px; background: #fff; border-bottom: 1px solid #e9ecef;" class="w-100">
-                                    <div style="display: table-cell; width: 42%" class="text-right pr-1">
-                                        F.C.BARCELONA
-                                        <img src="https://4.bp.blogspot.com/-pzhf1Bwj0BU/WVQLiFBRvKI/AAAAAAABKO8/0tVqRhP4Lhok-RWxXIw13sIFteRmpbTIgCLcBGAs/s1600/FC%2BBarcelona128x.png" alt="" width="22">
-                                    </div>
-                                    <div style="display: table-cell; width: 16%; padding: 5px 10px; font-size: 13px; font-weight: 500; background: #eb9114; color: #fff; text-align: center;">
-                                        -
-                                    </div>
-                                    <div style="display: table-cell; width: 42%" class="text-left pl-1">
-                                        <img src="https://2.bp.blogspot.com/-upfp9O0Prs4/WVkuKG3-BhI/AAAAAAABLN4/w1VNRlhmWvEvov1v40QAq1PtDPpYkZuegCLcBGAs/s1600/FC%2BZenit128x.png" alt="" width="22">
-                                        ZENIT
-                                    </div>
-                                </div>
-                                <div style="display: table; font-size: 11px; font-weight: 200; line-height: 18px; background: #fff; border-bottom: 1px solid #e9ecef;" class="w-100">
-                                    <div style="display: table-cell; width: 42%" class="text-right pr-1">
-                                        INTER MILAN
-                                        <img src="https://ugc.kn3.net/i/origin/http://icons.iconarchive.com/icons/giannis-zographos/italian-football-club/128/Internazionale-icon.png" alt="" width="22">
-                                    </div>
-                                    <div style="display: table-cell; width: 16%; padding: 5px 10px; font-size: 13px; font-weight: 500; background: #eb9114; color: #fff; text-align: center;">
-                                        -
-                                    </div>
-                                    <div style="display: table-cell; width: 42%" class="text-left pl-1">
-                                        <img src="https://i.pinimg.com/originals/9c/90/90/9c9090909e44dbd06497481231105494.png" alt="" width="22">
-                                        AFC AJAX
-                                    </div>
-                                </div>
-                                <div style="display: table; font-size: 11px; font-weight: 200; line-height: 18px; background: #fff;" class="w-100">
-                                    <div style="display: table-cell; width: 42%" class="text-right pr-1">
-                                        LIVERPOOL
-                                        <img src="http://estaticos.marca.com/iconos/v1.x/v1.0/fotos-apps/futbol/escudos/00211.png" alt="" width="22">
-                                    </div>
-                                    <div style="display: table-cell; width: 16%; padding: 5px 10px; font-size: 13px; font-weight: 500; background: #eb9114; color: #fff; text-align: center;">
-                                        -
-                                    </div>
-                                    <div style="display: table-cell; width: 42%" class="text-left pl-1">
-                                        <img src="https://1.bp.blogspot.com/-7_y1YwxuanE/WVQSa13VyOI/AAAAAAABKRc/LEsRt9M6L5Aq85z8IpHutm47yvv7m4uQwCLcBGAs/s1600/Valencia%2BCF128x.png" alt="" width="22">
-                                        VALENCIA
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
             </ul>
-        </div>
 
+        </div>
+    </div>
+
+    <div class="section-title">
+        Video resultados
     </div>
 </div>
 @endsection

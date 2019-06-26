@@ -18,20 +18,28 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
         {{-- Animate --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        {{-- Progressively --}}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/progressively/1.2.5/progressively.css">
 
         {{-- My styles --}}
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
         @yield('style')
+        <style>
+            body{
+                background: #161b35;
+            }
+        </style>
     </head>
 
     <body class="d-flex flex-column">
+
         <header>
             @include('layouts.partials.top_menu')
             @yield('section')
         </header>
 
-        <main class="container-fluid flex-grow px-2 px-md-3">
+        <main class="">
             <div id="app">
                 @yield('breadcrumb')
                 @yield('content')
@@ -40,18 +48,22 @@
 
         <footer>
             @include('layouts.partials.footer')
+            @yield('bottom-fixed')
         </footer>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
+        {{-- <script src="{{ asset('js/main.js') }}"></script> --}}
         {{-- Bootstrap Select --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/progressively/1.2.5/progressively.js"></script>
+
         @yield('js')
         <script>
-            $( document ).ready(function() {
 
+progressively.init();
+            $( document ).ready(function() {
                 var mediaquery = window.matchMedia("(max-width: 768px)");
                 function handleOrientationChange(mediaquery) {
                     if (!mediaquery.matches) {

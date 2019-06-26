@@ -1,10 +1,9 @@
-<h4>Play Offs</h4>
 <p>
     Hay que crear una tabla de rounds_participants para sacar los participantes de cada ronda de esa tabla y almacenar los que se vayan clasificando en siguientes rondas ahi tambien
 </p>
 
 <div class="table-form-content col-12 animated fadeIn p-0 border-0">
-    @if ($playoff->rounds->count() == 0)
+    @if (!$playoff->rounds)
         <div class="text-center border-top py-4">
             <figure>
                 <img src="{{ asset('img/table-empty.png') }}" alt="" width="72">
@@ -97,7 +96,7 @@
                                 </small>
                             </td>
                         </tr>
-                        @if ($round->round_trip && $clash->second_match)
+                        @if ($round->round_trip && $clash->return_match)
                             <tr>
                                 <td colspan="9">
                                     EQUIPO CLASIFICADO

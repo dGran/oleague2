@@ -1,9 +1,13 @@
 header {
 	position: relative;
 	.top-menu {
-		background: #292f35;
-		min-height: 62.38px;
-		padding: .5em 0;
+		background: #be0346;
+		margin-bottom: 54px;
+		min-height: 54px;
+		padding: .4em 0;
+		position: fixed;
+		width: 100%;
+		z-index: 9999;
 		h1 {
 			display: inline-block;
 			font-size: 1em;
@@ -63,10 +67,10 @@ header {
 			.user-img {
 				display: inline-block;
 				margin: 0;
-				min-width: 48px;
-				width: 48px;
+				min-width: 40px;
+				width: 40px;
 				img {
-					border: 1px solid darken(#292f35, 5%);
+					border: 1px solid #46081C;
 					background: #fff;
 					height: auto;
 					padding: 1px;
@@ -81,28 +85,30 @@ header {
 		}
 	}
 	#menu {
-		background: #3b434c;
+		background: #000000;
 		display: none;
-		position: absolute;
+		position: fixed;
 		left: 0;
-		top: 62px;
+		top: 48px;
 		width: 100%;
 		z-index: 1;
 		nav {
 			.nav {
 				.nav-item {
-					border-top: 1px solid darken(#3b434c, 3%);
+					border-top: 1px solid #999999;
 					display: block;
-					font-size: .8em;
+					font-size: 1em;
 					padding: .5em;
 					&:hover {
-						background: lighten(#3b434c, 10%);
-						color: #fff;
+						.nav-link {
+							color: #00d4e4;
+						}
+
 					}
 					.nav-link {
 						border-bottom: 1px solid transparent;
 						color: #fff;
-						font-weight: 300;
+						font-weight: bold;
 						padding: .25em;
 						text-transform: uppercase;
 						&.disabled {
@@ -110,7 +116,8 @@ header {
 						}
 					}
 					&.current {
-						background: $success;
+						color: #000000;
+						background: #00d4e4;
 					}
 				}
 			}

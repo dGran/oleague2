@@ -18,6 +18,7 @@ class CreatePlayoffsRoundsClashesTable extends Migration
             $table->integer("round_id")->unsigned();
 
             $table->integer("order")->default(1);
+            $table->boolean("return_match")->default(0);
             $table->integer("local_id")->unsigned()->nullable();
             $table->integer("local_user_id")->unsigned()->nullable();
             $table->integer("local_score")->nullable();

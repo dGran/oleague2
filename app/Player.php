@@ -135,4 +135,19 @@ class Player extends Model
         </div>";
         return $content;
 	}
+
+	public function getBall() {
+		switch ($this->overall_rating) {
+		    case ($this->overall_rating >84):
+		        return "img/black_ball.png";
+		    case ($this->overall_rating >79):
+		        return "img/yellow_ball.png";
+		    case ($this->overall_rating >74):
+		        return "img/silver_ball.png";
+		    case ($this->overall_rating >69):
+		        return "img/bronze_ball.png";
+		    case ($this->overall_rating <=69):
+		        return "img/white_ball.png";
+		}
+	}
 }
