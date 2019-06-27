@@ -17,11 +17,6 @@
 				<h5>Plantilla sin jugadores</h5>
 			</div>
 		@endif
-
-		@if ($participant->players->count() > 0)
-			@include('clubs.roster.stadistics')
-		@endif
-
 	</div>
 @endsection
 

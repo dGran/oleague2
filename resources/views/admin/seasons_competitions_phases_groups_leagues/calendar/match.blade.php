@@ -137,15 +137,15 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <small class="d-block">Asis.</small>
-                                                            <i class="icon-soccer_assist"></i>
+                                                            <i class="icon-soccer-assist"></i>
                                                         </td>
                                                         <td class="text-center">
                                                             <small class="d-block">Amarilla</small>
-                                                            <i class="icon-soccer_card text-warning"></i>
+                                                            <i class="icon-soccer-card text-warning"></i>
                                                         </td>
                                                         <td class="text-center">
                                                             <small class="d-block">Roja</small>
-                                                            <i class="icon-soccer_card text-danger"></i>
+                                                            <i class="icon-soccer-card text-danger"></i>
                                                         </td>
                                                     </tr>
                                                     @foreach ($match->local_participant->participant->players as $player)
@@ -190,15 +190,15 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <small class="d-block">Asis.</small>
-                                                        <i class="icon-soccer_assist"></i>
+                                                        <i class="icon-soccer-assist"></i>
                                                     </td>
                                                     <td class="text-center">
                                                         <small class="d-block">Amarilla</small>
-                                                        <i class="icon-soccer_card text-warning"></i>
+                                                        <i class="icon-soccer-card text-warning"></i>
                                                     </td>
                                                     <td class="text-center">
                                                         <small class="d-block">Roja</small>
-                                                        <i class="icon-soccer_card text-danger"></i>
+                                                        <i class="icon-soccer-card text-danger"></i>
                                                     </td>
                                                 </tr>
                                                 @foreach ($match->visitor_participant->participant->players as $player)

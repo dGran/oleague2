@@ -61,3 +61,9 @@
 		@endforeach
 	</div>
 </div>
+
+<h4 class="title-position">
+	<div class="container clearfix">
+		<span>Total: {{ $participant->players->count() }} jugadores</span>
+	</div>
+</h4>

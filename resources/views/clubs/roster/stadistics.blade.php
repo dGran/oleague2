@@ -1,9 +1,3 @@
-<h4 class="title-position">
-	<div class="container clearfix">
-		<span>Total: {{ $participant->players->count() }} jugadores</span>
-	</div>
-</h4>
-
 <div class="container p-3 border-bottom">
 	<h5>Mejores jugadores</h5>
 	@foreach ($top_players as $top_player)

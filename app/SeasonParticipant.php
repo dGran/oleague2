@@ -72,6 +72,10 @@ class SeasonParticipant extends Model
         return $this->salaries() . " M";
     }
 
+    public function salaries_avg() {
+        return $this->budget() / $this->players->count();
+    }
+
     public function logo() {
         if ($this->season->participant_has_team) {
             if ($this->team_id) {

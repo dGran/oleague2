@@ -35,11 +35,12 @@
 }
 
 .club-menu ul li.active a {
-  color: yellow;
+  color: #FFEF80;
+  pointer-events: none;
 }
 
 .club-menu ul li.active a:hover {
-  color: yellow;
+  color: #FFEF80;
 }
 
 .club-menu ul li a {
@@ -51,8 +52,9 @@
   color: #fff;
 }
 
-.club-menu ul li a img {
-  width: 32px;
+.club-menu ul li a i {
+  display: block;
+  font-size: 32px;
 }
 
 .club-menu ul li a span {
@@ -148,49 +150,88 @@
   font-size: .7em;
 }
 
-.wrapper .tops {
+.wrapper .club-info {
+  position: relative;
+}
+
+.wrapper .club-info .avatar {
+  position: absolute;
+  top: .5em;
+  right: .5em;
+  width: 64px;
+  padding: .25em;
+  border: 1px solid #DBDBDB;
+  background: #fff;
+}
+
+.wrapper .club-info .details {
+  list-style: none;
+  padding: 0;
+}
+
+.wrapper .club-info .details li {
+  font: 13px/24px  Arial, Helvetica;
+  margin-left: 8px;
+  padding-left: 5px;
+  position: relative;
+  width: 100%;
+}
+
+.wrapper .club-info .details li::before {
+  background: #FFB632;
+  border-radius: 50%;
+  content: " ";
+  height: 5px;
+  left: -6px;
+  position: absolute;
+  top: 10px;
+  width: 5px;
+}
+
+.wrapper .club-info .tops {
+  font-size: .9em;
   padding: 2px 8px 0 8px;
 }
 
-.wrapper .tops .img {
+.wrapper .club-info .tops .img {
   display: inline-block;
 }
 
-.wrapper .tops .img img {
+.wrapper .club-info .tops .img img {
   background: #f9f9f9;
   border: 1px solid #ddd;
   width: 32px;
 }
 
-.wrapper .tops .age {
+.wrapper .club-info .tops .age {
   display: inline-block;
   margin-left: .5rem;
   max-width: 52px;
   min-width: 52px;
 }
 
-.wrapper .tops .overall_rating {
+.wrapper .club-info .tops .overall_rating {
   display: inline-block;
   margin-left: .5rem;
   max-width: 20px;
   min-width: 20px;
 }
 
-.wrapper .tops .overall_rating span {
+.wrapper .club-info .tops .overall_rating span {
   display: block;
   text-align: center;
 }
 
-.wrapper .tops .ball {
+.wrapper .club-info .tops .ball {
   display: inline-block;
   margin-left: .5rem;
 }
 
-.wrapper .tops .ball img {
+.wrapper .club-info .tops .ball img {
   width: 20px;
 }
 
-.wrapper .tops .position {
+.wrapper .club-info .tops .position {
   display: inline-block;
   margin-left: .5rem;
   max-width: 29px;
@@ -198,7 +239,7 @@
   text-align: center;
 }
 
-.wrapper .tops .name {
+.wrapper .club-info .tops .name {
   display: inline-block;
   margin-left: .5rem;
 }
@@ -261,7 +302,6 @@
 
 .single-chart {
   width: 100px;
-  margin: 0 auto;
 }
 
 .circular-chart {

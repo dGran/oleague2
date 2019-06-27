@@ -39,20 +39,22 @@
 			min-width: 55px;
 		 	&.active {
 		 		a {
-		 			color: yellow;
+		 			color: #FFEF80;
+		 			pointer-events: none;
 		 			&:hover {
-		 				color: yellow;
+		 				color: #FFEF80;
 		 			}
 		 		}
 		 	}
-			 a {
+			a {
 			 	color: #ccc;
 			 	display: block;
 			 	&:hover {
 			 		color: #fff;
 			 	}
-			 	img {
-			 		width: 32px;
+			 	i {
+			 		display: block;
+			 		font-size: 32px;
 			 	}
 			 	span {
 					font-size: .7em;
@@ -136,50 +138,85 @@
 			}
 		}
 	}
-	.tops {
-		padding: 2px 8px 0 8px;
-		.img {
-			display: inline-block;
-			img {
-				background: #f9f9f9;
-				border: 1px solid $default-border-color;
-				width: 32px;
+	.club-info {
+		position: relative;
+		.avatar {
+			position: absolute;
+			top: .5em;
+			right: .5em;
+			width: 64px;
+			padding: .25em;
+			border: 1px solid #DBDBDB;
+			background: #fff;
+		}
+		.details {
+			list-style: none;
+			padding: 0;
+			li {
+				font: 13px/24px  Arial, Helvetica;
+				margin-left: 8px;
+				padding-left: 5px;
+				position: relative;
+				width: 100%;
+				&::before {
+					background: #FFB632;
+					border-radius: 50%;
+					content: " ";
+					height: 5px;
+					left: -6px;
+					position: absolute;
+					top: 10px;
+					width: 5px;
+				}
 			}
 		}
-		.age {
-			display: inline-block;
-			margin-left: .5rem;
-			max-width: 52px;
-			min-width: 52px;
-		}
-		.overall_rating {
-			display: inline-block;
-			margin-left: .5rem;
-			max-width: 20px;
-			min-width: 20px;
-			span {
-				display: block;
+		.tops {
+			font-size: .9em;
+			padding: 2px 8px 0 8px;
+			.img {
+				display: inline-block;
+				img {
+					background: #f9f9f9;
+					border: 1px solid $default-border-color;
+					width: 32px;
+				}
+			}
+			.age {
+				display: inline-block;
+				margin-left: .5rem;
+				max-width: 52px;
+				min-width: 52px;
+			}
+			.overall_rating {
+				display: inline-block;
+				margin-left: .5rem;
+				max-width: 20px;
+				min-width: 20px;
+				span {
+					display: block;
+					text-align: center;
+				}
+			}
+			.ball {
+				display: inline-block;
+				margin-left: .5rem;
+				img {
+					width: 20px;
+				}
+			}
+			.position {
+				display: inline-block;
+				margin-left: .5rem;
+				max-width: 29px;
+				min-width: 29px;
 				text-align: center;
 			}
-		}
-		.ball {
-			display: inline-block;
-			margin-left: .5rem;
-			img {
-				width: 20px;
+			.name {
+				display: inline-block;
+				margin-left: .5rem;
 			}
 		}
-		.position {
-			display: inline-block;
-			margin-left: .5rem;
-			max-width: 29px;
-			min-width: 29px;
-			text-align: center;
-		}
-		.name {
-			display: inline-block;
-			margin-left: .5rem;
-		}
+
 	}
 }
 
@@ -239,7 +276,6 @@
 
 .single-chart {
   width: 100px;
-  margin: 0 auto;
 }
 
 .circular-chart {

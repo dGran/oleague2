@@ -114,7 +114,81 @@ class HomeController extends Controller
             ->where('participant_id', '=', $participant->id)
             ->avg('players.age');
 
-        return view('clubs.index', compact('participants', 'participant', 'team_avg_overall', 'team_avg_age'));
+        $team_avg_overall = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('players.overall_rating')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->avg('players.overall_rating');
+
+        $top_players = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+
+        $top_defs = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->where(function($q) {
+                $q->where('players.position', '=', 'CT')
+                  ->orWhere('players.position', '=', 'LI')
+                  ->orWhere('players.position', '=', 'LD')
+                  ->orWhere('players.position', '=', 'LD');
+            })
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+
+        $top_mids = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->where(function($q) {
+                $q->where('players.position', '=', 'MCD')
+                  ->orWhere('players.position', '=', 'MC')
+                  ->orWhere('players.position', '=', 'MP')
+                  ->orWhere('players.position', '=', 'II')
+                  ->orWhere('players.position', '=', 'ID');
+            })
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+
+        $top_forws = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->where(function($q) {
+                $q->where('players.position', '=', 'DC')
+                  ->orWhere('players.position', '=', 'SD')
+                  ->orWhere('players.position', '=', 'EI')
+                  ->orWhere('players.position', '=', 'ED');
+            })
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+
+        $young_players = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->orderBy('players.age', 'asc')
+            ->take(3)->get();
+
+        $veteran_players = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->orderBy('players.age', 'desc')
+            ->take(3)->get();
+
+        return view('clubs.index', compact('participants', 'participant', 'team_avg_overall', 'team_avg_age', 'top_players', 'top_defs', 'top_mids', 'top_forws', 'young_players', 'veteran_players'));
     }
 
     public function clubRoster($slug)

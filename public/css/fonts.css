@@ -24,24 +24,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-yellow_card .path1:before {
-  content: "\e905";
-  color: rgb(255, 204, 92);
-}
-.icon-yellow_card .path2:before {
-  content: "\e906";
-  margin-left: -1em;
-  color: rgb(198, 156, 109);
-}
-.icon-yellow_card .path3:before {
-  content: "\e907";
-  margin-left: -1em;
-  color: rgb(0, 0, 0);
-}
-.icon-crono:before {
+.icon-soccer-field:before {
   content: "\e904";
 }
-.icon-soccer_assist:before {
+.icon-microphone:before {
+  content: "\e905";
+}
+.icon-stadium:before {
+  content: "\e906";
+}
+.icon-roster:before {
+  content: "\e907";
+}
+.icon-economy:before {
+  content: "\e908";
+}
+.icon-soccer-assist:before {
   content: "\e901";
 }
 .icon-whistle:before {
@@ -50,6 +48,6 @@
 .icon-tribunal:before {
   content: "\e903";
 }
-.icon-soccer_card:before {
+.icon-soccer-card:before {
   content: "\e900";
 }
