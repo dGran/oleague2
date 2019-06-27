@@ -91,30 +91,14 @@ class HomeController extends Controller
 
     public function clubs()
     {
-        $participants = SeasonParticipant::
-        leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
-        ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
-        ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
-        ->seasonId(active_season()->id)->orderBy('teams.name', 'asc')->get();
-
+        $participants = $this->get_participants();
         return view('clubs.list', compact('participants'));
     }
 
     public function club($slug)
     {
-        $participants = SeasonParticipant::
-        leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
-        ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
-        ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
-        ->seasonId(active_season()->id)->orderBy('teams.name', 'asc')->get();
-        // $participants = SeasonParticipant::where('season_id', '=', active_season()->id)->get();
-        $participant = SeasonParticipant::
-        leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
-        ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
-        ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
-        ->seasonId(active_season()->id)
-        ->where('teams.slug', '=', $slug)
-        ->first();
+        $participants = $this->get_participants();
+        $participant = $this->get_participant($slug);
 
         $team_avg_overall = SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
@@ -135,19 +119,8 @@ class HomeController extends Controller
 
     public function clubRoster($slug)
     {
-        $participants = SeasonParticipant::
-        leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
-        ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
-        ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
-        ->seasonId(active_season()->id)->orderBy('teams.name', 'asc')->get();
-        // $participants = SeasonParticipant::where('season_id', '=', active_season()->id)->get();
-        $participant = SeasonParticipant::
-        leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
-        ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
-        ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
-        ->seasonId(active_season()->id)
-        ->where('teams.slug', '=', $slug)
-        ->first();
+        $participants = $this->get_participants();
+        $participant = $this->get_participant($slug);
 
         $top_players = SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
@@ -219,6 +192,29 @@ class HomeController extends Controller
         return view('clubs.roster', compact('participants', 'participant', 'top_players', 'top_defs', 'top_mids', 'top_forws', 'young_players', 'veteran_players'));
     }
 
+    public function clubEconomy($slug)
+    {
+        $participants = $this->get_participants();
+        $participant = $this->get_participant($slug);
+
+        return view('clubs.economy', compact('participants', 'participant'));
+    }
+
+    public function clubResults($slug)
+    {
+        $participants = $this->get_participants();
+        $participant = $this->get_participant($slug);
+
+        return view('clubs.results', compact('participants', 'participant'));
+    }
+
+    public function clubPress($slug)
+    {
+        $participants = $this->get_participants();
+        $participant = $this->get_participant($slug);
+
+        return view('clubs.press', compact('participants', 'participant'));
+    }
     public function participants()
     {
         return view('participants');
@@ -252,5 +248,27 @@ class HomeController extends Controller
     public function competition_match()
     {
         return view('competitions.match');
+    }
+
+    // helpers
+
+    protected function get_participants()
+    {
+        return SeasonParticipant::
+            leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+            ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+            ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
+            ->seasonId(active_season()->id)->orderBy('teams.name', 'asc')->get();
+    }
+
+    protected function get_participant($slug)
+    {
+        return SeasonParticipant::
+            leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+            ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+            ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
+            ->seasonId(active_season()->id)
+            ->where('teams.slug', '=', $slug)
+            ->first();
     }
 }

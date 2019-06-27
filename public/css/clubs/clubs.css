@@ -1,0 +1,319 @@
+.club-header {
+  overflow: hidden;
+  margin-top: 54px;
+  background: #161c33;
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, #161c33), color-stop(100%, #40589e));
+  background: -webkit-gradient(linear, left top, left bottom, from(#161c33), to(#40589e));
+  background: linear-gradient(to bottom, #161c33 0%, #40589e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#161c33', endColorstr='#40589e', GradientType=0 );
+}
+
+.club-header .subname {
+  font-weight: bold;
+  font-size: .8em;
+}
+
+.club-menu {
+  background: #40589e;
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, #40589e), color-stop(100%, #161c33));
+  background: -webkit-gradient(linear, left top, left bottom, from(#40589e), to(#161c33));
+  background: linear-gradient(to bottom, #40589e 0%, #161c33 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40589e', endColorstr='#161c33', GradientType=0 );
+  border-top: 1px solid #32467d;
+  padding-top: 5px;
+}
+
+.club-menu ul {
+  padding: 0;
+}
+
+.club-menu ul li {
+  padding: .25em;
+  display: inline-block;
+  text-align: center;
+  min-width: 55px;
+}
+
+.club-menu ul li.active a {
+  color: yellow;
+}
+
+.club-menu ul li.active a:hover {
+  color: yellow;
+}
+
+.club-menu ul li a {
+  color: #ccc;
+  display: block;
+}
+
+.club-menu ul li a:hover {
+  color: #fff;
+}
+
+.club-menu ul li a img {
+  width: 32px;
+}
+
+.club-menu ul li a span {
+  font-size: .7em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapper {
+  background: #f2f2f2;
+}
+
+.wrapper .title-position {
+  background: #DBDBDB;
+  margin: 0;
+  padding: .5rem;
+}
+
+.wrapper .title-position span {
+  float: left;
+}
+
+.wrapper .title-position img {
+  height: 24px;
+  float: right;
+}
+
+.wrapper .player-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  margin: 1rem .5rem 0 .5rem;
+  position: relative;
+  text-align: center;
+}
+
+.wrapper .player-card .player-img {
+  display: inline-block;
+  margin: 0;
+}
+
+.wrapper .player-card .player-img img {
+  width: 96px;
+}
+
+.wrapper .player-card .ball {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 28px;
+}
+
+.wrapper .player-card .overall-rating {
+  font-size: .9em;
+  font-weight: bold;
+  left: 6px;
+  position: absolute;
+  top: 28px;
+}
+
+.wrapper .player-card .position {
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  font-size: 1.2em;
+  font-weight: bold;
+  left: 6px;
+  line-height: 18px;
+  position: absolute;
+  top: 6px;
+}
+
+.wrapper .player-card .player-name {
+  background: #EAEAEA;
+  border-top: 1px solid #ddd;
+  line-height: 18px;
+  text-align: center;
+}
+
+.wrapper .player-card .player-name span {
+  font-size: .75em;
+  font-weight: bold;
+}
+
+.wrapper .player-card .more-data {
+  background: #FDFDFD;
+  border-top: 1px solid #ddd;
+  line-height: 14px;
+  padding: .2em;
+  text-align: center;
+}
+
+.wrapper .player-card .more-data span {
+  display: block;
+  font-size: .7em;
+}
+
+.wrapper .tops {
+  padding: 2px 8px 0 8px;
+}
+
+.wrapper .tops .img {
+  display: inline-block;
+}
+
+.wrapper .tops .img img {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  width: 32px;
+}
+
+.wrapper .tops .age {
+  display: inline-block;
+  margin-left: .5rem;
+  max-width: 52px;
+  min-width: 52px;
+}
+
+.wrapper .tops .overall_rating {
+  display: inline-block;
+  margin-left: .5rem;
+  max-width: 20px;
+  min-width: 20px;
+}
+
+.wrapper .tops .overall_rating span {
+  display: block;
+  text-align: center;
+}
+
+.wrapper .tops .ball {
+  display: inline-block;
+  margin-left: .5rem;
+}
+
+.wrapper .tops .ball img {
+  width: 20px;
+}
+
+.wrapper .tops .position {
+  display: inline-block;
+  margin-left: .5rem;
+  max-width: 29px;
+  min-width: 29px;
+  text-align: center;
+}
+
+.wrapper .tops .name {
+  display: inline-block;
+  margin-left: .5rem;
+}
+
+.scrolling-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+  height: 9px;
+  background-color: transparent;
+}
+
+.scrolling-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.scrolling-wrapper .card {
+  display: inline-block;
+  background: transparent;
+}
+
+.scrolling-wrapper .card.participants {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  max-width: 48px;
+  min-width: 48px;
+  padding: .25em;
+  text-align: center;
+}
+
+.scrolling-wrapper .card.participants a {
+  text-align: center;
+}
+
+.scrolling-wrapper .card.participants a img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  width: 32px;
+}
+
+.scrolling-wrapper .card.participants a span {
+  color: #fff;
+  display: block;
+  font-size: .6em;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.single-chart {
+  width: 100px;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.circular-chart {
+  display: block;
+  margin: 10px auto;
+  max-width: 80%;
+  max-height: 250px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  -webkit-animation: progress 1s ease-out forwards;
+          animation: progress 1s ease-out forwards;
+}
+
+@-webkit-keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}
+
+.circular-chart.orange .circle {
+  stroke: #ff9f00;
+}
+
+.circular-chart.green .circle {
+  stroke: #4CC790;
+}
+
+.circular-chart.blue .circle {
+  stroke: #3c9ee5;
+}
+
+.percentage {
+  fill: #666;
+  font-family: sans-serif;
+  font-size: 0.5em;
+  text-anchor: middle;
+}
+

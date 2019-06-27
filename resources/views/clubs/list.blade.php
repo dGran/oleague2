@@ -55,6 +55,19 @@
 		@endforeach
     </div>
 
+	<div class="p-3">
+	@foreach ($participants as $participant)
+		<div class="">
+			{{ $participant->name() }}
+		</div>
+		<div class="progress mb-2" style="height: 20px;">
+			<div class="progress-bar text-left p-2" role="progressbar" style="width: {{$participant->budget()/500*100}}%;" aria-valuenow="{{$participant->budget()}}" aria-valuemin="0" aria-valuemax="500">
+				{{ $participant->budget() }} mill.
+			</div>
+		</div>
+	@endforeach
+	</div>
+
 </div>
 
 </div>

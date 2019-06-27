@@ -13,8 +13,8 @@
     <div class="cover-page-container">
 
         <div class="logos">
-            <img class="logo_game bounce-in-left" src="img/logo_pes2020.png" alt="">
-            <img class="logo_platform bounce-in-right" src="img/logo_xboxone.png" alt="">
+            <img class="logo_game" src="img/logo_pes2020.png" alt="">
+            <img class="logo_platform" src="img/logo_xboxone.png" alt="">
         </div>
 
 {{--         <div class="buttons p-4 text-center">
@@ -22,7 +22,7 @@
             <a href="" class="btn btn-danger">Registrate</a>
         </div> --}}
 
-        <p class="bounce-in-bck" style="text-align: center; padding-left: 1em; padding-right: 1em; padding-top: 320px; color: #00d4e4; font-size: 1.25em; font-weight: bold)">
+        <p style="text-align: center; padding-left: 1em; padding-right: 1em; padding-top: 320px; color: #00d4e4; font-size: 1.25em; font-weight: bold)">
             <span style="text-shadow: 0 0 20px #ed1e79;">Torneos y campeonatos online<br>Pro Evolution Soccer - Xbox One</span>
         </p>
 
