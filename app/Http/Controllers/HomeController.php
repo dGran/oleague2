@@ -122,6 +122,13 @@ class HomeController extends Controller
         $participants = $this->get_participants();
         $participant = $this->get_participant($slug);
 
+        $team_avg_overall = SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('players.overall_rating')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $participant->id)
+            ->avg('players.overall_rating');
+
         $top_players = SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('season_players.*')
@@ -189,7 +196,7 @@ class HomeController extends Controller
             ->orderBy('players.age', 'desc')
             ->take(3)->get();
 
-        return view('clubs.roster', compact('participants', 'participant', 'top_players', 'top_defs', 'top_mids', 'top_forws', 'young_players', 'veteran_players'));
+        return view('clubs.roster', compact('participants', 'participant', 'team_avg_overall', 'top_players', 'top_defs', 'top_mids', 'top_forws', 'young_players', 'veteran_players'));
     }
 
     public function clubEconomy($slug)

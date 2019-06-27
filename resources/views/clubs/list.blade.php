@@ -42,11 +42,12 @@
 						<ul style="font-size: .9em">
 							<li>
 								<a href="{{route('club', $participant->team->slug) }}">
-									Portada
+									Club
 								</a>
 							</li>
 							<li>Plantilla</li>
 							<li>Economía</li>
+							<li>Resultados</li>
 							<li>Sala de Prensa</li>
 						</ul>
 					</div>

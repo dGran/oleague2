@@ -9,81 +9,81 @@
 	@include('clubs.partials.header')
 
 	<div class="wrapper" style="background: #ffffff">
-		<div class="container py-3">
 
-			<div class="row">
-				<div class="col-6">
+		<div class="row">
+			<div class="col-6">
+				<div class="container text-center p-3 border-bottom">
 					<h5>Valoración media</h5>
-					<div class="flex-wrapper text-center">
-					  <div class="single-chart">
-					    <svg viewBox="0 0 36 36" class="circular-chart orange">
-					      <path class="circle-bg"
-					        d="M18 2.0845
-					          a 15.9155 15.9155 0 0 1 0 31.831
-					          a 15.9155 15.9155 0 0 1 0 -31.831"
-					      />
-					      <path class="circle"
-					        stroke-dasharray="{{ $team_avg_overall }}, 100"
-					        d="M18 2.0845
-					          a 15.9155 15.9155 0 0 1 0 31.831
-					          a 15.9155 15.9155 0 0 1 0 -31.831"
-					      />
-					      <text x="18" y="20.35" class="percentage">{{ number_format($team_avg_overall, 2) }}</text>
-					    </svg>
-					  </div>
+					<div class="single-chart">
+						<svg viewBox="0 0 36 36" class="circular-chart orange">
+							<path class="circle-bg"
+							d="M18 2.0845
+							a 15.9155 15.9155 0 0 1 0 31.831
+							a 15.9155 15.9155 0 0 1 0 -31.831"
+							/>
+							<path class="circle"
+							stroke-dasharray="{{ $team_avg_overall }}, 100"
+							d="M18 2.0845
+							a 15.9155 15.9155 0 0 1 0 31.831
+							a 15.9155 15.9155 0 0 1 0 -31.831"
+							/>
+							<text x="18" y="20.35" class="percentage">
+								{{ number_format($team_avg_overall, 2) }}
+							</text>
+						</svg>
 					</div>
-
-				</div>
-
-				<div class="col-6">
-					<h5>Edad media</h5>
-					<div class="flex-wrapper">
-					  <div class="single-chart">
-					    <svg viewBox="0 0 36 36" class="circular-chart orange">
-					      <path class="circle-bg"
-					        d="M18 2.0845
-					          a 15.9155 15.9155 0 0 1 0 31.831
-					          a 15.9155 15.9155 0 0 1 0 -31.831"
-					      />
-					      <path class="circle"
-					        stroke-dasharray="{{ $team_avg_age }}, 100"
-					        d="M18 2.0845
-					          a 15.9155 15.9155 0 0 1 0 31.831
-					          a 15.9155 15.9155 0 0 1 0 -31.831"
-					      />
-					      <text x="18" y="20.35" class="percentage">{{ number_format($team_avg_age, 2) }}</text>
-					    </svg>
-					  </div>
-					</div>
-
 				</div>
 			</div>
 
+			<div class="col-6">
+				<div class="container text-center p-3 border-bottom">
+					<h5>Edad media</h5>
+					<div class="single-chart">
+						<svg viewBox="0 0 36 36" class="circular-chart orange">
+							<path class="circle-bg"
+							d="M18 2.0845
+							a 15.9155 15.9155 0 0 1 0 31.831
+							a 15.9155 15.9155 0 0 1 0 -31.831"
+							/>
+							<path class="circle"
+							stroke-dasharray="{{ $team_avg_age }}, 100"
+							d="M18 2.0845
+							a 15.9155 15.9155 0 0 1 0 31.831
+							a 15.9155 15.9155 0 0 1 0 -31.831"
+							/>
+							<text x="18" y="20.35" class="percentage">
+								{{ number_format($team_avg_age, 2) }}
+							</text>
+						</svg>
+					</div>
+				</div>
+			</div>
+		</div>
 
-			info del team
-			<br>
-			economia
-			<br>
-			<ul>
-				<li>presupuesto</li>
-				<li>total salarios</li>
-				<li>media de salario</li>
-				<li>jugador que mas cobra</li>
-				<li>jugador que menos cobra</li>
-			</ul>
-			jugadores <br>
-			<ul>
-				<li>jugador de mas media</li>
-				<li>jugador de menos media</li>
-				<li>jugador mas joven</li>
-				<li>jugador mas veterano</li>
-				<li>media de edad del equipo</li>
 
-			</ul>
-			resultados
-			<li>forma del equipo</li>
+		info del team
+		<br>
+		economia
+		<br>
+		<ul>
+			<li>presupuesto</li>
+			<li>total salarios</li>
+			<li>media de salario</li>
+			<li>jugador que mas cobra</li>
+			<li>jugador que menos cobra</li>
+		</ul>
+		jugadores <br>
+		<ul>
+			<li>jugador de mas media</li>
+			<li>jugador de menos media</li>
+			<li>jugador mas joven</li>
+			<li>jugador mas veterano</li>
+			<li>media de edad del equipo</li>
 
-		</div> {{-- container --}}
+		</ul>
+		resultados
+		<li>forma del equipo</li>
+
 	</div> {{-- wrapper --}}
 
 @endsection

@@ -261,8 +261,7 @@
 
 .single-chart {
   width: 100px;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  margin: 0 auto;
 }
 
 .circular-chart {
