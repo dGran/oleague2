@@ -21,6 +21,7 @@ class CreateProfilesTable extends Migration
             $table->string('slack_id')->nullable();
             $table->integer('country_id')->nullable();
             $table->string('location')->nullable();
+            $table->date('birthdate')->nullable();
             $table->boolean('email_notifications')->default(1);
             $table->boolean('slack_notifications')->default(1);
             $table->timestamps();

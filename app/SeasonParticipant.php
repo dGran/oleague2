@@ -73,7 +73,10 @@ class SeasonParticipant extends Model
     }
 
     public function salaries_avg() {
-        return $this->budget() / $this->players->count();
+        if ($this->players->count() > 0) {
+            return $this->budget() / $this->players->count();
+        }
+        return '0';
     }
 
     public function logo() {
@@ -118,6 +121,103 @@ class SeasonParticipant extends Model
         } else {
             return "";
         }
+    }
+
+    public function team_avg_overall() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('players.overall_rating')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->avg('players.overall_rating');
+    }
+
+    public function team_avg_age() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('players.age')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->avg('players.age');
+    }
+
+    public function top_players() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+    }
+
+    public function top_defs() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->where(function($q) {
+                $q->where('players.position', '=', 'CT')
+                  ->orWhere('players.position', '=', 'LI')
+                  ->orWhere('players.position', '=', 'LD')
+                  ->orWhere('players.position', '=', 'LD');
+            })
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+    }
+
+    public function top_mids() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->where(function($q) {
+                $q->where('players.position', '=', 'MCD')
+                  ->orWhere('players.position', '=', 'MC')
+                  ->orWhere('players.position', '=', 'MP')
+                  ->orWhere('players.position', '=', 'II')
+                  ->orWhere('players.position', '=', 'ID');
+            })
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+    }
+
+    public function top_forws() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->where(function($q) {
+                $q->where('players.position', '=', 'DC')
+                  ->orWhere('players.position', '=', 'SD')
+                  ->orWhere('players.position', '=', 'EI')
+                  ->orWhere('players.position', '=', 'ED');
+            })
+            ->orderBy('players.overall_rating', 'desc')
+            ->take(3)->get();
+    }
+
+    public function young_players() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->orderBy('players.age', 'asc')
+            ->take(3)->get();
+    }
+
+    public function veteran_players() {
+        return SeasonPlayer::
+            leftJoin('players', 'players.id', '=', 'season_players.player_id')
+            ->select('season_players.*')
+            ->seasonId(active_season()->id)
+            ->where('participant_id', '=', $this->id)
+            ->orderBy('players.age', 'desc')
+            ->take(3)->get();
     }
 
 }

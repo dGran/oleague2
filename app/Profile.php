@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Profile extends Model
 {
@@ -15,5 +16,10 @@ class Profile extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function age()
+    {
+		return Carbon::parse($this->birthdate)->age;
     }
 }

@@ -270,12 +270,20 @@
 }
 
 .scrolling-wrapper .card.participants {
-  background: rgba(255, 255, 255, 0.15);
   border: none;
   max-width: 48px;
   min-width: 48px;
   padding: .25em;
   text-align: center;
+}
+
+.scrolling-wrapper .card.participants.active {
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.scrolling-wrapper .card.participants:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .scrolling-wrapper .card.participants a {
