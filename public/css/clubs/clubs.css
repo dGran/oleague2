@@ -67,10 +67,33 @@
   background: #f2f2f2;
 }
 
-.wrapper .title-position {
-  background: #DBDBDB;
+.wrapper .title-section {
+  font-size: 1.15em;
+  font-weight: bold;
   margin: 0;
   padding: .5rem;
+  text-transform: uppercase;
+}
+
+.wrapper .title-section span {
+  padding-top: 5px;
+  float: left;
+}
+
+.wrapper .title-section a {
+  float: right;
+  font-size: 1.5rem;
+}
+
+.wrapper .title-position {
+  background: #DBDBDB;
+  border-bottom: 1px solid #C7C7C7;
+  border-top: 1px solid #C7C7C7;
+  font-size: 1.15em;
+  font-weight: bold;
+  margin: 0;
+  padding: .5rem;
+  text-transform: uppercase;
 }
 
 .wrapper .title-position span {
@@ -78,7 +101,11 @@
 }
 
 .wrapper .title-position img {
-  height: 24px;
+  height: 20px;
+  float: right;
+}
+
+.wrapper .title-position i {
   float: right;
 }
 

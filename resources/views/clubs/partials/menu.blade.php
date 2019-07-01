@@ -17,8 +17,8 @@
 			<span>Economía</span>
 		</a>
 	</li>
-	<li class="{{ \Route::current()->getName() == 'club.results' ? 'active' : '' }}">
-		<a href="{{ route('club.results', $participant->team->slug) }}">
+	<li class="{{ \Route::current()->getName() == 'club.calendar' ? 'active' : '' }}">
+		<a href="{{ route('club.calendar', $participant->team->slug) }}">
 			<i class="icon-soccer-field"></i>
 			<span>Calendario</span>
 		</a>

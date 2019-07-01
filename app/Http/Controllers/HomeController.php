@@ -119,12 +119,12 @@ class HomeController extends Controller
         return view('clubs.economy', compact('participants', 'participant'));
     }
 
-    public function clubResults($slug)
+    public function clubCalendar($slug)
     {
         $participants = $this->get_participants();
         $participant = $this->get_participant($slug);
 
-        return view('clubs.results', compact('participants', 'participant'));
+        return view('clubs.calendar', compact('participants', 'participant'));
     }
 
     public function clubPress($slug)

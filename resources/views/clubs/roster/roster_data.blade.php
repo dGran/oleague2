@@ -1,3 +1,18 @@
+<div class="container p-3">
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti animi impedit nobis placeat, esse quae. Tempore optio pariatur similique, error, sapiente dolores sint veritatis officia repellat? Vel incidunt voluptatibus temporibus.
+</div>
+<h4 class="title-section">
+	<div class="container clearfix">
+		<span>Total: {{ $participant->players->count() }} jugadores</span>
+		<a href="" class="text-dark">
+			<i class="fas fa-id-card"></i>
+		</a>
+		<a href="" class="text-dark">
+			<i class="fas fa-th-list mr-3"></i>
+		</a>
+	</div>
+</h4>
+
 <h4 class="title-position">
 	<div class="container clearfix">
 		<span>Porteros</span>
@@ -61,9 +76,3 @@
 		@endforeach
 	</div>
 </div>
-
-<h4 class="title-position">
-	<div class="container clearfix">
-		<span>Total: {{ $participant->players->count() }} jugadores</span>
-	</div>
-</h4>

@@ -14,6 +14,8 @@
 		</div>
 	</div>
 
+	@include('clubs.calendar.breadcrumb')
+
 @endsection
 
 @section('bottom-fixed')

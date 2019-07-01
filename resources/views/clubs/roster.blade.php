@@ -18,6 +18,9 @@
 			</div>
 		@endif
 	</div>
+
+	@include('clubs.roster.breadcrumb')
+
 @endsection
 
 @section('bottom-fixed')

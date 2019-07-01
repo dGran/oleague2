@@ -14,6 +14,8 @@
 		</div>
 	</div>
 
+	@include('clubs.press.breadcrumb')
+
 @endsection
 
 @section('bottom-fixed')

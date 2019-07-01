@@ -14,6 +14,8 @@
 		</div>
 	</div>
 
+	@include('clubs.economy.breadcrumb')
+
 @endsection
 
 @section('bottom-fixed')

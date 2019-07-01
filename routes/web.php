@@ -26,8 +26,8 @@ Route::get('clubs', 'HomeController@clubs')->name('clubs');
 Route::get('clubs/{slug}', 'HomeController@club')->name('club');
 Route::get('clubs/{slug}/plantilla', 'HomeController@clubRoster')->name('club.roster');
 Route::get('clubs/{slug}/economia', 'HomeController@clubEconomy')->name('club.economy');
-Route::get('clubs/{slug}/resultados', 'HomeController@clubResults')->name('club.results');
-Route::get('clubs/{slug}/press', 'HomeController@clubPress')->name('club.press');
+Route::get('clubs/{slug}/calendario', 'HomeController@clubCalendar')->name('club.calendar');
+Route::get('clubs/{slug}/sala-de-prensa', 'HomeController@clubPress')->name('club.press');
 
 
 Route::get('participantes', 'HomeController@participants')->name('participants');
