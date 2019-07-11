@@ -1,32 +1,36 @@
 @extends('layouts.app')
 
 @section('style')
-	<link href="https://fonts.googleapis.com/css?family=Bad+Script|Kaushan+Script&display=swap" rel="stylesheet">
-    <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/clubs/clubs.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
 
-<div class="wrapper" style="background: #f2f2f2">
-
-	<div style="min-height: 104px; overflow: hidden;
-    background: url(img/bg_mv2nd.png) no-repeat 0 0 #161c33;
-    background-position: left center;
-    background-size: 70% auto; margin-top: 54px">
-    	<div class="container py-3">
-    		<div class="d-table-cell align-middle">
-    			<img src="{{ asset('img/team_no_image.png') }}" alt="" height="72">
-    		</div>
-    		<div class="d-table-cell pl-2 align-middle">
-	    		<h3 class="m-0 text-white">
-	    			Clubs
-	    		</h3>
-	    		<span class="d-block text-white">
-	    			Temporada 7
-	    		</span>
-    		</div>
-    	</div>
+<div class="club-header">
+	<div class="container py-2">
+		<div class="d-table-cell align-top">
+			{{-- <img src="{{ $participant->logo() }}" alt=""> --}}
+		</div>
+		<div class="d-table-cell pl-2 align-middle">
+    		<h3>
+    			{{-- {{ $participant->name() }} --}}
+    			Clubs
+    		</h3>
+    		<span class="subname">
+    			{{-- {{ $participant->sub_name() }} --}}
+    			Temporada 7
+    		</span>
+		</div>
 	</div>
+</div>
+
+<div class="club-menu">
+	<div class="container">
+		{{-- @include('clubs.partials.menu') --}}
+	</div>
+</div>
+
+<div class="wrapper" style="background: #f2f2f2">
 
 <div class="container">
     <div class="row" style="padding-bottom: 15px">
@@ -34,21 +38,44 @@
 			<div class="col-12 col-md-6 col-lg-4">
 				<div class="club-card border" style="background: #fff; margin: 15px 5px 0 5px; padding: 1em 0">
 					<div class="text-center d-table-cell" style="width: 170px">
-						<img src="{{ $participant->logo() }}" alt="" width="72px">
-						<span class="d-block" style="font-size: .9em; font-weight: bold">{{ $participant->name() }}</span>
-						<span class="d-block" style="font-size: .8em;">{{ $participant->sub_name() }}</span>
+						<a class="text-dark" href="{{route('club', $participant->team->slug) }}">
+							<img src="{{ $participant->logo() }}" alt="" width="72px">
+							<span class="d-block" style="font-size: .9em; font-weight: bold">{{ $participant->name() }}</span>
+							<span class="d-block" style="font-size: .8em;">{{ $participant->sub_name() }}</span>
+						</a>
 					</div>
 					<div class="d-table-cell border-left align-top ">
-						<ul style="font-size: .9em">
+						<ul style="font-size: .9em; padding: 0 1em; list-style: none">
 							<li>
-								<a href="{{route('club', $participant->team->slug) }}">
+								<a class="text-dark" href="{{route('club', $participant->team->slug) }}">
+									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 									Club
 								</a>
 							</li>
-							<li>Plantilla</li>
-							<li>Economía</li>
-							<li>Resultados</li>
-							<li>Sala de Prensa</li>
+							<li>
+								<a class="text-dark" href="{{route('club.roster', $participant->team->slug) }}">
+									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
+									Plantilla
+								</a>
+							</li>
+							<li>
+								<a class="text-dark" href="{{route('club.economy', $participant->team->slug) }}">
+									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
+									Economía
+								</a>
+							</li>
+							<li>
+								<a class="text-dark" href="{{route('club.calendar', $participant->team->slug) }}">
+									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
+									Calendario
+								</a>
+							</li>
+							<li>
+								<a class="text-dark" href="{{route('club.press', $participant->team->slug) }}">
+									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
+									Prensa
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>

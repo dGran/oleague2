@@ -19,8 +19,10 @@
 		@endif
 	</div>
 
-	@include('clubs.roster.breadcrumb')
+@endsection
 
+@section('breadcrumb')
+	@include('clubs.club.breadcrumb')
 @endsection
 
 @section('bottom-fixed')

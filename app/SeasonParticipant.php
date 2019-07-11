@@ -220,4 +220,21 @@ class SeasonParticipant extends Model
             ->take(3)->get();
     }
 
+    public function last_results() {
+
+        return SeasonCompetitionPhaseGroupLeagueDayMatch::
+            where(function($q) {
+                $q->whereNotNull('local_score')
+                  ->whereNotNull('visitor_score');
+            })
+            ->where(function($q) {
+                $q->where('local_user_id', '=', $this->user->id)
+                  ->OrWhere('visitor_user_id', '=', $this->user->id);
+            })
+            ->take(3)->get();
+
+            //falta el orden por partido registrado, es decir updated_at
+            //y faltaria obtener los resultados por participante, no por usuario
+    }
+
 }

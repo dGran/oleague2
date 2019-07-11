@@ -20,4 +20,13 @@ class SeasonCompetitionPhaseGroup extends Model
     {
         return $this->hasMany('App\SeasonCompetitionPhaseGroupParticipant', 'group_id', 'id');
     }
+
+    public function name() {
+        $phase = SeasonCompetitionPhase::find($this->phase->id);
+        if ($phase->groups->count() > 1) {
+            return $this->name;
+        } else {
+            return null;
+        }
+    }
 }

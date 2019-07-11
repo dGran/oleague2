@@ -9,13 +9,13 @@
 	@include('clubs.partials.header')
 
 	<div class="wrapper">
-		<div class="container">
-			<h4 class="p-3">Economia</h4>
-		</div>
-	</div>
+		@include('clubs.economy.data')
+	</div> {{-- wrapper --}}
 
-	@include('clubs.economy.breadcrumb')
+@endsection
 
+@section('breadcrumb')
+	@include('clubs.club.breadcrumb')
 @endsection
 
 @section('bottom-fixed')

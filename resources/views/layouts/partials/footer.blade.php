@@ -1,26 +1,55 @@
 <div class="corporate">
     <div class="container">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos ea veniam nobis voluptatibus, inventore autem sed velit facilis molestias distinctio! Odio fugiat harum reprehenderit veritatis, quaerat explicabo nisi, sunt distinctio.
-    </div>
-</div>
-
-<div class="container py-3">
-    <div class="row">
-        <div class="col-md-3">
-            <h5>Online League</h5>
+        <div class="logo text-center">
+            <figure>
+                <img src="{{ asset('img/logo.png') }}" alt="logo">
+            </figure>
+            LigasPesXbox
         </div>
-        <div class="col-md-3">Primer menu</div>
-        <div class="col-md-3">Segundo menu</div>
-        <div class="col-md-3">Síguenos</div>
+
+        <p class="cookies">
+            Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación y ofrecer contenidos y publicidad de interés. Al continuar navegando entendemos que aceptas el <a href="">uso de cookies</a>
+        </p>
+
+        <div class="legal">
+            <div class="container">
+                <ul class="menu">
+                    <li>
+                        <a href="">Contacto</a>
+                    </li>
+                    <li>
+                        <a href="">Política de privacidad</a>
+                    </li>
+                    <li>
+                        <a href="">Política de cookies</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-md-8 offset-md-2 small text-center">
-            <p>Al acceder, seguir utilizando o navegar por este sitio Web, el cliente acepta a que utilicemos ciertas cookies de navegación para mejorar su experiencia con nosotros. Rysteo sólo utilizará cookies que mejoren su experiencia y no aquellas que interfieran con su privacidad. Encontrará más información sobre el uso de cookies y cómo deshabilitarlas o gestionar su uso si lo desea en nuestra Política de cookies.</p>
-
-            <p>© 2018 Online League. Todos los derechos reservados.</p>
+<div class="container py-2">
+    <div class="text-center">
+        <p class="m-0">© 2019 LigasPesXbox. Todos los derechos reservados.</p>
+        <div class="social mt-2">
+            <ul>
+                <li>
+                    <a href="">
+                        <i class="fab fa-twitter pr-2"></i>Seguir
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fab fa-facebook-f pr-2"></i>Me gusta
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="fab fa-instagram p-2"></i>Seguir
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

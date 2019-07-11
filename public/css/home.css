@@ -37,12 +37,14 @@
 .logos .logo_game {
 	/*position: absolute;*/
 	float: left;
+  max-width: 220px;
 	width: 30%;
 }
 
 .logos .logo_platform {
 	/*position: absolute;*/
 	float: right;
+  max-width: 180px;
 	width: 30%;
 }
 

@@ -27,7 +27,9 @@
         @yield('style')
         <style>
             body{
-                background: #161b35;
+                background: #353f48;
+                /*background: #323232;*/
+                /*background: #161b35;*/
             }
         </style>
     </head>
@@ -41,12 +43,12 @@
 
         <main class="">
             <div id="app">
-                @yield('breadcrumb')
                 @yield('content')
             </div>
         </main>
 
         <footer>
+            @yield('breadcrumb')
             @include('layouts.partials.footer')
             @yield('bottom-fixed')
         </footer>
@@ -61,36 +63,34 @@
 
         @yield('js')
         <script>
+            progressively.init();
 
-progressively.init();
             $( document ).ready(function() {
                 var mediaquery = window.matchMedia("(max-width: 768px)");
                 function handleOrientationChange(mediaquery) {
                     if (!mediaquery.matches) {
                         $("#menu").css('display', 'none');
-                        $("#btn-menu").removeClass('fa-times');
-                        $("#btn-menu").addClass('fa-bars');
+                        $(".hamburger").removeClass('active');
                     }
                 }
                 handleOrientationChange(mediaquery);
                 mediaquery.addListener(handleOrientationChange);
 
-                $("#btn-menu").click(function(){
-                    if ( $("#menu").css('display') == 'none' ){
-                        $("#menu").removeClass('animated bounceOutLeft');
-                        $("#menu").addClass('animated bounceInLeft');
-                        $("#menu").fadeIn();
-                        $("#btn-menu").removeClass('fa-bars');
-                        $("#btn-menu").addClass('fa-times');
-                    } else {
-                        $("#menu").removeClass('animated bounceInLeft');
-                        $("#menu").addClass('animated bounceOutLeft');
-                        $("#menu").fadeOut();
-                        $("#btn-menu").removeClass('fa-times');
-                        $("#btn-menu").addClass('fa-bars');
-                    }
-                });
-
+                var el = document.querySelectorAll('.hamburger');
+                for (i=0; i<=el.length; i++) {
+                    el[i].addEventListener('click', function() {
+                        if ( $("#menu").css('display') == 'none' ){
+                            $("#menu").removeClass('animated bounceOutLeft');
+                            $("#menu").addClass('animated bounceInLeft');
+                            $("#menu").fadeIn();
+                        } else {
+                            $("#menu").fadeOut();
+                            $("#menu").removeClass('animated bounceInLeft');
+                            $("#menu").addClass('animated bounceOutLeft');
+                        }
+                        this.classList.toggle('active');
+                    }, false);
+                }
             });
         </script>
     </body>

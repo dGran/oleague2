@@ -34,4 +34,13 @@ class SeasonCompetitionPhase extends Model
             return $participants;
         }
     }
+
+    public function name() {
+        $competition = SeasonCompetition::find($this->competition->id);
+        if ($competition->phases->count() > 1) {
+            return $this->name;
+        } else {
+            return null;
+        }
+    }
 }

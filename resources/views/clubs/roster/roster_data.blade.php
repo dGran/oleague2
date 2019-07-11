@@ -1,6 +1,3 @@
-<div class="container p-3">
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti animi impedit nobis placeat, esse quae. Tempore optio pariatur similique, error, sapiente dolores sint veritatis officia repellat? Vel incidunt voluptatibus temporibus.
-</div>
 <h4 class="title-section">
 	<div class="container clearfix">
 		<span>Total: {{ $participant->players->count() }} jugadores</span>
@@ -16,7 +13,7 @@
 <h4 class="title-position">
 	<div class="container clearfix">
 		<span>Porteros</span>
-		<img src="{{ asset('img/clubs/pt.png') }}">
+		<img class="d-block d-md-none" src="{{ asset('img/clubs/pt.png') }}">
 	</div>
 </h4>
 <div class="container">

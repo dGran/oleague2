@@ -14,10 +14,10 @@
 		</div>
 	</div>
 
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius vel tempore, porro nihil iure delectus amet numquam mollitia rem quisquam odio quas fugit maxime aliquid minima esse est perferendis repellendus?
+@endsection
 
-	@include('clubs.calendar.breadcrumb')
-
+@section('breadcrumb')
+	@include('clubs.club.breadcrumb')
 @endsection
 
 @section('bottom-fixed')

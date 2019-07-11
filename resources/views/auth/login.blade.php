@@ -10,7 +10,7 @@
             <div class="row justify-content-center">
                 <div class="col-xs-8 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="text-center py-4">
-                        <img src="https://zero1.sg/img/accountlogin-icon.png" alt="" width="128">
+                        <img src="{{ asset('img/login.png') }}" alt="">
                         <h4 class="m-0 p-0 pt-2" style="padding: 2rem 2rem 0 2rem; color:#00d4e4">INICIAR SESIÓN</h4>
 
                     </div>

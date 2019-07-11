@@ -24,6 +24,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-judge:before {
+  content: "\e909";
+}
+.icon-trophy:before {
+  content: "\e90a";
+}
+.icon-home:before {
+  content: "\e90b";
+}
+.icon-transfer:before {
+  content: "\e90c";
+}
+.icon-clubs:before {
+  content: "\e90d";
+}
 .icon-soccer-field:before {
   content: "\e904";
 }

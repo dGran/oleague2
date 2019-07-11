@@ -13,8 +13,10 @@
     <div class="cover-page-container">
 
         <div class="logos">
-            <img class="logo_game" src="img/logo_pes2020.png" alt="">
-            <img class="logo_platform" src="img/logo_xboxone.png" alt="">
+            <div class="container">
+                <img class="logo_game" src="img/logo_pes2020.png" alt="">
+                <img class="logo_platform" src="img/logo_xboxone.png" alt="">
+            </div>
         </div>
 
 {{--         <div class="buttons p-4 text-center">
@@ -58,9 +60,9 @@
     <div class="row">
         <div class="col-12">
 {{--             <img src="https://www.mundodeportivo.com/r/GODO/MD/p6/Barca/Imagenes/2019/03/13/Recortada/img_rguillamet_20190313-224453_imagenes_md_otras_fuentes_champions-03-klvB-U461014157231diG-980x554@MundoDeportivo-Web.jpg" class="img-fluid" alt="" width="450"> --}}
-            <ul style="list-style: none; margin:0; padding: 0;" class="puff-in-tl">
+            <ul style="list-style: none; margin:0; padding: 0;">
 
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
                     <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
 
                         <img src="img/microphone.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
@@ -79,9 +81,40 @@
                                     El técnico del Ajax explota y carga contra los desarrolladores de Konami. "Es muy injusto querer hacer cosas y no poder"
                                 </span>
                             </li>
+                            <li class="text-right pt-2">
+                                <span style="display: block; font-size: 11px; color: #fafafa">
+                                     hoy, a las 3:43
+                                </span>
+                            </li>
                         </ul>
                     </div>
                 </li>
+
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
+                    <figure style="width: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
+                        <img src="https://image.flaticon.com/icons/svg/448/448003.svg" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
+                    </figure>
+                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                        <ul style="list-style: none; margin:0; padding: 0">
+                            <li>
+{{--                                 <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    Ferminnn cumple 47 años
+                                </span> --}}
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                    Felicidades ferminnn!!
+                                </span>
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    LPX te desea un feliz día en tu 47 cumpleaños
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <span class="text-right" style="display: block; font-size: 11px; color: #fafafa">
+                         hoy, a las 3:43
+                    </span>
+                </li>
+
+
 
 
                 <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">

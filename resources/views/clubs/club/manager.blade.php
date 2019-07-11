@@ -1,10 +1,10 @@
-<div class="club-info">
-	<h4 class="title-position">
-		<div class="container clearfix">
+<div class="club-info pt-2">
+	<h4 class="title-position border-bottom">
+		<div class="clearfix">
 			<span>Manager</span>
 		</div>
 	</h4>
-	<div class="container p-3">
+	<div class="p-3">
 		@if ($participant->user->hasProfile())
 			<img class="avatar rounded-circle" src="{{ $participant->user->profile->avatar }}">
 		@endif
@@ -31,8 +31,5 @@
 				@endif
 			</li>
 		</ul>
-		@if ($participant->user->hasProfile() && $participant->user->profile->gamertag)
-			<img class="img-fluid pt-2" src="https://www.mygamerprofile.net/card/xosmall/{{ $participant->user->profile->gamertag }}.png" />
-		@endif
 	</div>
 </div>

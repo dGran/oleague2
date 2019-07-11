@@ -673,8 +673,13 @@ class PlayerController extends Controller
                     } else {
                         $new_image = pesmaster_player_img_path($player->game_id);
                     }
-                    $player->img = $new_image;
-                    $player->save();
+
+                    if (@GetImageSize($new_image)) {
+                        \Image::make($new_image)->save('img/players/player_' . $player->id . '.png');
+                        $player->img = 'img/players/player_' . $player->id . '.png';
+                        $player->save();
+                     }
+
                     event(new TableWasUpdated($player, $player->name));
                 }
             }

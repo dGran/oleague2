@@ -1,25 +1,28 @@
 .club-header {
-  overflow: hidden;
+  background: #353f48;
   margin-top: 54px;
-  background: #161c33;
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, #161c33), color-stop(100%, #40589e));
-  background: -webkit-gradient(linear, left top, left bottom, from(#161c33), to(#40589e));
-  background: linear-gradient(to bottom, #161c33 0%, #40589e 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#161c33', endColorstr='#40589e', GradientType=0 );
+  padding: .75em 0;
+}
+
+.club-header h3 {
+  color: #fff;
+  margin: 0;
+}
+
+.club-header img {
+  width: 55px;
 }
 
 .club-header .subname {
+  color: #979797;
+  display: block;
   font-weight: bold;
   font-size: .8em;
 }
 
 .club-menu {
-  background: #40589e;
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, #40589e), color-stop(100%, #161c33));
-  background: -webkit-gradient(linear, left top, left bottom, from(#40589e), to(#161c33));
-  background: linear-gradient(to bottom, #40589e 0%, #161c33 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40589e', endColorstr='#161c33', GradientType=0 );
-  border-top: 1px solid #32467d;
+  background: #353f48;
+  border-top: 1px solid #414E5B;
   padding-top: 5px;
 }
 
@@ -35,12 +38,12 @@
 }
 
 .club-menu ul li.active a {
-  color: #FFEF80;
+  color: #89be38;
   pointer-events: none;
 }
 
 .club-menu ul li.active a:hover {
-  color: #FFEF80;
+  color: #89be38;
 }
 
 .club-menu ul li a {
@@ -64,7 +67,7 @@
 }
 
 .wrapper {
-  background: #f2f2f2;
+  background: #ffffff;
 }
 
 .wrapper .title-section {
@@ -215,50 +218,50 @@
   width: 5px;
 }
 
-.wrapper .club-info .tops {
+.wrapper .tops {
   font-size: .9em;
   padding: 2px 8px 0 8px;
 }
 
-.wrapper .club-info .tops .img {
+.wrapper .tops .img {
   display: inline-block;
 }
 
-.wrapper .club-info .tops .img img {
+.wrapper .tops .img img {
   background: #f9f9f9;
   border: 1px solid #ddd;
   width: 32px;
 }
 
-.wrapper .club-info .tops .age {
+.wrapper .tops .age {
   display: inline-block;
   margin-left: .5rem;
   max-width: 52px;
   min-width: 52px;
 }
 
-.wrapper .club-info .tops .overall_rating {
+.wrapper .tops .overall_rating {
   display: inline-block;
   margin-left: .5rem;
   max-width: 20px;
   min-width: 20px;
 }
 
-.wrapper .club-info .tops .overall_rating span {
+.wrapper .tops .overall_rating span {
   display: block;
   text-align: center;
 }
 
-.wrapper .club-info .tops .ball {
+.wrapper .tops .ball {
   display: inline-block;
   margin-left: .5rem;
 }
 
-.wrapper .club-info .tops .ball img {
+.wrapper .tops .ball img {
   width: 20px;
 }
 
-.wrapper .club-info .tops .position {
+.wrapper .tops .position {
   display: inline-block;
   margin-left: .5rem;
   max-width: 29px;
@@ -266,7 +269,7 @@
   text-align: center;
 }
 
-.wrapper .club-info .tops .name {
+.wrapper .tops .name {
   display: inline-block;
   margin-left: .5rem;
 }
@@ -389,5 +392,22 @@
   font-family: sans-serif;
   font-size: 0.5em;
   text-anchor: middle;
+}
+
+@media (min-width: 768px) {
+  .wrapper .title-position {
+    background: none;
+    border-bottom: none;
+    border-top: none;
+    text-transform: none;
+  }
+
+  .wrapper .title-position .container {
+    border-bottom: 1px solid #C7C7C7;
+  }
+
+  .wrapper .player-card {
+    margin: 1rem 0 0 0;
+  }
 }
 

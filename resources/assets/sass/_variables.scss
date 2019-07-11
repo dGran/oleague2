@@ -118,23 +118,22 @@ $input-placeholder-color: $gray-400 !default;
 
 // Breadcrumbs
 
-$breadcrumb-padding-y:              .75rem !default;
-$breadcrumb-padding-x:              1rem !default;
+$breadcrumb-padding-y:              0 !default;
+$breadcrumb-padding-x:              0 !default;
 $breadcrumb-item-padding:           .5rem !default;
 
-$breadcrumb-margin-bottom:          1rem !default;
+$breadcrumb-margin-bottom:          0 !default;
 
 $breadcrumb-bg:                     none;
-$breadcrumb-divider-color:          $gray-500 !default;
-$breadcrumb-active-color:           $gray-600 !default;
+$breadcrumb-divider-color:          #ffb44e !default;
+$breadcrumb-active-color:           #ffb44e !default;
 $breadcrumb-divider:                quote("/") !default;
 
 $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1140px
+  xl: 992px
 ) !default;
-
 
 $grid-gutter-width:           15px !default;

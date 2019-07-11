@@ -7,6 +7,7 @@ use App\User;
 use App\Season;
 use App\SeasonParticipant;
 use App\SeasonPlayer;
+use App\SeasonCompetitionPhaseGroupParticipant;
 
 class HomeController extends Controller
 {
@@ -77,6 +78,12 @@ class HomeController extends Controller
         // $text = "Mensaje de prueba con channel almacenado";
         // send_telegram_notification($text);
 
+// $img = Image::make('https://i.stack.imgur.com/koFpQ.png');
+$img = \Image::make('https://i.stack.imgur.com/koFpQ.png');
+// header('Content-Type: image/png');
+$img->save('img/test.jpg');
+// dd($img->response());
+
         $users = User::all();
         $onlineUsersCount = 0;
         foreach ( $users as $user )
@@ -100,7 +107,12 @@ class HomeController extends Controller
         $participants = $this->get_participants();
         $participant = $this->get_participant($slug);
 
-        return view('clubs.index', compact('participants', 'participant'));
+        // dd($participant->last_results());
+
+        $par = SeasonCompetitionPhaseGroupParticipant::where('participant_id', '=', $participant->id)->first();
+        // dd($par);
+
+        return view('clubs.index', compact('participants', 'participant', 'par'));
     }
 
     public function clubRoster($slug)
@@ -168,6 +180,8 @@ class HomeController extends Controller
     {
         return view('competitions.match');
     }
+
+
 
     // helpers
 

@@ -1,13 +1,13 @@
 <div class="club-header">
 	<div class="container py-2">
 		<div class="d-table-cell align-top">
-			<img src="{{ $participant->logo() }}" alt="" width="70">
+			<img src="{{ $participant->logo() }}" alt="">
 		</div>
 		<div class="d-table-cell pl-2 align-middle">
-    		<h3 class="m-0 text-white">
+    		<h3>
     			{{ $participant->name() }}
     		</h3>
-    		<span class="subname d-block text-white">
+    		<span class="subname">
     			{{ $participant->sub_name() }}
     		</span>
 		</div>

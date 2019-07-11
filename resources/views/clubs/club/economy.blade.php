@@ -1,10 +1,10 @@
-<div class="club-info">
-	<h4 class="title-position">
-		<div class="container clearfix">
+<div class="club-info pt-2">
+	<h4 class="title-position border-bottom">
+		<div class="clearfix">
 			<span>Economía</span>
 		</div>
 	</h4>
-	<div class="container p-3">
+	<div class="p-3">
 		<ul class="details">
 			<li>
 				Presupuesto: <strong>{{ $participant->budget() }} M.</strong>

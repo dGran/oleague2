@@ -1,75 +1,78 @@
 <section class="top-menu">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col d-inline-block d-md-none slide-in-fwd-left">
-                <i class="fas fa-bars" id="btn-menu"></i>
-            </div>
-            <div class="col d-none d-md-inline-block">
+    <div class="row align-items-center mx-2 mx-md-5 mx-lg-2">
+        <div class="col d-inline-block d-md-none">
+            <button class="hamburger hamburger-cancel">
+                <span class="icon"></span>
+            </button>
+        </div>
+        <div class="col-auto d-none d-md-inline-block">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <figure class="logo d-none d-md-inline-block">
+                    <img src="{{ asset('img/logo.png') }}" alt="logo">
+                </figure>
+                LigasPesXbox
+            </a>
+        </div>
+        <div class="col-auto d-none d-md-inline-block">
+            <nav>
+                <ul class="nav">
+                    @include('layouts.partials.menu')
+                </ul>
+            </nav>
+        </div>
+        <div class="col-auto d-inline-block d-md-none">
+            <h1>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <figure class="logo d-none d-lg-inline-block">
+                    <figure class="logo">
                         <img src="{{ asset('img/logo.png') }}" alt="logo">
                     </figure>
                     LigasPesXbox
                 </a>
-{{--                 <h1>
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </h1> --}}
-            </div>
-            <div class="col-auto d-none d-md-inline-block">
-                <nav>
-                    <ul class="nav">
-                        @include('layouts.partials.menu')
-                    </ul>
-                </nav>
-            </div>
-            <div class="col-auto d-inline-block d-md-none">
-                <h1>
-                    <a class="navbar-brand bounce-in-bck" href="{{ url('/') }}">
-                        <figure class="logo">
-                            <img src="{{ asset('img/logo.png') }}" alt="logo">
-                        </figure>
-                        LigasPesXbox
-                    </a>
-                </h1>
-            </div>
-            <div class="user col text-right">
+            </h1>
+        </div>
+        <div class="col user text-right">
 
-                <div class="btn-group dropright">
-                    @guest
-                        <div class="d-none d-lg-inline-block">
-                            <a href="{{ route('login') }}">Iniciar sesión</a> / <a href="{{ route('register') }}">Registrarse</a>
-                        </div>
+            <div class="btn-group dropright">
+                @guest
+                    <div class="d-none d-lg-inline-block pt-2">
+                        <a class="text-white" href="{{ route('login') }}">Iniciar sesión</a>
+                        <span class="text-white">/</span>
+                        <a  class="text-white" href="{{ route('register') }}">Regístrate</a>
+                    </div>
+                    <div class="btn-group dropup">
                         <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <figure class="user-img ml-3 slide-in-fwd-right">
+                            <figure class="user-img ml-3">
                                 <img src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
                             </figure>
                         </a>
-                    @else
-                        @if (auth()->user()->hasProfile())
-                            <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <figure class="user-img">
-                                    <img src="{{ auth()->user()->profile->avatar }}" alt="" class="rounded-circle slide-in-fwd-right">
-                                </figure>
-                            </a>
-                        @else
-                            <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <figure class="user-img">
-                                    <img src="{{ asset('img/avatars/default.png') }}" alt="" class="rounded-circle slide-in-fwd-right">
-                                </figure>
-                            </a>
-                        @endif
-                    @endguest
-                    <div class="dropdown-menu animated bounceIn" aria-labelledby="dropdownUserMenu">
-                        <h6 class="dropdown-header">Invitado</h6>
-                        <a href="{{ route('login') }}" class="dropdown-item">
-                            Iniciar sesión
-                        </a>
-                        <a href="{{ route('register') }}" class="dropdown-item">
-                            Registro
-                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item text-dark" href="{{ route('login') }}">Iniciar sesión</a>
+                            <a class="dropdown-item text-dark" href="{{ route('register') }}">Regístrate</a>
+                        </div>
                     </div>
+                @else
+                    @if (auth()->user()->hasProfile())
+                        <a class="dropdown dropleft" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <figure class="user-img">
+                                <img src="{{ auth()->user()->profile->avatar }}" alt="" class="rounded-circle">
+                            </figure>
+                        </a>
+                    @else
+                        <a class="dropdown dropleft" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <figure class="user-img">
+                                <img src="{{ asset('img/avatars/default.png') }}" alt="" class="rounded-circle">
+                            </figure>
+                        </a>
+                    @endif
+                @endguest
+                <div class="dropdown-menu animated bounceIn" aria-labelledby="dropdownUserMenu">
+                    <h6 class="dropdown-header">Invitado</h6>
+                    <a href="{{ route('login') }}" class="dropdown-item">
+                        Iniciar sesión
+                    </a>
+                    <a href="{{ route('register') }}" class="dropdown-item">
+                        Registro
+                    </a>
                 </div>
             </div>
         </div>
@@ -78,6 +81,28 @@
 
 <aside id="menu">
     <nav>
+        <div class="p-3">
+            @guest
+                <div class="row">
+                    <div class="col-6 text-right">
+                        <a href="{{ route('login') }}" class="text-white pr-2">
+                            Iniciar sesión
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ route('register') }}" class="text-white pl-2">
+                            Regístrate
+                        </a>
+                    </div>
+                </div>
+            @else
+                <div class="row">
+                    <div class="col-12 text-center text-white">
+                        Hola, {{ auth()->user()->name }}
+                    </div>
+                </div>
+            @endguest
+        </div>
         <ul class="nav flex-column">
             @include('layouts.partials.menu')
         </ul>

@@ -5,18 +5,26 @@
 @endsection
 
 @section('content')
-
 	@include('clubs.partials.header')
 
 	<div class="wrapper">
-		@include('clubs.club.manager')
-		@include('clubs.club.economy')
-		@include('clubs.club.roster')
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-md-6">
+					@include('clubs.club.manager')
+				</div>
+				<div class="col-12 col-md-6">
+					@include('clubs.club.economy')
+				</div>
+			</div>
+			@include('clubs.club.roster')
+		</div>
 		@include('clubs.club.results')
 	</div> {{-- wrapper --}}
+@endsection
 
+@section('breadcrumb')
 	@include('clubs.club.breadcrumb')
-
 @endsection
 
 @section('bottom-fixed')
