@@ -40,40 +40,27 @@
                         <a  class="text-white" href="{{ route('register') }}">Regístrate</a>
                     </div>
                     <div class="btn-group dropup">
-                        <a class="dropdown" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a id="btn-user-menu">
                             <figure class="user-img ml-3">
                                 <img src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
                             </figure>
                         </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item text-dark" href="{{ route('login') }}">Iniciar sesión</a>
-                            <a class="dropdown-item text-dark" href="{{ route('register') }}">Regístrate</a>
-                        </div>
                     </div>
                 @else
                     @if (auth()->user()->hasProfile())
-                        <a class="dropdown dropleft" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a id="btn-user-menu">
                             <figure class="user-img">
                                 <img src="{{ auth()->user()->profile->avatar }}" alt="" class="rounded-circle">
                             </figure>
                         </a>
                     @else
-                        <a class="dropdown dropleft" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a id="btn-user-menu">
                             <figure class="user-img">
                                 <img src="{{ asset('img/avatars/default.png') }}" alt="" class="rounded-circle">
                             </figure>
                         </a>
                     @endif
                 @endguest
-                <div class="dropdown-menu animated bounceIn" aria-labelledby="dropdownUserMenu">
-                    <h6 class="dropdown-header">Invitado</h6>
-                    <a href="{{ route('login') }}" class="dropdown-item">
-                        Iniciar sesión
-                    </a>
-                    <a href="{{ route('register') }}" class="dropdown-item">
-                        Registro
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -105,6 +92,37 @@
         </div>
         <ul class="nav flex-column">
             @include('layouts.partials.menu')
+        </ul>
+    </nav>
+</aside>
+
+
+<aside id="user-menu">
+    <nav>
+        <div class="p-3">
+            @guest
+                <div class="row">
+                    <div class="col-6 text-right">
+                        <a href="{{ route('login') }}" class="text-white pr-2">
+                            Iniciar sesión
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ route('register') }}" class="text-white pl-2">
+                            Regístrate
+                        </a>
+                    </div>
+                </div>
+            @else
+                <div class="row">
+                    <div class="col-12 text-center text-white">
+                        Hola, {{ auth()->user()->name }}
+                    </div>
+                </div>
+            @endguest
+        </div>
+        <ul class="nav flex-column">
+            @include('layouts.partials.user_menu')
         </ul>
     </nav>
 </aside>

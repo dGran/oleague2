@@ -47,7 +47,7 @@
             </div>
         </main>
 
-        <footer>
+        <footer class="footer">
             @yield('breadcrumb')
             @include('layouts.partials.footer')
             @yield('bottom-fixed')
@@ -70,28 +70,56 @@
                 function handleOrientationChange(mediaquery) {
                     if (!mediaquery.matches) {
                         $("#menu").css('display', 'none');
+                        $("#user-menu").css('display', 'none');
                         $(".hamburger").removeClass('active');
                     }
                 }
                 handleOrientationChange(mediaquery);
                 mediaquery.addListener(handleOrientationChange);
+            });
 
-                var el = document.querySelectorAll('.hamburger');
-                for (i=0; i<=el.length; i++) {
-                    el[i].addEventListener('click', function() {
-                        if ( $("#menu").css('display') == 'none' ){
-                            $("#menu").removeClass('animated bounceOutLeft');
-                            $("#menu").addClass('animated bounceInLeft');
-                            $("#menu").fadeIn();
-                        } else {
-                            $("#menu").fadeOut();
-                            $("#menu").removeClass('animated bounceInLeft');
-                            $("#menu").addClass('animated bounceOutLeft');
-                        }
-                        this.classList.toggle('active');
-                    }, false);
+            $('.hamburger').click(function() {
+                if ( $("#user-menu").css('display') == 'block' ){
+                    $("#user-menu").removeClass('animated bounceInRight');
+                    $("#user-menu").addClass('animated bounceOutRight');
+                }
+
+                if ( $("#menu").css('display') == 'none' ){
+                    $("#menu").removeClass('animated bounceOutLeft');
+                    $("#menu").addClass('animated bounceInLeft');
+                    $("#menu").fadeIn();
+                    $('.hamburger').addClass('active');
+                } else {
+                    $("#menu").fadeOut();
+                    $("#menu").removeClass('animated bounceInLeft');
+                    $("#menu").addClass('animated bounceOutLeft');
+                    $('.hamburger').removeClass('active');
                 }
             });
+
+            $('#btn-user-menu').click(function() {
+                if ( $("#menu").css('display') == 'block' ){
+                    $("#menu").removeClass('animated bounceInLeft');
+                    $("#menu").addClass('animated bounceOutLeft');
+                    $('.hamburger').removeClass('active');
+                }
+
+                if ( $("#user-menu").css('display') == 'none' ){
+                    $("#user-menu").removeClass('animated bounceOutRight');
+                    $("#user-menu").addClass('animated bounceInRight');
+                    $("#user-menu").fadeIn();
+                } else {
+                    $("#user-menu").fadeOut();
+                    $("#user-menu").removeClass('animated bounceInRight');
+                    $("#user-menu").addClass('animated bounceOutRight');
+                }
+            });
+
+            // margin bottom of bottom fixed when is visible
+            if ( $(".bottom-fixed").css('display') == 'block' ) {
+                var margin = 8 + $('.bottom-fixed').height();
+                $('.footer').css({'margin-bottom': margin + 'px'});
+            };
         </script>
     </body>
 

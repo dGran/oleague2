@@ -1,8 +1,7 @@
-footer {
+.footer {
 	color: #bbbbbb;
 	background: #353f48;
 	font-size: .9em;
-	margin-bottom: 68px;
 	a {
 		color: #fff;
 		&:hover {
@@ -29,7 +28,7 @@ footer {
 
 	.corporate {
 		background: #3f4b55;
-		border-bottom: 1px solid #444444;
+		border-top: 1px solid lighten(#353f48, 7%);
 		padding: 1em 0;
 		.logo {
 			font-size: 1.15em;
@@ -44,14 +43,14 @@ footer {
 			}
 		}
 		.cookies {
-			border-top: 1px solid #444444;
+			border-top: 1px solid lighten(#353f48, 7%);
 			font-size: .9em;
 			margin: 0;
 			padding: 1em 0;
 			text-align: center;
 		}
 		.legal {
-			border-top: 1px solid #444444;
+			border-top: 1px solid lighten(#353f48, 7%);
 			text-align: center;
 			.menu {
 				font-size: .9em;
@@ -81,7 +80,7 @@ footer {
 	}
 	.bottom-fixed {
     	background: #353f48;
-    	border-top: 1px solid #424F5B;
+    	border-top: 1px solid lighten(#353f48, 7%);
     	bottom: 0;
     	padding: .25em 0;
 		position: fixed;

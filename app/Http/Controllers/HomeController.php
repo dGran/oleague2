@@ -78,12 +78,6 @@ class HomeController extends Controller
         // $text = "Mensaje de prueba con channel almacenado";
         // send_telegram_notification($text);
 
-// $img = Image::make('https://i.stack.imgur.com/koFpQ.png');
-$img = \Image::make('https://i.stack.imgur.com/koFpQ.png');
-// header('Content-Type: image/png');
-$img->save('img/test.jpg');
-// dd($img->response());
-
         $users = User::all();
         $onlineUsersCount = 0;
         foreach ( $users as $user )

@@ -10710,7 +10710,8 @@ header .top-menu .user .user-img img {
   width: 100%;
 }
 
-header #menu {
+header #menu,
+header #user-menu {
   background: rgba(53, 63, 72, 0.99);
   -webkit-box-shadow: 0px 3px 7px -1px #353f48;
   box-shadow: 0px 3px 7px -1px #353f48;
@@ -10722,7 +10723,8 @@ header #menu {
   z-index: 1;
 }
 
-header #menu nav .nav .nav-item {
+header #menu nav .nav .nav-item,
+header #user-menu nav .nav .nav-item {
   border-left: 4px solid transparent;
   border-top: 1px solid #44515d;
   display: block;
@@ -10730,61 +10732,74 @@ header #menu nav .nav .nav-item {
   padding: .25em .75em;
 }
 
-header #menu nav .nav .nav-item:hover {
+header #menu nav .nav .nav-item:hover,
+header #user-menu nav .nav .nav-item:hover {
   background: #424e5a;
   border-left: 4px solid #89be38;
 }
 
 header #menu nav .nav .nav-item:hover .nav-link i,
-header #menu nav .nav .nav-item:hover .nav-link span {
+header #menu nav .nav .nav-item:hover .nav-link span,
+header #user-menu nav .nav .nav-item:hover .nav-link i,
+header #user-menu nav .nav .nav-item:hover .nav-link span {
   color: #fff;
 }
 
-header #menu nav .nav .nav-item.share {
+header #menu nav .nav .nav-item.share,
+header #user-menu nav .nav .nav-item.share {
   background: #fff;
   border-top: none;
   text-align: center;
 }
 
-header #menu nav .nav .nav-item.share:hover {
+header #menu nav .nav .nav-item.share:hover,
+header #user-menu nav .nav .nav-item.share:hover {
   border-left: 4px solid transparent;
 }
 
-header #menu nav .nav .nav-item.share span {
+header #menu nav .nav .nav-item.share span,
+header #user-menu nav .nav .nav-item.share span {
   font-size: .85em;
   color: #6f7b91;
   padding: .25em;
 }
 
-header #menu nav .nav .nav-item.share ul {
+header #menu nav .nav .nav-item.share ul,
+header #user-menu nav .nav .nav-item.share ul {
   list-style: none;
   padding: 0;
 }
 
-header #menu nav .nav .nav-item.share ul li {
+header #menu nav .nav .nav-item.share ul li,
+header #user-menu nav .nav .nav-item.share ul li {
   display: inline-block;
 }
 
-header #menu nav .nav .nav-item.share ul li a {
+header #menu nav .nav .nav-item.share ul li a,
+header #user-menu nav .nav .nav-item.share ul li a {
   padding: .5em;
 }
 
-header #menu nav .nav .nav-item.share ul li a i {
+header #menu nav .nav .nav-item.share ul li a i,
+header #user-menu nav .nav .nav-item.share ul li a i {
   font-size: 1.5em;
 }
 
-header #menu nav .nav .nav-item.share ul li a span {
+header #menu nav .nav .nav-item.share ul li a span,
+header #user-menu nav .nav .nav-item.share ul li a span {
   line-height: 2em;
 }
 
-header #menu nav .nav .nav-item .nav-link {
+header #menu nav .nav .nav-item .nav-link,
+header #user-menu nav .nav .nav-item .nav-link {
   border-bottom: 1px solid transparent;
   color: #f9f9f9;
   padding: .25em;
   text-transform: uppercase;
 }
 
-header #menu nav .nav .nav-item .nav-link i {
+header #menu nav .nav .nav-item .nav-link i,
+header #user-menu nav .nav .nav-item .nav-link i {
   color: #858585;
   display: table-cell;
   font-size: 1.75em;
@@ -10792,7 +10807,8 @@ header #menu nav .nav .nav-item .nav-link i {
   vertical-align: middle;
 }
 
-header #menu nav .nav .nav-item .nav-link span {
+header #menu nav .nav .nav-item .nav-link span,
+header #user-menu nav .nav .nav-item .nav-link span {
   color: #C2C2C2;
   display: table-cell;
   font-size: .85em;
@@ -10800,17 +10816,21 @@ header #menu nav .nav .nav-item .nav-link span {
   vertical-align: middle;
 }
 
-header #menu nav .nav .nav-item .nav-link.disabled {
+header #menu nav .nav .nav-item .nav-link.disabled,
+header #user-menu nav .nav .nav-item .nav-link.disabled {
   cursor: not-allowed;
 }
 
-header #menu nav .nav .nav-item.current {
+header #menu nav .nav .nav-item.current,
+header #user-menu nav .nav .nav-item.current {
   background: #44515d;
   border-left: 4px solid #89be38;
 }
 
 header #menu nav .nav .nav-item.current .nav-link i,
-header #menu nav .nav .nav-item.current .nav-link span {
+header #menu nav .nav .nav-item.current .nav-link span,
+header #user-menu nav .nav .nav-item.current .nav-link i,
+header #user-menu nav .nav .nav-item.current .nav-link span {
   color: #fff;
 }
 
@@ -10964,102 +10984,101 @@ header .section .match .visitor .participant {
   }
 }
 
-footer {
+.footer {
   color: #bbbbbb;
   background: #353f48;
   font-size: .9em;
-  margin-bottom: 68px;
 }
 
-footer a {
+.footer a {
   color: #fff;
 }
 
-footer a:hover {
+.footer a:hover {
   color: #fff;
   text-decoration: underline;
 }
 
-footer .navigator {
+.footer .navigator {
   background: #546472;
   padding: 1em 0;
 }
 
-footer .navigator .breadcrumb .breadcrumb-item a {
+.footer .navigator .breadcrumb .breadcrumb-item a {
   color: #b3b3b3;
 }
 
-footer .navigator .breadcrumb .breadcrumb-item.active {
+.footer .navigator .breadcrumb .breadcrumb-item.active {
   color: #fff;
 }
 
-footer .corporate {
+.footer .corporate {
   background: #3f4b55;
-  border-bottom: 1px solid #444444;
+  border-top: 1px solid #44515d;
   padding: 1em 0;
 }
 
-footer .corporate .logo {
+.footer .corporate .logo {
   font-size: 1.15em;
   margin: 0;
   text-align: center;
 }
 
-footer .corporate .logo figure {
+.footer .corporate .logo figure {
   display: inline-block;
 }
 
-footer .corporate .logo figure img {
+.footer .corporate .logo figure img {
   height: 24px;
   width: auto;
 }
 
-footer .corporate .cookies {
-  border-top: 1px solid #444444;
+.footer .corporate .cookies {
+  border-top: 1px solid #44515d;
   font-size: .9em;
   margin: 0;
   padding: 1em 0;
   text-align: center;
 }
 
-footer .corporate .legal {
-  border-top: 1px solid #444444;
+.footer .corporate .legal {
+  border-top: 1px solid #44515d;
   text-align: center;
 }
 
-footer .corporate .legal .menu {
+.footer .corporate .legal .menu {
   font-size: .9em;
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-footer .corporate .legal .menu li {
+.footer .corporate .legal .menu li {
   display: inline-block;
   padding: 1em .5em 0 .5em;
 }
 
-footer .corporate .legal .menu li:first-child {
+.footer .corporate .legal .menu li:first-child {
   padding-left: 0;
 }
 
-footer .social {
+.footer .social {
   text-align: center;
 }
 
-footer .social ul {
+.footer .social ul {
   list-style: none;
   padding: 0;
 }
 
-footer .social ul li {
+.footer .social ul li {
   display: inline-block;
   padding: 0 1em;
 }
 
-footer .bottom-fixed {
+.footer .bottom-fixed {
   background: #353f48;
-  border-top: 1px solid #424F5B;
+  border-top: 1px solid #44515d;
   bottom: 0;
   padding: .25em 0;
   position: fixed;
