@@ -175,6 +175,11 @@ class HomeController extends Controller
         return view('competitions.match');
     }
 
+    public function rules()
+    {
+        return view('rules.index');
+    }
+
 
 
     // helpers

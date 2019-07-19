@@ -22,4 +22,19 @@ class Profile extends Model
     {
 		return Carbon::parse($this->birthdate)->age;
     }
+
+    public function getAvatarFormatted() {
+        $no_img = asset('img/avatars/default.png');
+        $broken = asset('img/avatars/broken.png');
+        if ($this->avatar) {
+            $img = $this->avatar;
+            if (@GetImageSize($img)) {
+                return $img;
+            } else {
+                return $broken;
+            }
+        } else {
+            return $no_img;
+        }
+    }
 }

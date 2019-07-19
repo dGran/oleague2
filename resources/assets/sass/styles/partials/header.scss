@@ -3,23 +3,37 @@
 header {
 	position: relative;
 	.top-menu {
-		background: #be0346;
 		// background: #be3861;
-		margin-bottom: 54px;
+		// margin-bottom: 54px;
+		background: #be0346;
+		line-height: 54px;
+		max-height: 54px;
 		min-height: 54px;
-		padding: .4em 0;
+		padding: 0;
 		position: fixed;
+		vertical-align: middle;
 		width: 100%;
 		z-index: 9999;
 		h1 {
 			display: inline-block;
 			font-size: 1em;
 			margin: 0;
+			padding: 0;
 			a {
 				color: #fff;
+				i {
+					font-size: 2.25rem;
+					padding-right: .25rem;
+					vertical-align: middle;
+				}
+				span {
+					vertical-align: middle;
+				}
 			}
 		}
 		nav {
+			padding: 0;
+			vertical-align: middle;
 			.nav {
 				.nav-item {
 					font-size: 1em;
@@ -36,7 +50,6 @@ header {
 								a {
 									color: #fff;
 									font-weight: bold;
-									padding: .25em;
 								}
 							}
 						}
@@ -44,7 +57,7 @@ header {
 					.nav-link {
 						border-bottom: 1px solid transparent;
 						color: #fff;
-						padding: .25em;
+						padding: 0 .25em;
 						&:hover {
 							border-bottom: 1px solid $gray-300;
 							color: #fff;
@@ -63,38 +76,55 @@ header {
 		}
 		.navbar-brand {
 			color: #fff;
-			.logo {
-				display: inline-block;
-				margin: 0;
-				img {
-					height: 32px;
-					width: auto;
+			a {
+				color: #fff;
+				i {
+					font-size: 2.25rem;
+					padding-right: .25rem;
+					vertical-align: middle;
+				}
+				span {
+					vertical-align: middle;
 				}
 			}
 		}
 		.user {
 			color: $gray-600;
 			font-size: .9em;
+			vertical-align: middle;
 			a {
 				color: $gray-400;
 				&:hover {
 					color: $gray-100;
 				}
 			}
-			.user-img {
-				display: inline-block;
-				margin: 0;
-				min-width: 40px;
-				width: 40px;
-				img {
-					background: #fff;
-					height: auto;
-					width: 100%;
+			#btn-user-menu {
+				cursor: pointer;
+				.user-img {
+					display: inline-block;
+					margin: 0;
+					padding: 0;
+					height: 40px;
+					line-height: 40px;
+					vertical-align: middle;
+					width: 40px;
+					img {
+						border-radius: 50%;
+						height: 100%;
+						width: auto;
+						transition: all 0.25s;
+						vertical-align: middle;
+						&.guest, &.default, &.menu-close {
+							// border: 1px solid #000;
+							border-radius: 0%;
+							filter: invert(100%);
+						}
+					}
 				}
 			}
 		}
 	}
-	#menu, #user-menu {
+	#menu {
 		background: rgba(53, 63, 72, 0.99);
 		-webkit-box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
 		-moz-box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
@@ -122,9 +152,9 @@ header {
 							}
 						}
 					}
-					// &:first-child {
-					// 	border-top: 1px solid transparent;
-					// }
+					&:first-child {
+						border-top: 1px solid transparent;
+					}
 					&.share {
 						background: #fff;
 						border-top: none;
@@ -190,6 +220,130 @@ header {
 			}
 		}
 	}
+	#user-menu {
+		background: rgba(22, 27, 53, .99);
+		-webkit-box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
+		-moz-box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
+		box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
+		display: none;
+		position: fixed;
+		right: 0;
+		top: 54px;
+		width: 100%;
+		z-index: 1;
+		nav {
+			.nav {
+				.nav-item {
+					border-left: 4px solid transparent;
+					border-top: 1px solid lighten(#161b35, 7%);
+					display: block;
+					font-size: 1em;
+					padding: .25em .75em;
+					&:hover {
+						background: lighten(#161b35, 6%);
+						border-left: 4px solid #00d4e4;
+						.nav-link {
+							i, span {
+								color: #fff;
+							}
+						}
+					}
+					// &:first-child {
+					// 	border-top: 1px solid transparent;
+					// }
+					&.share {
+						background: #fff;
+						border-top: none;
+						text-align: center;
+						&:hover {
+							border-left: 4px solid transparent;
+						}
+						span {
+							font-size: .85em;
+							color: $primary;
+							padding: .25em;
+						}
+						ul {
+							list-style: none;
+							padding: 0;
+							li {
+								display: inline-block;
+								a {
+									i {
+										font-size: 1.5em;
+									}
+									span {
+										line-height: 2em;
+									}
+									padding: .5em;
+								}
+							}
+						}
+					}
+					&.footer {
+						background: #fff;
+						border-top: none;
+						&:hover {
+							border-left: 4px solid transparent;
+						}
+						span {
+							font-size: .85em;
+							padding: .25em;
+						}
+						ul {
+							// list-style: none;
+							padding: 0;
+							li {
+								display: block;
+								a {
+									i {
+										font-size: 1.5em;
+									}
+									span {
+										line-height: 2em;
+									}
+									padding: .5em;
+								}
+							}
+						}
+					}
+					.nav-link {
+						border-bottom: 1px solid transparent;
+						color: #f9f9f9;
+						padding: .25em;
+						text-transform: uppercase;
+						i {
+							color: #858585;
+							display: table-cell;
+							font-size: 1.75em;
+							font-weight: bold;
+							vertical-align: middle;
+						}
+						span {
+							color: #C2C2C2;
+							display: table-cell;
+							font-size: .85em;
+							padding-left: 1em;
+							vertical-align: middle;
+						}
+						&.disabled {
+							cursor: not-allowed;
+						}
+					}
+					&.current {
+						background: lighten(#161b35, 7%);
+						border-left: 4px solid #00d4e4;
+						.nav-link {
+							i, span {
+								color: #fff;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.section {
 		background: #E7E7E7;
 		.title {
@@ -323,6 +477,7 @@ header {
 			nav {
 				.nav {
 					.nav-item {
+						line-height: 53px;
 						i {
 							display: none;
 						}
@@ -330,15 +485,40 @@ header {
 				}
 			}
 		}
+		#user-menu {
+			width: 400px;
+		}
 	}
 }
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
+	header {
+		.top-menu {
+			nav {
+				.nav {
+					.nav-item {
+						padding: 0 .15em;
+					}
+				}
+			}
+		}
+	}
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
+	header {
+		.top-menu {
+			nav {
+				.nav {
+					.nav-item {
+						padding: 0 .5em;
+					}
+				}
+			}
+		}
+	}
 }
 
 // Extra large devices (large desktops, 1200px and up)

@@ -23,7 +23,7 @@
     </a>
 </li>
 <li class="nav-item {{ \Request::is('reglamento*') ? 'current' : '' }}">
-    <a class="nav-link {{ \Request::is('reglamento*') ? 'disabled' : '' }}" href="">
+    <a class="nav-link {{ \Request::is('reglamento*') ? 'disabled' : '' }}" href="{{ route('rules') }}">
         <i class="icon-judge"></i>
         <span>Reglas</span>
     </a>

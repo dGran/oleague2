@@ -24,6 +24,24 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-admin-panel:before {
+  content: "\e90e";
+}
+.icon-logout:before {
+  content: "\e90f";
+}
+.icon-user-card:before {
+  content: "\e910";
+}
+.icon-notification:before {
+  content: "\e911";
+}
+.icon-xbox-controller:before {
+  content: "\e912";
+}
+.icon-logo:before {
+  content: "\e913";
+}
 .icon-judge:before {
   content: "\e909";
 }

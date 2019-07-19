@@ -41,7 +41,7 @@
             @yield('section')
         </header>
 
-        <main class="">
+        <main>
             <div id="app">
                 @yield('content')
             </div>
@@ -64,13 +64,14 @@
         @yield('js')
         <script>
             progressively.init();
+            var user_icon = $('#btn-user-menu figure img').attr('src');
+            var user_close_icon = '{{ asset('img/avatars/close.png') }}';
 
             $( document ).ready(function() {
                 var mediaquery = window.matchMedia("(max-width: 768px)");
                 function handleOrientationChange(mediaquery) {
                     if (!mediaquery.matches) {
                         $("#menu").css('display', 'none');
-                        $("#user-menu").css('display', 'none');
                         $(".hamburger").removeClass('active');
                     }
                 }
@@ -78,10 +79,22 @@
                 mediaquery.addListener(handleOrientationChange);
             });
 
+            $('body').on('click touchstart', function() {
+                if ( $("#user-menu").css('display') == 'block' ) {
+                    $('#btn-user-menu').trigger("click");
+                }
+                if ( $("#menu").css('display') == 'block' ) {
+                    $('.hamburger').trigger("click");
+                }
+            });
+
+            $('#user-menu, #menu, .hamburger, #btn-user-menu').on('click touchstart', function(event){
+                event.stopPropagation();
+            });
+
             $('.hamburger').click(function() {
-                if ( $("#user-menu").css('display') == 'block' ){
-                    $("#user-menu").removeClass('animated bounceInRight');
-                    $("#user-menu").addClass('animated bounceOutRight');
+                if ( $("#user-menu").css('display') == 'block' ) {
+                    $('#btn-user-menu').trigger("click");
                 }
 
                 if ( $("#menu").css('display') == 'none' ){
@@ -98,17 +111,21 @@
             });
 
             $('#btn-user-menu').click(function() {
-                if ( $("#menu").css('display') == 'block' ){
-                    $("#menu").removeClass('animated bounceInLeft');
-                    $("#menu").addClass('animated bounceOutLeft');
-                    $('.hamburger').removeClass('active');
+                if ( $("#menu").css('display') == 'block' ) {
+                    $('.hamburger').trigger("click");
                 }
 
                 if ( $("#user-menu").css('display') == 'none' ){
                     $("#user-menu").removeClass('animated bounceOutRight');
                     $("#user-menu").addClass('animated bounceInRight');
+                    $('#btn-user-menu figure img').addClass('menu-close');
+                    $('#btn-user-menu figure img').attr('src', user_close_icon);
+                    $('#btn-user-menu figure img').css('height', '22px');
                     $("#user-menu").fadeIn();
                 } else {
+                    $('#btn-user-menu figure img').removeClass('menu-close');
+                    $('#btn-user-menu figure img').attr('src', user_icon);
+                    $('#btn-user-menu figure img').css('height', '100%');
                     $("#user-menu").fadeOut();
                     $("#user-menu").removeClass('animated bounceInRight');
                     $("#user-menu").addClass('animated bounceOutRight');

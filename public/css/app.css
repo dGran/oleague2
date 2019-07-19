@@ -609,7 +609,7 @@ pre code {
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 992px;
+    max-width: 1140px;
   }
 }
 
@@ -10609,10 +10609,12 @@ header {
 
 header .top-menu {
   background: #be0346;
-  margin-bottom: 54px;
+  line-height: 54px;
+  max-height: 54px;
   min-height: 54px;
-  padding: .4em 0;
+  padding: 0;
   position: fixed;
+  vertical-align: middle;
   width: 100%;
   z-index: 9999;
 }
@@ -10621,10 +10623,26 @@ header .top-menu h1 {
   display: inline-block;
   font-size: 1em;
   margin: 0;
+  padding: 0;
 }
 
 header .top-menu h1 a {
   color: #fff;
+}
+
+header .top-menu h1 a i {
+  font-size: 2.25rem;
+  padding-right: .25rem;
+  vertical-align: middle;
+}
+
+header .top-menu h1 a span {
+  vertical-align: middle;
+}
+
+header .top-menu nav {
+  padding: 0;
+  vertical-align: middle;
 }
 
 header .top-menu nav .nav .nav-item {
@@ -10648,13 +10666,12 @@ header .top-menu nav .nav .nav-item.share ul li {
 header .top-menu nav .nav .nav-item.share ul li a {
   color: #fff;
   font-weight: bold;
-  padding: .25em;
 }
 
 header .top-menu nav .nav .nav-item .nav-link {
   border-bottom: 1px solid transparent;
   color: #fff;
-  padding: .25em;
+  padding: 0 .25em;
 }
 
 header .top-menu nav .nav .nav-item .nav-link:hover {
@@ -10674,19 +10691,24 @@ header .top-menu .navbar-brand {
   color: #fff;
 }
 
-header .top-menu .navbar-brand .logo {
-  display: inline-block;
-  margin: 0;
+header .top-menu .navbar-brand a {
+  color: #fff;
 }
 
-header .top-menu .navbar-brand .logo img {
-  height: 32px;
-  width: auto;
+header .top-menu .navbar-brand a i {
+  font-size: 2.25rem;
+  padding-right: .25rem;
+  vertical-align: middle;
+}
+
+header .top-menu .navbar-brand a span {
+  vertical-align: middle;
 }
 
 header .top-menu .user {
   color: #6c757d;
   font-size: .9em;
+  vertical-align: middle;
 }
 
 header .top-menu .user a {
@@ -10697,21 +10719,38 @@ header .top-menu .user a:hover {
   color: #f8f9fa;
 }
 
-header .top-menu .user .user-img {
+header .top-menu .user #btn-user-menu {
+  cursor: pointer;
+}
+
+header .top-menu .user #btn-user-menu .user-img {
   display: inline-block;
   margin: 0;
-  min-width: 40px;
+  padding: 0;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
   width: 40px;
 }
 
-header .top-menu .user .user-img img {
-  background: #fff;
-  height: auto;
-  width: 100%;
+header .top-menu .user #btn-user-menu .user-img img {
+  border-radius: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+  vertical-align: middle;
 }
 
-header #menu,
-header #user-menu {
+header .top-menu .user #btn-user-menu .user-img img.guest,
+header .top-menu .user #btn-user-menu .user-img img.default,
+header .top-menu .user #btn-user-menu .user-img img.menu-close {
+  border-radius: 0%;
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+}
+
+header #menu {
   background: rgba(53, 63, 72, 0.99);
   -webkit-box-shadow: 0px 3px 7px -1px #353f48;
   box-shadow: 0px 3px 7px -1px #353f48;
@@ -10723,8 +10762,7 @@ header #user-menu {
   z-index: 1;
 }
 
-header #menu nav .nav .nav-item,
-header #user-menu nav .nav .nav-item {
+header #menu nav .nav .nav-item {
   border-left: 4px solid transparent;
   border-top: 1px solid #44515d;
   display: block;
@@ -10732,65 +10770,195 @@ header #user-menu nav .nav .nav-item {
   padding: .25em .75em;
 }
 
-header #menu nav .nav .nav-item:hover,
-header #user-menu nav .nav .nav-item:hover {
+header #menu nav .nav .nav-item:hover {
   background: #424e5a;
   border-left: 4px solid #89be38;
 }
 
 header #menu nav .nav .nav-item:hover .nav-link i,
-header #menu nav .nav .nav-item:hover .nav-link span,
+header #menu nav .nav .nav-item:hover .nav-link span {
+  color: #fff;
+}
+
+header #menu nav .nav .nav-item:first-child {
+  border-top: 1px solid transparent;
+}
+
+header #menu nav .nav .nav-item.share {
+  background: #fff;
+  border-top: none;
+  text-align: center;
+}
+
+header #menu nav .nav .nav-item.share:hover {
+  border-left: 4px solid transparent;
+}
+
+header #menu nav .nav .nav-item.share span {
+  font-size: .85em;
+  color: #6f7b91;
+  padding: .25em;
+}
+
+header #menu nav .nav .nav-item.share ul {
+  list-style: none;
+  padding: 0;
+}
+
+header #menu nav .nav .nav-item.share ul li {
+  display: inline-block;
+}
+
+header #menu nav .nav .nav-item.share ul li a {
+  padding: .5em;
+}
+
+header #menu nav .nav .nav-item.share ul li a i {
+  font-size: 1.5em;
+}
+
+header #menu nav .nav .nav-item.share ul li a span {
+  line-height: 2em;
+}
+
+header #menu nav .nav .nav-item .nav-link {
+  border-bottom: 1px solid transparent;
+  color: #f9f9f9;
+  padding: .25em;
+  text-transform: uppercase;
+}
+
+header #menu nav .nav .nav-item .nav-link i {
+  color: #858585;
+  display: table-cell;
+  font-size: 1.75em;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+header #menu nav .nav .nav-item .nav-link span {
+  color: #C2C2C2;
+  display: table-cell;
+  font-size: .85em;
+  padding-left: 1em;
+  vertical-align: middle;
+}
+
+header #menu nav .nav .nav-item .nav-link.disabled {
+  cursor: not-allowed;
+}
+
+header #menu nav .nav .nav-item.current {
+  background: #44515d;
+  border-left: 4px solid #89be38;
+}
+
+header #menu nav .nav .nav-item.current .nav-link i,
+header #menu nav .nav .nav-item.current .nav-link span {
+  color: #fff;
+}
+
+header #user-menu {
+  background: rgba(22, 27, 53, 0.99);
+  -webkit-box-shadow: 0px 3px 7px -1px #353f48;
+  box-shadow: 0px 3px 7px -1px #353f48;
+  display: none;
+  position: fixed;
+  right: 0;
+  top: 54px;
+  width: 100%;
+  z-index: 1;
+}
+
+header #user-menu nav .nav .nav-item {
+  border-left: 4px solid transparent;
+  border-top: 1px solid #20284e;
+  display: block;
+  font-size: 1em;
+  padding: .25em .75em;
+}
+
+header #user-menu nav .nav .nav-item:hover {
+  background: #1f264b;
+  border-left: 4px solid #00d4e4;
+}
+
 header #user-menu nav .nav .nav-item:hover .nav-link i,
 header #user-menu nav .nav .nav-item:hover .nav-link span {
   color: #fff;
 }
 
-header #menu nav .nav .nav-item.share,
 header #user-menu nav .nav .nav-item.share {
   background: #fff;
   border-top: none;
   text-align: center;
 }
 
-header #menu nav .nav .nav-item.share:hover,
 header #user-menu nav .nav .nav-item.share:hover {
   border-left: 4px solid transparent;
 }
 
-header #menu nav .nav .nav-item.share span,
 header #user-menu nav .nav .nav-item.share span {
   font-size: .85em;
   color: #6f7b91;
   padding: .25em;
 }
 
-header #menu nav .nav .nav-item.share ul,
 header #user-menu nav .nav .nav-item.share ul {
   list-style: none;
   padding: 0;
 }
 
-header #menu nav .nav .nav-item.share ul li,
 header #user-menu nav .nav .nav-item.share ul li {
   display: inline-block;
 }
 
-header #menu nav .nav .nav-item.share ul li a,
 header #user-menu nav .nav .nav-item.share ul li a {
   padding: .5em;
 }
 
-header #menu nav .nav .nav-item.share ul li a i,
 header #user-menu nav .nav .nav-item.share ul li a i {
   font-size: 1.5em;
 }
 
-header #menu nav .nav .nav-item.share ul li a span,
 header #user-menu nav .nav .nav-item.share ul li a span {
   line-height: 2em;
 }
 
-header #menu nav .nav .nav-item .nav-link,
+header #user-menu nav .nav .nav-item.footer {
+  background: #fff;
+  border-top: none;
+}
+
+header #user-menu nav .nav .nav-item.footer:hover {
+  border-left: 4px solid transparent;
+}
+
+header #user-menu nav .nav .nav-item.footer span {
+  font-size: .85em;
+  padding: .25em;
+}
+
+header #user-menu nav .nav .nav-item.footer ul {
+  padding: 0;
+}
+
+header #user-menu nav .nav .nav-item.footer ul li {
+  display: block;
+}
+
+header #user-menu nav .nav .nav-item.footer ul li a {
+  padding: .5em;
+}
+
+header #user-menu nav .nav .nav-item.footer ul li a i {
+  font-size: 1.5em;
+}
+
+header #user-menu nav .nav .nav-item.footer ul li a span {
+  line-height: 2em;
+}
+
 header #user-menu nav .nav .nav-item .nav-link {
   border-bottom: 1px solid transparent;
   color: #f9f9f9;
@@ -10798,7 +10966,6 @@ header #user-menu nav .nav .nav-item .nav-link {
   text-transform: uppercase;
 }
 
-header #menu nav .nav .nav-item .nav-link i,
 header #user-menu nav .nav .nav-item .nav-link i {
   color: #858585;
   display: table-cell;
@@ -10807,7 +10974,6 @@ header #user-menu nav .nav .nav-item .nav-link i {
   vertical-align: middle;
 }
 
-header #menu nav .nav .nav-item .nav-link span,
 header #user-menu nav .nav .nav-item .nav-link span {
   color: #C2C2C2;
   display: table-cell;
@@ -10816,19 +10982,15 @@ header #user-menu nav .nav .nav-item .nav-link span {
   vertical-align: middle;
 }
 
-header #menu nav .nav .nav-item .nav-link.disabled,
 header #user-menu nav .nav .nav-item .nav-link.disabled {
   cursor: not-allowed;
 }
 
-header #menu nav .nav .nav-item.current,
 header #user-menu nav .nav .nav-item.current {
-  background: #44515d;
-  border-left: 4px solid #89be38;
+  background: #20284e;
+  border-left: 4px solid #00d4e4;
 }
 
-header #menu nav .nav .nav-item.current .nav-link i,
-header #menu nav .nav .nav-item.current .nav-link span,
 header #user-menu nav .nav .nav-item.current .nav-link i,
 header #user-menu nav .nav .nav-item.current .nav-link span {
   color: #fff;
@@ -10979,8 +11141,28 @@ header .section .match .visitor .participant {
 }
 
 @media (min-width: 576px) {
+  header .top-menu nav .nav .nav-item {
+    line-height: 53px;
+  }
+
   header .top-menu nav .nav .nav-item i {
     display: none;
+  }
+
+  header #user-menu {
+    width: 400px;
+  }
+}
+
+@media (min-width: 768px) {
+  header .top-menu nav .nav .nav-item {
+    padding: 0 .15em;
+  }
+}
+
+@media (min-width: 992px) {
+  header .top-menu nav .nav .nav-item {
+    padding: 0 .5em;
   }
 }
 

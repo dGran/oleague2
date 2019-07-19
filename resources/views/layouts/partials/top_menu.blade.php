@@ -5,13 +5,13 @@
                 <span class="icon"></span>
             </button>
         </div>
-        <div class="col-auto d-none d-md-inline-block">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                <figure class="logo d-none d-md-inline-block">
-                    <img src="{{ asset('img/logo.png') }}" alt="logo">
-                </figure>
-                LigasPesXbox
-            </a>
+        <div class="col-auto ">
+            <h1>
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <i class="icon-logo"></i>
+                    <span>LigasPesXbox</span>
+                </a>
+            </h1>
         </div>
         <div class="col-auto d-none d-md-inline-block">
             <nav>
@@ -20,21 +20,11 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-auto d-inline-block d-md-none">
-            <h1>
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <figure class="logo">
-                        <img src="{{ asset('img/logo.png') }}" alt="logo">
-                    </figure>
-                    LigasPesXbox
-                </a>
-            </h1>
-        </div>
         <div class="col user text-right">
 
             <div class="btn-group dropright">
                 @guest
-                    <div class="d-none d-lg-inline-block pt-2">
+                    <div class="d-none d-lg-inline-block">
                         <a class="text-white" href="{{ route('login') }}">Iniciar sesión</a>
                         <span class="text-white">/</span>
                         <a  class="text-white" href="{{ route('register') }}">Regístrate</a>
@@ -42,7 +32,7 @@
                     <div class="btn-group dropup">
                         <a id="btn-user-menu">
                             <figure class="user-img ml-3">
-                                <img src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
+                                <img class="guest" src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
                             </figure>
                         </a>
                     </div>
@@ -50,13 +40,13 @@
                     @if (auth()->user()->hasProfile())
                         <a id="btn-user-menu">
                             <figure class="user-img">
-                                <img src="{{ auth()->user()->profile->avatar }}" alt="" class="rounded-circle">
+                                <img class="{{ auth()->user()->profile->avatar ? '' : 'default' }}" src="{{ auth()->user()->profile->getAvatarFormatted() }}" alt="">
                             </figure>
                         </a>
                     @else
                         <a id="btn-user-menu">
                             <figure class="user-img">
-                                <img src="{{ asset('img/avatars/default.png') }}" alt="" class="rounded-circle">
+                                <img class="default" src="{{ asset('img/avatars/default.png') }}" alt="">
                             </figure>
                         </a>
                     @endif
@@ -68,28 +58,6 @@
 
 <aside id="menu">
     <nav>
-        <div class="p-3">
-            @guest
-                <div class="row">
-                    <div class="col-6 text-right">
-                        <a href="{{ route('login') }}" class="text-white pr-2">
-                            Iniciar sesión
-                        </a>
-                    </div>
-                    <div class="col-6">
-                        <a href="{{ route('register') }}" class="text-white pl-2">
-                            Regístrate
-                        </a>
-                    </div>
-                </div>
-            @else
-                <div class="row">
-                    <div class="col-12 text-center text-white">
-                        Hola, {{ auth()->user()->name }}
-                    </div>
-                </div>
-            @endguest
-        </div>
         <ul class="nav flex-column">
             @include('layouts.partials.menu')
         </ul>

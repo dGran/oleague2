@@ -29,7 +29,8 @@
 
                     <div class="text-white" style="padding: 0 2em 0 2em">
                         <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
-                            @csrf
+                            {{-- @csrf --}}
+                            {{ csrf_field() }}
 
 
 

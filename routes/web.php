@@ -13,6 +13,7 @@
 
 // Authenticate routes
 Auth::routes();
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/user/verify/{token}', 'Auth\RegisterController@verifyUser')->name('verifyUser');
 Route::get('/user/resend_verify', 'Auth\LoginController@resendActivation')->name('resendActivation');
 Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')->name('resendActivation.mail');
@@ -28,6 +29,8 @@ Route::get('clubs/{slug}/plantilla', 'HomeController@clubRoster')->name('club.ro
 Route::get('clubs/{slug}/economia', 'HomeController@clubEconomy')->name('club.economy');
 Route::get('clubs/{slug}/calendario', 'HomeController@clubCalendar')->name('club.calendar');
 Route::get('clubs/{slug}/sala-de-prensa', 'HomeController@clubPress')->name('club.press');
+
+Route::get('reglamento', 'HomeController@rules')->name('rules');
 
 
 Route::get('participantes', 'HomeController@participants')->name('participants');
