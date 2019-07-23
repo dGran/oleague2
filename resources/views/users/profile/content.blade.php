@@ -43,17 +43,41 @@
             </div> {{-- col --}}
         </div> {{-- form-group --}}
 
+        <div class="form-group row">
+            <label for="slack_id" class="col-sm-2 col-form-label">
+                País
+            </label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-slack">
+                            <i class="fas fa-globe"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" id="country_id" name="country_id" placeholder="País de nacimiento" aria-describedby="addon-slack" value="{{ $profile->country_id }}">
+                </div> {{-- input-group --}}
+            </div> {{-- col --}}
+        </div> {{-- form-group --}}
 
-        {{-- <i class="fab fa-telegram-plane"></i> --}}
 
-        <div class="form-group">
-            <label for="country">Pais</label>
-            <input type="text" class="form-control" id="country_id" name="country_id" placeholder="País de nacimiento"  value="{{ $profile->country_id }}">
-        </div>
-        <div class="form-group">
-            <label for="location">Localidad</label>
-            <input type="text" class="form-control" id="location" name="location" placeholder="Localidad donde resides"  value="{{ $profile->location }}">
-        </div>
+        <div class="form-group row">
+            <label for="slack_id" class="col-sm-2 col-form-label">
+                Localidad
+            </label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="addon-slack">
+                            <i class="fas fa-globe"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" id="location" name="location" placeholder="Localidad donde resides" aria-describedby="addon-slack" value="{{ $profile->location }}">
+                </div> {{-- input-group --}}
+            </div> {{-- col --}}
+        </div> {{-- form-group --}}
+
+
+
         <div class="form-group">
             <label for="avatar">Avatar</label>
             <input type="text" class="form-control" id="avatar" name="avatar" aria-describedby="avatarHelp" placeholder="Avatar"  value="{{ $profile->avatar }}">

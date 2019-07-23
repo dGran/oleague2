@@ -17,7 +17,7 @@
     </a>
 </li>
 <li class="nav-item {{ \Request::is('mercado*') ? 'current' : '' }}">
-    <a class="nav-link {{ \Request::is('mercado*') ? 'disabled' : '' }}" href="">
+    <a class="nav-link {{ \Request::is('mercado*') ? 'disabled' : '' }}" href="{{ route('market') }}">
         <i class="icon-transfer"></i>
         <span>Mercado</span>
     </a>

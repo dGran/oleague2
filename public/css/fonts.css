@@ -24,6 +24,30 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-push-pin:before {
+  content: "\e914";
+}
+.icon-fax:before {
+  content: "\e915";
+}
+.icon-search:before {
+  content: "\e916";
+}
+.icon-negotiation:before {
+  content: "\e917";
+}
+.icon-my-team:before {
+  content: "\e918";
+}
+.icon-sale:before {
+  content: "\e919";
+}
+.icon-search-player:before {
+  content: "\e91a";
+}
+.icon-soccer-player:before {
+  content: "\e91b";
+}
 .icon-admin-panel:before {
   content: "\e90e";
 }

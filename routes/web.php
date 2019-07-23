@@ -41,6 +41,11 @@ Route::get('competiciones/competicion/calendario', 'HomeController@competition_s
 Route::get('competiciones/competicion/estadisticas', 'HomeController@competition_statistics')->name('competition.league.statistics');
 Route::get('competiciones/competicion/partido', 'HomeController@competition_match')->name('competition.match');
 
+
+// Market Routes
+Route::get('mercado', 'MarketController@index')->name('market');
+
+
 // User routes
 Route::get('perfil', 'ProfileController@edit')->name('profileEdit');
 Route::put('perfil/{id}', 'ProfileController@update')->name('profileUpdate');

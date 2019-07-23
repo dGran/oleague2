@@ -4,6 +4,7 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Api;
 use App\GeneralSetting;
 use App\Season;
+use App\SeasonParticipant;
 
 function validateUrl($url)
 {
@@ -66,6 +67,13 @@ function active_season() {
 			$season = Season::find($season_id);
 			return $season;
 		}
+	}
+	return false;
+}
+
+function user_is_participant($user_id) {
+	if (SeasonParticipant::where('season_id', '=', active_season()->id)->where('user_id', '=', $user_id)->first()) {
+		return true;
 	}
 	return false;
 }

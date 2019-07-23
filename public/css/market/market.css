@@ -1,0 +1,72 @@
+.market-header {
+  background: #353f48;
+  margin-top: 54px;
+  padding: .75em 0;
+}
+
+.market-header h3 {
+  color: #fff;
+  margin: 0;
+}
+
+.market-header img {
+  width: 55px;
+}
+
+.market-header .subname {
+  color: #979797;
+  display: block;
+  font-weight: bold;
+  font-size: .8em;
+}
+
+.market-menu {
+  background: #353f48;
+  border-top: 1px solid #414E5B;
+  padding: 5px 0;
+}
+
+.market-menu ul {
+  padding: 0;
+}
+
+.market-menu ul li {
+  padding: .25em;
+  display: inline-block;
+  text-align: center;
+  min-width: 55px;
+}
+
+.market-menu ul li.active a {
+  color: #89be38;
+  pointer-events: none;
+}
+
+.market-menu ul li.active a:hover {
+  color: #89be38;
+}
+
+.market-menu ul li a {
+  color: #ccc;
+  display: block;
+}
+
+.market-menu ul li a:hover {
+  color: #fff;
+}
+
+.market-menu ul li a i {
+  display: block;
+  font-size: 32px;
+}
+
+.market-menu ul li a span {
+  font-size: .7em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapper {
+  background: #ffffff;
+}
+
