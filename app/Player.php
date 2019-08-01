@@ -150,4 +150,29 @@ class Player extends Model
 		        return "img/white_ball.png";
 		}
 	}
+
+	public function getIconPosition() {
+		switch ($this->position) {
+		    case ($this->position == "DC") || ($this->position == "SD") || ($this->position == "EI") || ($this->position == "ED"):
+		        return "img/clubs/dc.png";
+		    case ($this->position == "MCD") || ($this->position == "MC") || ($this->position == "MP") || ($this->position == "II") || ($this->position == "ID"):
+		        return "img/clubs/mc.png";
+		    case ($this->position == "CT") || ($this->position == "LD") || ($this->position == "LI"):
+		        return "img/clubs/ct.png";
+		    case "PT":
+		        return "img/clubs/pt.png";
+		}
+		switch ($this->overall_rating) {
+		    case ($this->overall_rating >84):
+		        return "img/black_ball.png";
+		    case ($this->overall_rating >79):
+		        return "img/yellow_ball.png";
+		    case ($this->overall_rating >74):
+		        return "img/silver_ball.png";
+		    case ($this->overall_rating >69):
+		        return "img/bronze_ball.png";
+		    case ($this->overall_rating <=69):
+		        return "img/white_ball.png";
+		}
+	}
 }

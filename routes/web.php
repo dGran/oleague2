@@ -44,6 +44,8 @@ Route::get('competiciones/competicion/partido', 'HomeController@competition_matc
 
 // Market Routes
 Route::get('mercado', 'MarketController@index')->name('market');
+Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
+Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
 
 
 // User routes
