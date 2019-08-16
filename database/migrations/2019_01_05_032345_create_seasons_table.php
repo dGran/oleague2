@@ -20,6 +20,7 @@ class CreateSeasonsTable extends Migration
             $table->boolean('participant_has_team')->default(1);
             $table->boolean('use_economy')->default(1);
             $table->integer('initial_budget')->default(0);
+            $table->integer('salary_cap')->default(0);
             $table->boolean('use_rosters')->default(1);
             $table->integer('players_db_id')->unsigned()->index();
             $table->integer('min_players')->default(0);

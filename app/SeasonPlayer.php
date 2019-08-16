@@ -9,7 +9,7 @@ class SeasonPlayer extends Model
 	public $timestamps = false;
 
     protected $fillable = [
-        'season_id', 'player_id', 'participant_id', 'salary', 'price', 'active'
+        'season_id', 'player_id', 'participant_id', 'salary', 'price', 'active', 'transferable', 'untransferable', 'player_on_loan', 'for_sale', 'sale_price', 'sale_auto_accept'
     ];
 
     public function season()

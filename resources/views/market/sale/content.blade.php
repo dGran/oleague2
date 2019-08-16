@@ -12,83 +12,94 @@
 <div class="row">
 	<div class="col-12 p-0">
 
-		<div class="" style="border-top: 1px solid #E9E9E9; border-bottom: 1px solid #E9E9E9; line-height: 1.25em; background: #f9f9f9; font-size: .9em; height: 124px; position: relative;">
-			<img src="https://www.pesmaster.com/pes-2019/graphics/players/player_34098.png" alt="" width="94" style="position: absolute; left: 0px; bottom: 0;">
-			<div style='background: #4c9f20; border: 1px solid grey; font-size: 1em; width: 24px; height: 24px; line-height: 1em; position: absolute; left: 5px; top: 5px;' class='rounded-circle p-1 text-center'>
-				<span class='font-weight-bold text-white'>
-					<small>MC</small>
+		@foreach ($players as $player)
+			<div class="" style="border-top: 1px solid #E9E9E9; line-height: 1.25em; background: #f9f9f9; font-size: .9em; height: 124px; position: relative;">
+				<img src="{{ $player->player->getImgFormatted() }}" alt="" width="94" style="position: absolute; left: 0px; bottom: 0;">
+				<div style='background: {{ $player->player->getPositionColor() }}; border: 1px solid grey; font-size: 1em; width: 24px; height: 24px; line-height: 1em; position: absolute; left: 5px; top: 5px;' class='rounded-circle p-1 text-center'>
+					<span class='font-weight-bold text-white'>
+						<small>{{ $player->player->position }}</small>
+					</span>
+				</div>
+				<img src="{{ asset($player->player->getBall()) }}" alt="" width="24" height="24" style="position: absolute; right: 20px; top: 5px">
+				<span class="player-name text-uppercase" style="position: absolute; left: 36px; top: 9px; font-size: .9rem; font-weight: bold">
+					{{ $player->player->name }}
 				</span>
-			</div>
-			<img src="{{ asset('img/black_ball.png') }}" alt="" width="24" height="24" style="position: absolute; right: 20px; top: 5px">
-			<span class="player-name text-uppercase" style="position: absolute; left: 36px; top: 9px; font-size: .9rem; font-weight: bold">
-				L. MODRIC
-			</span>
-			<div style='background: #000; font-size: .7em; height: 20px; border: 1px solid grey; line-height: 1em; position: absolute; left: 65px; bottom: -5px;' class='rounded p-1 text-center'>
-			    <span class='font-weight-bold text-white'>
-			        <small>2 ofertas</small>
-			    </span>
-			</div>
+				<div style='background: #000; font-size: .7em; height: 20px; border: 1px solid grey; line-height: 1em; position: absolute; left: 65px; bottom: -5px;' class='rounded p-1 text-center'>
+				    <span class='font-weight-bold text-white'>
+				        <small>2 ofertas</small>
+				    </span>
+				</div>
 
-			<img src="{{ asset('img/clubs/mc.png') }}" width="20" style="position: absolute; top: 7px; right: 50px">
-			<div style='background: #ff7f00; font-size: 1em; width: 24px; height: 24px; border: 1px solid grey; line-height: 1em; position: absolute; right: 5px; top: 5px;' class='rounded-circle p-1 text-center'>
-			    <span class='font-weight-bold text-dark'>
-			        <small>91</small>
-			    </span>
-			</div>
-			<img src="{{ asset('img/teams/4_070620191940315d20dd0f32d9b.png') }}" alt="" width="28" style="position: absolute; left: 95px; top: 40px; padding: 2px; background-color: #fff" class="border rounded-circle">
-			<span class="text-uppercase" style="position: absolute; left: 130px; top: 41px; font-weight: bold; font-size: .6rem">
-				PARIS S.G.
-			</span>
-			<span class="" style="position: absolute; left: 130px; top: 52px; font-size: .55rem">
-				ferminnn
-			</span>
-			<img src="https://www.pesmaster.com/pes-2019/graphics/nteamlogos/flag_HRV.png?w=40" alt="" width="28" style="position: absolute; left: 95px; top: 70px; padding: 2px; background-color: #fff" class="border rounded-circle">
-			<span class="text-uppercase" style="position: absolute; left: 130px; top: 76px; font-weight: bold; font-size: .6rem">
-				Croacia
-			</span>
-
-			<div style="position: absolute; right: 105px; top: 40px; font-size: .9em; ">
-				Claúsula
-			</div>
-			<div style="position: absolute; right: 8px; top: 40px;">
-				<span class="d-inline-block" style="font-size: .9em; font-weight: bold">
-					160,00
+				<img src="{{ asset($player->player->getIconPosition()) }}" width="20" style="position: absolute; top: 7px; right: 50px">
+				<div style='background: {{ $player->player->getOverallRatingColor() }}; font-size: 1em; width: 24px; height: 24px; border: 1px solid grey; line-height: 1em; position: absolute; right: 5px; top: 5px;' class='rounded-circle p-1 text-center'>
+				    <span class='font-weight-bold text-dark'>
+				        <small>{{ $player->player->overall_rating }}</small>
+				    </span>
+				</div>
+				<img src="{{ $player->participant->logo() }}" alt="" width="28" style="position: absolute; left: 95px; top: 40px; padding: 2px; background-color: #fff" class="border rounded-circle">
+				<span class="text-uppercase" style="position: absolute; left: 130px; top: 41px; font-weight: bold; font-size: .6rem">
+					{{ $player->participant->name() }}
 				</span>
-				<small class="d-inline-block" style="font-size: .7em">mill.</small>
-			</div>
-
-			<div style="position: absolute; right: 105px; top: 60px; font-size: .9em; ">
-				Precio
-			</div>
-			<div style="position: absolute; right: 8px; top: 60px;">
-				<span class="d-inline-block" style="font-size: 1.25em; font-weight: bold">
-					120,00
+				<span class="" style="position: absolute; left: 130px; top: 52px; font-size: .55rem">
+					{{ $player->participant->sub_name() }}
 				</span>
-				<small class="d-inline-block">mill.</small>
+				<img src="https://www.pesmaster.com/pes-2019/graphics/nteamlogos/flag_HRV.png?w=40" alt="" width="28" style="position: absolute; left: 95px; top: 70px; padding: 2px; background-color: #fff" class="border rounded-circle">
+				<span class="text-uppercase" style="position: absolute; left: 130px; top: 76px; font-weight: bold; font-size: .6rem">
+					{{ $player->player->nation_name }}
+				</span>
+
+				<div style="position: absolute; right: 105px; top: 40px; font-size: .9em; ">
+					Claúsula
+				</div>
+				<div style="position: absolute; right: 8px; top: 40px;">
+					<span class="d-inline-block" style="font-size: .9em; font-weight: bold">
+						{{ number_format($player->price, 2, ',', '.') }}
+					</span>
+					<small class="d-inline-block" style="font-size: .7em">mill.</small>
+				</div>
+
+				@if ($player->for_sale)
+					<div style="position: absolute; right: 105px; top: 60px; font-size: .9em; ">
+						Precio
+					</div>
+					<div style="position: absolute; right: 8px; top: 60px;">
+						<span class="d-inline-block" style="font-size: 1.25em; font-weight: bold">
+							{{ $player->sale_price }}
+						</span>
+						<small class="d-inline-block">mill.</small>
+					</div>
+				@endif
+
+				@if ($player->player_on_loan)
+					<div style="position: absolute; right: 105px; top: 60px; font-size: .9em; ">
+						Cedible
+					</div>
+				@endif
+	{{-- 			<img src="https://image.flaticon.com/icons/svg/118/118650.svg" alt="" width="28" style="position: absolute; left: 105px; top: 94px; padding: 2px; background-color: #fff" class="border rounded-circle">
+				<span class="text-uppercase" style="position: absolute; left: 140px; top: 100px; font-size: .8rem; font-weight: bold; font-size: .7rem">
+					181 cm
+				</span>
+				<img src="https://image.flaticon.com/icons/svg/1743/1743289.svg" alt="" width="28" style="position: absolute; left: 105px; top: 124px; padding: 2px; background-color: #fff" class="border rounded-circle">
+				<span class="text-uppercase" style="position: absolute; left: 140px; top: 130px; font-size: .8rem; font-weight: bold; font-size: .7rem">
+					70 kg
+				</span> --}}
+
+
+				<div style="position: absolute; right: 8px; bottom: 8px">
+					<a href="" class="btn btn-success btn-sm"  style="font-size: .9em">
+						Fichar ya!
+					</a>
+					<a href="" class="btn btn-primary btn-sm" style="font-size: .9em;">
+						Abrir negociación
+					</a>
+				</div>
 			</div>
-{{-- 			<img src="https://image.flaticon.com/icons/svg/118/118650.svg" alt="" width="28" style="position: absolute; left: 105px; top: 94px; padding: 2px; background-color: #fff" class="border rounded-circle">
-			<span class="text-uppercase" style="position: absolute; left: 140px; top: 100px; font-size: .8rem; font-weight: bold; font-size: .7rem">
-				181 cm
-			</span>
-			<img src="https://image.flaticon.com/icons/svg/1743/1743289.svg" alt="" width="28" style="position: absolute; left: 105px; top: 124px; padding: 2px; background-color: #fff" class="border rounded-circle">
-			<span class="text-uppercase" style="position: absolute; left: 140px; top: 130px; font-size: .8rem; font-weight: bold; font-size: .7rem">
-				70 kg
-			</span> --}}
-
-
-			<div style="position: absolute; right: 8px; bottom: 8px">
-				<a href="" class="btn btn-success btn-sm"  style="font-size: .9em">
-					Fichar ya!
-				</a>
-				<a href="" class="btn btn-primary btn-sm" style="font-size: .9em;">
-					Abrir negociación
-				</a>
-			</div>
-		</div>
-
-		<p class="px-2 py-2 mb-1" style="font-size: .8em">
-			<strong>ferminnn</strong>: Un balón de oro a precio de ganga!
-		</p>
+			@if ($player->market_phrase)
+				<p class="px-2 py-2 mb-1 border-top" style="font-size: .8em">
+					<strong>{{ $player->participant->sub_name() }}</strong>: {{ $player->market_phrase }}
+				</p>
+			@endif
+		@endforeach
 
 		<div class="" style="border-top: 1px solid #E9E9E9; border-bottom: 1px solid #E9E9E9; line-height: 1.25em; background: #f9f9f9; font-size: .9em; height: 124px; position: relative;">
 			<img src="https://www.pesmaster.com/pes-2019/graphics/players/player_60550.png" alt="" width="94" style="position: absolute; left: 0px; bottom: 0;">

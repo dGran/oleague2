@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('style')
@@ -21,4 +20,13 @@
 
 @section('bottom-fixed')
 	{{-- @include('rules.partials.bottom_fixed') --}}
+@endsection
+
+@section('modal')
+	@include('market.my_team.edit_modal')
+    @include('market.my_team.view_modal')
+@endsection
+
+@section('js')
+    @include('market.my_team.javascript')
 @endsection

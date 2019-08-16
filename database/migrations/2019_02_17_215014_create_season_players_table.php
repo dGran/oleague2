@@ -27,6 +27,7 @@ class CreateSeasonPlayersTable extends Migration
             $table->boolean('sale_price')->nullable()->default(0);
             $table->boolean('sale_auto_accept')->default(0);
             $table->boolean('player_on_loan')->default(0)->index();
+            $table->string('market_phrase', 80)->nullable();
             $table->integer("owner_id")->unsigned()->nullable();
             $table->boolean('active')->default(1);
         });
