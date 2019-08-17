@@ -274,26 +274,6 @@
   margin-left: .5rem;
 }
 
-.scrolling-wrapper {
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-}
-
-.scrolling-wrapper::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-.scrolling-wrapper::-webkit-scrollbar {
-  height: 9px;
-  background-color: transparent;
-}
-
-.scrolling-wrapper::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
 .scrolling-wrapper .card {
   display: inline-block;
   background: transparent;

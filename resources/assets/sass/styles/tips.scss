@@ -40,3 +40,26 @@ button .btn .btn-white .dropdown-toggle:focus {
 	box-shadow: none !important;
 	-webkit-box-shadow: none !important;
 }
+
+.scrolling-wrapper {
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+	&::-webkit-scrollbar-track
+	{
+		// -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+		background-color: transparent;
+	}
+
+	&::-webkit-scrollbar
+	{
+		height: 9px;
+		background-color: transparent;
+	}
+
+	&::-webkit-scrollbar-thumb
+	{
+		background-color: rgba(0,0,0,.3);
+	}
+}

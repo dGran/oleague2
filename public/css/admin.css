@@ -10461,6 +10461,26 @@ button .btn .btn-white .dropdown-toggle:focus {
   -webkit-box-shadow: none !important;
 }
 
+.scrolling-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrolling-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scrolling-wrapper::-webkit-scrollbar {
+  height: 9px;
+  background-color: transparent;
+}
+
+.scrolling-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 ol,
 ul,
 dl {

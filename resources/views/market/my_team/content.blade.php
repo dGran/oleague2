@@ -1,44 +1,47 @@
-<div style="padding: 1em .5em; background: #E5E5E5; position: relative">
-	<img src="{{ $participant->logo() }}" width="64">
-	<div class="d-inline-block align-middle">
-		<span class="">
-			<strong>{{ $participant->name() }}</strong>
-		</span>
-		<small class="d-block">
-			{{ $participant->sub_name() }}
-		</small>
+<div style="background: #f9f9f9; position: relative">
+	<div class="p-2" style="background: #f9f9f9; position: relative">
+		<img src="{{ $participant->logo() }}" width="75" class="align-top p-1 rounded-circle mr-3" style="-webkit-box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+-moz-box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);">
+		<div class="d-inline-block">
+			<span class="m-0" style="font-size: 1.35em; font-weight: bold;">
+				{{ $participant->name() }}
+			</span>
+			<span class="d-block text-muted" style="font-size: .8em">
+				<strong>Manager: </strong>{{ $participant->sub_name() }}
+			</span>
+			<div class="d-inline-block">
+				<img src="https://image.flaticon.com/icons/svg/2000/2000597.svg" alt="" width="16" class="mr-1">
+				<span class="text-muted" style="font-size: .7em">
+					{{ number_format($participant->budget(), 2, ',', '.') }} M.
+				</span>
+			</div>
+			<div class="d-inline-block">
+				<img src="https://image.flaticon.com/icons/svg/1319/1319523.svg" alt="" width="16" class="ml-2 mr-1">
+				<span style="font-size: .7em">
+					{{ number_format($participant->salaries(), 2, ',', '.') }} M.
+				</span>
+			</div>
+			<div class="d-inline-block">
+				<img src="https://image.flaticon.com/icons/svg/56/56950.svg" alt="" width="16" class="ml-2 mr-1">
+				<span class="text-muted" style="font-size: .7em">
+					{{ $participant->players->count() }} jug.
+				</span>
+			</div>
+
+		</div>
 	</div>
-	<div style="position: absolute; right: 8px; top: 8px; line-height: 1.1em" class="text-right">
-		<span class="d-block text-uppercase" style="font-size: .7em">Presupuesto</span>
-		<span class="d-inline-block" style="font-size: 1.25em; font-weight: bold">
-			{{ number_format($participant->budget(), 2, ',', '.') }}
-		</span>
-		<small class="d-inline-block" style="font-size: .9em">mill.</small>
-
-		<span class="d-block text-uppercase pt-2" style="font-size: .7em">salarios</span>
-		<span class="d-inline-block" style="font-size: .9em; font-weight: bold">
-			{{ number_format($participant->salaries(), 2, ',', '.') }}
-		</span>
-		<small class="d-inline-block" style="font-size: .7em">mill.</small>
-
-{{-- 		<span class="d-block" style="font-size: .9em">Salarios</span>
-		<span class="d-inline-block" style="font-size: .9em; font-weight: bold">
-			{{ number_format($participant->salaries(), 2, ',', '.') }}
-		</span>
-		<small class="d-inline-block" style="font-size: .7em">mill.</small> --}}
-	</div>
-
 </div>
 
 <section class="positions gk">
-	<h4 class="title-position">
-		<div class="container clearfix">
-			<span>Porteros</span>
-			<img class="d-block d-md-none" src="{{ asset('img/clubs/pt.png') }}" width="16">
+	<h5 class="title-position m-0">
+		<div class="container clearfix p-2 border-top border-bottom" style="background: #eceaee">
+			<span class="float-left">Porteros</span>
+			<img class="d-block d-md-none float-right mt-1" src="{{ asset('img/clubs/pt.png') }}" width="16">
 		</div>
-	</h4>
+	</h5>
 	<div class="container">
-		<div class="row pb-3">
+		<div class="row pb-2">
 			@foreach ($players as $player)
 				@if ($player->player->position == 'PT')
 					@include('market.my_team.card_data')
@@ -49,14 +52,14 @@
 </section>
 
 <section class="positions df">
-	<h4 class="title-position">
-		<div class="container clearfix">
-			<span>Defensas</span>
-			<img src="{{ asset('img/clubs/ct.png') }}" width="16">
+	<h5 class="title-position m-0">
+		<div class="container clearfix p-2 border-top border-bottom" style="background: #eceaee">
+			<span class="float-left">Defensas</span>
+			<img class="d-block d-md-none float-right mt-1" src="{{ asset('img/clubs/ct.png') }}" width="16">
 		</div>
-	</h4>
+	</h5>
 	<div class="container">
-		<div class="row pb-3">
+		<div class="row pb-2">
 			@foreach ($players as $player)
 				@if ($player->player->position == 'CT' || $player->player->position == 'LD' || $player->player->position == 'LI')
 					@include('market.my_team.card_data')
@@ -67,14 +70,14 @@
 </section>
 
 <section class="positions md">
-	<h4 class="title-position">
-		<div class="container clearfix">
-			<span>Medios</span>
-			<img src="{{ asset('img/clubs/mc.png') }}" width="16">
+	<h5 class="title-position m-0">
+		<div class="container clearfix p-2 border-top border-bottom" style="background: #eceaee">
+			<span class="float-left">Medios</span>
+			<img class="d-block d-md-none float-right mt-1" src="{{ asset('img/clubs/mc.png') }}" width="16">
 		</div>
-	</h4>
+	</h5>
 	<div class="container">
-		<div class="row pb-3">
+		<div class="row pb-2">
 			@foreach ($players as $player)
 				@if ($player->player->position == 'MCD' || $player->player->position == 'MC' || $player->player->position == 'MP' || $player->player->position == 'MD' || $player->player->position == 'MI')
 					@include('market.my_team.card_data')
@@ -85,14 +88,14 @@
 </section>
 
 <section class="positions md">
-	<h4 class="title-position">
-		<div class="container clearfix">
-			<span>Delanteros</span>
-			<img src="{{ asset('img/clubs/dc.png') }}" width="16">
+	<h5 class="title-position m-0">
+		<div class="container clearfix p-2 border-top border-bottom" style="background: #eceaee">
+			<span class="float-left">Delanteros</span>
+			<img class="d-block d-md-none float-right mt-1" src="{{ asset('img/clubs/dc.png') }}" width="16">
 		</div>
-	</h4>
+	</h5>
 	<div class="container">
-		<div class="row pb-3">
+		<div class="row pb-2">
 			@foreach ($players as $player)
 				@if ($player->player->position == 'DC' || $player->player->position == 'SD' || $player->player->position == 'EI' || $player->player->position == 'ED')
 					@include('market.my_team.card_data')

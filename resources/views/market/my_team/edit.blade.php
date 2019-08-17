@@ -68,12 +68,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 					<div class="row">
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Salario</label>
-							<input type="number" step="any" min="0.5" max="{{ ($player->salary + $player->season->salary_cap - $player->participant->salaries()) }}" class="form-control" name="salary" id="salary" placeholder="Salario del jugador" value="{{ $player->salary }}" onkeyup="changeSalary()">
-							<small id="salaryHelp" class="form-text text-muted">Margen salarial: {{ $player->salary + $player->season->salary_cap - $player->participant->salaries() }} M.</small>
+							<input type="number" step="any" min="0.5" max="{{ ($player->salary + $player->season->salary_cap - $player->participant->salaries()) }}" class="form-control py-1" name="salary" id="salary" value="{{ $player->salary }}" onkeyup="changeSalary()">
+							<small id="salaryHelp" class="form-text text-muted">Salario máximo: {{ $player->salary + $player->season->salary_cap - $player->participant->salaries() }} M.</small>
 						</div>
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Claúsula</label>
-							<input type="number" class="form-control" name="price" id="price" placeholder="Claúsula del jugador" value="{{ $player->price }}" onkeyup="changePrice()">
+							<input type="number" class="form-control py-1" name="price" id="price" value="{{ $player->price }}" onkeyup="changePrice()">
 						</div>
 
 					</div>
@@ -85,18 +85,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 
 					<div class="d-block mb-2">
 					    <div class="pretty p-switch p-fill">
-					        <input type="checkbox" name="untransferable" id="untransferable" {{ $player->untransferable ? 'checked' : '' }}/>
+					        <input type="checkbox" name="untransferable" id="untransferable" {{ $player->untransferable ? 'checked' : '' }} onchange="untransferableChange()"/>
 					        <div class="state p-success">
 					            <label for="untransferable">Intransferible</label>
-					        </div>
-					    </div>
-				    </div>
-
-					<div class="d-block mb-2">
-					    <div class="pretty p-switch p-fill">
-					        <input type="checkbox" name="transferable" id="transferable" {{ $player->transferable ? 'checked' : '' }}/>
-					        <div class="state p-success">
-					            <label for="transferable">Transferible</label>
 					        </div>
 					    </div>
 				    </div>
@@ -112,29 +103,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 
 					<div class="d-block mb-2">
 					    <div class="pretty p-switch p-fill">
-					        <input type="checkbox" name="for_sale" id="for_sale" {{ $player->for_sale ? 'checked' : '' }}/>
+					        <input type="checkbox" name="transferable" id="transferable" {{ $player->transferable ? 'checked' : '' }} onchange="enableDisableSale()" />
 					        <div class="state p-success">
-					            <label for="for_sale">En venta</label>
+					            <label for="transferable">Transferible</label>
 					        </div>
 					    </div>
 				    </div>
+
 					<div class="col-6 m-0 p-0 mb-1 form-group">
 						<label class="m-0" for="sale_price">Precio</label>
-						<input type="number" step="any" name="sale_price" id="sale_price" class="form-control" placeholder="Precio de venta" value="{{ $player->sale_price }}" {{ !$player->player_for_sale ? 'disabled' : '' }}>
+						<input type="number" step="any" name="sale_price" id="sale_price" class="form-control py-1" value="{{ $player->sale_price }}" {{ !$player->transferable ? 'disabled' : '' }}>
 					</div>
 					<div class="d-block">
 					    <div class="pretty p-switch p-fill">
-					        <input type="checkbox" name="sale_auto_accept" id="sale_auto_accept" {{ $player->sale_auto_accept ? 'checked' : '' }} {{ !$player->player_for_sale ? 'disabled' : '' }}/>
+					        <input type="checkbox" name="sale_auto_accept" id="sale_auto_accept" {{ $player->sale_auto_accept ? 'checked' : '' }} {{ !$player->transferable ? 'disabled' : '' }}/>
 					        <div class="state p-danger">
 					            <label for="sale_auto_accept">Compra directa</label>
 					        </div>
 					    </div>
-					    <small id="emailHelp" class="form-text text-muted">*Venta automática por el valor del precio de venta</small>
+					    <small id="emailHelp" class="form-text text-muted">Venta automática por el valor del precio de venta</small>
 				    </div>
 
 					<div class="form-group mt-3">
 						<label class="m-0" for="market_phrase">Comentario de mercado</label>
-						<input type="text" class="form-control py-1 px-2" style="font-size: .9em" name="market_phrase" id="market_phrase" placeholder="Claúsula del jugador" value="{{ $player->market_phrase }}" onkeyup="">
+						<small class="float-right d-none" id="phrase_counter">0 / 80</small>
+						<input type="text" class="form-control py-1 px-2" style="font-size: .9em" name="market_phrase" id="market_phrase" value="{{ $player->market_phrase }}" onkeyup="phraseCounter()" onblur="phraseCounterBlur()" onfocus="phraseCounterFocus()" maxlength="80">
+						<small id="marketPhraseHelp" class="form-text text-muted">Comentario opcional para el escaparate</small>
 					</div>
 				</div>
 			</div>

@@ -32,33 +32,32 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 					</figure> --}}
 				</div>
 
-				<div class="d-sm-none">
-					<span class="badge badge-dark p-1" style="position: absolute; right: 0px; top: 5px; padding: 2px; opacity: .2">INTRANSFERIBLE</span>
-					<span class="badge badge-dark p-1" style="position: absolute; right: 0px; top: 30px; padding: 2px;">TRANSFERIBLE</span>
-					<span class="badge badge-dark p-1" style="position: absolute; right: 0px; top: 55px; padding: 2px;">CEDIBLE</span>
-				</div>
-
-				<div class="d-none d-sm-block">
-					<div class="pt-2 pb-1">
-						<span class="badge badge-dark p-1" style="padding: 2px; opacity: .2">INTRANSFERIBLE</span>
-					</div>
-					<div class="pb-1">
-						<span class="badge badge-dark p-1" style="padding: 2px;">TRANSFERIBLE</span>
-					</div>
-					<div class="pb-1">
-						<span class="badge badge-dark p-1" style="padding: 2px;">CEDIBLE</span>
-					</div>
-				</div>
 			</div>
 
 			<div class="col-12 col-sm-7 col-md-7 col-lg-9">
 	            <div class="details" style="font-size: .9em">
 	            	<div class="clearfix border-bottom py-2">
 	            		<span class="float-left">
+	            			Equipo
+	            		</span>
+	            		<div class="float-right" style="color: #a5a5a7">
+	                        {{ $player->participant->name() }}
+	            		</div>
+	            	</div>
+	            	<div class="clearfix border-bottom py-2">
+	            		<span class="float-left">
+	            			Manager
+	            		</span>
+	            		<div class="float-right" style="color: #a5a5a7">
+	                        {{ $player->participant->sub_name() }}
+	            		</div>
+	            	</div>
+	            	<div class="clearfix border-bottom py-2">
+	            		<span class="float-left">
 	            			Salario
 	            		</span>
 	            		<div class="float-right" style="color: #a5a5a7">
-	                        {{ $player->salary }} M.
+	                        {{ number_format($player->salary, 2, ',', '.') }} M.
 	            		</div>
 	            	</div>
 	            	<div class="clearfix border-bottom py-2">
@@ -66,7 +65,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 	            			Claúsula
 	            		</span>
 	            		<div class="float-right" style="color: #a5a5a7">
-	                        {{ $player->price }} M.
+	                        {{ number_format($player->price, 2, ',', '.') }} M.
 	            		</div>
 	            	</div>
 	            	<div class="clearfix border-bottom py-2">

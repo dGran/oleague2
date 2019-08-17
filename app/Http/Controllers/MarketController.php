@@ -20,7 +20,6 @@ class MarketController extends Controller
 	        ->seasonId(active_season()->id)
 			->where(function($q) {
           		$q->where('season_players.transferable', '=', 1)
-            	  ->orWhere('season_players.for_sale', '=', 1)
             	  ->orWhere('season_players.player_on_loan', '=', 1);
       			});
         // $players = $players->participantId($participant->id);
@@ -102,15 +101,22 @@ class MarketController extends Controller
     {
         $player = SeasonPlayer::find($id);
         if ($player) {
-            // $data = request()->all();
         	$player->salary = request()->salary;
         	$player->price = request()->price;
-        	$player->transferable = request()->transferable == 'on' ? 1 : 0;
-        	$player->untransferable = request()->untransferable == 'on' ? 1 : 0;
-        	$player->player_on_loan = request()->player_on_loan == 'on' ? 1 : 0;
-        	$player->for_sale = request()->for_sale == 'on' ? 1 : 0;
-        	$player->sale_price = request()->sale_price;
-        	$player->sale_auto_accept = request()->sale_auto_accept == 'on' ? 1 : 0;
+
+        	if (request()->untransferable == 'on') {
+        		$player->untransferable	= 1;
+        		$player->player_on_loan = 0;
+        		$player->transferable = 0;
+        		$player->sale_price = null;
+        		$player->sale_auto_accept = 0;
+        	} else {
+        		$player->untransferable	= 0;
+	        	$player->player_on_loan = request()->player_on_loan == 'on' ? 1 : 0;
+	        	$player->transferable = request()->transferable == 'on' ? 1 : 0;
+	        	$player->sale_price = request()->sale_price;
+	        	$player->sale_auto_accept = request()->sale_auto_accept == 'on' ? 1 : 0;
+        	}
         	$player->market_phrase = request()->market_phrase;
         	$player->save();
             return redirect()->route('market.my_team');

@@ -1,6 +1,6 @@
-<div class="col-12 col-md-6">
-	<div class="" style="border-top: 1px solid #E9E9E9; line-height: 1.25em; font-size: .9em; height: 72px; position: relative;">
-		<img src="{{ $player->player->getImgFormatted() }}" alt="" width="48" style="position: absolute; left: 0px; bottom: 0;">
+<div class="col-12 col-md-6 m-0 p-0" style="background: #f9f9f9">
+	<div class="border rounded mt-2 mx-2" style="border-top: 1px solid #E9E9E9; line-height: 1.25em; font-size: .9em; height: 92px; position: relative; background: #fff">
+		<img src="{{ $player->player->getImgFormatted() }}" alt="" width="55" style="position: absolute; left: 0px; bottom: 0;">
 		<div style='background: {{ $player->player->getPositionColor() }}; border: 1px solid grey; font-size: .7em; width: 24px; height: 24px; line-height: 1.3em; position: absolute; left: 5px; top: 5px;' class='rounded-circle p-1 text-center'>
 			<span class='font-weight-bold text-white'>
 				<small>{{ $player->player->position }}</small>
@@ -14,76 +14,71 @@
 			</a>
 		</span>
 
-	{{-- 							<div style='background: #000; font-size: .7em; height: 20px; border: 1px solid grey; line-height: 1em; position: absolute; left: 65px; bottom: -5px;' class='rounded p-1 text-center'>
-		    <span class='font-weight-bold text-white'>
-		        <small>3 clubs le siguen</small>
-		    </span>
-		</div> --}}
-
-		<div style="position: absolute; right: 90px; top: 7px;">
-			<img src="https://image.flaticon.com/icons/svg/126/126422.svg" width="15">
+		<div class="text-muted" style="position: absolute; left: 55px; top: 26px;">
+			<i class="fas fa-star" style="font-size: .7em;"></i>
 			<span class="d-inline-block" style="font-size: .9em; font-weight: bold">
-				<small>{{ number_format($player->price, 2, ',', '.') }}</small>
+				<small>14</small>
+			</span>
+		</div>
+
+		<div class="text-muted" style="position: absolute; left: 85px; top: 26px;">
+			<i class="fas fa-euro-sign" style="font-size: .7em"></i>
+			<span class="d-inline-block" style="font-size: .9em; font-weight: bold">
+				<small>{{ number_format($player->salary, 2, ',', '.') }}</small>
 			</span>
 			<small class="d-inline-block" style="font-size: .7em">mill.</small>
 		</div>
 
-		<img src="{{ asset($player->player->getIconPosition()) }}" width="20" style="position: absolute; top: 7px; right: 50px">
 		<div style='background: {{ $player->player->getOverallRatingColor() }}; font-size: 1em; width: 24px; height: 24px; border: 1px solid grey; line-height: 1em; position: absolute; right: 5px; top: 5px;' class='rounded-circle p-1 text-center'>
 		    <span class='font-weight-bold text-dark'>
 		        <small>{{ $player->player->overall_rating }}</small>
 		    </span>
 		</div>
-		@if ($player->untransferable)
-			<span class="badge badge-danger p-1" style="position: absolute; left: 55px; top: 40px; padding: 2px;">IN</span>
-		@else
-			<span class="badge badge-danger p-1" style="position: absolute; left: 55px; top: 40px; padding: 2px; opacity: .2">IN</span>
-		@endif
 		@if ($player->transferable)
-			<span class="badge badge-success p-1" style="position: absolute; left: 80px; top: 40px; padding: 2px;">TR</span>
+			<span class="badge badge-success p-1" style="position: absolute; left: 55px; top: 47px; padding: 2px;">TRA</span>
+			<div class="text-muted" style="position: absolute; left: 55px; top: 67px;">
+				@if ($player->sale_price)
+					<i class="fas fa-tag" style="font-size: .7em"></i>
+					<span class="d-inline-block" style="font-size: .9em; font-weight: bold">
+						<small>{{ number_format($player->sale_price, 2, ',', '.') }}</small>
+					</span>
+					<small class="d-inline-block" style="font-size: .7em">mill.</small>
+				@endif
+			</div>
 		@else
-			<span class="badge badge-success p-1" style="position: absolute; left: 80px; top: 40px; padding: 2px; opacity: .2">TR</span>
+			<span class="badge badge-success p-1" style="position: absolute; left: 55px; top: 47px; padding: 2px; opacity: .2">TRA</span>
 		@endif
 		@if ($player->player_on_loan)
-			<span class="badge badge-success p-1" style="position: absolute; left: 105px; top: 40px; padding: 2px;">CD</span>
+			<span class="badge badge-success p-1" style="position: absolute; left: 87px; top: 47px; padding: 2px;">CED</span>
 		@else
-			<span class="badge badge-success p-1" style="position: absolute; left: 105px; top: 40px; padding: 2px; opacity: .2">CD</span>
+			<span class="badge badge-success p-1" style="position: absolute; left: 87px; top: 47px; padding: 2px; opacity: .2">CED</span>
 		@endif
-		@if ($player->for_sale)
-			<span class="badge badge-success p-1" style="position: absolute; left: 130px; top: 40px; padding: 2px;">VT</span>
+		@if ($player->untransferable)
+			<span class="badge badge-danger p-1" style="position: absolute; left: 119px; top: 47px; padding: 2px;">INT</span>
 		@else
-			<span class="badge badge-success p-1" style="position: absolute; left: 130px; top: 40px; padding: 2px; opacity: .2">VT</span>
+			<span class="badge badge-danger p-1" style="position: absolute; left: 119px; top: 47px; padding: 2px; opacity: .2">INT</span>
 		@endif
 
-
-	{{-- 							<img src="https://image.flaticon.com/icons/svg/118/118650.svg" alt="" width="28" style="position: absolute; left: 105px; top: 94px; padding: 2px; background-color: #fff" class="border rounded-circle">
-		<span class="text-uppercase" style="position: absolute; left: 140px; top: 100px; font-size: .8rem; font-weight: bold; font-size: .7rem">
-			181 cm
-		</span>
-		<img src="https://image.flaticon.com/icons/svg/1743/1743289.svg" alt="" width="28" style="position: absolute; left: 105px; top: 124px; padding: 2px; background-color: #fff" class="border rounded-circle">
-		<span class="text-uppercase" style="position: absolute; left: 140px; top: 130px; font-size: .8rem; font-weight: bold; font-size: .7rem">
-			70 kg
-		</span> --}}
-
-
-		<div style="position: absolute; right: 8px; bottom: 8px">
-			<a href="" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#editModal" id="btnEdit" data-id="{{ $player->id }}">
+		<div style="position: absolute; right: 8px; bottom: 8px;">
+{{-- 			<a href="" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editModal" id="btnEdit" data-id="{{ $player->id }}" style="font-size: .9em">
 				Editar
-				{{-- <i class="fas fa-info-circle text-info"></i> --}}
-			</a>
-{{-- 			<div class="dropdown dropleft">
-			  <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: .9em;">
+			</a> --}}
+			<div class="dropdown dropleft">
+			  <button class="btn btn-light btn-sm border dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: .9em;">
 			    Acciones
 			  </button>
-			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: .9em;">
-			    <a class="dropdown-item" href="#">Editar salario</a>
-			    <a class="dropdown-item" href="#">Marcar como transferible</a>
-			    <a class="dropdown-item" href="#">Marcar como cedible</a>
-			    <a class="dropdown-item" href="#">Marcar como intransferible</a>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: .9em; background: #f9f9f9">
+			    <a class="dropdown-item" href="" data-toggle="modal" data-target="#editModal" id="btnEdit" data-id="{{ $player->id }}">Editar</a>
+			    <div class="dropdown-divider"></div>
+			    <a class="dropdown-item" href="#">Declarar transferible</a>
+			    <a class="dropdown-item" href="#">Declarar cedible</a>
+			    <a class="dropdown-item" href="#">Declarar intransferible</a>
+			    <div class="dropdown-divider"></div>
+			    <a class="dropdown-item text-danger" href="#">Despedir</a>
 			  </div>
 
 
-			</div> --}}
+			</div>
 		</div>
 	</div>
 </div>
