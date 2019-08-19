@@ -1,7 +1,7 @@
 <div class="col-12 col-md-6 m-0 p-0" style="background: #f9f9f9">
 	<div class="border rounded mt-2 mx-2" style="border-top: 1px solid #E9E9E9; line-height: 1.25em; font-size: .9em; height: 92px; position: relative; background: #fff">
 		<img src="{{ $player->player->getImgFormatted() }}" alt="" width="55" style="position: absolute; left: 0px; bottom: 0;">
-		<div style='background: {{ $player->player->getPositionColor() }}; border: 1px solid grey; font-size: .7em; width: 24px; height: 24px; line-height: 1.3em; position: absolute; left: 5px; top: 5px;' class='rounded-circle p-1 text-center'>
+		<div style='background: {{ $player->player->getPositionColor() }}; font-size: .8em; width: 24px; height: 24px; line-height: 1.3em; position: absolute; left: 5px; top: 5px; padding-top: .43em' class='rounded-circle text-center'>
 			<span class='font-weight-bold text-white'>
 				<small>{{ $player->player->position }}</small>
 			</span>
@@ -70,11 +70,12 @@
 			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: .9em; background: #f9f9f9">
 			    <a class="dropdown-item" href="" data-toggle="modal" data-target="#editModal" id="btnEdit" data-id="{{ $player->id }}">Editar</a>
 			    <div class="dropdown-divider"></div>
-			    <a class="dropdown-item" href="#">Declarar transferible</a>
-			    <a class="dropdown-item" href="#">Declarar cedible</a>
-			    <a class="dropdown-item" href="#">Declarar intransferible</a>
+			    <a class="dropdown-item {{ $player->untransferable ? 'disabled' : '' }}" href="{{ route('market.my_team.player.tags.untransferable', $player->id) }}">Declarar intransferible</a>
+			    <a class="dropdown-item {{ $player->transferable ? 'disabled' : '' }}" href="{{ route('market.my_team.player.tags.transferable', $player->id) }}">Declarar transferible</a>
+			    <a class="dropdown-item {{ $player->player_on_loan ? 'disabled' : '' }}" href="{{ route('market.my_team.player.tags.on_loan', $player->id) }}">Declarar cedible</a>
+			    <a class="dropdown-item" href="{{ route('market.my_team.player.tags.delete', $player->id) }}">Eliminar etiquetas</a>
 			    <div class="dropdown-divider"></div>
-			    <a class="dropdown-item text-danger" href="#">Despedir</a>
+			    <a class="dropdown-item text-danger" href="" onclick="dismiss_player('{{ $player->id }}', '{{ $player->player->name }}', '{{ number_format($player->season->free_players_remuneration, 2, ',', '.') }}')">Despedir</a>
 			  </div>
 
 

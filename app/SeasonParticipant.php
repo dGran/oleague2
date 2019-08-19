@@ -74,7 +74,7 @@ class SeasonParticipant extends Model
 
     public function salaries_avg() {
         if ($this->players->count() > 0) {
-            return $this->budget() / $this->players->count();
+            return $this->salaries() / $this->players->count();
         }
         return '0';
     }
@@ -227,10 +227,10 @@ class SeasonParticipant extends Model
                 $q->whereNotNull('local_score')
                   ->whereNotNull('visitor_score');
             })
-            ->where(function($q) {
-                $q->where('local_user_id', '=', $this->user->id)
-                  ->OrWhere('visitor_user_id', '=', $this->user->id);
-            })
+            // ->where(function($q) {
+            //     $q->where('local_user_id', '=', $this->user->id)
+            //       ->OrWhere('visitor_user_id', '=', $this->user->id);
+            // })
             ->take(3)->get();
 
             //falta el orden por partido registrado, es decir updated_at

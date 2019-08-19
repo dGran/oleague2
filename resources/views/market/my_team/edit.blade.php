@@ -68,12 +68,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 					<div class="row">
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Salario</label>
-							<input type="number" step="any" min="0.5" max="{{ ($player->salary + $player->season->salary_cap - $player->participant->salaries()) }}" class="form-control py-1" name="salary" id="salary" value="{{ $player->salary }}" onkeyup="changeSalary()">
-							<small id="salaryHelp" class="form-text text-muted">Salario máximo: {{ $player->salary + $player->season->salary_cap - $player->participant->salaries() }} M.</small>
+							<input type="number" step="any" min="0.5" max="{{ ($player->salary + active_season()->salary_cap - $player->participant->salaries()) }}" class="form-control py-1" name="salary" id="salary" value="{{ $player->salary }}" onkeyup="changeSalary()" onblur="salaryBlur()">
+							<small id="salaryHelp" class="form-text text-muted">Salario máximo: {{ $player->salary + active_season()->salary_cap - $player->participant->salaries() }} M.</small>
 						</div>
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Claúsula</label>
-							<input type="number" class="form-control py-1" name="price" id="price" value="{{ $player->price }}" onkeyup="changePrice()">
+							<input type="number" class="form-control py-1" name="price" id="price" value="{{ $player->price }}" onkeyup="changePrice()" onblur="priceBlur()">
 						</div>
 
 					</div>
@@ -94,7 +94,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 
 					<div class="d-block mb-2">
 					    <div class="pretty p-switch p-fill">
-					        <input type="checkbox" name="player_on_loan" id="player_on_loan" {{ $player->player_on_loan ? 'checked' : '' }}/>
+					        <input type="checkbox" name="player_on_loan" id="player_on_loan" {{ $player->player_on_loan ? 'checked' : '' }} onchange="onLoanChange()" />
 					        <div class="state p-success">
 					            <label for="player_on_loan">Cedible</label>
 					        </div>
@@ -103,7 +103,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 
 					<div class="d-block mb-2">
 					    <div class="pretty p-switch p-fill">
-					        <input type="checkbox" name="transferable" id="transferable" {{ $player->transferable ? 'checked' : '' }} onchange="enableDisableSale()" />
+					        <input type="checkbox" name="transferable" id="transferable" {{ $player->transferable ? 'checked' : '' }} onchange="transferableChange()" />
 					        <div class="state p-success">
 					            <label for="transferable">Transferible</label>
 					        </div>
@@ -127,7 +127,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', end
 					<div class="form-group mt-3">
 						<label class="m-0" for="market_phrase">Comentario de mercado</label>
 						<small class="float-right d-none" id="phrase_counter">0 / 80</small>
-						<input type="text" class="form-control py-1 px-2" style="font-size: .9em" name="market_phrase" id="market_phrase" value="{{ $player->market_phrase }}" onkeyup="phraseCounter()" onblur="phraseCounterBlur()" onfocus="phraseCounterFocus()" maxlength="80">
+						<input type="text" class="form-control py-1 px-2" style="font-size: .9em" name="market_phrase" id="market_phrase" value="{{ $player->market_phrase }}" onkeyup="phraseCounter()" onblur="phraseCounterBlur()" onfocus="phraseCounterFocus()" maxlength="80" {{ $player->transferable || $player->player_on_loan ? '' : 'disabled' }}>
 						<small id="marketPhraseHelp" class="form-text text-muted">Comentario opcional para el escaparate</small>
 					</div>
 				</div>

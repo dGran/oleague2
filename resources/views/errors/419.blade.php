@@ -5,14 +5,14 @@
 		<div class="container">
 		    <div class="error-page p-3">
 		        <h2 class="headline text-info mb-3 text-underline">
-		        	404
+		        	419
 		        </h2>
 		        <div class="error-content">
 		            <h3>
-		            	<i class="fas fa-exclamation-triangle text-warning"></i> Oops! Página no encontrada.
+		            	<i class="fas fa-exclamation-triangle text-warning"></i> Página expirada
 		            </h3>
 		            <p class="my-3">
-		                No pudimos encontrar la página que estabas buscando.
+		                La página ha expirado debido a la inactividad.
 		            </p>
 	                <div class="my-4">
 	                	<a class="btn btn-primary" href="{{ route('home') }}">Volver al inicio</a>

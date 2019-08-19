@@ -4,3 +4,107 @@
 	border-top: 1px solid #E9EEF1;
 	overflow: hidden;
 }
+
+.swal-title {
+	font-size: 18px;
+}
+.swal-text {
+	font-size: 14px;
+	text-align: center;
+	&:first-child {
+		margin-top: 25px;
+	}
+	&:last-child {
+		margin-bottom: 25px;
+	}
+}
+
+.swal-success {
+	background-color: #d3edda;
+	border: 1px solid #c2e6cb;
+	.swal-title {
+		font-size: 18px;
+	}
+	.swal-text {
+		color: #165723;
+		font-size: 14px;
+		&:first-child {
+			margin-top: 25px;
+		}
+		&:last-child {
+			margin-bottom: 25px;
+		}
+	}
+}
+
+.swal-error {
+	background-color: #f8d7da;
+	border: 1px solid #f5c6ca;
+	.swal-title {
+		font-size: 18px;
+	}
+	.swal-text {
+		color: #731d24;
+		font-size: 14px;
+		&:first-child {
+			margin-top: 25px;
+		}
+		&:last-child {
+			margin-bottom: 25px;
+		}
+	}
+}
+
+.swal-warning {
+	background-color: #fff3cd;
+	border: 1px solid #ffeeba;
+	.swal-title {
+		font-size: 18px;
+	}
+	.swal-text {
+		color: #856402;
+		font-size: 14px;
+		&:first-child {
+			margin-top: 25px;
+		}
+		&:last-child {
+			margin-bottom: 25px;
+		}
+	}
+}
+
+.swal-info {
+	background-color: #d1ecf1;
+	border: 1px solid #bee5eb;
+	.swal-title {
+		font-size: 18px;
+	}
+	.swal-text {
+		color: #085460;
+		font-size: 14px;
+		&:first-child {
+			margin-top: 25px;
+		}
+		&:last-child {
+			margin-bottom: 25px;
+		}
+	}
+}
+
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}

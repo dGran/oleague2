@@ -10481,6 +10481,118 @@ button .btn .btn-white .dropdown-toggle:focus {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.swal-footer {
+  background-color: #f5f8fa;
+  margin-top: 32px;
+  border-top: 1px solid #E9EEF1;
+  overflow: hidden;
+}
+
+.swal-title {
+  font-size: 18px;
+}
+
+.swal-text {
+  font-size: 14px;
+  text-align: center;
+}
+
+.swal-text:first-child {
+  margin-top: 25px;
+}
+
+.swal-text:last-child {
+  margin-bottom: 25px;
+}
+
+.swal-success {
+  background-color: #d3edda;
+  border: 1px solid #c2e6cb;
+}
+
+.swal-success .swal-title {
+  font-size: 18px;
+}
+
+.swal-success .swal-text {
+  color: #165723;
+  font-size: 14px;
+}
+
+.swal-success .swal-text:first-child {
+  margin-top: 25px;
+}
+
+.swal-success .swal-text:last-child {
+  margin-bottom: 25px;
+}
+
+.swal-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6ca;
+}
+
+.swal-error .swal-title {
+  font-size: 18px;
+}
+
+.swal-error .swal-text {
+  color: #731d24;
+  font-size: 14px;
+}
+
+.swal-error .swal-text:first-child {
+  margin-top: 25px;
+}
+
+.swal-error .swal-text:last-child {
+  margin-bottom: 25px;
+}
+
+.swal-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+}
+
+.swal-warning .swal-title {
+  font-size: 18px;
+}
+
+.swal-warning .swal-text {
+  color: #856402;
+  font-size: 14px;
+}
+
+.swal-warning .swal-text:first-child {
+  margin-top: 25px;
+}
+
+.swal-warning .swal-text:last-child {
+  margin-bottom: 25px;
+}
+
+.swal-info {
+  background-color: #d1ecf1;
+  border: 1px solid #bee5eb;
+}
+
+.swal-info .swal-title {
+  font-size: 18px;
+}
+
+.swal-info .swal-text {
+  color: #085460;
+  font-size: 14px;
+}
+
+.swal-info .swal-text:first-child {
+  margin-top: 25px;
+}
+
+.swal-info .swal-text:last-child {
+  margin-bottom: 25px;
+}
+
 ol,
 ul,
 dl {

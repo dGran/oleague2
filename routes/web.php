@@ -49,6 +49,11 @@ Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team
 Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
 Route::get('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerEdit')->name('market.my_team.player.edit');
 Route::put('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerUpdate')->name('market.my_team.player.update');
+Route::get('mercado/mi-equipo/jugador/declarar-transferible/{id}', 'MarketController@tagsTransferable')->name('market.my_team.player.tags.transferable');
+Route::get('mercado/mi-equipo/jugador/declarar-intransferible/{id}', 'MarketController@tagsUntransferable')->name('market.my_team.player.tags.untransferable');
+Route::get('mercado/mi-equipo/jugador/declarar-cedible/{id}', 'MarketController@tagsOnLoan')->name('market.my_team.player.tags.on_loan');
+Route::get('mercado/mi-equipo/jugador/eliminar-etiquetas/{id}', 'MarketController@tagsDelete')->name('market.my_team.player.tags.delete');
+Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
 
 
 // User routes

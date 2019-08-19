@@ -1,4 +1,4 @@
-<section class="top-menu">
+    <section class="top-menu">
     <div class="row align-items-center mx-2 mx-md-5 mx-lg-2">
         <div class="col d-inline-block d-md-none">
             <button class="hamburger hamburger-cancel">

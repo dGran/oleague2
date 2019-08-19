@@ -59,6 +59,7 @@
 
     <div class="row">
         <div class="col-12">
+
 {{--             <img src="https://www.mundodeportivo.com/r/GODO/MD/p6/Barca/Imagenes/2019/03/13/Recortada/img_rguillamet_20190313-224453_imagenes_md_otras_fuentes_champions-03-klvB-U461014157231diG-980x554@MundoDeportivo-Web.jpg" class="img-fluid" alt="" width="450"> --}}
             <ul style="list-style: none; margin:0; padding: 0;">
 

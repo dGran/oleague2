@@ -36,27 +36,6 @@
                 /*background: #161b35;*/
             }
         </style>
-    </head>
-
-    <body class="d-flex flex-column">
-
-        <header>
-            @include('layouts.partials.top_menu')
-            @yield('section')
-        </header>
-
-        <main>
-            <div id="app">
-                @yield('content')
-            </div>
-            @yield('modal')
-        </main>
-
-        <footer class="footer">
-            @yield('breadcrumb')
-            @include('layouts.partials.footer')
-            @yield('bottom-fixed')
-        </footer>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>
@@ -71,6 +50,28 @@
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/progressively/1.2.5/progressively.js"></script>
+    </head>
+
+    <body class="d-flex flex-column">
+
+        <header>
+            @include('layouts.partials.top_menu')
+            @yield('section')
+        </header>
+
+        <main>
+            <div id="app">
+                @include('layouts.partials.flash_message')
+                @yield('content')
+            </div>
+            @yield('modal')
+        </main>
+
+        <footer class="footer">
+            @yield('breadcrumb')
+            @include('layouts.partials.footer')
+            @yield('bottom-fixed')
+        </footer>
 
         @yield('js')
         <script>
