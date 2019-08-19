@@ -47,7 +47,12 @@ box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);">
     		</span>
     		<div class="float-right" style="font-size: 1.2em; font-weight: bold">
                 <img src="https://image.flaticon.com/icons/svg/1803/1803103.svg" alt="" width="20" class="mr-1">
-                {{ number_format($participant->budget(), 2, ',', '.') }} M.
+				<span class="{{ number_format($participant->budget() < 0) ? 'text-danger' : '' }}">
+                	{{ number_format($participant->budget(), 2, ',', '.') }} M.
+				</span>
+				@if (number_format($participant->budget() < 0))
+					<i class="fas fa-exclamation-triangle text-warning ml-1 animated infinite flash" style="font-size: .85em"></i>
+				@endif
     		</div>
     	</div>
     	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
@@ -55,31 +60,37 @@ box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);">
     			Total salarios
     		</span>
     		<div class="float-right text-right">
-                {{ number_format($participant->salaries(), 2, ',', '.') }} M.<small class="d-block text-muted ml-2">Tope salarial: {{ number_format(active_season()->salary_cap, 2, ',', '.') }} M.</small>
+                {{ number_format($participant->salaries(), 2, ',', '.') }} M.
+				@if ($participant->salaries() > active_season()->salary_cap)
+					<i class="fas fa-exclamation-triangle text-warning ml-1"></i>
+				@endif
+                <small class="d-block text-muted ml-2">Tope salarial: {{ number_format(active_season()->salary_cap, 2, ',', '.') }} M.</small>
     		</div>
     	</div>
-    	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
+{{--     	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
     		<span class="float-left text-muted">
     			Salario medio
     		</span>
     		<div class="float-right text-right">
                 {{ number_format($participant->salaries_avg(), 2, ',', '.') }} M.
     		</div>
-    	</div>
-    	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
+    	</div> --}}
+{{--     	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
     		<span class="float-left text-muted">
     			Claúsulas pagadas
     		</span>
     		<div class="float-right text-right">
                 {{ $participant->paid_clauses }} / {{ active_season()->max_clauses_paid }}
     		</div>
-    	</div>
+    	</div> --}}
     	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
     		<span class="float-left text-muted">
-    			Claúsulas recibidas
+    			Claúsulas
     		</span>
     		<div class="float-right text-right">
-                {{ $participant->clauses_received }} / {{ active_season()->max_clauses_received }}
+    			<span class="d-block">Pagadas: {{ $participant->paid_clauses }} / {{ active_season()->max_clauses_paid }}</span>
+    			<span class="d-block">Recibidas: {{ $participant->clauses_received }} / {{ active_season()->max_clauses_received }}</span>
+
     		</div>
     	</div>
     	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
@@ -87,17 +98,21 @@ box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);">
     			Plantilla
     		</span>
     		<div class="float-right text-right">
-                {{ $participant->players->count() }} jug.<small class="d-block text-muted ml-2">{{ active_season()->min_players }} min. / {{ active_season()->max_players }} max.</small>
+                {{ $participant->players->count() }} jug.
+				@if ($participant->players->count() > active_season()->max_players || $participant->players->count() < active_season()->min_players)
+					<i class="fas fa-exclamation-triangle text-warning ml-1"></i>
+				@endif
+				<small class="d-block text-muted ml-2">{{ active_season()->min_players }} min. / {{ active_season()->max_players }} max.</small>
     		</div>
     	</div>
-    	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
+{{--     	<div class="clearfix py-1 px-2" style="font-size: .9em; border-top: 1px solid #f1eff3">
     		<span class="float-left text-muted">
     			Valoración media
     		</span>
     		<div class="float-right text-right">
                 {{ number_format($participant->team_avg_overall(), 2, ',', '.') }}
     		</div>
-    	</div>
+    	</div> --}}
 
 	</div>
 
