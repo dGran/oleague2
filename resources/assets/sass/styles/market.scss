@@ -2,22 +2,36 @@
 
 @import "../variables";
 
+.wrapper {
+	background: #ffffff;
+}
+
 .market-header {
 	background: #353f48;
 	margin-top: 54px;
 	padding: .75em 0;
-	h3 {
-		color: #fff;
-		margin: 0;
+	.logo {
+		display: table-cell;
+		vertical-align: top;
+		img {
+			width: 55px;
+		}
 	}
-	img {
-		width: 55px;
-	}
-	.subname {
-		color: #979797;
-		display: block;
-		font-weight: bold;
-		font-size: .8em;
+	.title {
+		display: table-cell;
+		padding-left: 1em;
+		vertical-align: middle;
+		h3 {
+			color: #fff;
+			font-size: 1.5em;
+			margin: 0;
+		}
+		.subtitle {
+			color: #AAAAAA;
+			display: block;
+			font-size: .8em;
+			// font-weight: bold;
+		}
 	}
 }
 
@@ -25,14 +39,18 @@
 	background: #353f48;
 	border-top: 1px solid #414E5B;
 	padding: 5px 0;
-
 	ul {
 		padding: 0;
-		li {
-			padding: .25em;
+		.item {
 			display: inline-block;
-			text-align: center;
 			min-width: 55px;
+			padding: .25em;
+			text-align: center;
+			&.new-section {
+				border-left: 1px solid #414E5B;
+				margin-left: .5em;
+				padding-left: 1em;
+			}
 		 	&.active {
 		 		a {
 		 			color: #89be38;
@@ -45,6 +63,7 @@
 			a {
 			 	color: #ccc;
 			 	display: block;
+			 	position: relative;
 			 	&:hover {
 			 		color: #fff;
 			 	}
@@ -57,18 +76,556 @@
 					text-align: center;
 					text-transform: uppercase;
 			 	}
+			 	.counter {
+					border: 1px solid #353f48;
+					font-size: .9em;
+					min-width: 21px;
+					position: absolute;
+					right: -5px;
+					top: 16px;
+			 	}
 			 }
 		}
 	}
 }
 
-.wrapper {
-	background: #ffffff;
+.my-team {
+	background: #f9f9f9;
+	.header {
+		background: #F2F2F2;
+		padding: .5rem 0;
+		position: relative;
+		.logo {
+			box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+			-moz-box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+			-webkit-box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+			margin-right: 1rem;
+			padding: .25rem;
+			vertical-align: top;
+			width: 75px;
+		}
+		.participant {
+			display: inline-block;
+			padding-top: .5rem;
+			.name {
+				font-size: 1.35em;
+				font-weight: bold;
+				margin: 0;
+			}
+			.subname {
+				color: $gray-600;
+				display: block;
+				font-size: .8em;
+			}
+		}
+	}
+
+	.content {
+		position: relative;
+		.info {
+			background: #ffffff;
+			.item {
+				border-top: 1px solid #f1eff3;
+				font-size: .9em;
+				line-height: 1.8em;
+				padding: .5rem .25rem;
+				vertical-align: middle;
+				.title {
+					color: $gray-600;
+					float: left;
+				}
+				.description {
+					float: right;
+					text-align: right;
+					&.budget {
+						.data {
+							font-size: 1.2em;
+							font-weight: bold;
+						}
+						.icon {
+							margin-right: .25rem;
+							width: 20px;
+						}
+					}
+					.data {
+						font-size: 1em;
+					}
+					.info {
+						color: $gray-600;
+						font-size: .75em;
+						line-height: 1rem;
+						margin-left: .5rem;
+					}
+					.warning {
+						color: $warning;
+						font-size: .85em;
+						margin-left: .5rem;
+					}
+				}
+			}
+		}
+		.positions {
+			.title {
+				background: #F2F2F2;
+				border-bottom: 1px solid $border-color;
+				border-top: 1px solid $border-color;
+				margin: 0;
+				padding: .5rem 0;
+				.icon {
+					margin-top: .25rem;
+					width: 16px;
+				}
+			}
+			.detail {
+				.wrap {
+					background: #f9f9f9;
+					margin: 0;
+					padding: 0;
+					.item {
+						background: #fff;
+						border: 1px solid #E9E9E9;
+						border-radius: .25rem;
+						font-size: .9em;
+						height: 92px;
+						line-height: 1.25em;
+						margin: .5rem .5rem 0 .5rem;
+						position: relative;
+						.player-img {
+							bottom: 0;
+							left: 0px;
+							position: absolute;
+							width: 55px;
+						}
+						.position {
+							border-radius: 50%;
+							font-size: .8em;
+							height: 24px;
+							left: 5px;
+							line-height: 1.3em;
+							padding-top: .43em;
+							position: absolute;
+							text-align: center;
+							top: 5px;
+							width: 24px;
+							.text {
+								color: #ffffff;
+								font-weight: bold;
+							}
+						}
+						.ball-img {
+							height: 24;
+							position: absolute;
+							right: 20px;
+							top: 5px;
+							width: 24px;
+						}
+						.overall {
+							border: 1px solid grey;
+							border-radius: 50%;
+							font-size: 1em;
+							height: 24px;
+							line-height: 1.1em;
+							padding: .25em;
+							position: absolute;
+							right: 5px;
+							text-align: center;
+							top: 5px;
+							width: 24px;
+							span {
+								color: $black;
+								font-size: .8em;
+							}
+						}
+						.player-name {
+							font-size: .9rem;
+							font-weight: bold;
+							left: 36px;
+							position: absolute;
+							text-transform: uppercase;
+							top: 9px;
+							.player-info {
+								color: $info;
+								cursor: pointer;
+								margin-left: .25em;
+								&:hover {
+									color: darken($info, 15%);
+								}
+							}
+						}
+						.tracing {
+							color: $gray-600;
+							left: 55px;
+							position: absolute;
+							top: 26px;
+							i {
+								font-size: .7em;
+							}
+							span {
+								display: inline-block;
+								font-size: .75em;
+    							font-weight: 400;
+							}
+						}
+						.salary {
+							color: $gray-600;
+							left: 85px;
+							position: absolute;
+							top: 26px;
+							i {
+								font-size: .7em;
+							}
+							span {
+								display: inline-block;
+								font-size: .75em;
+    							font-weight: 400;
+							}
+						}
+						.market-icons {
+							border-radius: .25rem;
+							color: #ffffff;
+							font-size: .75em;
+							min-width: 25px;
+							padding: .1em .3em;
+							position: absolute;
+							text-align: center;
+							&.off {
+								opacity: .2;
+							}
+							&.transferable {
+								background-color: $success;
+								left: 55px;
+								top: 45px;
+							}
+							&.on-loan {
+								background-color: $success;
+								left: 85px;
+								top: 45px;
+							}
+							&.untransferable {
+								background-color: $danger;
+								left: 115px;
+								top: 45px;
+							}
+						}
+						.sale-price {
+							color: $gray-600;
+							left: 55px;
+							position: absolute;
+							top: 65px;
+							i {
+								font-size: .7em;
+							}
+							span {
+								display: inline-block;
+								font-size: .75em;
+    							font-weight: 400;
+							}
+						}
+						.actions {
+							bottom: 8px;
+							position: absolute;
+							right: 8px;
+							button {
+								background: #f9f9f9;
+								border: 1px solid #E9E9E9;
+								font-size: .9em;
+							}
+							.dropdown-menu {
+								background: #f9f9f9;
+								border: 1px solid #E9E9E9;
+								font-size: .9em;
+								.dropdown-item {
+									&:hover {
+										background: #ffffff;
+									}
+								}
+							}
+						}
+
+					}
+				}
+			}
+		}
+	}
 }
+
+.sale {
+	.header {
+		padding-top: 1rem;
+	}
+
+	.content {
+		.item {
+			background: #f9f9f9;
+			border-top: 1px solid #f1eff3;
+			border-bottom: 1px solid #f1eff3;
+			font-size: .9em;
+			height: 140px;
+			line-height: 1.25em;
+			position: relative;
+			.player-img {
+				bottom: 0;
+				left: 0px;
+				position: absolute;
+				width: 110px;
+			}
+			.position {
+				border: 1px solid grey;
+				border-radius: 50%;
+				color: #ffffff;
+				font-size: .6em;
+				height: 24px;
+				left: 5px;
+				line-height: 1.9em;
+				padding: .25rem;
+				position: absolute;
+				text-align: center;
+				top: 5px;
+				width: 24px;
+			}
+			.player-ball {
+				height: 24px;
+				position: absolute;
+				right: 20px;
+				top: 5px;
+				width: 24px;
+			}
+			.name {
+				font-size: .9rem;
+				font-weight: bold;
+				left: 36px;
+				position: absolute;
+				text-transform: uppercase;
+				top: 9px;
+			}
+			// .offers {
+			// 	background: #000000;
+			// 	border: 1px solid grey;
+			// 	border-radius: 0.25rem;
+			// 	bottom: -5px;
+			// 	color: #ffffff;
+			// 	font-size: .7em;
+			// 	height: 20px;
+			// 	left: 65px;
+			// 	line-height: 1em;
+			// 	padding: .25rem;
+			// 	position: absolute;
+			// 	text-align: center;
+			// }
+			.icon-position {
+				position: absolute;
+				right: 50px;
+				top: 7px;
+				width: 20px;
+			}
+			.overall {
+				border-radius: 50%;
+				border: 1px solid grey;
+				color: #000000;
+				font-size: .8em;
+				font-weight: bold;
+				height: 24px;
+				line-height: 1.35em;
+				padding: .25rem;
+				position: absolute;
+				right: 5px;
+				text-align: center;
+				top: 5px;
+				width: 24px;
+			}
+			.participant-logo {
+				background-color: #ffffff;
+				border-radius: 50%;
+				border: 1px solid #f1eff3;
+				left: 95px;
+				padding: 2px;
+				position: absolute;
+				top: 40px;
+				width: 28px;
+			}
+			.participant-name {
+				font-size: .6rem;
+				font-weight: bold;
+				left: 130px;
+				position: absolute;
+				text-transform: uppercase;
+				top: 41px;
+			}
+			.participant-subname {
+				font-size: .55rem;
+				left: 130px;
+				position: absolute;
+				top: 52px;
+			}
+			.nation-logo {
+				background-color: #ffffff;
+				border-radius: 50%;
+				border: 1px solid #f1eff3;
+				left: 95px;
+				padding: 2px;
+				position: absolute;
+				top: 70px;
+				width: 28px;
+			}
+			.nation-name {
+				font-size: .6rem;
+				font-weight: bold;
+				left: 130px;
+				position: absolute;
+				text-transform: uppercase;
+				top: 76px;
+			}
+			.clause-title {
+				font-size: .9em;
+				position: absolute;
+				right: 95px;
+				top: 40px;
+			}
+			.clause-data {
+				position: absolute;
+				right: 8px;
+				top: 40px;
+				.units {
+					display: inline-block;
+					font-size: .9em;
+					font-weight: bold;
+				}
+				.measure {
+					display: inline-block;
+					font-size: .7em;
+				}
+			}
+			.price-title {
+				font-size: .9em;
+				position: absolute;
+				right: 95px;
+				top: 60px;
+			}
+			.price-data {
+				position: absolute;
+				right: 8px;
+				top: 60px;
+				.units {
+					display: inline-block;
+					font-size: 1.25em;
+					font-weight: bold;
+				}
+				.measure {
+					display: inline-block;
+				}
+			}
+			.buy-now {
+				bottom: 8px;
+				position: absolute;
+				right: 8px;
+				a {
+					font-size: .9em;
+				}
+			}
+		}
+		.item-phrase {
+			font-size: .8em;
+			margin: 0;
+			padding: .25rem .5rem;
+			min-height: .75rem;
+		}
+	}
+}
+
+#viewModal, #editModal {
+	margin-top: 55px;
+}
+.modal-content {
+	.modal-header {
+		background-color: #e2e2e4;
+		h4 {
+			margin: 0;
+		}
+	}
+	.modal-body {
+		.card {
+			background: rgba(139,160,184,1);
+			border-radius: .25rem;
+			border: 1px solid #f1eff3;
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', endColorstr='#ffffff', GradientType=0 );
+			height: 120px;
+			position: relative;
+			width: 160px;
+		    background: -o-linear-gradient(rgba(139,160,184,1) 0%, rgba(162,179,199,1) 50%, rgba(255,255,255,1) 100%);
+		    background: -webkit-linear-gradient(rgba(139,160,184,1) 0%, rgba(162,179,199,1) 50%, rgba(255,255,255,1) 100%);
+		    background: linear-gradient(rgba(139,160,184,1) 0%, rgba(162,179,199,1) 50%, rgba(255,255,255,1) 100%);
+		    .img {
+		    	bottom: 0;
+		    	left: 30px;
+		    	position: absolute;
+		    	width: 100px;
+		    }
+		    .position {
+		    	color: white;
+		    	font-size: 1.2em;
+		    	font-weight: bold;
+		    	left: 5px;
+		    	position: absolute;
+		    	text-align: center;
+		    	top: 2px;
+		    	width: 35px;
+		    }
+		    .overall {
+		    	color: white;
+		    	font-size: 1.6em;
+		    	font-weight: bold;
+		    	left: 5px;
+		    	position: absolute;
+		    	text-align: center;
+		    	top: 20px;
+		    	width: 35px;
+		    }
+		    .ball {
+		    	position: absolute;
+		    	right: 8px;
+		    	top: 8px;
+		    	img {
+		    		width: 36px;
+		    	}
+		    }
+		}
+		.details {
+			font-size: .9em;
+			.detail-item {
+				border-bottom: 1px solid #f1eff3;
+				padding: .5rem 0;
+				.title {
+					float: left;
+				}
+				.data {
+					color: #a5a5a7;
+					float: right;
+				}
+			}
+		}
+	}
+	.modal-bottom {
+		background-color: #e2e2e4;
+		padding: 1rem;
+		a {
+			display: block;
+			font-size: .9em;
+		}
+	}
+}
+
 
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
+	.sale {
+		.content {
+			.item {
+				border: 1px solid #f1eff3;
+				border-radius: .25rem;
+			}
+		}
+	}
 }
 
 // Medium devices (tablets, 768px and up)

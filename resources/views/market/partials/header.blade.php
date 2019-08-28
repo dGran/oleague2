@@ -1,13 +1,13 @@
 <div class="market-header">
-	<div class="container py-2">
-		<div class="d-table-cell align-top">
+	<div class="container">
+		<div class="logo">
 			<img src="https://resources.gradadiez.com/images/escudos/svg/g10_icon.png">
 		</div>
-		<div class="d-table-cell pl-2 align-middle">
+		<div class="title">
     		<h3>
     			Mercado de fichajes
     		</h3>
-    		<span class="subname">
+    		<span class="subtitle">
     			Temporada 7
     		</span>
 		</div>

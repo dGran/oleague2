@@ -8,9 +8,7 @@
 	@include('market.partials.header')
 
 	<div class="wrapper">
-		<div class="container p-0">
-			@include('market.my_team.content')
-		</div>
+		@include('market.my_team.content')
 	</div> {{-- wrapper --}}
 @endsection
 

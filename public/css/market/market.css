@@ -1,22 +1,37 @@
+.wrapper {
+  background: #ffffff;
+}
+
 .market-header {
   background: #353f48;
   margin-top: 54px;
   padding: .75em 0;
 }
 
-.market-header h3 {
-  color: #fff;
-  margin: 0;
+.market-header .logo {
+  display: table-cell;
+  vertical-align: top;
 }
 
-.market-header img {
+.market-header .logo img {
   width: 55px;
 }
 
-.market-header .subname {
-  color: #979797;
+.market-header .title {
+  display: table-cell;
+  padding-left: 1em;
+  vertical-align: middle;
+}
+
+.market-header .title h3 {
+  color: #fff;
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.market-header .title .subtitle {
+  color: #AAAAAA;
   display: block;
-  font-weight: bold;
   font-size: .8em;
 }
 
@@ -30,43 +45,637 @@
   padding: 0;
 }
 
-.market-menu ul li {
-  padding: .25em;
+.market-menu ul .item {
   display: inline-block;
-  text-align: center;
   min-width: 55px;
+  padding: .25em;
+  text-align: center;
 }
 
-.market-menu ul li.active a {
+.market-menu ul .item.new-section {
+  border-left: 1px solid #414E5B;
+  margin-left: .5em;
+  padding-left: 1em;
+}
+
+.market-menu ul .item.active a {
   color: #89be38;
   pointer-events: none;
 }
 
-.market-menu ul li.active a:hover {
+.market-menu ul .item.active a:hover {
   color: #89be38;
 }
 
-.market-menu ul li a {
+.market-menu ul .item a {
   color: #ccc;
   display: block;
+  position: relative;
 }
 
-.market-menu ul li a:hover {
+.market-menu ul .item a:hover {
   color: #fff;
 }
 
-.market-menu ul li a i {
+.market-menu ul .item a i {
   display: block;
   font-size: 32px;
 }
 
-.market-menu ul li a span {
+.market-menu ul .item a span {
   font-size: .7em;
   text-align: center;
   text-transform: uppercase;
 }
 
-.wrapper {
+.market-menu ul .item a .counter {
+  border: 1px solid #353f48;
+  font-size: .9em;
+  min-width: 21px;
+  position: absolute;
+  right: -5px;
+  top: 16px;
+}
+
+.my-team {
+  background: #f9f9f9;
+}
+
+.my-team .header {
+  background: #F2F2F2;
+  padding: .5rem 0;
+  position: relative;
+}
+
+.my-team .header .logo {
+  box-shadow: 14px 0px 9px -11px #949494;
+  -moz-box-shadow: 14px 0px 9px -11px #949494;
+  -webkit-box-shadow: 14px 0px 9px -11px #949494;
+  margin-right: 1rem;
+  padding: .25rem;
+  vertical-align: top;
+  width: 75px;
+}
+
+.my-team .header .participant {
+  display: inline-block;
+  padding-top: .5rem;
+}
+
+.my-team .header .participant .name {
+  font-size: 1.35em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.my-team .header .participant .subname {
+  color: #6c757d;
+  display: block;
+  font-size: .8em;
+}
+
+.my-team .content {
+  position: relative;
+}
+
+.my-team .content .info {
   background: #ffffff;
+}
+
+.my-team .content .info .item {
+  border-top: 1px solid #f1eff3;
+  font-size: .9em;
+  line-height: 1.8em;
+  padding: .5rem .25rem;
+  vertical-align: middle;
+}
+
+.my-team .content .info .item .title {
+  color: #6c757d;
+  float: left;
+}
+
+.my-team .content .info .item .description {
+  float: right;
+  text-align: right;
+}
+
+.my-team .content .info .item .description.budget .data {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.my-team .content .info .item .description.budget .icon {
+  margin-right: .25rem;
+  width: 20px;
+}
+
+.my-team .content .info .item .description .data {
+  font-size: 1em;
+}
+
+.my-team .content .info .item .description .info {
+  color: #6c757d;
+  font-size: .75em;
+  line-height: 1rem;
+  margin-left: .5rem;
+}
+
+.my-team .content .info .item .description .warning {
+  color: #f0ad4e;
+  font-size: .85em;
+  margin-left: .5rem;
+}
+
+.my-team .content .positions .title {
+  background: #F2F2F2;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  margin: 0;
+  padding: .5rem 0;
+}
+
+.my-team .content .positions .title .icon {
+  margin-top: .25rem;
+  width: 16px;
+}
+
+.my-team .content .positions .detail .wrap {
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.my-team .content .positions .detail .wrap .item {
+  background: #fff;
+  border: 1px solid #E9E9E9;
+  border-radius: .25rem;
+  font-size: .9em;
+  height: 92px;
+  line-height: 1.25em;
+  margin: .5rem .5rem 0 .5rem;
+  position: relative;
+}
+
+.my-team .content .positions .detail .wrap .item .player-img {
+  bottom: 0;
+  left: 0px;
+  position: absolute;
+  width: 55px;
+}
+
+.my-team .content .positions .detail .wrap .item .position {
+  border-radius: 50%;
+  font-size: .8em;
+  height: 24px;
+  left: 5px;
+  line-height: 1.3em;
+  padding-top: .43em;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.my-team .content .positions .detail .wrap .item .position .text {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.my-team .content .positions .detail .wrap .item .ball-img {
+  height: 24;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  width: 24px;
+}
+
+.my-team .content .positions .detail .wrap .item .overall {
+  border: 1px solid grey;
+  border-radius: 50%;
+  font-size: 1em;
+  height: 24px;
+  line-height: 1.1em;
+  padding: .25em;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.my-team .content .positions .detail .wrap .item .overall span {
+  color: #000;
+  font-size: .8em;
+}
+
+.my-team .content .positions .detail .wrap .item .player-name {
+  font-size: .9rem;
+  font-weight: bold;
+  left: 36px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 9px;
+}
+
+.my-team .content .positions .detail .wrap .item .player-name .player-info {
+  color: #5bc0de;
+  cursor: pointer;
+  margin-left: .25em;
+}
+
+.my-team .content .positions .detail .wrap .item .player-name .player-info:hover {
+  color: #28a1c5;
+}
+
+.my-team .content .positions .detail .wrap .item .tracing {
+  color: #6c757d;
+  left: 55px;
+  position: absolute;
+  top: 26px;
+}
+
+.my-team .content .positions .detail .wrap .item .tracing i {
+  font-size: .7em;
+}
+
+.my-team .content .positions .detail .wrap .item .tracing span {
+  display: inline-block;
+  font-size: .75em;
+  font-weight: 400;
+}
+
+.my-team .content .positions .detail .wrap .item .salary {
+  color: #6c757d;
+  left: 85px;
+  position: absolute;
+  top: 26px;
+}
+
+.my-team .content .positions .detail .wrap .item .salary i {
+  font-size: .7em;
+}
+
+.my-team .content .positions .detail .wrap .item .salary span {
+  display: inline-block;
+  font-size: .75em;
+  font-weight: 400;
+}
+
+.my-team .content .positions .detail .wrap .item .market-icons {
+  border-radius: .25rem;
+  color: #ffffff;
+  font-size: .75em;
+  min-width: 25px;
+  padding: .1em .3em;
+  position: absolute;
+  text-align: center;
+}
+
+.my-team .content .positions .detail .wrap .item .market-icons.off {
+  opacity: .2;
+}
+
+.my-team .content .positions .detail .wrap .item .market-icons.transferable {
+  background-color: #09baab;
+  left: 55px;
+  top: 45px;
+}
+
+.my-team .content .positions .detail .wrap .item .market-icons.on-loan {
+  background-color: #09baab;
+  left: 85px;
+  top: 45px;
+}
+
+.my-team .content .positions .detail .wrap .item .market-icons.untransferable {
+  background-color: #ef696c;
+  left: 115px;
+  top: 45px;
+}
+
+.my-team .content .positions .detail .wrap .item .sale-price {
+  color: #6c757d;
+  left: 55px;
+  position: absolute;
+  top: 65px;
+}
+
+.my-team .content .positions .detail .wrap .item .sale-price i {
+  font-size: .7em;
+}
+
+.my-team .content .positions .detail .wrap .item .sale-price span {
+  display: inline-block;
+  font-size: .75em;
+  font-weight: 400;
+}
+
+.my-team .content .positions .detail .wrap .item .actions {
+  bottom: 8px;
+  position: absolute;
+  right: 8px;
+}
+
+.my-team .content .positions .detail .wrap .item .actions button {
+  background: #f9f9f9;
+  border: 1px solid #E9E9E9;
+  font-size: .9em;
+}
+
+.my-team .content .positions .detail .wrap .item .actions .dropdown-menu {
+  background: #f9f9f9;
+  border: 1px solid #E9E9E9;
+  font-size: .9em;
+}
+
+.my-team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-item:hover {
+  background: #ffffff;
+}
+
+.sale .header {
+  padding-top: 1rem;
+}
+
+.sale .content .item {
+  background: #f9f9f9;
+  border-top: 1px solid #f1eff3;
+  border-bottom: 1px solid #f1eff3;
+  font-size: .9em;
+  height: 140px;
+  line-height: 1.25em;
+  position: relative;
+}
+
+.sale .content .item .player-img {
+  bottom: 0;
+  left: 0px;
+  position: absolute;
+  width: 110px;
+}
+
+.sale .content .item .position {
+  border: 1px solid grey;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: .6em;
+  height: 24px;
+  left: 5px;
+  line-height: 1.9em;
+  padding: .25rem;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.sale .content .item .player-ball {
+  height: 24px;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  width: 24px;
+}
+
+.sale .content .item .name {
+  font-size: .9rem;
+  font-weight: bold;
+  left: 36px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 9px;
+}
+
+.sale .content .item .icon-position {
+  position: absolute;
+  right: 50px;
+  top: 7px;
+  width: 20px;
+}
+
+.sale .content .item .overall {
+  border-radius: 50%;
+  border: 1px solid grey;
+  color: #000000;
+  font-size: .8em;
+  font-weight: bold;
+  height: 24px;
+  line-height: 1.35em;
+  padding: .25rem;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.sale .content .item .participant-logo {
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 1px solid #f1eff3;
+  left: 95px;
+  padding: 2px;
+  position: absolute;
+  top: 40px;
+  width: 28px;
+}
+
+.sale .content .item .participant-name {
+  font-size: .6rem;
+  font-weight: bold;
+  left: 130px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 41px;
+}
+
+.sale .content .item .participant-subname {
+  font-size: .55rem;
+  left: 130px;
+  position: absolute;
+  top: 52px;
+}
+
+.sale .content .item .nation-logo {
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 1px solid #f1eff3;
+  left: 95px;
+  padding: 2px;
+  position: absolute;
+  top: 70px;
+  width: 28px;
+}
+
+.sale .content .item .nation-name {
+  font-size: .6rem;
+  font-weight: bold;
+  left: 130px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 76px;
+}
+
+.sale .content .item .clause-title {
+  font-size: .9em;
+  position: absolute;
+  right: 95px;
+  top: 40px;
+}
+
+.sale .content .item .clause-data {
+  position: absolute;
+  right: 8px;
+  top: 40px;
+}
+
+.sale .content .item .clause-data .units {
+  display: inline-block;
+  font-size: .9em;
+  font-weight: bold;
+}
+
+.sale .content .item .clause-data .measure {
+  display: inline-block;
+  font-size: .7em;
+}
+
+.sale .content .item .price-title {
+  font-size: .9em;
+  position: absolute;
+  right: 95px;
+  top: 60px;
+}
+
+.sale .content .item .price-data {
+  position: absolute;
+  right: 8px;
+  top: 60px;
+}
+
+.sale .content .item .price-data .units {
+  display: inline-block;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.sale .content .item .price-data .measure {
+  display: inline-block;
+}
+
+.sale .content .item .buy-now {
+  bottom: 8px;
+  position: absolute;
+  right: 8px;
+}
+
+.sale .content .item .buy-now a {
+  font-size: .9em;
+}
+
+.sale .content .item-phrase {
+  font-size: .8em;
+  margin: 0;
+  padding: .25rem .5rem;
+  min-height: .75rem;
+}
+
+#viewModal,
+#editModal {
+  margin-top: 55px;
+}
+
+.modal-content .modal-header {
+  background-color: #e2e2e4;
+}
+
+.modal-content .modal-header h4 {
+  margin: 0;
+}
+
+.modal-content .modal-body .card {
+  background: #8ba0b8;
+  border-radius: .25rem;
+  border: 1px solid #f1eff3;
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8ba0b8', endColorstr='#ffffff', GradientType=0 );
+  height: 120px;
+  position: relative;
+  width: 160px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#8ba0b8), color-stop(50%, #a2b3c7), to(white));
+  background: linear-gradient(#8ba0b8 0%, #a2b3c7 50%, white 100%);
+}
+
+.modal-content .modal-body .card .img {
+  bottom: 0;
+  left: 30px;
+  position: absolute;
+  width: 100px;
+}
+
+.modal-content .modal-body .card .position {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  left: 5px;
+  position: absolute;
+  text-align: center;
+  top: 2px;
+  width: 35px;
+}
+
+.modal-content .modal-body .card .overall {
+  color: white;
+  font-size: 1.6em;
+  font-weight: bold;
+  left: 5px;
+  position: absolute;
+  text-align: center;
+  top: 20px;
+  width: 35px;
+}
+
+.modal-content .modal-body .card .ball {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+.modal-content .modal-body .card .ball img {
+  width: 36px;
+}
+
+.modal-content .modal-body .details {
+  font-size: .9em;
+}
+
+.modal-content .modal-body .details .detail-item {
+  border-bottom: 1px solid #f1eff3;
+  padding: .5rem 0;
+}
+
+.modal-content .modal-body .details .detail-item .title {
+  float: left;
+}
+
+.modal-content .modal-body .details .detail-item .data {
+  color: #a5a5a7;
+  float: right;
+}
+
+.modal-content .modal-bottom {
+  background-color: #e2e2e4;
+  padding: 1rem;
+}
+
+.modal-content .modal-bottom a {
+  display: block;
+  font-size: .9em;
+}
+
+@media (min-width: 576px) {
+  .sale .content .item {
+    border: 1px solid #f1eff3;
+    border-radius: .25rem;
+  }
 }
 

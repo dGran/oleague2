@@ -1,4 +1,6 @@
 a:focus, button:focus, input:focus, .btn:focus {
+	-webkit-box-shadow: none;
+	box-shadow: none;
 	outline: none !important;
 	text-decoration: none;
 }
