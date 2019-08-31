@@ -1,4 +1,4 @@
-<div class="wrap col-12 col-md-6">
+<div class="wrap col-12 col-md-6 col-xl-4">
 	<div class="item">
 
 		<img class="player-img" src="{{ $player->player->getImgFormatted() }}" alt="" >

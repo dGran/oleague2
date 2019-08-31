@@ -23,7 +23,7 @@ class CreateSeasonPlayersTable extends Migration
             $table->boolean('allow_clause_pay')->default(1);
             $table->boolean('untransferable')->default(0)->index();
             $table->boolean('transferable')->default(0)->index();
-            $table->boolean('sale_price')->nullable()->default(0);
+            $table->decimal('sale_price')->nullable()->default(0);
             $table->boolean('sale_auto_accept')->default(0);
             $table->boolean('player_on_loan')->default(0)->index();
             $table->string('market_phrase', 80)->nullable();

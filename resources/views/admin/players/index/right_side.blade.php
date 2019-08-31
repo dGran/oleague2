@@ -199,14 +199,14 @@
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <label for="filterTeam" class="mb-1">País</label>
+            <label for="filterNation" class="mb-1">País</label>
             <input class="filterNation-input form-control mousetrap filterNation" id="filterNation" name="filterNation" type="text" placeholder="País..." value="{{ $filterNation ? $filterNation : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-sm-12">
-            <label for="filterTeam" class="mb-1">Posición</label>
+            <label for="filterPosition" class="mb-1">Posición</label>
             <input class="filterPosition-input form-control mousetrap filterPosition" id="filterPosition" name="filterPosition" type="text" placeholder="Posición..." value="{{ $filterPosition ? $filterPosition : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
         </div>
     </div>

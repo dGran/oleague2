@@ -1,7 +1,7 @@
 <div class="market-header">
 	<div class="container">
 		<div class="logo">
-			<img src="https://resources.gradadiez.com/images/escudos/svg/g10_icon.png">
+			<img src="{{ asset('img/transfer_icon.png') }}">
 		</div>
 		<div class="title">
     		<h3>

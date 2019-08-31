@@ -30,7 +30,6 @@
 			color: #AAAAAA;
 			display: block;
 			font-size: .8em;
-			// font-weight: bold;
 		}
 	}
 }
@@ -351,14 +350,33 @@
 
 .sale {
 	.header {
-		padding-top: 1rem;
+		background: #F2F2F2;
+		border-bottom: 1px solid #f1eff3;
+		padding: .5rem .5rem 1rem .5rem;
+		h2 {
+			color: #4ea800;
+			font-weight: 400;
+			font-size: 28px;
+			line-height: 1.3em;
+			margin: .5em 0;
+			padding: .25rem 0;
+		}
+		.filters {
+			a {
+				background-color: $blue;
+				border-radius: 1rem;
+				color: #ffffff;
+				cursor: pointer;
+				font-size: .9em;
+				padding: .6em 1.25em;
+			}
+		}
 	}
 
 	.content {
 		.item {
 			background: #f9f9f9;
-			border-top: 1px solid #f1eff3;
-			border-bottom: 1px solid #f1eff3;
+			border: 1px solid #f1eff3;
 			font-size: .9em;
 			height: 140px;
 			line-height: 1.25em;
@@ -370,13 +388,12 @@
 				width: 110px;
 			}
 			.position {
-				border: 1px solid grey;
 				border-radius: 50%;
 				color: #ffffff;
 				font-size: .6em;
 				height: 24px;
 				left: 5px;
-				line-height: 1.9em;
+				line-height: 2.1em;
 				padding: .25rem;
 				position: absolute;
 				text-align: center;
@@ -397,21 +414,15 @@
 				position: absolute;
 				text-transform: uppercase;
 				top: 9px;
+				.player-info {
+					color: $info;
+					cursor: pointer;
+					margin-left: .25em;
+					&:hover {
+						color: darken($info, 15%);
+					}
+				}
 			}
-			// .offers {
-			// 	background: #000000;
-			// 	border: 1px solid grey;
-			// 	border-radius: 0.25rem;
-			// 	bottom: -5px;
-			// 	color: #ffffff;
-			// 	font-size: .7em;
-			// 	height: 20px;
-			// 	left: 65px;
-			// 	line-height: 1em;
-			// 	padding: .25rem;
-			// 	position: absolute;
-			// 	text-align: center;
-			// }
 			.icon-position {
 				position: absolute;
 				right: 50px;
@@ -420,7 +431,7 @@
 			}
 			.overall {
 				border-radius: 50%;
-				border: 1px solid grey;
+				border: 1px solid #EEEEEE;
 				color: #000000;
 				font-size: .8em;
 				font-weight: bold;
@@ -523,23 +534,68 @@
 				}
 			}
 		}
-		.item-phrase {
-			font-size: .8em;
-			margin: 0;
-			padding: .25rem .5rem;
-			min-height: .75rem;
+		.item-header {
+			.date {
+				color: $gray-600;
+				font-size: .7em;
+				padding-bottom: .25rem;
+				text-align: right;
+			}
+		}
+		.item-bottom {
+			padding-top: .25rem;
+			.phrase {
+				font-size: .8em;
+			}
 		}
 	}
 }
 
-#viewModal, #editModal {
+#filtersModal {
+	.modal-body {
+		.frmFilter {
+			font-size: .9em;
+			label {
+				padding: .25rem 0;
+			}
+			.bootstrap-select {
+				.dropdown-toggle, .dropdown-menu li a {
+					font-size: .9em;
+				}
+			}
+			.dropdown-item.active, .dropdown-item:active {
+				color: black;
+			    background-color: #F2F2F2;
+			}
+			.dropdown-menu .dropdown-item {
+			    padding: .3em .6em;
+			}
+		}
+	}
+}
+
+#viewModal, #editModal, #filtersModal {
 	margin-top: 55px;
 }
 .modal-content {
+	border: none;
 	.modal-header {
-		background-color: #e2e2e4;
 		h4 {
 			margin: 0;
+		}
+		&.primary {
+			background-color: $primary;
+			color: $white;
+			.close {
+				color: $white;
+			}
+		}
+		&.info {
+			background-color: $info;
+			color: $white;
+			.close {
+				color: $white;
+			}
 		}
 	}
 	.modal-body {
@@ -605,7 +661,7 @@
 		}
 	}
 	.modal-bottom {
-		background-color: #e2e2e4;
+		background-color: #f2f2f2;
 		padding: 1rem;
 		a {
 			display: block;
@@ -620,10 +676,6 @@
 @media (min-width: 576px) {
 	.sale {
 		.content {
-			.item {
-				border: 1px solid #f1eff3;
-				border-radius: .25rem;
-			}
 		}
 	}
 }

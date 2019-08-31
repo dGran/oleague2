@@ -337,13 +337,13 @@
 }
 
 .my-team .content .positions .detail .wrap .item .market-icons.transferable {
-  background-color: #09baab;
+  background-color: #4ea800;
   left: 55px;
   top: 45px;
 }
 
 .my-team .content .positions .detail .wrap .item .market-icons.on-loan {
-  background-color: #09baab;
+  background-color: #4ea800;
   left: 85px;
   top: 45px;
 }
@@ -394,13 +394,32 @@
 }
 
 .sale .header {
-  padding-top: 1rem;
+  background: #F2F2F2;
+  border-bottom: 1px solid #f1eff3;
+  padding: .5rem .5rem 1rem .5rem;
+}
+
+.sale .header h2 {
+  color: #4ea800;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.3em;
+  margin: .5em 0;
+  padding: .25rem 0;
+}
+
+.sale .header .filters a {
+  background-color: #009bce;
+  border-radius: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: .9em;
+  padding: .6em 1.25em;
 }
 
 .sale .content .item {
   background: #f9f9f9;
-  border-top: 1px solid #f1eff3;
-  border-bottom: 1px solid #f1eff3;
+  border: 1px solid #f1eff3;
   font-size: .9em;
   height: 140px;
   line-height: 1.25em;
@@ -415,13 +434,12 @@
 }
 
 .sale .content .item .position {
-  border: 1px solid grey;
   border-radius: 50%;
   color: #ffffff;
   font-size: .6em;
   height: 24px;
   left: 5px;
-  line-height: 1.9em;
+  line-height: 2.1em;
   padding: .25rem;
   position: absolute;
   text-align: center;
@@ -446,6 +464,16 @@
   top: 9px;
 }
 
+.sale .content .item .name .player-info {
+  color: #5bc0de;
+  cursor: pointer;
+  margin-left: .25em;
+}
+
+.sale .content .item .name .player-info:hover {
+  color: #28a1c5;
+}
+
 .sale .content .item .icon-position {
   position: absolute;
   right: 50px;
@@ -455,7 +483,7 @@
 
 .sale .content .item .overall {
   border-radius: 50%;
-  border: 1px solid grey;
+  border: 1px solid #EEEEEE;
   color: #000000;
   font-size: .8em;
   font-weight: bold;
@@ -573,24 +601,74 @@
   font-size: .9em;
 }
 
-.sale .content .item-phrase {
+.sale .content .item-header .date {
+  color: #6c757d;
+  font-size: .7em;
+  padding-bottom: .25rem;
+  text-align: right;
+}
+
+.sale .content .item-bottom {
+  padding-top: .25rem;
+}
+
+.sale .content .item-bottom .phrase {
   font-size: .8em;
-  margin: 0;
-  padding: .25rem .5rem;
-  min-height: .75rem;
+}
+
+#filtersModal .modal-body .frmFilter {
+  font-size: .9em;
+}
+
+#filtersModal .modal-body .frmFilter label {
+  padding: .25rem 0;
+}
+
+#filtersModal .modal-body .frmFilter .bootstrap-select .dropdown-toggle,
+#filtersModal .modal-body .frmFilter .bootstrap-select .dropdown-menu li a {
+  font-size: .9em;
+}
+
+#filtersModal .modal-body .frmFilter .dropdown-item.active,
+#filtersModal .modal-body .frmFilter .dropdown-item:active {
+  color: black;
+  background-color: #F2F2F2;
+}
+
+#filtersModal .modal-body .frmFilter .dropdown-menu .dropdown-item {
+  padding: .3em .6em;
 }
 
 #viewModal,
-#editModal {
+#editModal,
+#filtersModal {
   margin-top: 55px;
 }
 
-.modal-content .modal-header {
-  background-color: #e2e2e4;
+.modal-content {
+  border: none;
 }
 
 .modal-content .modal-header h4 {
   margin: 0;
+}
+
+.modal-content .modal-header.primary {
+  background-color: #009bce;
+  color: #fff;
+}
+
+.modal-content .modal-header.primary .close {
+  color: #fff;
+}
+
+.modal-content .modal-header.info {
+  background-color: #5bc0de;
+  color: #fff;
+}
+
+.modal-content .modal-header.info .close {
+  color: #fff;
 }
 
 .modal-content .modal-body .card {
@@ -663,19 +741,12 @@
 }
 
 .modal-content .modal-bottom {
-  background-color: #e2e2e4;
+  background-color: #f2f2f2;
   padding: 1rem;
 }
 
 .modal-content .modal-bottom a {
   display: block;
   font-size: .9em;
-}
-
-@media (min-width: 576px) {
-  .sale .content .item {
-    border: 1px solid #f1eff3;
-    border-radius: .25rem;
-  }
 }
 

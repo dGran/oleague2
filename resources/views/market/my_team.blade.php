@@ -22,7 +22,7 @@
 
 @section('modal')
 	@include('market.my_team.edit_modal')
-    @include('market.my_team.view_modal')
+    @include('general_modals.player_view_modal')
 @endsection
 
 @section('js')

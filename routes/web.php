@@ -43,8 +43,12 @@ Route::get('competiciones/competicion/partido', 'HomeController@competition_matc
 
 
 // Market Routes
+Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.playerView');
+
 Route::get('mercado', 'MarketController@index')->name('market');
+
 Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
+
 Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
 Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
 Route::get('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerEdit')->name('market.my_team.player.edit');
