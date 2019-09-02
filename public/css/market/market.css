@@ -2,6 +2,37 @@
   background: #ffffff;
 }
 
+.searchbox {
+  margin: .75rem .25rem 0 .25rem;
+  font-size: 1em;
+  position: relative;
+}
+
+.searchbox label {
+  color: #1694CA;
+  position: absolute;
+  left: .625em;
+  top: .5em;
+}
+
+.searchbox input {
+  font-size: .9rem;
+  padding-left: 2.25em;
+  padding-right: 2em;
+}
+
+.searchbox span {
+  color: #a1a8ae;
+  cursor: pointer;
+  position: absolute;
+  right: .625em;
+  top: .5em;
+}
+
+.searchbox span:hover {
+  color: #1694CA;
+}
+
 .market-header {
   background: #353f48;
   margin-top: 54px;
@@ -393,6 +424,10 @@
   background: #ffffff;
 }
 
+.sale {
+  background: #f9f9f9;
+}
+
 .sale .header {
   background: #F2F2F2;
   border-bottom: 1px solid #f1eff3;
@@ -418,7 +453,7 @@
 }
 
 .sale .content .item {
-  background: #f9f9f9;
+  background: #ffffff;
   border: 1px solid #f1eff3;
   font-size: .9em;
   height: 140px;
@@ -614,6 +649,281 @@
 
 .sale .content .item-bottom .phrase {
   font-size: .8em;
+}
+
+.search {
+  background: #f9f9f9;
+}
+
+.search .header {
+  background: #EEEEEE;
+  border-bottom: 1px solid #f1eff3;
+  padding: .5rem .5rem 1rem .5rem;
+}
+
+.search .header h2 {
+  color: #4ea800;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.3em;
+  margin: .5em 0;
+  padding: .25rem 0;
+}
+
+.search .header .filters a {
+  background-color: #009bce;
+  border-radius: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: .9em;
+  padding: .6em 1.25em;
+}
+
+.search .content .item {
+  background: #ffffff;
+  border: 1px solid #f1eff3;
+  border-radius: .25rem;
+  font-size: .9em;
+  height: 100px;
+  line-height: 1.25em;
+  margin: .75rem .75rem 0 .75rem;
+  position: relative;
+}
+
+.search .content .item.free {
+  border: 1px solid #fae3c4;
+  background: #fef9f3;
+}
+
+.search .content .item.clause-pay {
+  border: 1px solid #fbdcdd;
+  background: #fef3f3;
+}
+
+.search .content .item .showcase {
+  background: #4ea800;
+  bottom: -6px;
+  font-size: .6rem;
+  font-weight: 400;
+  left: 12px;
+  padding: .25rem .25rem .4rem .25rem;
+  position: absolute;
+  text-transform: uppercase;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: left;
+          transform-origin: left;
+}
+
+.search .content .item .player-img {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 64px;
+}
+
+.search .content .item .position {
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: .6em;
+  height: 24px;
+  line-height: 2.1em;
+  padding: .25rem;
+  position: absolute;
+  left: 5px;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.search .content .item .player-ball {
+  height: 24px;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  width: 24px;
+}
+
+.search .content .item .name {
+  font-size: .85rem;
+  font-weight: bold;
+  left: 59px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 9px;
+}
+
+.search .content .item .name .player-info {
+  color: #5bc0de;
+  cursor: pointer;
+  margin-left: .25em;
+}
+
+.search .content .item .name .player-info:hover {
+  color: #28a1c5;
+}
+
+.search .content .item .icon-position {
+  position: absolute;
+  right: 48px;
+  top: 9px;
+  width: 16px;
+}
+
+.search .content .item .overall {
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  color: #000000;
+  font-size: .8em;
+  font-weight: bold;
+  height: 24px;
+  line-height: 1.35em;
+  padding: .25rem;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.search .content .item .participant-logo {
+  height: 26px;
+  left: 59px;
+  position: absolute;
+  top: 35px;
+  width: 26px;
+}
+
+.search .content .item .participant-logo.none {
+  opacity: .5;
+}
+
+.search .content .item .participant-name {
+  font-size: .6rem;
+  font-weight: bold;
+  left: 90px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 35px;
+}
+
+.search .content .item .participant-name.none {
+  color: #f0ad4e;
+  top: 40px;
+}
+
+.search .content .item .participant-subname {
+  font-size: .55rem;
+  left: 90px;
+  position: absolute;
+  top: 46px;
+}
+
+.search .content .item .nation-logo {
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  height: 20px;
+  left: 32px;
+  position: absolute;
+  top: 7px;
+  width: 20px;
+}
+
+.search .content .item .nation-name {
+  font-size: .6rem;
+  font-weight: bold;
+  left: 130px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 76px;
+}
+
+.search .content .item .clause-title {
+  font-size: .9em;
+  position: absolute;
+  right: 95px;
+  top: 40px;
+}
+
+.search .content .item .clause-data {
+  position: absolute;
+  left: 90px;
+  top: 68px;
+}
+
+.search .content .item .clause-data .units {
+  display: inline-block;
+  font-size: .9em;
+  font-weight: bold;
+}
+
+.search .content .item .clause-data .measure {
+  display: inline-block;
+  font-size: .7em;
+}
+
+.search .content .item .price-title {
+  font-size: .9em;
+  position: absolute;
+  right: 95px;
+  top: 60px;
+}
+
+.search .content .item .price-data {
+  position: absolute;
+  right: 8px;
+  top: 60px;
+}
+
+.search .content .item .price-data .units {
+  display: inline-block;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.search .content .item .price-data .measure {
+  display: inline-block;
+}
+
+.search .content .item .clause-pay {
+  color: #ef696c;
+  bottom: 42px;
+  position: absolute;
+  right: 8px;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.search .content .item .actions {
+  bottom: 8px;
+  position: absolute;
+  right: 8px;
+}
+
+.search .content .item .actions button {
+  background: #f9f9f9;
+  border: 1px solid #E9E9E9;
+  font-size: .9em;
+}
+
+.search .content .item .actions .dropdown-menu {
+  background: #f9f9f9;
+  border: 1px solid #E9E9E9;
+  font-size: .9em;
+}
+
+.search .content .item .actions .dropdown-menu .dropdown-item:hover {
+  background: #ffffff;
+}
+
+.search .content .item .actions .dropdown-menu .dropdown-item.disabled {
+  color: #adb5bd;
+  pointer-events: none;
+}
+
+.search .content .item .actions .dropdown-menu .dropdown-item.disabled:hover {
+  background: none;
 }
 
 #filtersModal .modal-body .frmFilter {

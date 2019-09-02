@@ -9,7 +9,7 @@
 
     <div class="modal-body">
     	<div class="row justify-content-center p-1 p-lg-3">
-			<div class="col-12 col-sm-5 col-md-5 col-lg-3 mb-3 mb-md-0">
+			<div class="col-12 col-sm-5 mb-3 mb-md-0">
 				<div class="card">
 					<img class="img" src="{{ $player->player->getImgFormatted() }}">
 					<span class="position">
@@ -24,14 +24,16 @@
 				</div>
 			</div>
 
-			<div class="col-12 col-sm-7 col-md-7 col-lg-9">
+			<div class="col-12 col-sm-7">
 	            <div class="details" style="font-size: .9em">
 	            	<div class="detail-item clearfix">
 	            		<span class="title">
 	            			Equipo
 	            		</span>
 	            		<div class="data">
-	                        {{ $player->participant->name() }}
+	            			@if ($player->participant)
+	                        	{{ $player->participant->name() }}
+	                        @endif
 	            		</div>
 	            	</div>
 	            	<div class="detail-item clearfix">
@@ -39,7 +41,9 @@
 	            			Manager
 	            		</span>
 	            		<div class="data">
-	                        {{ $player->participant->sub_name() }}
+	            			@if ($player->participant)
+	                        	{{ $player->participant->sub_name() }}
+	                        @endif
 	            		</div>
 	            	</div>
 	            	<div class="detail-item clearfix">

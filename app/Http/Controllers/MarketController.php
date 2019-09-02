@@ -31,7 +31,7 @@ class MarketController extends Controller
         if (!$order) {
             $order = 'date_desc';
         }
-        $order_ext = $this->getOrder($order);
+        $order_ext = $this->saleGetOrder($order);
         $filterSeason = active_season()->id;
         if (request()->filterParticipant == NULL) { request()->filterParticipant = 0; }
         $filterParticipant = request()->filterParticipant;
@@ -88,7 +88,7 @@ class MarketController extends Controller
         	}
         }
 		$players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
-			->orderBy('players.name', 'asc')
+			->orderBy('showcase.created_at', 'desc')
 	        ->get();
 
         if (Season::find($filterSeason)->participant_has_team) {
@@ -115,6 +115,189 @@ class MarketController extends Controller
         } else {
             return view('market.sale.view-empty')->render();
         }
+    }
+
+    public function search()
+    {
+    	//data of user->participant
+    	if (!auth()->guest() && user_is_participant(auth()->user()->id)) {
+    		$participant_of_user = participant_of_user();
+    	}
+    	//filter variables
+    	$order = request()->order;
+        if (!$order) {
+            $order = 'overall_desc';
+        }
+
+        $pagination = request()->pagination;
+        if (!$pagination == null) {
+            $perPage = $pagination;
+        } else {
+            $perPage = 10;
+        }
+
+        $page = request()->page;
+
+        $order_ext = $this->searchGetOrder($order);
+
+        $filterSeason = active_season()->id;
+
+        $filterName = null;
+        if (!is_null(request()->filterName)) {
+        	$filterName = request()->filterName;
+        }
+
+        $filterParticipant = request()->filterParticipant;
+        if ($filterParticipant == NULL) {
+        	$filterParticipant = -1;
+        }
+
+        $filterPosition = request()->filterPosition;
+
+        $filterNation = request()->filterNation;
+
+        $filterOriginalTeam = request()->filterOriginalTeam;
+
+        $filterOriginalLeague = request()->filterOriginalLeague;
+
+		if (request()->filterHideFree == "on") {
+			$filterHideFree = true;
+		} else {
+			$filterHideFree = false;
+		}
+
+		if (request()->filterHideClausePaid == "on") {
+			$filterHideClausePaid = true;
+		} else {
+			$filterHideClausePaid = false;
+		}
+
+		if (request()->filterHideParticipantClauseLimit == "on") {
+			$filterHideParticipantClauseLimit = true;
+		} else {
+			$filterHideParticipantClauseLimit = false;
+		}
+
+		if (request()->filterShowClausesCanPay == "on") {
+			$filterShowClausesCanPay = true;
+		} else {
+			$filterShowClausesCanPay = false;
+		}
+
+    	if (request()->overall_range) {
+	    	$overall_rating = (explode( ';', request()->overall_range));
+	    	$filterOverallRangeFrom = $overall_rating[0];
+	    	$filterOverallRangeTo = $overall_rating[1];
+    	} else {
+    		$filterOverallRangeFrom = 70;
+	    	$filterOverallRangeTo = 99;
+    	}
+
+    	if (request()->clause_range) {
+	    	$clause_range = (explode( ';', request()->clause_range));
+	    	$filterClauseRangeFrom = $clause_range[0];
+	    	$filterClauseRangeTo = $clause_range[1];
+    	} else {
+    		$filterClauseRangeFrom = 0;
+	    	$filterClauseRangeTo = 500;
+    	}
+
+    	if (request()->age_range) {
+	    	$age_range = (explode( ';', request()->age_range));
+	    	$filterAgeRangeFrom = $age_range[0];
+	    	$filterAgeRangeTo = $age_range[1];
+    	} else {
+    		$filterAgeRangeFrom = 15;
+	    	$filterAgeRangeTo = 45;
+    	}
+
+    	if (request()->height_range) {
+	    	$height_range = (explode( ';', request()->height_range));
+	    	$filterHeightRangeFrom = $height_range[0];
+	    	$filterHeightRangeTo = $height_range[1];
+    	} else {
+    		$filterHeightRangeFrom = 150;
+	    	$filterHeightRangeTo = 210;
+    	}
+
+    	//list of players
+        $players = SeasonPlayer::select('season_players.*', 'season_participants.clauses_received')
+        	->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+        	->leftjoin('season_participants', 'season_participants.id', '=', 'season_players.participant_id');
+		$players->where('season_players.season_id', "=", $filterSeason);
+        $players->where('active', '=', 1);
+        if (!is_null($filterName)) {
+        	$players->where('players.name', "LIKE", "%$filterName%");
+        }
+        if ($filterParticipant >= 0) {
+            $players = $players->where('season_players.participant_id', '=', $filterParticipant);
+        }
+        if ($filterShowClausesCanPay) {
+        	$players = $players->where(function($q) use ($participant_of_user) {
+          		$q->where('season_players.participant_id', '!=', 0)
+            	  ->where('season_players.participant_id', '!=', $participant_of_user->id);
+      		});
+        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
+        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+        	$players = $players->where(\DB::raw('season_players.price * 1.10'), '<', $participant_of_user->budget());
+        } else {
+	        if ($filterHideFree) {
+	        	$players = $players->where('season_players.participant_id', '!=', 0);
+	        }
+	        if ($filterHideClausePaid) {
+	        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
+	        }
+	        if ($filterHideParticipantClauseLimit) {
+	        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+	        }
+        }
+        if ($filterPosition != NULL) {
+            $players = $players->where('players.position', '=', $filterPosition);
+        }
+        if ($filterNation != NULL) {
+            $players = $players->where('players.nation_name', '=', $filterNation);
+        }
+        if ($filterOriginalTeam != NULL) {
+            $players = $players->where('players.team_name', '=', $filterOriginalTeam);
+        }
+        if ($filterOriginalLeague != NULL) {
+            $players = $players->where('players.league_name', '=', $filterOriginalLeague);
+        }
+        $players = $players->where('players.overall_rating', '>=', $filterOverallRangeFrom);
+        $players = $players->where('players.overall_rating', '<=', $filterOverallRangeTo);
+        $players = $players->where('season_players.price', '>=', $filterClauseRangeFrom);
+        $players = $players->where('season_players.price', '<=', $filterClauseRangeTo);
+        $players = $players->where('players.age', '>=', $filterAgeRangeFrom);
+        $players = $players->where('players.age', '<=', $filterAgeRangeTo);
+        $players = $players->where('players.height', '>=', $filterHeightRangeFrom);
+        $players = $players->where('players.height', '<=', $filterHeightRangeTo);
+		$players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection'])
+			->orderBy('players.name', 'asc')
+	        ->paginate($perPage, ['*'], 'page', $page);
+
+	    //list of participants
+        if (Season::find($filterSeason)->participant_has_team) {
+            $participants = SeasonParticipant::
+            leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+            ->select('season_participants.*', 'teams.name as team_name')
+            ->seasonId($filterSeason)->orderBy('team_name', 'asc')->get();
+        } else {
+            $participants = SeasonParticipant::
+            leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+            ->select('season_participants.*', 'users.name as user_name')
+            ->seasonId($filterSeason)->orderBy('user_name', 'asc')->get();
+        }
+        //list of positions
+        $positions = Player::select('position')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('position', 'asc')->get();
+        //list of nations
+		$nations = Player::select('nation_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('nation_name', 'asc')->get();
+        //list of original_teams
+		$original_teams = Player::select('team_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('team_name', 'asc')->get();
+		//list of original_league
+		$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
+
+		//return view
+        return view('market.search', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
     }
 
     public function myTeam()
@@ -388,7 +571,7 @@ class MarketController extends Controller
 		return false;
 	}
 
-    protected function getOrder($order) {
+    protected function saleGetOrder($order) {
         $order_ext = [
             'date' => [
                 'sortField'     => 'showcase.created_at',
@@ -398,6 +581,36 @@ class MarketController extends Controller
                 'sortField'     => 'showcase.created_at',
                 'sortDirection' => 'desc'
             ],
+            'name' => [
+                'sortField'     => 'players.name',
+                'sortDirection' => 'asc'
+            ],
+            'name_desc' => [
+                'sortField'     => 'players.name',
+                'sortDirection' => 'desc'
+            ],
+            'overall' => [
+                'sortField'     => 'players.overall_rating',
+                'sortDirection' => 'asc'
+            ],
+            'overall_desc' => [
+                'sortField'     => 'players.overall_rating',
+                'sortDirection' => 'desc'
+            ],
+            'saleprice' => [
+                'sortField'     => 'season_players.sale_price',
+                'sortDirection' => 'asc'
+            ],
+            'saleprice_desc' => [
+                'sortField'     => 'season_players.sale_price',
+                'sortDirection' => 'desc'
+            ]
+        ];
+        return $order_ext[$order];
+    }
+
+    protected function searchGetOrder($order) {
+        $order_ext = [
             'name' => [
                 'sortField'     => 'players.name',
                 'sortDirection' => 'asc'

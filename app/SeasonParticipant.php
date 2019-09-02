@@ -237,4 +237,18 @@ class SeasonParticipant extends Model
             //y faltaria obtener los resultados por participante, no por usuario
     }
 
+    public function clauses_received_limit() {
+        if ($this->clauses_received < $this->season->max_clauses_received) {
+            return false;
+        }
+        return true;
+    }
+
+    public function clauses_paid_limit() {
+        if ($this->paid_clauses < $this->season->max_clauses_paid) {
+            return false;
+        }
+        return true;
+    }
+
 }

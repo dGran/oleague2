@@ -19,7 +19,9 @@
 			@if ($players->count() > 0)
 				<div class="row py-2">
 					@foreach ($players as $player)
-						@include('market.sale.card_data')
+						<div class="col-12 col-md-6 col-xl-4 py-1 px-3">
+							@include('market.sale.card_data')
+						</div>
 					@endforeach
 				</div> {{-- row --}}
 			@else

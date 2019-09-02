@@ -6,8 +6,8 @@
 				<span>Resumen</span>
 			</a>
 		</li>
-		<li class="item {{ \Route::current()->getName() == 'club.roster' ? 'active' : '' }}">
-			<a href="{{ route('club.roster', 'ss') }}">
+		<li class="item {{ \Route::current()->getName() == 'market.search' ? 'active' : '' }}">
+			<a href="{{ route('market.search') }}">
 				<i class="icon-search-player"></i>
 				<span>Buscador</span>
 			</a>

@@ -5,6 +5,7 @@ use Telegram\Bot\Api;
 use App\GeneralSetting;
 use App\Season;
 use App\SeasonParticipant;
+use App\Showcase;
 
 function validateUrl($url)
 {
@@ -73,6 +74,21 @@ function active_season() {
 
 function user_is_participant($user_id) {
 	if (SeasonParticipant::where('season_id', '=', active_season()->id)->where('user_id', '=', $user_id)->first()) {
+		return true;
+	}
+	return false;
+}
+
+function participant_of_user() {
+	$participant = SeasonParticipant::where('season_id', '=', active_season()->id)->where('user_id', '=', auth()->user()->id)->first();
+	if ($participant) {
+		return $participant;
+	}
+	return null;
+}
+
+function player_in_showcase($player_id) {
+	if (Showcase::where('player_id', '=', $player_id)->first()) {
 		return true;
 	}
 	return false;

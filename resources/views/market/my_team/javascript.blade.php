@@ -77,7 +77,7 @@
             $('#sale_auto_accept').prop('disabled', false);
             $('#market_phrase').prop('disabled', false);
         } else {
-            $('#sale_price').val('');
+            $('#sale_price').val('0.00');
             $('#sale_price').prop('disabled', true);
             $('#sale_auto_accept').prop('checked', false);
             $('#sale_auto_accept').prop('disabled', true);
@@ -107,7 +107,7 @@
     function untransferableChange() {
         if ($('#untransferable').prop('checked') == true) {
             $('#transferable').prop('checked', false);
-            $('#sale_price').val('');
+            $('#sale_price').val('0.00');
             $('#sale_price').prop('disabled', true);
             $('#sale_auto_accept').prop('checked', false);
             $('#sale_auto_accept').prop('disabled', true);

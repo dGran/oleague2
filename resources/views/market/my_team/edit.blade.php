@@ -12,7 +12,7 @@
 	    {{ method_field('PUT') }}
 	    {{ csrf_field() }}
 
-    <div class="modal-header">
+    <div class="modal-header primary">
     	<h4>{{ $player->player->name }}</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -21,7 +21,7 @@
 
     <div class="modal-body">
     	<div class="row justify-content-center p-1 p-lg-3">
-			<div class="col-12 col-sm-5 col-md-5 col-lg-3 mb-3 mb-md-0">
+			<div class="col-12 col-sm-5 mb-3 mb-md-0">
 				<div class="card">
 					<img class="img" src="{{ $player->player->getImgFormatted() }}">
 					<span class="position">
@@ -36,7 +36,7 @@
 				</div>
 			</div>
 
-			<div class="col-12 col-sm-7 col-md-7 col-lg-9">
+			<div class="col-12 col-sm-7">
 	            <div class="details">
 					<div class="row">
 						<div class="form-group col-6">
@@ -109,7 +109,7 @@
     <div class="modal-bottom p-3" style="background-color: #e2e2e4">
         @if ($player->player->game_id)
             <div class="text-right" style="font-size: .9em">
-				<input type="submit" class="btn btn-success" value="Guardar cambios">
+				<input type="submit" class="btn btn-primary" value="Guardar cambios">
             </div>
         @endif
     </div>

@@ -47,6 +47,8 @@ Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.
 
 Route::get('mercado', 'MarketController@index')->name('market');
 
+Route::get('mercado/buscador', 'MarketController@search')->name('market.search');
+
 Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
 
 Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');

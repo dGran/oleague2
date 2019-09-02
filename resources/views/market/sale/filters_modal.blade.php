@@ -28,7 +28,7 @@
 							    <div class="pretty p-switch p-fill">
 							        <input type="radio" name="filterState" id="opt_transferable" value="transferable" {{ $filterState == 'transferable' ? 'checked' : '' }} />
 							        <div class="state p-success">
-							            <label for="opt_transferable" style="padding: .05rem 0;">Transferible</label>
+							            <label for="opt_transferable" style="padding: .05rem 0;">Transferibles</label>
 							        </div>
 							    </div>
 						    </div>
@@ -44,7 +44,7 @@
 							    <div class="pretty p-switch p-fill">
 							        <input type="radio" name="filterState" id="opt_buyNow" value="buynow" {{ $filterState == 'buynow' ? 'checked' : '' }} />
 							        <div class="state p-success">
-							            <label for="opt_buyNow" style="padding: .05rem 0;">Venta directa</label>
+							            <label for="opt_buyNow" style="padding: .05rem 0;">Con venta directa</label>
 							        </div>
 							    </div>
 						    </div>
@@ -52,7 +52,7 @@
 							    <div class="pretty p-switch p-fill">
 							        <input type="radio" name="filterState" id="opt_onLoan" value="onloan" {{ $filterState == 'onloan' ? 'checked' : '' }} />
 							        <div class="state p-success">
-							            <label for="opt_onLoan" style="padding: .05rem 0;">Cedible</label>
+							            <label for="opt_onLoan" style="padding: .05rem 0;">Cedibles</label>
 							        </div>
 							    </div>
 						    </div>
