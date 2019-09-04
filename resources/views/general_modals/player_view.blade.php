@@ -62,7 +62,16 @@
 	                        {{ number_format($player->price, 2, ',', '.') }} M.
 	            		</div>
 	            	</div>
-	            	<div class="detail-item clearfix">
+	            	<div class="detail-item clearfix border-0">
+	            		<span class="title">
+	            			<i class="fab fa-gratipay mr-1 {{ num_favourite_player($player->id) > 0 ? 'text-danger' : '' }}"></i>Seguidores
+	            		</span>
+	            		<div class="data">
+	                        {{ number_format(num_favourite_player($player->id), 0, ',', '.') }}
+	            		</div>
+	            	</div>
+
+	            	<div class="detail-item clearfix mt-3">
 	            		<span class="title">
 	            			Edad
 	            		</span>
@@ -102,7 +111,7 @@
 	                        @endif
 	            		</div>
 	            	</div>
-	            	<div class="detail-item clearfix">
+	            	<div class="detail-item clearfix border-0">
 	            		<span class="title">
 	            			*Liga
 	            		</span>

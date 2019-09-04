@@ -10743,7 +10743,6 @@ header {
 
 header .top-menu {
   background: #be0346;
-  line-height: 54px;
   max-height: 54px;
   min-height: 54px;
   padding: 0;
@@ -10754,7 +10753,6 @@ header .top-menu {
 }
 
 header .top-menu h1 {
-  display: inline-block;
   font-size: 1em;
   margin: 0;
   padding: 0;
@@ -10833,6 +10831,7 @@ header .top-menu .navbar-brand a i {
   font-size: 2.25rem;
   padding-right: .25rem;
   vertical-align: middle;
+  border: 1px solid white;
 }
 
 header .top-menu .navbar-brand a span {
@@ -10862,7 +10861,7 @@ header .top-menu .user #btn-user-menu .user-img {
   margin: 0;
   padding: 0;
   height: 40px;
-  line-height: 40px;
+  line-height: normal;
   vertical-align: middle;
   width: 40px;
 }
@@ -10893,7 +10892,7 @@ header #menu {
   left: 0;
   top: 54px;
   width: 100%;
-  z-index: 1;
+  z-index: 999;
 }
 
 header #menu nav .nav .nav-item {
@@ -11001,7 +11000,7 @@ header #user-menu {
   right: 0;
   top: 54px;
   width: 100%;
-  z-index: 1;
+  z-index: 999;
 }
 
 header #user-menu nav .nav .nav-item {

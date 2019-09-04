@@ -203,14 +203,16 @@
 			            <div class="col-12">
 			                <label for="order" class="col-form-label">Ordenar por</label>
 				            <select name="order" id="order" class="form-control selectpicker show-tick order">
-				                <option value="date_desc" {{ $order == 'date_desc' ? 'selected' : '' }} data-icon="fas fa-sort-amount-up">Los últimos al principio</option>
-				                <option value="date" {{ $order == 'date' ? 'selected' : '' }} data-icon="fas fa-sort-amount-down">Los últimos al final</option>
-				                <option value="name" {{ $order == 'name' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por nombre</option>
-				                <option value="name_desc" {{ $order == 'name_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre</option>
 				                <option value="overall" {{ $order == 'overall' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por media</option>
 				                <option value="overall_desc" {{ $order == 'overall_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por media</option>
-				                <option value="saleprice" {{ $order == 'saleprice' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por precio</option>
-				                <option value="saleprice_desc" {{ $order == 'saleprice_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por precio</option>
+				                <option value="name" {{ $order == 'name' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-up">Por nombre</option>
+				                <option value="name_desc" {{ $order == 'name_desc' ? 'selected' : '' }} data-icon="fas fa-sort-alpha-down">Por nombre</option>
+								<option value="clause" {{ $order == 'clause' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por claúsula</option>
+				                <option value="clause_desc" {{ $order == 'clause_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por claúsula</option>
+								<option value="age" {{ $order == 'age' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por edad</option>
+				                <option value="age_desc" {{ $order == 'age_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por edad</option>
+								<option value="height" {{ $order == 'height' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-up">Por altura</option>
+				                <option value="height_desc" {{ $order == 'height_desc' ? 'selected' : '' }} data-icon="fas fa-sort-numeric-down">Por altura</option>
 				            </select>
 			            </div> {{-- col --}}
 			        </div> {{-- form-group --}}
@@ -232,7 +234,7 @@
 
 		    <div class="modal-bottom">
 		    	<div class="clearfix">
-		    		<a href="{{ route('market.search') }}" class="btn float-left">Limpiar filtros</a>
+		    		<a href="{{ route('market.search') }}" class="btn float-left" onclick="disabledActionsButtons()">Limpiar filtros</a>
 		    		<a href="" class="btn btn-primary float-right" onclick="ApplyFilters()">Ver resultados</a>
 		    	</div>
 		    </div>

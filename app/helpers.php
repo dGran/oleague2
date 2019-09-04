@@ -6,6 +6,7 @@ use App\GeneralSetting;
 use App\Season;
 use App\SeasonParticipant;
 use App\Showcase;
+use App\FavoritePlayer;
 
 function validateUrl($url)
 {
@@ -85,6 +86,18 @@ function participant_of_user() {
 		return $participant;
 	}
 	return null;
+}
+
+function is_favourite_player($player_id) {
+	$favourite = FavoritePlayer::where('player_id', '=', $player_id)->where('participant_id', '=', participant_of_user()->id)->first();
+	if ($favourite) {
+		return true;
+	}
+	return false;
+}
+
+function num_favourite_player($player_id) {
+	return FavoritePlayer::where('player_id', '=', $player_id)->count();
 }
 
 function player_in_showcase($player_id) {

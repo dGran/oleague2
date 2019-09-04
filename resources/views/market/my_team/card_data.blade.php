@@ -16,19 +16,23 @@
 			</a>
 		</span>
 
+		<div id="player_favorite{{ $player->id}}" class="d-inline-block">
+			@include('market.partials.favorite')
+		</div>
+
 		<div class="overall" style="background: {{ $player->player->getOverallRatingColor() }};">
 		    <span>{{ $player->player->overall_rating }}</span>
 		</div>
 
-		<div class="tracing">
-			<i class="fas fa-star"></i>
-			<span>19</span>
+		<div class="salary">
+			<span>
+				Salario: {{ number_format($player->salary, 2, ',', '.') }} mill.
+			</span>
 		</div>
 
-		<div class="salary">
-			<i class="fas fa-euro-sign"></i>
+		<div class="clause">
 			<span>
-				{{ number_format($player->salary, 2, ',', '.') }} mill.
+				Claúsula: {{ number_format($player->price, 2, ',', '.') }} mill.
 			</span>
 		</div>
 
@@ -36,11 +40,10 @@
 		<span class="market-icons on-loan {{ !$player->player_on_loan ? 'off' : '' }}">CED</span>
 		<span class="market-icons untransferable {{ !$player->untransferable ? 'off' : '' }}">INT</span>
 
-		@if ($player->sale_price)
+		@if ($player->sale_price > 0)
 			<div class="sale-price">
-				<i class="fas fa-tag"></i>
 				<span>
-					{{ number_format($player->sale_price, 2, ',', '.') }} mill.
+					Precio venta: {{ number_format($player->sale_price, 2, ',', '.') }} mill.
 				</span>
 			</div>
 		@endif
@@ -51,7 +54,11 @@
 					Acciones
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" href="" data-toggle="modal" data-target="#editModal" id="btnEdit" data-id="{{ $player->id }}">		Editar
+					<h6 class="dropdown-header">
+						{{ $player->player->name }}
+					</h6>
+					<a class="dropdown-item" href="" data-toggle="modal" data-target="#editModal" id="btnEdit" data-id="{{ $player->id }}">
+						Editar
 					</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item {{ $player->untransferable ? 'disabled' : '' }}" href="{{ route('market.my_team.player.tags.untransferable', $player->id) }}">

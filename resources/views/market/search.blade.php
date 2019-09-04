@@ -26,5 +26,6 @@
 @endsection
 
 @section('js')
+	@include('market.partials.market_functions')
     @include('market.search.javascript')
 @endsection

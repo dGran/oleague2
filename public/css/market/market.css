@@ -2,37 +2,6 @@
   background: #ffffff;
 }
 
-.searchbox {
-  margin: .75rem .25rem 0 .25rem;
-  font-size: 1em;
-  position: relative;
-}
-
-.searchbox label {
-  color: #1694CA;
-  position: absolute;
-  left: .625em;
-  top: .5em;
-}
-
-.searchbox input {
-  font-size: .9rem;
-  padding-left: 2.25em;
-  padding-right: 2em;
-}
-
-.searchbox span {
-  color: #a1a8ae;
-  cursor: pointer;
-  position: absolute;
-  right: .625em;
-  top: .5em;
-}
-
-.searchbox span:hover {
-  color: #1694CA;
-}
-
 .market-header {
   background: #353f48;
   margin-top: 54px;
@@ -128,6 +97,241 @@
   top: 16px;
 }
 
+.transfer {
+  background: #f9f9f9;
+}
+
+.transfer .header {
+  background: #EEEEEE;
+  border-bottom: 1px solid #f1eff3;
+  padding: .5rem .5rem 1rem .5rem;
+}
+
+.transfer .header h2 {
+  color: #4ea800;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.3em;
+  margin: .5em 0;
+  padding: .25rem 0;
+}
+
+.transfer .header .filters a {
+  background-color: #009bce;
+  border-radius: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: .9em;
+  padding: .6em 1.25em;
+}
+
+.transfer .content .item {
+  background: #ffffff;
+  border: 1px solid #f1eff3;
+  border-radius: .25rem;
+  font-size: .9em;
+  height: 100px;
+  line-height: 1.25em;
+  position: relative;
+}
+
+.transfer .content .item .player-img {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 64px;
+}
+
+.transfer .content .item .position {
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: .6em;
+  height: 24px;
+  line-height: 2.1em;
+  padding: .25rem;
+  position: absolute;
+  left: 5px;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.transfer .content .item .player-favorite {
+  color: #adb5bd;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 68px;
+  top: 7px;
+}
+
+.transfer .content .item .player-favorite i.active {
+  color: #ef696c;
+}
+
+.transfer .content .item .player-favorite i.inactive {
+  color: #adb5bd;
+}
+
+.transfer .content .item .player-ball {
+  height: 24px;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  width: 24px;
+}
+
+.transfer .content .item .name {
+  font-size: .85rem;
+  font-weight: bold;
+  left: 59px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 9px;
+}
+
+.transfer .content .item .name .player-info {
+  color: #5bc0de;
+  cursor: pointer;
+  margin-left: .25em;
+}
+
+.transfer .content .item .name .player-info:hover {
+  color: #28a1c5;
+}
+
+.transfer .content .item .icon-position {
+  position: absolute;
+  right: 48px;
+  top: 9px;
+  width: 16px;
+}
+
+.transfer .content .item .overall {
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  color: #000000;
+  font-size: .8em;
+  font-weight: bold;
+  height: 24px;
+  line-height: 1.35em;
+  padding: .25rem;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.transfer .content .item .icon-transfer-out {
+  color: #ef696c;
+  font-size: 2em;
+  left: 59px;
+  position: absolute;
+  top: 35px;
+}
+
+.transfer .content .item .participant-from-logo {
+  height: 26px;
+  left: 89px;
+  position: absolute;
+  top: 35px;
+  width: 26px;
+  opacity: .4;
+}
+
+.transfer .content .item .participant-from-name {
+  font-size: .6rem;
+  font-weight: bold;
+  left: 120px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 35px;
+  opacity: .4;
+}
+
+.transfer .content .item .participant-from-name.none {
+  top: 40px;
+}
+
+.transfer .content .item .participant-from-subname {
+  font-size: .55rem;
+  left: 120px;
+  position: absolute;
+  top: 46px;
+  opacity: .4;
+}
+
+.transfer .content .item .icon-transfer-in {
+  color: #4ea800;
+  font-size: 2em;
+  left: 59px;
+  position: absolute;
+  top: 65px;
+}
+
+.transfer .content .item .participant-to-logo {
+  height: 26px;
+  left: 89px;
+  position: absolute;
+  top: 65px;
+  width: 26px;
+}
+
+.transfer .content .item .participant-to-name {
+  font-size: .6rem;
+  font-weight: bold;
+  left: 120px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 65px;
+}
+
+.transfer .content .item .participant-to-name.none {
+  top: 70px;
+}
+
+.transfer .content .item .participant-to-subname {
+  font-size: .55rem;
+  left: 120px;
+  position: absolute;
+  top: 76px;
+}
+
+.transfer .content .item .nation-logo {
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  height: 20px;
+  left: 32px;
+  position: absolute;
+  top: 7px;
+  width: 20px;
+}
+
+.transfer .content .item-header .type {
+  float: left;
+  font-size: .7em;
+  font-weight: bold;
+  padding-bottom: .25rem;
+  text-transform: uppercase;
+}
+
+.transfer .content .item-header .date {
+  color: #6c757d;
+  font-size: .7em;
+  padding-bottom: .25rem;
+  float: right;
+}
+
+.transfer .content .item-bottom {
+  padding-top: .25rem;
+}
+
+.transfer .content .item-bottom .phrase {
+  font-size: .8em;
+}
+
 .my-team {
   background: #f9f9f9;
 }
@@ -139,11 +343,11 @@
 }
 
 .my-team .header .logo {
-  box-shadow: 14px 0px 9px -11px #949494;
-  -moz-box-shadow: 14px 0px 9px -11px #949494;
   -webkit-box-shadow: 14px 0px 9px -11px #949494;
+  box-shadow: 14px 0px 9px -11px #949494;
+  margin-left: .5rem;
   margin-right: 1rem;
-  padding: .25rem;
+  padding-right: .5rem;
   vertical-align: top;
   width: 75px;
 }
@@ -154,7 +358,7 @@
 }
 
 .my-team .header .participant .name {
-  font-size: 1.35em;
+  font-size: 1.25em;
   font-weight: bold;
   margin: 0;
 }
@@ -191,14 +395,21 @@
   text-align: right;
 }
 
+.my-team .content .info .item .description.budget {
+  position: relative;
+}
+
 .my-team .content .info .item .description.budget .data {
   font-size: 1.2em;
   font-weight: bold;
 }
 
 .my-team .content .info .item .description.budget .icon {
-  margin-right: .25rem;
-  width: 20px;
+  position: absolute;
+  right: 80px;
+  top: 2px;
+  font-size: 1.75em;
+  color: #646B80;
 }
 
 .my-team .content .info .item .description .data {
@@ -273,6 +484,23 @@
   font-weight: bold;
 }
 
+.my-team .content .positions .detail .wrap .item .player-favorite {
+  color: #adb5bd;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 50px;
+  top: 7px;
+}
+
+.my-team .content .positions .detail .wrap .item .player-favorite i.active {
+  color: #ef696c;
+}
+
+.my-team .content .positions .detail .wrap .item .player-favorite i.inactive {
+  color: #adb5bd;
+}
+
 .my-team .content .positions .detail .wrap .item .ball-img {
   height: 24;
   position: absolute;
@@ -319,35 +547,27 @@
   color: #28a1c5;
 }
 
-.my-team .content .positions .detail .wrap .item .tracing {
+.my-team .content .positions .detail .wrap .item .salary {
   color: #6c757d;
   left: 55px;
   position: absolute;
   top: 26px;
 }
 
-.my-team .content .positions .detail .wrap .item .tracing i {
-  font-size: .7em;
-}
-
-.my-team .content .positions .detail .wrap .item .tracing span {
+.my-team .content .positions .detail .wrap .item .salary span {
   display: inline-block;
   font-size: .75em;
   font-weight: 400;
 }
 
-.my-team .content .positions .detail .wrap .item .salary {
+.my-team .content .positions .detail .wrap .item .clause {
   color: #6c757d;
-  left: 85px;
+  left: 150px;
   position: absolute;
   top: 26px;
 }
 
-.my-team .content .positions .detail .wrap .item .salary i {
-  font-size: .7em;
-}
-
-.my-team .content .positions .detail .wrap .item .salary span {
+.my-team .content .positions .detail .wrap .item .clause span {
   display: inline-block;
   font-size: .75em;
   font-weight: 400;
@@ -392,10 +612,6 @@
   top: 65px;
 }
 
-.my-team .content .positions .detail .wrap .item .sale-price i {
-  font-size: .7em;
-}
-
 .my-team .content .positions .detail .wrap .item .sale-price span {
   display: inline-block;
   font-size: .75em;
@@ -409,19 +625,46 @@
 }
 
 .my-team .content .positions .detail .wrap .item .actions button {
-  background: #f9f9f9;
-  border: 1px solid #E9E9E9;
+  background: #F3F3F3;
+  border: 1px solid #DFDDE1;
   font-size: .9em;
+}
+
+.my-team .content .positions .detail .wrap .item .actions button:hover {
+  color: #ffffff;
+  background: #009bce;
+  border: 1px solid #0088b5;
 }
 
 .my-team .content .positions .detail .wrap .item .actions .dropdown-menu {
-  background: #f9f9f9;
-  border: 1px solid #E9E9E9;
+  background: #ffffff;
+  border: 1px solid #0088b5;
   font-size: .9em;
 }
 
+.my-team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-header {
+  background: #009bce;
+  padding: .5rem;
+  color: #ffffff;
+}
+
+.my-team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-header .free {
+  color: #FFE093;
+  margin-left: .25rem;
+}
+
 .my-team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-item:hover {
-  background: #ffffff;
+  color: #212529;
+  background: #f9f9f9;
+}
+
+.my-team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-item.disabled {
+  color: #adb5bd;
+  pointer-events: none;
+}
+
+.my-team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-item.disabled:hover {
+  background: none;
 }
 
 .sale {
@@ -480,6 +723,23 @@
   text-align: center;
   top: 5px;
   width: 24px;
+}
+
+.sale .content .item .player-favorite {
+  color: #adb5bd;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 74px;
+  top: 7px;
+}
+
+.sale .content .item .player-favorite i.active {
+  color: #ef696c;
+}
+
+.sale .content .item .player-favorite i.inactive {
+  color: #adb5bd;
 }
 
 .sale .content .item .player-ball {
@@ -715,6 +975,21 @@
           transform-origin: left;
 }
 
+.search .content .item .untransferable {
+  background: #ef696c;
+  bottom: -6px;
+  font-size: .5rem;
+  font-weight: 400;
+  left: 12px;
+  padding: .25rem .25rem .4rem .25rem;
+  position: absolute;
+  text-transform: uppercase;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-transform-origin: left;
+          transform-origin: left;
+}
+
 .search .content .item .player-img {
   bottom: 0;
   left: 0;
@@ -735,6 +1010,23 @@
   text-align: center;
   top: 5px;
   width: 24px;
+}
+
+.search .content .item .player-favorite {
+  color: #adb5bd;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 68px;
+  top: 7px;
+}
+
+.search .content .item .player-favorite i.active {
+  color: #ef696c;
+}
+
+.search .content .item .player-favorite i.inactive {
+  color: #adb5bd;
 }
 
 .search .content .item .player-ball {
@@ -902,19 +1194,37 @@
 }
 
 .search .content .item .actions button {
-  background: #f9f9f9;
-  border: 1px solid #E9E9E9;
+  background: #F3F3F3;
+  border: 1px solid #DFDDE1;
   font-size: .9em;
+}
+
+.search .content .item .actions button:hover {
+  color: #ffffff;
+  background: #009bce;
+  border: 1px solid #0088b5;
 }
 
 .search .content .item .actions .dropdown-menu {
-  background: #f9f9f9;
-  border: 1px solid #E9E9E9;
+  background: #ffffff;
+  border: 1px solid #0088b5;
   font-size: .9em;
 }
 
+.search .content .item .actions .dropdown-menu .dropdown-header {
+  background: #009bce;
+  padding: .5rem;
+  color: #ffffff;
+}
+
+.search .content .item .actions .dropdown-menu .dropdown-header .free {
+  color: #FFE093;
+  margin-left: .25rem;
+}
+
 .search .content .item .actions .dropdown-menu .dropdown-item:hover {
-  background: #ffffff;
+  color: #212529;
+  background: #f9f9f9;
 }
 
 .search .content .item .actions .dropdown-menu .dropdown-item.disabled {
@@ -924,6 +1234,474 @@
 
 .search .content .item .actions .dropdown-menu .dropdown-item.disabled:hover {
   background: none;
+}
+
+.teams {
+  background: #f9f9f9;
+}
+
+.teams .header {
+  background: #F2F2F2;
+  border-bottom: 1px solid #f1eff3;
+  padding: .5rem .5rem 1rem .5rem;
+}
+
+.teams .header h2 {
+  color: #4ea800;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.3em;
+  margin: .5em 0;
+  padding: .25rem 0;
+}
+
+.teams .content .item {
+  background: #ffffff;
+  border: 1px solid #E5E5E5;
+  height: 88px;
+  position: relative;
+  margin-top: 1em;
+  widows: auto;
+}
+
+.teams .content .item:hover {
+  border: 1px solid #1cc7ff;
+}
+
+.teams .content .item:hover .team-img {
+  background: #fff;
+  -webkit-transition: all 1.5s ease;
+  transition: all 1.5s ease;
+}
+
+.teams .content .item:hover .title .name,
+.teams .content .item:hover .title .subname {
+  color: #009bce;
+  -webkit-transition: all .5s ease;
+  transition: all .5s ease;
+}
+
+.teams .content .item .team-img {
+  background: #f9f9f9;
+  border: 1px solid #f1eff3;
+  left: 5px;
+  padding: 5px;
+  position: absolute;
+  top: 5px;
+  width: 75px;
+  z-index: 1;
+  -webkit-box-shadow: 1px -1px 5px 0px #a8a8a8;
+  box-shadow: 1px -1px 5px 0px #a8a8a8;
+}
+
+.teams .content .item .title {
+  background: #eee;
+  padding: 5px 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.teams .content .item .title .name {
+  color: #212529;
+  display: block;
+  font-size: .9em;
+  font-weight: bold;
+  padding-left: 80px;
+  text-transform: uppercase;
+}
+
+.teams .content .item .title .subname {
+  color: #6c757d;
+  display: block;
+  font-size: .7em;
+  padding-left: 80px;
+}
+
+.teams .content .item .budget {
+  color: #212529;
+  font-size: .9em;
+  font-weight: bold;
+  padding-left: 1em;
+  position: absolute;
+  right: 10px;
+  top: 56px;
+}
+
+.teams .content .item .budget .measure {
+  font-size: .8em;
+  font-weight: 400;
+}
+
+.teams .content .item .budget-icon {
+  color: #646B80;
+  font-size: 1.5em;
+  position: absolute;
+  right: 90px;
+  top: 55px;
+}
+
+.team {
+  background: #f9f9f9;
+}
+
+.team .header {
+  background: #F2F2F2;
+  padding: .5rem 0;
+  position: relative;
+}
+
+.team .header .logo {
+  -webkit-box-shadow: 14px 0px 9px -11px #949494;
+  box-shadow: 14px 0px 9px -11px #949494;
+  margin-left: .5rem;
+  margin-right: 1rem;
+  padding-right: .5rem;
+  vertical-align: top;
+  width: 75px;
+}
+
+.team .header .participant {
+  display: inline-block;
+  padding-top: .5rem;
+}
+
+.team .header .participant .name {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.team .header .participant .subname {
+  color: #6c757d;
+  display: block;
+  font-size: .8em;
+}
+
+.team .content {
+  position: relative;
+}
+
+.team .content .info {
+  background: #ffffff;
+}
+
+.team .content .info .item {
+  border-top: 1px solid #f1eff3;
+  font-size: .9em;
+  line-height: 1.8em;
+  padding: .5rem .25rem;
+  vertical-align: middle;
+}
+
+.team .content .info .item .title {
+  color: #6c757d;
+  float: left;
+}
+
+.team .content .info .item .description {
+  float: right;
+  text-align: right;
+}
+
+.team .content .info .item .description.budget {
+  position: relative;
+}
+
+.team .content .info .item .description.budget .data {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.team .content .info .item .description.budget .icon {
+  position: absolute;
+  right: 80px;
+  top: 2px;
+  font-size: 1.75em;
+  color: #646B80;
+}
+
+.team .content .info .item .description .data {
+  font-size: 1em;
+}
+
+.team .content .info .item .description .info {
+  color: #6c757d;
+  font-size: .75em;
+  line-height: 1rem;
+  margin-left: .5rem;
+}
+
+.team .content .info .item .description .warning {
+  color: #f0ad4e;
+  font-size: .85em;
+  margin-left: .5rem;
+}
+
+.team .content .positions .title {
+  background: #F2F2F2;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  margin: 0;
+  padding: .5rem 0;
+}
+
+.team .content .positions .title .icon {
+  margin-top: .25rem;
+  width: 16px;
+}
+
+.team .content .positions .detail .wrap {
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.team .content .positions .detail .wrap .item {
+  background: #fff;
+  border: 1px solid #E9E9E9;
+  border-radius: .25rem;
+  font-size: .9em;
+  height: 86px;
+  line-height: 1.25em;
+  margin: .5rem .5rem 0 .5rem;
+  position: relative;
+}
+
+.team .content .positions .detail .wrap .item.transferable {
+  border: 1px solid #C1D9C4;
+  background: #F6FFF7;
+}
+
+.team .content .positions .detail .wrap .item.untransferable {
+  border: 1px solid #fbdcdd;
+  background: #fef3f3;
+}
+
+.team .content .positions .detail .wrap .item .player-img {
+  bottom: 0;
+  left: 0px;
+  position: absolute;
+  width: 55px;
+}
+
+.team .content .positions .detail .wrap .item .position {
+  border-radius: 50%;
+  font-size: .8em;
+  height: 24px;
+  left: 5px;
+  line-height: 1.3em;
+  padding-top: .43em;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.team .content .positions .detail .wrap .item .position .text {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.team .content .positions .detail .wrap .item .nation-logo {
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+  height: 20px;
+  left: 32px;
+  position: absolute;
+  top: 7px;
+  width: 20px;
+}
+
+.team .content .positions .detail .wrap .item .player-favorite {
+  color: #adb5bd;
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 50px;
+  top: 7px;
+}
+
+.team .content .positions .detail .wrap .item .player-favorite i.active {
+  color: #ef696c;
+}
+
+.team .content .positions .detail .wrap .item .player-favorite i.inactive {
+  color: #adb5bd;
+}
+
+.team .content .positions .detail .wrap .item .ball-img {
+  height: 24;
+  position: absolute;
+  right: 20px;
+  top: 5px;
+  width: 24px;
+}
+
+.team .content .positions .detail .wrap .item .overall {
+  border: 1px solid grey;
+  border-radius: 50%;
+  font-size: 1em;
+  height: 24px;
+  line-height: 1.1em;
+  padding: .25em;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+  width: 24px;
+}
+
+.team .content .positions .detail .wrap .item .overall span {
+  color: #000;
+  font-size: .8em;
+}
+
+.team .content .positions .detail .wrap .item .player-name {
+  font-size: .9rem;
+  font-weight: bold;
+  left: 59px;
+  position: absolute;
+  text-transform: uppercase;
+  top: 9px;
+}
+
+.team .content .positions .detail .wrap .item .player-name .player-info {
+  color: #5bc0de;
+  cursor: pointer;
+  margin-left: .25em;
+}
+
+.team .content .positions .detail .wrap .item .player-name .player-info:hover {
+  color: #28a1c5;
+}
+
+.team .content .positions .detail .wrap .item .salary {
+  color: #6c757d;
+  left: 59px;
+  position: absolute;
+  top: 26px;
+}
+
+.team .content .positions .detail .wrap .item .salary i {
+  font-size: .7em;
+}
+
+.team .content .positions .detail .wrap .item .salary span {
+  display: inline-block;
+  font-size: .75em;
+  font-weight: 400;
+}
+
+.team .content .positions .detail .wrap .item .clause-data {
+  color: #6c757d;
+  top: 40px;
+  position: absolute;
+  left: 59px;
+}
+
+.team .content .positions .detail .wrap .item .clause-data .units {
+  display: inline-block;
+  font-size: .9em;
+  font-weight: bold;
+}
+
+.team .content .positions .detail .wrap .item .clause-data .measure {
+  display: inline-block;
+  font-size: .7em;
+}
+
+.team .content .positions .detail .wrap .item .market-situation {
+  color: #212529;
+  font-size: 1em;
+  font-weight: bold;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
+
+.team .content .positions .detail .wrap .item .market-situation.red {
+  color: #f18083;
+}
+
+.team .content .positions .detail .wrap .item .market-situation.green {
+  color: #5ac200;
+}
+
+.searchbox {
+  margin: .75rem .25rem 0 .25rem;
+  font-size: 1em;
+  position: relative;
+}
+
+.searchbox label {
+  color: #1694CA;
+  position: absolute;
+  left: .625em;
+  top: .5em;
+}
+
+.searchbox input {
+  font-size: .9rem;
+  padding-left: 2.25em;
+  padding-right: 2em;
+}
+
+.searchbox span {
+  color: #a1a8ae;
+  cursor: pointer;
+  position: absolute;
+  right: .625em;
+  top: .5em;
+}
+
+.searchbox span:hover {
+  color: #1694CA;
+}
+
+.scrolling-wrapper .card {
+  display: inline-block;
+  background: transparent;
+}
+
+.scrolling-wrapper .card.participants {
+  border: none;
+  max-width: 48px;
+  min-width: 48px;
+  padding: .25em;
+  text-align: center;
+}
+
+.scrolling-wrapper .card.participants.active {
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.scrolling-wrapper .card.participants:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.scrolling-wrapper .card.participants a {
+  text-align: center;
+}
+
+.scrolling-wrapper .card.participants a img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  width: 32px;
+}
+
+.scrolling-wrapper .card.participants a span {
+  color: #fff;
+  display: block;
+  font-size: .6em;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 #filtersModal .modal-body .frmFilter {
@@ -1058,5 +1836,15 @@
 .modal-content .modal-bottom a {
   display: block;
   font-size: .9em;
+}
+
+@media (min-width: 576px) {
+  .team .header .logo {
+    margin-left: 0;
+  }
+
+  .my-team .header .logo {
+    margin-left: 0;
+  }
 }
 

@@ -8,9 +8,7 @@
 	@include('market.partials.header')
 
 	<div class="wrapper">
-		<div class="container">
-			@include('market.index.content')
-		</div>
+		@include('market.index.content')
 	</div> {{-- wrapper --}}
 @endsection
 
@@ -18,6 +16,11 @@
 	@include('market.index.breadcrumb')
 @endsection
 
-@section('bottom-fixed')
-	{{-- @include('rules.partials.bottom_fixed') --}}
+@section('modal')
+    @include('general_modals.player_view_modal')
+@endsection
+
+@section('js')
+	@include('market.partials.market_functions')
+    @include('market.index.javascript')
 @endsection

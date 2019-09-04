@@ -30,15 +30,15 @@
 </li>
 
 <li class="nav-item share">
-    <span class="d-inline-block d-md-none">Compartir página</span>
+    <span class="d-inline-block d-md-none text-secondary">Compartir página</span>
     <ul class="text-center">
         <li>
-            <a href="whatsapp://send?text={{ url()->current() }}" data-action="share/whatsapp/share">
+            <a class="text-secondary" href="whatsapp://send?text={{ url()->current() }}" data-action="share/whatsapp/share">
                 <i class="fab fa-whatsapp"></i>
             </a>
         </li>
         <li>
-            <a href="tg://msg_url?url={{ url()->current() }}">
+            <a class="text-secondary" href="tg://msg_url?url={{ url()->current() }}">
                 <i class="fab fa-telegram"></i>
             </a>
         </li>

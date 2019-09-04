@@ -15,7 +15,7 @@ class CreateTransfersTable extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('type', ['clause', 'negotiation', 'cession', 'dismiss'])->index();
+            $table->enum('type', ['free', 'clause', 'negotiation', 'cession', 'dismiss'])->index();
             $table->integer("player_id")->unsigned()->nullable();
             $table->integer("participant_from")->unsigned()->nullable();
             $table->integer("participant_to")->unsigned()->nullable();

@@ -85,17 +85,15 @@
     }
 
     $('.search-clear').on("click", function() {
-        $('.search-input').val('');
-        $('.frmFilter').submit();
-
+        if ($('.search-input').val() != '') {
+            $('.search-input').val('');
+            $('.frmFilter').submit();
+        }
     });
     $('.search-input').keydown(function(e){
         if (e.keyCode == 27) {
             $(this).val('');
         }
-    });
-    $(".search-input").focus(function(){
-        // $(this).select();
     });
 
     $('#viewModal').on('show.bs.modal', function(e) {
@@ -117,6 +115,7 @@
 
     function ApplyFilters() {
         window.event.preventDefault();
+        disabledActionsButtons();
         $('.frmFilter').submit();
     }
 

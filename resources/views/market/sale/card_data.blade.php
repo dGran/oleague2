@@ -8,6 +8,11 @@
 	<div class="position" style="background: {{ $player->season_player->player->getPositionColor() }};">
 		{{ $player->season_player->player->position }}
 	</div> {{-- position --}}
+	@if (!auth()->guest() && user_is_participant(auth()->user()->id))
+		<div id="player_favorite{{ $player->id}}" class="d-inline-block">
+			@include('market.partials.favorite')
+		</div>
+	@endif
 	<img class="player-ball" src="{{ asset($player->season_player->player->getBall()) }}">
 	<span class="name">
 		{{ $player->season_player->player->name }}

@@ -12,8 +12,8 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css')
-   .sass('resources/assets/sass/admin.scss', 'public/css')
-   .sass('resources/assets/sass/styles/clubs.scss', 'public/css/clubs')
-   .sass('resources/assets/sass/styles/competition.scss', 'public/css/competition')
-   .sass('resources/assets/sass/styles/market.scss', 'public/css/market');
+	.sass('resources/assets/sass/app.scss', 'public/css')
+	.sass('resources/assets/sass/admin.scss', 'public/css')
+	.sass('resources/assets/sass/styles/clubs.scss', 'public/css/clubs')
+	.sass('resources/assets/sass/styles/competition.scss', 'public/css/competition')
+	.sass('resources/assets/sass/styles/market.scss', 'public/css/market');

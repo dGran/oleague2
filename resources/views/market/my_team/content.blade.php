@@ -2,7 +2,7 @@
 
 	<div class="header">
 		<div class="container p-0">
-			<img class="logo rounded-circle" src="{{ $participant->logo() }}">
+			<img class="logo" src="{{ $participant->logo() }}">
 			<div class="participant">
 				<span class="name">
 					{{ $participant->name() }}
@@ -23,7 +23,7 @@
 		    			Presupuesto
 		    		</span>
 		    		<div class="description budget">
-		                <img class="icon" src="https://image.flaticon.com/icons/svg/1803/1803103.svg">
+		                <i class="icon icon-safe-box"></i>
 						<span class="data {{ number_format($participant->budget() < 0) ? 'text-danger' : '' }}">
 		                	{{ number_format($participant->budget(), 2, ',', '.') }} M.
 						</span>

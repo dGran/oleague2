@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-teams:before {
+  content: "\e91c";
+}
 .icon-push-pin:before {
   content: "\e914";
 }
@@ -95,6 +98,9 @@
 }
 .icon-economy:before {
   content: "\e908";
+}
+.icon-safe-box:before {
+  content: "\e91d";
 }
 .icon-soccer-assist:before {
   content: "\e901";

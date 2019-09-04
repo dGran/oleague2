@@ -43,6 +43,11 @@ Route::get('competiciones/competicion/partido', 'HomeController@competition_matc
 
 
 // Market Routes
+// comun utils
+Route::get('mercado/agregar-favorito/{player_id}/{participant_id}', 'MarketController@addFavoritePlayer')->name('market.favorite_player.add');
+Route::get('mercado/eliminar-favorito/{player_id}/{participant_id}', 'MarketController@removeFavoritePlayer')->name('market.favorite_player.remove');
+Route::get('mercado/fichar-jugador-libre/{id}', 'MarketController@signFreePlayer')->name('market.sign_free_player');
+
 Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.playerView');
 
 Route::get('mercado', 'MarketController@index')->name('market');
@@ -50,6 +55,9 @@ Route::get('mercado', 'MarketController@index')->name('market');
 Route::get('mercado/buscador', 'MarketController@search')->name('market.search');
 
 Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
+
+Route::get('mercado/equipos', 'MarketController@teams')->name('market.teams');
+Route::get('mercado/equipos/{slug}', 'MarketController@team')->name('market.team');
 
 Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
 Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
@@ -61,6 +69,8 @@ Route::get('mercado/mi-equipo/jugador/declarar-cedible/{id}', 'MarketController@
 Route::get('mercado/mi-equipo/jugador/eliminar-etiquetas/{id}', 'MarketController@tagsDelete')->name('market.my_team.player.tags.delete');
 Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
 
+Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
+Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');
 
 // User routes
 Route::get('perfil', 'ProfileController@edit')->name('profileEdit');

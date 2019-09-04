@@ -2,10 +2,18 @@
 	@if (player_in_showcase($player->id))
 		<span class="showcase badge badge-success">Escaparate</span>
 	@endif
+	@if ($player->untransferable)
+		<span class="untransferable badge badge-danger">Intransferible</span>
+	@endif
 	<img class="player-img" src="{{ $player->player->getImgFormatted() }}">
 	<div class="position" style="background: {{ $player->player->getPositionColor() }};">
 		{{ $player->player->position }}
 	</div> {{-- position --}}
+	@if (!auth()->guest() && user_is_participant(auth()->user()->id))
+		<div id="player_favorite{{ $player->id}}" class="d-inline-block">
+			@include('market.partials.favorite')
+		</div>
+	@endif
 	<img class="player-ball" src="{{ asset($player->player->getBall()) }}">
 	<span class="name">
 		{{ $player->player->name }}
@@ -53,10 +61,10 @@
 					Acciones
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<h6 class="dropdown-header p-2">
+					<h6 class="dropdown-header">
 						{{ $player->player->name }}
 						@if (!$player->participant)
-							<small class="text-warning ml-1"><strong>Libre</strong></small>
+							<small class="free"><strong>Libre</strong></small>
 						@endif
 					</h6>
 					<div class="dropdown-divider"></div>
@@ -66,7 +74,7 @@
 					<a class="dropdown-item {{ !$player->participant || !$player->allow_clause_pay || ($player->participant && $player->participant->clauses_received_limit()) || ($player->participant && participant_of_user()->clauses_paid_limit()) ? 'disabled' : '' }}" href="">
 						Pagar claúsula
 					</a>
-					<a class="dropdown-item {{ $player->participant ? 'disabled' : '' }}" href="">
+					<a class="dropdown-item {{ $player->participant ? 'disabled' : '' }}" href="" onclick="sign_free_player('{{ $player->id }}', '{{ $player->player->name }}', '{{ number_format($player->season->free_players_cost, 2, ',', '.') }}')">
 						Fichar jugador
 					</a>
 				</div> {{-- dropdown-menu --}}

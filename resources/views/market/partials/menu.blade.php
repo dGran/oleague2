@@ -18,6 +18,12 @@
 				<span>Escaparate</span>
 			</a>
 		</li>
+		<li class="item {{ \Request::is('mercado/equipos*') ? 'active' : '' }}">
+			<a href="{{ route('market.teams') }}">
+				<i class="icon-teams"></i>
+				<span>Equipos</span>
+			</a>
+		</li>
 
 		@if (auth()->user() && user_is_participant(auth()->user()->id))
 			<li class="item new-section {{ \Route::current()->getName() == 'market.my_team' ? 'active' : '' }}">
@@ -33,10 +39,10 @@
 					<span class="counter badge badge-danger rounded-circle">5</span>
 				</a>
 			</li>
-			<li class="item {{ \Route::current()->getName() == 'club.press' ? 'active' : '' }}">
-				<a href="{{ route('club.press', 'ss') }}">
-					<i class="icon-push-pin"></i>
-					<span>Mi lista</span>
+			<li class="item {{ \Route::current()->getName() == 'market.favorites' ? 'active' : '' }}">
+				<a href="{{ route('market.favorites') }}">
+					<i class="fas fa-heart"></i>
+					<span>Favoritos</span>
 				</a>
 			</li>
 		@endif
