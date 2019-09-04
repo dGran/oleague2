@@ -1,10 +1,34 @@
 <div class="item-header clearfix">
 	<div class="type">
-		<span class="{{ $player->type == 'free' || $player->type == 'negotiation' ? 'green' : '' }} {{ $player->type == 'clause' ? 'black' : '' }} {{ $player->type == 'cession' ? 'info' : '' }} {{ $player->type == 'dismiss' ? 'red' : '' }}">
-			{{ $player->type }}
-		</span>
+		@if ($player->type == 'free')
+			<span class="text-primary">
+				jugador libre
+			</span>
+		@endif
+		@if ($player->type == 'negotiation')
+			<span class="text-primary">
+				Negociación
+			</span>
+		@endif
+		@if ($player->type == 'clause')
+			<span class="text-success" style="font-size: 1.25em">
+				<i class="fab fa-paypal" style="font-weight: normal"></i>
+				Clausulazo!!!
+			</span>
+		@endif
+		@if ($player->type == 'cession')
+			<span class="text-warning">
+				Cesión
+			</span>
+		@endif
+		@if ($player->type == 'dismiss')
+			<span class="text-danger">
+				Despido
+			</span>
+		@endif
 	</div>
 	<div class="date">
+		<i class="fas fa-history"></i>
 		{{ $player->created_at->diffForHumans() }}
 	</div>
 </div> {{-- item-header --}}
@@ -68,6 +92,20 @@
 </div> {{-- item --}}
 <div class="item-bottom">
 	<div class="phrase">
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae voluptates fugiat consequuntur numquam consequatur ex aut molestias eum voluptatibus quisquam aliquid, necessitatibus saepe, et, quaerat quo dolorem soluta accusamus veniam.
+		@if ($player->type == 'free')
+			{{ $player->season_player->player->name }} se incorpora a la disciplina de {{ $player->participantTo->name() }}
+		@endif
+		@if ($player->type == 'negotiation')
+				Negociación
+		@endif
+		@if ($player->type == 'clause')
+				Clausulazo!!!
+		@endif
+		@if ($player->type == 'cession')
+				Cesión
+		@endif
+		@if ($player->type == 'dismiss')
+			{{ $player->season_player->player->name }} se va a cascarla a la bolsa de jugadores libres esperando que algún manager se apiade de el.
+		@endif
 	</div>
 </div> {{-- item-bottom --}}

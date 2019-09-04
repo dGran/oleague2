@@ -283,30 +283,19 @@
 				float: left;
 				font-size: .7em;
 				font-weight: bold;
-				padding-bottom: .25rem;
+				padding-bottom: .15rem;
 				text-transform: uppercase;
-				.green {
-					$color: $success;
-				}
-				.black {
-					$color: #000;
-				}
-				.info {
-					$color: $info;
-				}
-				.red {
-					$color: danger;
-				}
 			}
 			.date {
 				color: $gray-600;
 				font-size: .7em;
-				padding-bottom: .25rem;
+				padding-bottom: .15rem;
 				float: right;
 			}
 		}
 		.item-bottom {
 			padding-top: .25rem;
+			padding-bottom: 1rem;
 			.phrase {
 				font-size: .8em;
 			}

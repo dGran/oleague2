@@ -313,19 +313,20 @@
   float: left;
   font-size: .7em;
   font-weight: bold;
-  padding-bottom: .25rem;
+  padding-bottom: .15rem;
   text-transform: uppercase;
 }
 
 .transfer .content .item-header .date {
   color: #6c757d;
   font-size: .7em;
-  padding-bottom: .25rem;
+  padding-bottom: .15rem;
   float: right;
 }
 
 .transfer .content .item-bottom {
   padding-top: .25rem;
+  padding-bottom: 1rem;
 }
 
 .transfer .content .item-bottom .phrase {
