@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Player;
 use App\Showcase;
 use App\FavoritePlayer;
@@ -108,19 +110,19 @@ class MarketController extends Controller
 	        		// PENDIENTE
 	        		// primero las validaciones de dinero y limite plantilla
 
-		        	$this->add_cash_history(
-		        		$participant_to,
-		        		'Fichaje del jugador libre ' . $player->player->name,
-		        		$player->season->free_players_cost,
-		        		'S'
-		        	);
-
 		        	$this->add_transfer(
 		        		'free',
 		        		$player->id,
 		        		$participant_from,
 		        		$participant_to,
 		        		$player->season->free_players_cost
+		        	);
+
+		        	$this->add_cash_history(
+		        		$participant_to,
+		        		'Fichaje del agente libre ' . $player->player->name,
+		        		$player->season->free_players_cost,
+		        		'S'
 		        	);
 
 		        	//generate new
@@ -851,13 +853,6 @@ class MarketController extends Controller
 	        		// PENDIENTE
 	        		// primero las validaciones de dinero y limite plantilla
 
-		        	$this->add_cash_history(
-		        		$player->participant_id,
-		        		'Despido de ' . $player->player->name,
-		        		$player->season->free_players_remuneration,
-		        		'E'
-		        	);
-
 		        	$this->add_transfer(
 		        		'dismiss',
 		        		$player->id,
@@ -865,6 +860,14 @@ class MarketController extends Controller
 		        		$participant_to,
 		        		$player->season->free_players_remuneration
 		        	);
+
+		        	$this->add_cash_history(
+		        		$player->participant_id,
+		        		'Despido de ' . $player->player->name,
+		        		$player->season->free_players_remuneration,
+		        		'E'
+		        	);
+
 
 		        	//generate new
 		        	//generate transfers table
@@ -904,6 +907,23 @@ class MarketController extends Controller
 	    $cash->amount = $amount;
 	    $cash->movement = $movement;
 	    $cash->save();
+
+	    if ($cash->save()) {
+	    	$participant = SeasonParticipant::find($participant_id);
+	    	if ($movement == 'E') {
+	    		$action = 'ingresa';
+	    	} else {
+	    		$action = 'desembolsa';
+	    	}
+	    	$text = "\xF0\x9F\x92\xB2" . $participant->team->name . " <b>" . $action . "</b> " . number_format($amount, 2, ",", ".") . " millones por\n" . "'" . $description . "'\n" . "Su presupuesto queda en: " . number_format($participant->budget(), 2, ",", ".") . " millones";
+			Telegram::sendMessage([
+			    'chat_id' => '-1001241759649',
+			    'parse_mode' => 'HTML',
+			    'text' => $text,
+			    'disable_web_page_preview' => true
+			]);
+	    }
+
 	}
 
 	protected function add_transfer($type, $player_id, $participant_from, $participant_to, $price) {
@@ -914,6 +934,40 @@ class MarketController extends Controller
 	    $transfer->participant_to = $participant_to;
 	    $transfer->price = $price;
 	    $transfer->save();
+
+	    if ($transfer->save()) {
+			switch ($type) {
+				case 'free':
+					$participant = SeasonParticipant::find($participant_to);
+					$player = SeasonPlayer::find($player_id);
+					$text = '<a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> (agente libre) nuevo jugador de <b>' . $participant->team->name . '</b>';
+					break;
+				case 'clause':
+					# code...
+					break;
+				case 'negotiation':
+					# code...
+					break;
+				case 'cession':
+					# code...
+					break;
+				case 'dismiss':
+					$participant = SeasonParticipant::find($participant_from);
+					$player = SeasonPlayer::find($player_id);
+					$text = "\xF0\x9F\x91\x88" . '<b>' . $participant->team->name . '</b> despide al jugador <a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> que se convierte en agente libre';
+					break;
+
+				default:
+					# code...
+					break;
+			}
+			Telegram::sendMessage([
+			    'chat_id' => '-1001241759649',
+			    'parse_mode' => 'HTML',
+			    'text' => $text,
+			    'disable_web_page_preview' => true
+			]);
+	    }
 	}
 
 
