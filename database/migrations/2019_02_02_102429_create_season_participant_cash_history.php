@@ -17,7 +17,7 @@ class CreateSeasonParticipantCashHistory extends Migration
             $table->increments('id');
             $table->integer('participant_id')->unsigned()->index();
             $table->string('description');
-            $table->integer('amount');
+            $table->decimal('amount');
             $table->string('movement');
             $table->timestamps();
         });

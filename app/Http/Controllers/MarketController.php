@@ -13,6 +13,8 @@ use App\SeasonPlayer;
 use App\SeasonParticipant;
 use App\SeasonParticipantCashHistory as Cash;
 use App\Transfer;
+use App\Post;
+
 
 class MarketController extends Controller
 {
@@ -117,6 +119,7 @@ class MarketController extends Controller
 		        		$participant_to,
 		        		$player->season->free_players_cost
 		        	);
+		        	$transfer = Transfer::orderBy('id', 'desc')->first();
 
 		        	$this->add_cash_history(
 		        		$participant_to,
@@ -125,7 +128,11 @@ class MarketController extends Controller
 		        		'S'
 		        	);
 
-		        	//generate new
+					$this->generate_new(
+						'transfer',
+						$transfer->id,
+						NULL
+		        	);
 
 		        	$player->participant_id = $participant_to;
 		        	$player->market_phrase = null;
@@ -140,6 +147,79 @@ class MarketController extends Controller
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
 		            	return back()->with('success', $player->player->name . ' ha fichado por tu equipo.');
+		        	} else {
+		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+		        	}
+	        	} else {
+	        		return back()->with('error', 'Acción cancelada. No eres participante.');
+	        	}
+	        }
+	        return back();
+    	}
+    }
+
+    public function payClausePlayer($id)
+    {
+    	if (auth()->guest()) {
+    		return back()->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+	        $player = SeasonPlayer::find($id);
+	        if ($player) {
+	        	if (user_is_participant(auth()->user()->id)) {
+	        		$participant_from = $player->participant_id;
+	        		$participant_to = participant_of_user()->id;
+
+	        		// PENDIENTE
+	        		// primero las validaciones de dinero y limite plantilla
+
+		        	$this->add_transfer(
+		        		'clause',
+		        		$player->id,
+		        		$participant_from,
+		        		$participant_to,
+		        		$player->price * 1.10
+		        	);
+		        	$transfer = Transfer::orderBy('id', 'desc')->first();
+
+		        	$this->add_cash_history(
+		        		$participant_to,
+		        		'Pago de claúsula del jugador ' . $player->player->name,
+		        		$player->price,
+		        		'S'
+		        	);
+		        	$this->add_cash_history(
+		        		$participant_to,
+		        		'Impuestos del pago de claúsula del jugador ' . $player->player->name,
+		        		$player->price * 0.10,
+		        		'S'
+		        	);
+		        	$this->add_cash_history(
+		        		$participant_from,
+		        		'Pago de claúsula del jugador ' . $player->player->name,
+		        		$player->price,
+		        		'E'
+		        	);
+
+					$this->generate_new(
+						'transfer',
+						$transfer->id,
+						NULL
+		        	);
+		        	// sumar contador clausulas recibidas y pagadas
+
+		        	$player->participant_id = $participant_to;
+		        	$player->market_phrase = null;
+		        	$player->untransferable = 0;
+		        	$player->player_on_loan = 0;
+		        	$player->transferable = 0;
+		        	$player->sale_price = 0;
+		        	$player->sale_auto_accept = 0;
+		        	$player->price = $player->price + 10;
+		        	$player->salary = $player->salary + 1;
+		        	$player->save();
+		        	if ($player->save()) {
+		        		$this->manage_player_showcase($player);
+		            	return back()->with('success', 'Has pagado la claúsula del jugador ' . $player->player->name . ' y se ha incorporado por tu equipo.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -860,6 +940,7 @@ class MarketController extends Controller
 		        		$participant_to,
 		        		$player->season->free_players_remuneration
 		        	);
+		        	$transfer = Transfer::orderBy('id', 'desc')->first();
 
 		        	$this->add_cash_history(
 		        		$player->participant_id,
@@ -868,9 +949,11 @@ class MarketController extends Controller
 		        		'E'
 		        	);
 
-
-		        	//generate new
-		        	//generate transfers table
+					$this->generate_new(
+						'transfer',
+						$transfer->id,
+						NULL
+		        	);
 
 		        	$player->participant_id = 0;
 		        	$player->market_phrase = null;
@@ -884,7 +967,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido declarado despedido.');
+		            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido despedido.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -895,6 +978,10 @@ class MarketController extends Controller
 	        return back();
     	}
     }
+
+
+
+
 
     /*
      * HELPERS FUNCTIONS
@@ -915,12 +1002,12 @@ class MarketController extends Controller
 	    	} else {
 	    		$action = 'desembolsa';
 	    	}
-	    	$text = "\xF0\x9F\x92\xB2" . $participant->team->name . " <b>" . $action . "</b> " . number_format($amount, 2, ",", ".") . " millones por\n" . "'" . $description . "'\n" . "Su presupuesto queda en: " . number_format($participant->budget(), 2, ",", ".") . " millones";
+	    	$text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($amount, 2, ",", ".") . " mill. por " . "'<i>" . $description . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
 			Telegram::sendMessage([
 			    'chat_id' => '-1001241759649',
 			    'parse_mode' => 'HTML',
-			    'text' => $text,
-			    'disable_web_page_preview' => true
+			    'text' => $text
+			    // 'disable_web_page_preview' => true
 			]);
 	    }
 
@@ -940,10 +1027,13 @@ class MarketController extends Controller
 				case 'free':
 					$participant = SeasonParticipant::find($participant_to);
 					$player = SeasonPlayer::find($player_id);
-					$text = '<a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> (agente libre) nuevo jugador de <b>' . $participant->team->name . '</b>';
+					$text = '<a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> (agente libre) nuevo jugador de <b>' . $participant->team->name . '</b> (' . $participant->user->name . ')';
 					break;
 				case 'clause':
-					# code...
+					$participant_from = SeasonParticipant::find($participant_from);
+					$participant_to = SeasonParticipant::find($participant_to);
+					$player = SeasonPlayer::find($player_id);
+					$text = "\xF0\x9F\x92\xB0" . "\xF0\x9F\x92\xB0" . "\xF0\x9F\x92\xB0" . '<b>' . $participant_to->team->name . '</b> (' . $participant_to->user->name . ') paga la claúsula de <a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> que pertenecía a ' . $participant_from->team->name . ' (' . $participant_from->user->name . ')';
 					break;
 				case 'negotiation':
 					# code...
@@ -954,20 +1044,83 @@ class MarketController extends Controller
 				case 'dismiss':
 					$participant = SeasonParticipant::find($participant_from);
 					$player = SeasonPlayer::find($player_id);
-					$text = "\xF0\x9F\x91\x88" . '<b>' . $participant->team->name . '</b> despide al jugador <a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> que se convierte en agente libre';
-					break;
-
-				default:
-					# code...
+					$text = "\xF0\x9F\x91\x88" . '<b>' . $participant->team->name . '</b> (' . $participant->user->name . ') despide al jugador <a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> que se convierte en agente libre';
 					break;
 			}
 			Telegram::sendMessage([
 			    'chat_id' => '-1001241759649',
 			    'parse_mode' => 'HTML',
-			    'text' => $text,
-			    'disable_web_page_preview' => true
+			    'text' => $text
+			    // 'disable_web_page_preview' => true
 			]);
 	    }
+	}
+
+	protected function generate_new($type, $transfer_id, $match_id) {
+
+		switch ($type) {
+			case 'default':
+				# code...
+				break;
+			case 'transfer':
+				if ($transfer_id) {
+					$transfer = Transfer::find($transfer_id);
+				    if ($transfer) {
+						switch ($transfer->type) {
+							case 'free':
+								$category = "Fichajes - " . $transfer->participantTo->team->name;
+								$title = $transfer->season_player->player->name . " firma por " . $transfer->participantTo->team->name;
+								$description = "Se incorpora como agente libre";
+								$img = $transfer->season_player->player->getImgFormatted();
+								break;
+							case 'clause':
+								$category = "Fichajes - " . $transfer->participantTo->team->name;
+								$title = "Clausulazo de " . $transfer->participantTo->team->name . " por " . $transfer->season_player->player->name;
+								$description = "Deja " . $transfer->participantFrom->team->name . " a golpe de talonario";
+								$img = $transfer->season_player->player->getImgFormatted();
+								break;
+							case 'negotiation':
+								# code...
+								break;
+							case 'cession':
+								# code...
+								break;
+							case 'dismiss':
+								$category = "Fichajes - " . $transfer->participantFrom->team->name;
+								$title = $transfer->participantFrom->team->name . " despide a " . $transfer->season_player->player->name;
+								$description = "Se incorpora a la bolsa de agentes libres";
+								$img = $transfer->season_player->player->getImgFormatted();
+								break;
+						}
+				    }
+				}
+				break;
+			case 'result':
+				# code...
+				break;
+			case 'press':
+				# code...
+				break;
+			case 'duel':
+				# code...
+				break;
+			case 'champion':
+				# code...
+				break;
+			case 'birthday':
+				# code...
+				break;
+		}
+
+        $post = Post::create([
+		    'type' => $type,
+		    'transfer_id' => $transfer_id,
+		    'match_id' => $match_id,
+		    'category' => $category,
+		    'title' => $title,
+		    'description' => $description,
+		    'img' => $img,
+        ]);
 	}
 
 

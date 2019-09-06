@@ -71,7 +71,7 @@
 					<a class="dropdown-item {{ !$player->participant ? 'disabled' : '' }}" href="">
 						Abrir negociación
 					</a>
-					<a class="dropdown-item {{ !$player->participant || !$player->allow_clause_pay || ($player->participant && $player->participant->clauses_received_limit()) || ($player->participant && participant_of_user()->clauses_paid_limit()) ? 'disabled' : '' }}" href="">
+					<a class="dropdown-item {{ !$player->participant || !$player->allow_clause_pay || ($player->participant && $player->participant->clauses_received_limit()) || ($player->participant && participant_of_user()->clauses_paid_limit()) ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->id }}', '{{ $player->player->name }}', '{{ number_format($player->price, 2, ',', '.') }}')">
 						Pagar claúsula
 					</a>
 					<a class="dropdown-item {{ $player->participant ? 'disabled' : '' }}" href="" onclick="sign_free_player('{{ $player->id }}', '{{ $player->player->name }}', '{{ number_format($player->season->free_players_cost, 2, ',', '.') }}')">

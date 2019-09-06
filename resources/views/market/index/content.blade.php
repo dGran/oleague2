@@ -22,29 +22,6 @@
 			    	</form>
 			    </div>
 			</div>
-
-<div class="player-card" style="background-image: url(https://www.pesmaster.com//pes-2020/graphics/cards/000_l.png);">
-    <div class="player-card-ovr">93</div>
-    <div class="player-card-position">LWF</div>
-    <div class="player-card-name">C. Ronaldo</div>
-            <img class="player-card-teamlogo" src="https://www.pesmaster.com//pes-2020/graphics/teamlogos/e_000120.png">
-        <img class="player-card-image" src="https://www.pesmaster.com//pes-2020/graphics/players/player_4522.png">
-    <div class="stats-col-1">
-        88 <span class="player-card-stats-name">SPD</span><br>
-        89 <span class="player-card-stats-name">DRI</span><br>
-        83 <span class="player-card-stats-name">PAS</span>
-    </div>
-    <div class="stats-col-2">
-        91 <span class="player-card-stats-name">SHT</span><br>
-        86 <span class="player-card-stats-name">PHY</span><br>
-        49 <span class="player-card-stats-name">DEF</span>
-    </div>
-    <div class="stats-col-bg"></div>
-            <a href="/c-ronaldo/pes-2020/player/4522/">
-            <div class="player-card-clicktrap"></div>
-        </a>
-    </div>
-
 			@if ($players->count() > 0)
 				<div class="row py-2">
 					@foreach ($players as $player)

@@ -8,6 +8,7 @@ use App\Season;
 use App\SeasonParticipant;
 use App\SeasonPlayer;
 use App\SeasonCompetitionPhaseGroupParticipant;
+use App\Post;
 
 class HomeController extends Controller
 {
@@ -86,8 +87,9 @@ class HomeController extends Controller
                 $onlineUsersCount++;
             }
         }
+        $posts = Post::orderBy('created_at', 'desc')->get();
 
-        return view('home', compact('onlineUsersCount'));
+        return view('home', compact('onlineUsersCount', 'posts'));
     }
 
     public function clubs()

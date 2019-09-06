@@ -69,4 +69,39 @@
             }
         });
     }
+
+    function pay_clause_player(id, name, remuneration) {
+        window.event.preventDefault();
+        value = parseFloat(remuneration);
+        value_tax = value * 0.10;
+        swal({
+            title: 'Pagar claúsula de "' + name + '"',
+            text: 'Coste: ' + value + ' + ' + value_tax  + ' millones.',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger btn-sm",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary btn-sm",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+        })
+        .then((value) => {
+            if (value) {
+                var url = '{{ route("market.pay_clause_player", ":id") }}';
+                url = url.replace(':id', id);
+                window.location.href = url;
+            }
+        });
+    }
 </script>

@@ -2,6 +2,11 @@
 
 @section('style')
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <style>
+        body{
+            background: #161b35;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -59,9 +64,39 @@
 
     <div class="row">
         <div class="col-12">
+            <ul style="list-style: none; margin:0; padding: 0;">
+            @foreach ($posts as $post)
+                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
+
+                        <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
+                    </figure>
+                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                        <ul style="list-style: none; margin:0; padding: 0">
+                            <li>
+                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                    {{ $post->category }}
+                                </span>
+                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                    {{ $post->title }}
+                                </span>
+                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                    {{ $post->description }}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            @endforeach
+
+
+
+
+
+
+
 
 {{--             <img src="https://www.mundodeportivo.com/r/GODO/MD/p6/Barca/Imagenes/2019/03/13/Recortada/img_rguillamet_20190313-224453_imagenes_md_otras_fuentes_champions-03-klvB-U461014157231diG-980x554@MundoDeportivo-Web.jpg" class="img-fluid" alt="" width="450"> --}}
-            <ul style="list-style: none; margin:0; padding: 0;">
 
                 <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
                     <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">

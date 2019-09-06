@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class New extends Model
+class Post extends Model
 {
-	protected $table = 'news';
+	protected $table = 'posts';
 
     protected $fillable = ['type', 'transfer_id', 'match_id', 'category', 'title', 'description', 'img'];
 

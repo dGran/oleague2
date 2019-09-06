@@ -31,13 +31,6 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
         @yield('style')
-        <style>
-            body{
-                /*background: #353f48;*/
-                /*background: #323232;*/
-                background: #161b35;
-            }
-        </style>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}"></script>

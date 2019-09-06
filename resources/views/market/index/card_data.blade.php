@@ -90,7 +90,7 @@
 	@endif
 	<img class="nation-logo" src="https://cdn10.bigcommerce.com/s-ey7tq/products/3606/images/4932/FISPA-2__55833.1407859367.1280.1280.jpg?c=2" data-toggle="tooltip" data-placement="top" title="{{ $player->season_player->player->nation_name}}">
 </div> {{-- item --}}
-<div class="item-bottom">
+{{-- <div class="item-bottom">
 	<div class="phrase">
 		@if ($player->type == 'free')
 			{{ $player->season_player->player->name }} se incorpora a la disciplina de {{ $player->participantTo->name() }}
@@ -108,4 +108,4 @@
 			{{ $player->season_player->player->name }} se va a cascarla a la bolsa de jugadores libres esperando que algún manager se apiade de el.
 		@endif
 	</div>
-</div> {{-- item-bottom --}}
+</div> --}} {{-- item-bottom --}}
