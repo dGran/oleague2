@@ -25,11 +25,10 @@
 					@endforeach
 				</div> {{-- row --}}
 			@else
-				<div class="py-3 px-1 text-center">
-					<h5>No se han encontrado resultados</h5>
-					<figure class="text-center">
-						<img class="img-fluid" src="https://media.giphy.com/media/12zV7u6Bh0vHpu/giphy.gif">
-					</figure>
+				<div class="row">
+					<div class="col-12 col-lg-6 offset-lg-3 p-0">
+						@include('market.sale.card_data_empty')
+					</div>
 				</div>
 			@endif
 		</section> {{-- content --}}

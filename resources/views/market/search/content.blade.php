@@ -18,7 +18,7 @@
 		<section class="content">
 			{{-- search --}}
 			<div class="row">
-			    <div class="col-12 col-md-8 col-xl-6">
+			    <div class="col-12 col-lg-6 offset-lg-3">
 			    	<div class="searchbox">
 				        <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
 				        <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
@@ -42,11 +42,10 @@
 			        </div>
 			    </div>
 			@else
-				<div class="py-3 px-1 text-center">
-					<h5>No se han encontrado resultados</h5>
-					<figure class="text-center">
-						<img class="img-fluid" src="https://media.giphy.com/media/12zV7u6Bh0vHpu/giphy.gif">
-					</figure>
+				<div class="row">
+					<div class="col-12 col-lg-6 offset-lg-3 p-0">
+						@include('market.search.card_data_empty')
+					</div>
 				</div>
 			@endif
 		</section> {{-- content --}}

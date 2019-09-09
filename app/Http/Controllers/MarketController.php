@@ -22,7 +22,7 @@ class MarketController extends Controller
     {
         $page = request()->page;
 
-        $perPage = 20;
+        $perPage = 10;
 
         $filterSeason = active_season()->id;
 
@@ -106,11 +106,22 @@ class MarketController extends Controller
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
 	        	if (user_is_participant(auth()->user()->id)) {
+	        		if (participant_of_user()->max_players_limit()) {
+	        			return back()->with('error', 'No puedes fichar al jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
+	        		}
+	        		if (participant_of_user()->budget() < $player->season->free_players_cost) {
+	        			return back()->with('error', 'No puedes fichar al jugador. No dispones de los ' . $player->season->free_players_cost . ' mill. que cuesta el jugador en tu presupuesto.');
+	        		}
+
 	        		$participant_from = $player->participant_id;
 	        		$participant_to = participant_of_user()->id;
 
-	        		// PENDIENTE
-	        		// primero las validaciones de dinero y limite plantilla
+		        	$this->add_cash_history(
+		        		$participant_to,
+		        		'Fichaje del agente libre ' . $player->player->name,
+		        		$player->season->free_players_cost,
+		        		'S'
+		        	);
 
 		        	$this->add_transfer(
 		        		'free',
@@ -120,13 +131,6 @@ class MarketController extends Controller
 		        		$player->season->free_players_cost
 		        	);
 		        	$transfer = Transfer::orderBy('id', 'desc')->first();
-
-		        	$this->add_cash_history(
-		        		$participant_to,
-		        		'Fichaje del agente libre ' . $player->player->name,
-		        		$player->season->free_players_cost,
-		        		'S'
-		        	);
 
 					$this->generate_new(
 						'transfer',
@@ -166,48 +170,74 @@ class MarketController extends Controller
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
 	        	if (user_is_participant(auth()->user()->id)) {
-	        		$participant_from = $player->participant_id;
-	        		$participant_to = participant_of_user()->id;
+	        		$participant_from = $player->participant;
+	        		$participant_to = participant_of_user();
 
-	        		// PENDIENTE
-	        		// primero las validaciones de dinero y limite plantilla
+	        		// validations
+	        		if ($participant_to->id == $player->participant_id) {
+	        			return back()->with('error', 'No puedes pagar la claúsula de un jugador de tu equipo.');
+	        		}
+	        		if ($participant_to->clauses_paid_limit()) {
+	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. Ya has llegado al límite de claúsulas pagadas.');
+	        		}
+	        		if ($participant_from->clauses_received_limit()) {
+	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. ' . $participant_from->team->name .' ya ha llegado al límite de claúsulas recibidas.');
+	        		}
+	        		if ($participant_to->max_players_limit()) {
+	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
+	        		}
+	        		if ($participant_to->budget() < $player->clause_price()) {
+	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. No dispones de los ' . $player->clause_price() . ' mill. que cuesta el jugador en tu presupuesto.');
+	        		}
+	        		// END::validations
 
-		        	$this->add_transfer(
-		        		'clause',
-		        		$player->id,
-		        		$participant_from,
-		        		$participant_to,
-		        		$player->price * 1.10
-		        	);
-		        	$transfer = Transfer::orderBy('id', 'desc')->first();
-
+	        		// generate cash movements
 		        	$this->add_cash_history(
-		        		$participant_to,
+		        		$participant_to->id,
 		        		'Pago de claúsula del jugador ' . $player->player->name,
 		        		$player->price,
 		        		'S'
 		        	);
 		        	$this->add_cash_history(
-		        		$participant_to,
+		        		$participant_to->id,
 		        		'Impuestos del pago de claúsula del jugador ' . $player->player->name,
 		        		$player->price * 0.10,
 		        		'S'
 		        	);
 		        	$this->add_cash_history(
-		        		$participant_from,
+		        		$participant_from->id,
 		        		'Pago de claúsula del jugador ' . $player->player->name,
 		        		$player->price,
 		        		'E'
 		        	);
+		        	// END::generate cash movements
 
+		        	// save transfer
+		        	$this->add_transfer(
+		        		'clause',
+		        		$player->id,
+		        		$participant_from->id,
+		        		$participant_to->id,
+		        		$player->price * 1.10
+		        	);
+
+		        	// generate post (new)
+		        	$transfer = Transfer::orderBy('id', 'desc')->first();
 					$this->generate_new(
 						'transfer',
 						$transfer->id,
 						NULL
 		        	);
-		        	// sumar contador clausulas recibidas y pagadas
 
-		        	$player->participant_id = $participant_to;
+		        	// clauses counter for participants
+		        	$participant_from->clauses_received += 1;
+		        	$participant_from->save();
+		        	$participant_to->paid_clauses += 1;
+		        	$participant_to->save();
+
+		        	// reset player market data
+		        	$player->participant_id = $participant_to->id;
+		        	$player->allow_clause_pay = 0;
 		        	$player->market_phrase = null;
 		        	$player->untransferable = 0;
 		        	$player->player_on_loan = 0;
@@ -443,13 +473,17 @@ class MarketController extends Controller
             $players = $players->where('season_players.participant_id', '=', $filterParticipant);
         }
         if ($filterShowClausesCanPay) {
-        	$players = $players->where(function($q) use ($participant_of_user) {
-          		$q->where('season_players.participant_id', '!=', 0)
-            	  ->where('season_players.participant_id', '!=', $participant_of_user->id);
-      		});
-        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
-        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
-        	$players = $players->where(\DB::raw('season_players.price * 1.10'), '<', $participant_of_user->budget());
+        	if (!$participant_of_user->clauses_paid_limit()) {
+	        	$players = $players->where(function($q) use ($participant_of_user) {
+	          		$q->where('season_players.participant_id', '!=', 0)
+	            	  ->where('season_players.participant_id', '!=', $participant_of_user->id);
+	      		});
+	        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
+	        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+	        	$players = $players->where(\DB::raw('season_players.price * 1.10'), '<', $participant_of_user->budget());
+        	} else {
+        		$players = $players->where('season_players.id', '=', -1);
+        	}
         } else {
 	        if ($filterHideFree) {
 	        	$players = $players->where('season_players.participant_id', '!=', 0);
@@ -539,194 +573,201 @@ class MarketController extends Controller
     public function favorites()
     {
     	//data of user->participant
-    	if (!auth()->guest() && user_is_participant(auth()->user()->id)) {
-    		$participant_of_user = participant_of_user();
-    	}
-    	//filter variables
-    	$order = request()->order;
-        if (!$order) {
-            $order = 'overall_desc';
-        }
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+				$participant_of_user = participant_of_user();
 
-        $pagination = request()->pagination;
-        if (!$pagination == null) {
-            $perPage = $pagination;
-        } else {
-            $perPage = 12;
-        }
+		    	//filter variables
+		    	$order = request()->order;
+		        if (!$order) {
+		            $order = 'overall_desc';
+		        }
 
-        $page = request()->page;
+		        $pagination = request()->pagination;
+		        if (!$pagination == null) {
+		            $perPage = $pagination;
+		        } else {
+		            $perPage = 12;
+		        }
 
-        $order_ext = $this->searchGetOrder($order);
+		        $page = request()->page;
 
-        $filterSeason = active_season()->id;
+		        $order_ext = $this->searchGetOrder($order);
 
-        $filterName = null;
-        if (!is_null(request()->filterName)) {
-        	$filterName = request()->filterName;
-        }
+		        $filterSeason = active_season()->id;
 
-        $filterParticipant = request()->filterParticipant;
-        if ($filterParticipant == NULL) {
-        	$filterParticipant = -1;
-        }
+		        $filterName = null;
+		        if (!is_null(request()->filterName)) {
+		        	$filterName = request()->filterName;
+		        }
 
-        $filterPosition = request()->filterPosition;
+		        $filterParticipant = request()->filterParticipant;
+		        if ($filterParticipant == NULL) {
+		        	$filterParticipant = -1;
+		        }
 
-        $filterNation = request()->filterNation;
+		        $filterPosition = request()->filterPosition;
 
-        $filterOriginalTeam = request()->filterOriginalTeam;
+		        $filterNation = request()->filterNation;
 
-        $filterOriginalLeague = request()->filterOriginalLeague;
+		        $filterOriginalTeam = request()->filterOriginalTeam;
 
-		if (request()->filterHideFree == "on") {
-			$filterHideFree = true;
-		} else {
-			$filterHideFree = false;
-		}
+		        $filterOriginalLeague = request()->filterOriginalLeague;
 
-		if (request()->filterHideClausePaid == "on") {
-			$filterHideClausePaid = true;
-		} else {
-			$filterHideClausePaid = false;
-		}
+				if (request()->filterHideFree == "on") {
+					$filterHideFree = true;
+				} else {
+					$filterHideFree = false;
+				}
 
-		if (request()->filterHideParticipantClauseLimit == "on") {
-			$filterHideParticipantClauseLimit = true;
-		} else {
-			$filterHideParticipantClauseLimit = false;
-		}
+				if (request()->filterHideClausePaid == "on") {
+					$filterHideClausePaid = true;
+				} else {
+					$filterHideClausePaid = false;
+				}
 
-		if (!auth()->guest() && user_is_participant(auth()->user()->id)) {
-			if (request()->filterShowClausesCanPay == "on") {
-				$filterShowClausesCanPay = true;
-			} else {
-				$filterShowClausesCanPay = false;
+				if (request()->filterHideParticipantClauseLimit == "on") {
+					$filterHideParticipantClauseLimit = true;
+				} else {
+					$filterHideParticipantClauseLimit = false;
+				}
+
+				if (!auth()->guest() && user_is_participant(auth()->user()->id)) {
+					if (request()->filterShowClausesCanPay == "on") {
+						$filterShowClausesCanPay = true;
+					} else {
+						$filterShowClausesCanPay = false;
+					}
+				} else {
+					$filterShowClausesCanPay = false;
+				}
+
+		    	if (request()->overall_range) {
+			    	$overall_rating = (explode( ';', request()->overall_range));
+			    	$filterOverallRangeFrom = $overall_rating[0];
+			    	$filterOverallRangeTo = $overall_rating[1];
+		    	} else {
+		    		$filterOverallRangeFrom = 70;
+			    	$filterOverallRangeTo = 99;
+		    	}
+
+		    	if (request()->clause_range) {
+			    	$clause_range = (explode( ';', request()->clause_range));
+			    	$filterClauseRangeFrom = $clause_range[0];
+			    	$filterClauseRangeTo = $clause_range[1];
+		    	} else {
+		    		$filterClauseRangeFrom = 0;
+			    	$filterClauseRangeTo = 500;
+		    	}
+
+		    	if (request()->age_range) {
+			    	$age_range = (explode( ';', request()->age_range));
+			    	$filterAgeRangeFrom = $age_range[0];
+			    	$filterAgeRangeTo = $age_range[1];
+		    	} else {
+		    		$filterAgeRangeFrom = 15;
+			    	$filterAgeRangeTo = 45;
+		    	}
+
+		    	if (request()->height_range) {
+			    	$height_range = (explode( ';', request()->height_range));
+			    	$filterHeightRangeFrom = $height_range[0];
+			    	$filterHeightRangeTo = $height_range[1];
+		    	} else {
+		    		$filterHeightRangeFrom = 150;
+			    	$filterHeightRangeTo = 210;
+		    	}
+
+		    	//list of players
+		        $players = FavoritePlayer::select('favorite_players.*', 'season_participants.clauses_received')
+		        	->leftjoin('season_players', 'season_players.id', '=', 'favorite_players.player_id')
+		        	->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+		        	->leftjoin('season_participants', 'season_participants.id', '=', 'season_players.participant_id');
+		    	$players->where('favorite_players.participant_id', "=", $participant_of_user->id);
+				$players->where('season_players.season_id', "=", $filterSeason);
+		        $players->where('active', '=', 1);
+		        if (!is_null($filterName)) {
+		        	$players->where('players.name', "LIKE", "%$filterName%");
+		        }
+		        if ($filterParticipant >= 0) {
+		            $players = $players->where('season_players.participant_id', '=', $filterParticipant);
+		        }
+		        if ($filterShowClausesCanPay) {
+		        	$players = $players->where(function($q) use ($participant_of_user) {
+		          		$q->where('season_players.participant_id', '!=', 0)
+		            	  ->where('season_players.participant_id', '!=', $participant_of_user->id);
+		      		});
+		        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
+		        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+		        	$players = $players->where(\DB::raw('season_players.price * 1.10'), '<', $participant_of_user->budget());
+		        } else {
+			        if ($filterHideFree) {
+			        	$players = $players->where('season_players.participant_id', '!=', 0);
+			        }
+			        if ($filterHideClausePaid) {
+			        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
+			        }
+			        if ($filterHideParticipantClauseLimit) {
+			        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+			        }
+		        }
+		        if ($filterPosition != NULL) {
+		            $players = $players->where('players.position', '=', $filterPosition);
+		        }
+		        if ($filterNation != NULL) {
+		            $players = $players->where('players.nation_name', '=', $filterNation);
+		        }
+		        if ($filterOriginalTeam != NULL) {
+		            $players = $players->where('players.team_name', '=', $filterOriginalTeam);
+		        }
+		        if ($filterOriginalLeague != NULL) {
+		            $players = $players->where('players.league_name', '=', $filterOriginalLeague);
+		        }
+		        $players = $players->where('players.overall_rating', '>=', $filterOverallRangeFrom);
+		        $players = $players->where('players.overall_rating', '<=', $filterOverallRangeTo);
+		        $players = $players->where('season_players.price', '>=', $filterClauseRangeFrom);
+		        $players = $players->where('season_players.price', '<=', $filterClauseRangeTo);
+		        $players = $players->where('players.age', '>=', $filterAgeRangeFrom);
+		        $players = $players->where('players.age', '<=', $filterAgeRangeTo);
+		        $players = $players->where('players.height', '>=', $filterHeightRangeFrom);
+		        $players = $players->where('players.height', '<=', $filterHeightRangeTo);
+				$players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection']);
+				if ($order_ext['sortField'] == 'players.overall_rating') {
+					$players = $players->orderBy('players.name', 'asc');
+				} else {
+					$players = $players->orderBy('players.overall_rating', 'desc');
+				}
+		        $players = $players->paginate($perPage, ['*'], 'page', $page);
+
+			    //list of participants
+		        if (Season::find($filterSeason)->participant_has_team) {
+		            $participants = SeasonParticipant::
+		            leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+		            ->select('season_participants.*', 'teams.name as team_name')
+		            ->seasonId($filterSeason)->orderBy('team_name', 'asc')->get();
+		        } else {
+		            $participants = SeasonParticipant::
+		            leftJoin('users', 'users.id', '=', 'season_participants.user_id')
+		            ->select('season_participants.*', 'users.name as user_name')
+		            ->seasonId($filterSeason)->orderBy('user_name', 'asc')->get();
+		        }
+		        //list of positions
+		        $positions = Player::select('position')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('position', 'asc')->get();
+		        //list of nations
+				$nations = Player::select('nation_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('nation_name', 'asc')->get();
+		        //list of original_teams
+				$original_teams = Player::select('team_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('team_name', 'asc')->get();
+				//list of original_league
+				$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
+
+				//return view
+		        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
 			}
-		} else {
-			$filterShowClausesCanPay = false;
 		}
 
-    	if (request()->overall_range) {
-	    	$overall_rating = (explode( ';', request()->overall_range));
-	    	$filterOverallRangeFrom = $overall_rating[0];
-	    	$filterOverallRangeTo = $overall_rating[1];
-    	} else {
-    		$filterOverallRangeFrom = 70;
-	    	$filterOverallRangeTo = 99;
-    	}
-
-    	if (request()->clause_range) {
-	    	$clause_range = (explode( ';', request()->clause_range));
-	    	$filterClauseRangeFrom = $clause_range[0];
-	    	$filterClauseRangeTo = $clause_range[1];
-    	} else {
-    		$filterClauseRangeFrom = 0;
-	    	$filterClauseRangeTo = 500;
-    	}
-
-    	if (request()->age_range) {
-	    	$age_range = (explode( ';', request()->age_range));
-	    	$filterAgeRangeFrom = $age_range[0];
-	    	$filterAgeRangeTo = $age_range[1];
-    	} else {
-    		$filterAgeRangeFrom = 15;
-	    	$filterAgeRangeTo = 45;
-    	}
-
-    	if (request()->height_range) {
-	    	$height_range = (explode( ';', request()->height_range));
-	    	$filterHeightRangeFrom = $height_range[0];
-	    	$filterHeightRangeTo = $height_range[1];
-    	} else {
-    		$filterHeightRangeFrom = 150;
-	    	$filterHeightRangeTo = 210;
-    	}
-
-    	//list of players
-        $players = FavoritePlayer::select('favorite_players.*', 'season_participants.clauses_received')
-        	->leftjoin('season_players', 'season_players.id', '=', 'favorite_players.player_id')
-        	->leftjoin('players', 'players.id', '=', 'season_players.player_id')
-        	->leftjoin('season_participants', 'season_participants.id', '=', 'season_players.participant_id');
-    	$players->where('favorite_players.participant_id', "=", $participant_of_user->id);
-		$players->where('season_players.season_id', "=", $filterSeason);
-        $players->where('active', '=', 1);
-        if (!is_null($filterName)) {
-        	$players->where('players.name', "LIKE", "%$filterName%");
-        }
-        if ($filterParticipant >= 0) {
-            $players = $players->where('season_players.participant_id', '=', $filterParticipant);
-        }
-        if ($filterShowClausesCanPay) {
-        	$players = $players->where(function($q) use ($participant_of_user) {
-          		$q->where('season_players.participant_id', '!=', 0)
-            	  ->where('season_players.participant_id', '!=', $participant_of_user->id);
-      		});
-        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
-        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
-        	$players = $players->where(\DB::raw('season_players.price * 1.10'), '<', $participant_of_user->budget());
-        } else {
-	        if ($filterHideFree) {
-	        	$players = $players->where('season_players.participant_id', '!=', 0);
-	        }
-	        if ($filterHideClausePaid) {
-	        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
-	        }
-	        if ($filterHideParticipantClauseLimit) {
-	        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
-	        }
-        }
-        if ($filterPosition != NULL) {
-            $players = $players->where('players.position', '=', $filterPosition);
-        }
-        if ($filterNation != NULL) {
-            $players = $players->where('players.nation_name', '=', $filterNation);
-        }
-        if ($filterOriginalTeam != NULL) {
-            $players = $players->where('players.team_name', '=', $filterOriginalTeam);
-        }
-        if ($filterOriginalLeague != NULL) {
-            $players = $players->where('players.league_name', '=', $filterOriginalLeague);
-        }
-        $players = $players->where('players.overall_rating', '>=', $filterOverallRangeFrom);
-        $players = $players->where('players.overall_rating', '<=', $filterOverallRangeTo);
-        $players = $players->where('season_players.price', '>=', $filterClauseRangeFrom);
-        $players = $players->where('season_players.price', '<=', $filterClauseRangeTo);
-        $players = $players->where('players.age', '>=', $filterAgeRangeFrom);
-        $players = $players->where('players.age', '<=', $filterAgeRangeTo);
-        $players = $players->where('players.height', '>=', $filterHeightRangeFrom);
-        $players = $players->where('players.height', '<=', $filterHeightRangeTo);
-		$players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection']);
-		if ($order_ext['sortField'] == 'players.overall_rating') {
-			$players = $players->orderBy('players.name', 'asc');
-		} else {
-			$players = $players->orderBy('players.overall_rating', 'desc');
-		}
-        $players = $players->paginate($perPage, ['*'], 'page', $page);
-
-	    //list of participants
-        if (Season::find($filterSeason)->participant_has_team) {
-            $participants = SeasonParticipant::
-            leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
-            ->select('season_participants.*', 'teams.name as team_name')
-            ->seasonId($filterSeason)->orderBy('team_name', 'asc')->get();
-        } else {
-            $participants = SeasonParticipant::
-            leftJoin('users', 'users.id', '=', 'season_participants.user_id')
-            ->select('season_participants.*', 'users.name as user_name')
-            ->seasonId($filterSeason)->orderBy('user_name', 'asc')->get();
-        }
-        //list of positions
-        $positions = Player::select('position')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('position', 'asc')->get();
-        //list of nations
-		$nations = Player::select('nation_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('nation_name', 'asc')->get();
-        //list of original_teams
-		$original_teams = Player::select('team_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('team_name', 'asc')->get();
-		//list of original_league
-		$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
-
-		//return view
-        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
     public function favoritesDestroy($id) {
@@ -928,49 +969,51 @@ class MarketController extends Controller
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
 	        	if (auth()->user()->id == $player->participant->user_id) {
-	        		$participant_from = participant_of_user()->id;
-	        		$participant_to = 0;
-	        		// PENDIENTE
-	        		// primero las validaciones de dinero y limite plantilla
+	        		if ($player->participant->min_players_limit()) {
+	        			return back()->with('error', 'No puedes despedir al jugador. Actualmente tienes el mínimo de jugadores en tu plantilla.');
+	        		} else {
+		        		$participant_from = $player->participant->id;
+		        		$participant_to = 0;
 
-		        	$this->add_transfer(
-		        		'dismiss',
-		        		$player->id,
-		        		$participant_from,
-		        		$participant_to,
-		        		$player->season->free_players_remuneration
-		        	);
-		        	$transfer = Transfer::orderBy('id', 'desc')->first();
+			        	$this->add_cash_history(
+			        		$player->participant_id,
+			        		'Despido de ' . $player->player->name,
+			        		$player->season->free_players_remuneration,
+			        		'E'
+			        	);
 
-		        	$this->add_cash_history(
-		        		$player->participant_id,
-		        		'Despido de ' . $player->player->name,
-		        		$player->season->free_players_remuneration,
-		        		'E'
-		        	);
+			        	$this->add_transfer(
+			        		'dismiss',
+			        		$player->id,
+			        		$participant_from,
+			        		$participant_to,
+			        		$player->season->free_players_remuneration
+			        	);
+			        	$transfer = Transfer::orderBy('id', 'desc')->first();
 
-					$this->generate_new(
-						'transfer',
-						$transfer->id,
-						NULL
-		        	);
+						$this->generate_new(
+							'transfer',
+							$transfer->id,
+							NULL
+			        	);
 
-		        	$player->participant_id = 0;
-		        	$player->market_phrase = null;
-		        	$player->untransferable = 0;
-		        	$player->player_on_loan = 0;
-		        	$player->transferable = 0;
-		        	$player->sale_price = null;
-		        	$player->sale_auto_accept = 0;
-		        	$player->price = $player->season->free_players_salary * 10;
-		        	$player->salary = $player->season->free_players_salary;
-		        	$player->save();
-		        	if ($player->save()) {
-		        		$this->manage_player_showcase($player);
-		            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido despedido.');
-		        	} else {
-		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
-		        	}
+			        	$player->participant_id = 0;
+			        	$player->market_phrase = null;
+			        	$player->untransferable = 0;
+			        	$player->player_on_loan = 0;
+			        	$player->transferable = 0;
+			        	$player->sale_price = null;
+			        	$player->sale_auto_accept = 0;
+			        	$player->price = $player->season->free_players_salary * 10;
+			        	$player->salary = $player->season->free_players_salary;
+			        	$player->save();
+			        	if ($player->save()) {
+			        		$this->manage_player_showcase($player);
+			            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido despedido.');
+			        	} else {
+			        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+			        	}
+	        		}
 	        	} else {
 	        		return back()->with('error', 'Acción cancelada. Ya no eres propietario del jugador');
 	        	}
@@ -1003,12 +1046,11 @@ class MarketController extends Controller
 	    		$action = 'desembolsa';
 	    	}
 	    	$text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($amount, 2, ",", ".") . " mill. por " . "'<i>" . $description . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
-			Telegram::sendMessage([
-			    'chat_id' => '-1001241759649',
-			    'parse_mode' => 'HTML',
-			    'text' => $text
-			    // 'disable_web_page_preview' => true
-			]);
+			// Telegram::sendMessage([
+			//     'chat_id' => '-1001241759649',
+			//     'parse_mode' => 'HTML',
+			//     'text' => $text
+			// ]);
 	    }
 
 	}
@@ -1025,15 +1067,67 @@ class MarketController extends Controller
 	    if ($transfer->save()) {
 			switch ($type) {
 				case 'free':
-					$participant = SeasonParticipant::find($participant_to);
+					$participant_to = SeasonParticipant::find($participant_to);
 					$player = SeasonPlayer::find($player_id);
-					$text = '<a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> (agente libre) nuevo jugador de <b>' . $participant->team->name . '</b> (' . $participant->user->name . ')';
+					$player_name = $player->player->name;
+					$pTo_team_name = $participant_to->team->name;
+					$pTo_user_name = $participant_to->user->name;
+					$office_pTo_link = 'http://www.ligaspesxbox.com/mercado/equipos/' . $participant_to->team->slug;
+					$bottom_link = 'http://www.ligaspesxbox.com/mercado';
+					$title = "\xF0\x9F\x86\x93Agente libre fichado\xE2\x9D\x97";
+
+					$text = "$title<a href='" . pesmaster_player_info_path($player->player->game_id) . "'>$player_name</a>\n\n";
+					$text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name) su nuevo destino tras desembolsar \xF0\x9F\x92\xB6 $price mill.</b>\n\n";
+					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
+					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
+					$text .= "    Presupuesto $pTo_team_name: " . number_format($participant_to->budget(), 2, ",", ".") . " mill.\n\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n\n";
+					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
 					break;
 				case 'clause':
 					$participant_from = SeasonParticipant::find($participant_from);
 					$participant_to = SeasonParticipant::find($participant_to);
 					$player = SeasonPlayer::find($player_id);
-					$text = "\xF0\x9F\x92\xB0" . "\xF0\x9F\x92\xB0" . "\xF0\x9F\x92\xB0" . '<b>' . $participant_to->team->name . '</b> (' . $participant_to->user->name . ') paga la claúsula de <a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> que pertenecía a ' . $participant_from->team->name . ' (' . $participant_from->user->name . ')';
+					$player_name = $player->player->name;
+					$pTo_team_name = $participant_to->team->name;
+					$pTo_user_name = $participant_to->user->name;
+					$pFrom_team_name = $participant_from->team->name;
+					$pFrom_user_name = $participant_from->user->name;
+					$pTo_budget = $participant_to->budget();
+					$pFrom_budget = $participant_from->budget();
+					$money = number_format($player->price * 1.10, 2, ",", ".") . " mill. (" . number_format($player->price, 2, ",", ".") . " + " . number_format($player->price * 0.10, 2, ",", ".") . ")";
+					$office_pTo_link = 'http://www.ligaspesxbox.com/mercado/equipos/' . $participant_to->team->slug;
+					$office_pFrom_link = 'http://www.ligaspesxbox.com/mercado/equipos/' . $participant_from->team->slug;
+					$bottom_link = 'http://www.ligaspesxbox.com/mercado';
+
+					switch ($player->price) {
+						case ($player->price <= 10):
+							$title = "\xF0\x9F\x92\xA9Mierdi-clausulazo\xE2\x9D\x97";
+							break;
+						case (($player->price > 10) && ($player->price <= 30)):
+							$title = "\xF0\x9F\x92\xB0Claúsula pagada\xE2\x9D\x97";
+							break;
+						case (($player->price > 30) && ($player->price <= 100)):
+							$title = "\xF0\x9F\x92\xB0\xF0\x9F\x92\xB0Clausulazo\xE2\x9D\x97";
+							break;
+						case (($player->price > 100) && ($player->price <= 200)):
+							$title = "\xF0\x9F\x98\xB1\xF0\x9F\x92\xB0\xF0\x9F\x92\xB0\xF0\x9F\x98\xB1Clausulazo\xE2\x9D\x97";
+							break;
+						case ($player->price > 200):
+							$title = "\xF0\x9F\x94\x9D\xF0\x9F\x92\xB0\xF0\x9F\x92\xB0\xF0\x9F\x94\x9DClausulazo TOP\xE2\x9D\x97";
+							break;
+					}
+					$text = "$title<a href='" . pesmaster_player_info_path($player->player->game_id) . "'>$player_name</a>\n\n";
+					$text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name)</b>\n";
+					$text .= "    \xF0\x9F\x92\xB6 $money\n\n";
+					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
+					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
+					$text .= "    \xF0\x9F\x91\x88 $pFrom_team_name ($pFrom_user_name)\n\n";
+					$text .= "    Presupuesto $pTo_team_name: " . number_format($pTo_budget, 2, ",", ".") . " mill.\n";
+					$text .= "    Presupuesto $pFrom_team_name: " . number_format($pFrom_budget, 2, ",", ".") . " mill.\n\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
+					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
 					break;
 				case 'negotiation':
 					# code...
@@ -1042,74 +1136,64 @@ class MarketController extends Controller
 					# code...
 					break;
 				case 'dismiss':
-					$participant = SeasonParticipant::find($participant_from);
+					$participant_from = SeasonParticipant::find($participant_from);
 					$player = SeasonPlayer::find($player_id);
-					$text = "\xF0\x9F\x91\x88" . '<b>' . $participant->team->name . '</b> (' . $participant->user->name . ') despide al jugador <a href="' . pesdb_player_info_path($player->player->game_id) . '">' . $player->player->name . '</a> que se convierte en agente libre';
+					$player_name = $player->player->name;
+					$pFrom_team_name = $participant_from->team->name;
+					$pFrom_user_name = $participant_from->user->name;
+					$office_pFrom_link = 'http://www.ligaspesxbox.com/mercado/equipos/' . $participant_from->team->slug;
+					$bottom_link = 'http://www.ligaspesxbox.com/mercado';
+					$title = "\xF0\x9F\x9A\xAA\xF0\x9F\x91\x88 Jugador despedido\xE2\x9D\x97";
+
+					$text = "$title<a href='" . pesmaster_player_info_path($player->player->game_id) . "'>$player_name</a>\n\n";
+					$text .= "    <b>$pFrom_team_name ($pFrom_user_name) prescinde de sus servicios y recibe \xF0\x9F\x92\xB6 $price mill.</b>\n\n";
+					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
+					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
+					$text .= "    Presupuesto $pFrom_team_name: " . number_format($participant_from->budget(), 2, ",", ".") . " mill.\n\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
+					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
 					break;
 			}
-			Telegram::sendMessage([
-			    'chat_id' => '-1001241759649',
-			    'parse_mode' => 'HTML',
-			    'text' => $text
-			    // 'disable_web_page_preview' => true
-			]);
+			// Telegram::sendMessage([
+			//     'chat_id' => '-1001241759649',
+			//     'parse_mode' => 'HTML',
+			//     'text' => $text
+			// ]);
 	    }
 	}
 
 	protected function generate_new($type, $transfer_id, $match_id) {
 
-		switch ($type) {
-			case 'default':
-				# code...
-				break;
-			case 'transfer':
-				if ($transfer_id) {
-					$transfer = Transfer::find($transfer_id);
-				    if ($transfer) {
-						switch ($transfer->type) {
-							case 'free':
-								$category = "Fichajes - " . $transfer->participantTo->team->name;
-								$title = $transfer->season_player->player->name . " firma por " . $transfer->participantTo->team->name;
-								$description = "Se incorpora como agente libre";
-								$img = $transfer->season_player->player->getImgFormatted();
-								break;
-							case 'clause':
-								$category = "Fichajes - " . $transfer->participantTo->team->name;
-								$title = "Clausulazo de " . $transfer->participantTo->team->name . " por " . $transfer->season_player->player->name;
-								$description = "Deja " . $transfer->participantFrom->team->name . " a golpe de talonario";
-								$img = $transfer->season_player->player->getImgFormatted();
-								break;
-							case 'negotiation':
-								# code...
-								break;
-							case 'cession':
-								# code...
-								break;
-							case 'dismiss':
-								$category = "Fichajes - " . $transfer->participantFrom->team->name;
-								$title = $transfer->participantFrom->team->name . " despide a " . $transfer->season_player->player->name;
-								$description = "Se incorpora a la bolsa de agentes libres";
-								$img = $transfer->season_player->player->getImgFormatted();
-								break;
-						}
-				    }
+		if ($transfer_id) {
+			$transfer = Transfer::find($transfer_id);
+		    if ($transfer) {
+				switch ($transfer->type) {
+					case 'free':
+						$category = "Fichajes - " . $transfer->participantTo->team->name;
+						$title = $transfer->season_player->player->name . " firma por " . $transfer->participantTo->team->name;
+						$description = "Se incorpora como agente libre para ponerse a las órdenes de " . $transfer->participantTo->user->name;
+						$img = $transfer->season_player->player->getImgFormatted();
+						break;
+					case 'clause':
+						$category = "Fichajes - " . $transfer->participantTo->team->name;
+						$title = "Clausulazo de " . $transfer->participantTo->team->name . " por " . $transfer->season_player->player->name;
+						$description = $transfer->participantTo->team->name . " deposita los " . $transfer->season_player->price . " mill. de su claúsula en las oficinas de " . $transfer->participantFrom->team->name . " para incorporar al jugador";
+						$img = $transfer->season_player->player->getImgFormatted();
+						break;
+					case 'negotiation':
+						# code...
+						break;
+					case 'cession':
+						# code...
+						break;
+					case 'dismiss':
+						$category = "Fichajes - " . $transfer->participantFrom->team->name;
+						$title = $transfer->participantFrom->team->name . " despide a " . $transfer->season_player->player->name;
+						$description = "El jugador se incorpora a la bolsa de agentes libres";
+						$img = $transfer->season_player->player->getImgFormatted();
+						break;
 				}
-				break;
-			case 'result':
-				# code...
-				break;
-			case 'press':
-				# code...
-				break;
-			case 'duel':
-				# code...
-				break;
-			case 'champion':
-				# code...
-				break;
-			case 'birthday':
-				# code...
-				break;
+		    }
 		}
 
         $post = Post::create([

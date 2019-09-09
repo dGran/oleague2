@@ -251,4 +251,18 @@ class SeasonParticipant extends Model
         return true;
     }
 
+    public function max_players_limit() {
+        if ($this->players->count() < $this->season->max_players) {
+            return false;
+        }
+        return true;
+    }
+
+    public function min_players_limit() {
+        if ($this->players->count() > $this->season->min_players) {
+            return false;
+        }
+        return true;
+    }
+
 }

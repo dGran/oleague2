@@ -8,11 +8,34 @@
 		</div> {{-- container --}}
 	</div> {{-- header --}}
 
+<div class="scrolling-wrapper">
+<ul class="nav nav-pills justify-content-center my-3 mx-0" style="font-size: .8em">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Todos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Claúsulas</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Libres</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Despidos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Cesiones</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#">Negociaciones</a>
+  </li>
+</ul>
+</div>
+
 	<div class="container">
 		<section class="content">
 			{{-- search --}}
 			<div class="row">
-			    <div class="col-12 col-md-8 col-xl-6">
+			    <div class="col-12 col-lg-6 offset-lg-3">
 			    	<form class="frmFilter" role="search" method="get" action="{{ route('market') }}">
 				    	<div class="searchbox">
 					        <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
@@ -25,7 +48,7 @@
 			@if ($players->count() > 0)
 				<div class="row py-2">
 					@foreach ($players as $player)
-						<div class="col-12 col-md-6 col-xl-4 py-1 px-3">
+						<div class="col-12">
 							@include('market.index.card_data')
 						</div>
 					@endforeach
@@ -38,11 +61,10 @@
 			        </div>
 			    </div>
 			@else
-				<div class="py-3 px-1 text-center">
-					<h5>No se han encontrado resultados</h5>
-					<figure class="text-center">
-						<img class="img-fluid" src="https://media.giphy.com/media/12zV7u6Bh0vHpu/giphy.gif">
-					</figure>
+				<div class="row">
+					<div class="col-12 col-lg-6 offset-lg-3 p-0">
+						@include('market.index.card_data_empty')
+					</div>
 				</div>
 			@endif
 		</section> {{-- content --}}

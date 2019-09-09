@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->enum('type', ['default', 'transfer', 'result', 'press', 'duel', 'champion', 'birthday'])->index();
             $table->integer("transfer_id")->unsigned()->nullable();
             $table->integer("match_id")->unsigned()->nullable();
+            $table->integer("press_id")->unsigned()->nullable();
             $table->string('category')->nullable()->index();
             $table->string('title')->nullable();
             $table->string('description')->nullable();

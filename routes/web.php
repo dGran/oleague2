@@ -23,12 +23,13 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 Route::get('/', 'HomeController@index')->name('home');
 
 // Clubs routes
-Route::get('clubs', 'HomeController@clubs')->name('clubs');
-Route::get('clubs/{slug}', 'HomeController@club')->name('club');
-Route::get('clubs/{slug}/plantilla', 'HomeController@clubRoster')->name('club.roster');
-Route::get('clubs/{slug}/economia', 'HomeController@clubEconomy')->name('club.economy');
-Route::get('clubs/{slug}/calendario', 'HomeController@clubCalendar')->name('club.calendar');
-Route::get('clubs/{slug}/sala-de-prensa', 'HomeController@clubPress')->name('club.press');
+Route::get('clubs', 'ClubController@clubs')->name('clubs');
+Route::get('clubs/{slug}', 'ClubController@club')->name('club');
+Route::get('clubs/{slug}/plantilla', 'ClubController@clubRoster')->name('club.roster');
+Route::get('clubs/{slug}/economia', 'ClubController@clubEconomy')->name('club.economy');
+Route::get('clubs/{slug}/calendario', 'ClubController@clubCalendar')->name('club.calendar');
+Route::get('clubs/{slug}/sala-de-prensa', 'ClubController@clubPress')->name('club.press');
+Route::post('clubs/{slug}/sala-de-prensa/nueva', 'ClubController@clubPressAdd')->name('club.press.add');
 
 Route::get('reglamento', 'HomeController@rules')->name('rules');
 

@@ -48,4 +48,9 @@ class SeasonPlayer extends Model
         }
         return true;
     }
+
+    public function clause_price()
+    {
+        return $this->price * 1.10;
+    }
 }

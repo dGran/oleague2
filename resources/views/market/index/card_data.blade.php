@@ -1,32 +1,4 @@
 <div class="item-header clearfix">
-	<div class="type">
-		@if ($player->type == 'free')
-			<span class="text-primary">
-				jugador libre
-			</span>
-		@endif
-		@if ($player->type == 'negotiation')
-			<span class="text-primary">
-				Negociación
-			</span>
-		@endif
-		@if ($player->type == 'clause')
-			<span class="text-success" style="font-size: 1.25em">
-				<i class="fab fa-paypal" style="font-weight: normal"></i>
-				Clausulazo!!!
-			</span>
-		@endif
-		@if ($player->type == 'cession')
-			<span class="text-warning">
-				Cesión
-			</span>
-		@endif
-		@if ($player->type == 'dismiss')
-			<span class="text-danger">
-				Despido
-			</span>
-		@endif
-	</div>
 	<div class="date">
 		<i class="fas fa-history"></i>
 		{{ $player->created_at->diffForHumans() }}

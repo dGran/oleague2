@@ -1,4 +1,4 @@
-<div class="item {{ !$player->season_player->participant ? 'free' : '' }} {{ !$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()) ? 'clause-pay' : '' }}">
+<div class="item {{ !$player->season_player->participant ? 'free' : '' }} {{ (!$player->season_player->allow_clause_pay && $player->season_player->participant) || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()) ? 'clause-pay' : '' }}">
 	@if (player_in_showcase($player->season_player->id))
 		<span class="showcase badge badge-success">Escaparate</span>
 	@endif
@@ -42,10 +42,10 @@
 		</div> {{-- clause-data --}}
 	@endif
 	@if (!$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()))
-		@if (!$player->season_player->allow_clause_pay)
+		@if (!$player->season_player->allow_clause_pay && $player->season_player->participant)
 			<small class="clause-pay">Claúsula pagada</small>
 		@endif
-		@if ($player->season_player->participant->clauses_received_limit())
+		@if ($player->season_player->participant && $player->season_player->participant->clauses_received_limit())
 			<small class="clause-pay">Límite claúsulas</small>
 		@endif
 	@endif
@@ -69,10 +69,10 @@
 					<a class="dropdown-item {{ !$player->season_player->participant ? 'disabled' : '' }}" href="">
 						Abrir negociación
 					</a>
-					<a class="dropdown-item {{ !$player->season_player->participant || !$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()) || ($player->season_player->participant && participant_of_user()->clauses_paid_limit()) ? 'disabled' : '' }}" href="">
+					<a class="dropdown-item {{ !$player->season_player->participant || !$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()) || ($player->season_player->participant && participant_of_user()->clauses_paid_limit()) || $player->season_player->participant && $player->season_player->participant->id == participant_of_user()->id || participant_of_user()->budget() < $player->season_player->clause_price() || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->price, 2, ',', '.') }}')">
 						Pagar claúsula
 					</a>
-					<a class="dropdown-item {{ $player->season_player->participant ? 'disabled' : '' }}" href="" onclick="sign_free_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->season->free_players_cost, 2, ',', '.') }}')">
+					<a class="dropdown-item {{ $player->season_player->participant || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="sign_free_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->season->free_players_cost, 2, ',', '.') }}')">
 						Fichar jugador
 					</a>
 				</div> {{-- dropdown-menu --}}

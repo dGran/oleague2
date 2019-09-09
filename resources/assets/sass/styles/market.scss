@@ -119,14 +119,21 @@
 			border: 1px solid #f1eff3;
 			border-radius: .25rem;
 			font-size: .9em;
-			height: 100px;
+			height: 120px;
+			margin: 0 .25rem 1em .25rem;
 			line-height: 1.25em;
 			position: relative;
+			&.empty {
+				height: auto;
+				margin: 1em;
+				padding: 1em;
+				text-align: center;
+			}
 			.player-img {
 				bottom: 0;
 				left: 0;
 				position: absolute;
-				width: 64px;
+				width: 80px;
 			}
 			.position {
 				border: 1px solid #ffffff;
@@ -205,13 +212,14 @@
 			.icon-transfer-out {
 				color: $danger;
 				font-size: 2em;
-				left: 59px;
+				left: 69px;
+				opacity: .4;
 				position: absolute;
 				top: 35px;
 			}
 			.participant-from-logo {
 				height: 26px;
-				left: 89px;
+				left: 99px;
 				position: absolute;
 				top: 35px;
 				width: 26px;
@@ -220,7 +228,7 @@
 			.participant-from-name {
 				font-size: .6rem;
 				font-weight: bold;
-				left: 120px;
+				left: 130px;
 				position: absolute;
 				text-transform: uppercase;
 				top: 35px;
@@ -231,7 +239,7 @@
 			}
 			.participant-from-subname {
 				font-size: .55rem;
-				left: 120px;
+				left: 130px;
 				position: absolute;
 				top: 46px;
 				opacity: .4;
@@ -239,33 +247,33 @@
 			.icon-transfer-in {
 				color: $success;
 				font-size: 2em;
-				left: 59px;
-				position: absolute;
-				top: 65px;
-			}
-			.participant-to-logo {
-				height: 26px;
 				left: 89px;
 				position: absolute;
+				top: 72px;
+			}
+			.participant-to-logo {
+				height: 42px;
+				left: 119px;
+				position: absolute;
 				top: 65px;
-				width: 26px;
+				width: 42px;
 			}
 			.participant-to-name {
-				font-size: .6rem;
+				font-size: .8rem;
 				font-weight: bold;
-				left: 120px;
+				left: 165px;
 				position: absolute;
 				text-transform: uppercase;
-				top: 65px;
+				top: 72px;
 				&.none {
-					top: 70px;
+					top: 77px;
 				}
 			}
 			.participant-to-subname {
-				font-size: .55rem;
-				left: 120px;
+				font-size: .65rem;
+				left: 165px;
 				position: absolute;
-				top: 76px;
+				top: 86px;
 			}
 			.nation-logo {
 				border-radius: 50%;
@@ -278,6 +286,7 @@
 			}
 		}
 		.item-header {
+			margin: 0 .25rem;
 			.type {
 				float: left;
 				font-size: .7em;
@@ -629,6 +638,12 @@
 			height: 140px;
 			line-height: 1.25em;
 			position: relative;
+			&.empty {
+				height: auto;
+				margin: 1em;
+				padding: 1em;
+				text-align: center;
+			}
 			.player-img {
 				bottom: 0;
 				left: 0px;
@@ -851,6 +866,12 @@
 			line-height: 1.25em;
 			margin: .75rem .75rem 0 .75rem;
 			position: relative;
+			&.empty {
+				height: auto;
+				margin-bottom: 1em;
+				padding: 1em;
+				text-align: center;
+			}
 			&.free {
 				border: 1px solid lighten($warning, 25%);
 				background: lighten($warning, 35%);

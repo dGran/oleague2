@@ -66,15 +66,22 @@
         <div class="col-12">
             <ul style="list-style: none; margin:0; padding: 0;">
             @foreach ($posts as $post)
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
-                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
-
-                        <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
+                <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
+                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative; line-height: 1.1em;" class="m-0 text-center align-top px-2">
+                        @if ($post->type == "transfer")
+                            <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
+                        @elseif ($post->type == "press")
+                            <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
+                            <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
+                        @endif
                     </figure>
                     <div style="display: table-cell; padding-left: 8px;" class="align-top">
                         <ul style="list-style: none; margin:0; padding: 0">
                             <li>
-                                <span style="display: block; font-size: 11px; color: #00d4e4">
+                                <span class="text-white d-block" style="font-size: .7em">
+                                    {{ $post->created_at->diffForHumans() }}
+                                </span>
+                                <span style="display: block; margin-bottom: 6px; font-size: 11px; color: #00d4e4">
                                     {{ $post->category }}
                                 </span>
                                 <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
@@ -98,35 +105,9 @@
 
 {{--             <img src="https://www.mundodeportivo.com/r/GODO/MD/p6/Barca/Imagenes/2019/03/13/Recortada/img_rguillamet_20190313-224453_imagenes_md_otras_fuentes_champions-03-klvB-U461014157231diG-980x554@MundoDeportivo-Web.jpg" class="img-fluid" alt="" width="450"> --}}
 
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
-                    <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
 
-                        <img src="img/microphone.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
-                        <small class="text-white" style="text-shadow: 0 0 20px #ed1e79;">Luizao</small>
-                    </figure>
-                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
-                        <ul style="list-style: none; margin:0; padding: 0">
-                            <li>
-                                <span style="display: block; font-size: 11px; color: #00d4e4">
-                                    RUEDA DE PRENSA - AJAX
-                                </span>
-                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
-                                    "Konami me trolea"
-                                </span>
-                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
-                                    El técnico del Ajax explota y carga contra los desarrolladores de Konami. "Es muy injusto querer hacer cosas y no poder"
-                                </span>
-                            </li>
-                            <li class="text-right pt-2">
-                                <span style="display: block; font-size: 11px; color: #fafafa">
-                                     hoy, a las 3:43
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
 
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
+                <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
                     <figure style="width: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
                         <img src="https://image.flaticon.com/icons/svg/448/448003.svg" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
                     </figure>
@@ -153,7 +134,7 @@
 
 
 
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
                     <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
 
                         <img src="https://seeklogo.com/images/F/FC_Barcelona-logo-D941E13B46-seeklogo.com.png" alt="" style="position:absolute; left: 10px; top: 0; width: 50px; height: auto" class="rounded">
@@ -186,7 +167,7 @@
                     <img src="http://i61.tinypic.com/wph76.jpg" alt="" class="img-fluid">
                 </li> --}}
 
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
                     <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
 
                         <img src="img/winner.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
@@ -209,30 +190,8 @@
                     </div>
                 </li>
 
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
-                    <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
 
-                        <img src="img/microphone.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
-                        <small class="text-white" style="text-shadow: 0 0 20px #ed1e79;">padronee</small>
-                    </figure>
-                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
-                        <ul style="list-style: none; margin:0; padding: 0">
-                            <li>
-                                <span style="display: block; font-size: 11px; color: #00d4e4">
-                                    RUEDA DE PRENSA - ZENIT
-                                </span>
-                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
-                                    "Pollito no está en venta"
-                                </span>
-                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
-                                    Es el jugador más valioso del equipo, si alguien lo quiere que pase por caja. Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
+                <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
                     <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
 
                         <img src="img/score.png" alt="" style="padding: .5em; width: 100%; height: auto;" class="rounded">
@@ -273,49 +232,6 @@
                     </div>
                 </li>
 
-
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
-                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
-
-                        <img src="http://pesdb.net/pes2019/images/players/60550.png" alt="L. Suarez firma por el PSG" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
-                    </figure>
-                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
-                        <ul style="list-style: none; margin:0; padding: 0">
-                            <li>
-                                <span style="display: block; font-size: 11px; color: #00d4e4">
-                                    FICHAJES - ZENIT
-                                </span>
-                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
-                                    A. Saint-Maximin "Pollito" firma por el ZENIT
-                                </span>
-                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
-                                    Se incorpora como agente libre
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="py-2 d-inline-block" style="display: table; border-top: 1px solid #292C5E">
-                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
-
-                        <img src="http://pesdb.net/pes2018/images/players/player_34881.png" alt="L. Suarez firma por el PSG" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
-                    </figure>
-                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
-                        <ul style="list-style: none; margin:0; padding: 0">
-                            <li>
-                                <span style="display: block; font-size: 11px; color: #00d4e4">
-                                    FICHAJES - ZENIT
-                                </span>
-                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
-                                    A. Saint-Maximin "Pollito" firma por el ZENIT
-                                </span>
-                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
-                                    Se incorpora como agente libre
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
 
         </div>
