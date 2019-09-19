@@ -14,6 +14,113 @@ body {
    flex: 1;
 }
 
+.player-card {
+	background-image: url(https://www.pesmaster.com/pes-2020/graphics/cards/000_l.png);
+	line-height: 1.2;
+	width: 160px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    .overall {
+		color: #ffffff;
+		font-family: 'DINPro-Bold', 'Open Sans', sans-serif;
+		font-size: 34px;
+		font-weight: bold;
+		left: 0;
+		position: absolute;
+		text-align: center;
+		top: 30px;
+		width: 60px;
+		z-index: 4;
+    }
+    .position {
+		color: #ffffff;
+		font-family: 'DINPro-Bold', 'Open Sans', sans-serif;
+		font-size: 22px;
+		font-weight: bold;
+		left: 0;
+		position: absolute;
+		text-align: center;
+		top: 2px;
+		width: 60px;
+		z-index: 4;
+    }
+    .name {
+		background: rgba(0,0,0,0.7);
+		bottom: 0;
+		color: #FFF;
+		font-family: 'DINPro-Medium', 'Open Sans', sans-serif;
+		font-size: 19px;
+		height: 28px;
+		line-height: 28px;
+		overflow: hidden;
+		position: absolute;
+		text-align: center;
+		text-overflow: ellipsis;
+		text-transform: uppercase;
+		white-space: nowrap;
+		width: 100%;
+		z-index: 5;
+    }
+    .team-logo {
+		left: 12px;
+		position: absolute;
+		top: 79px;
+		width: 34px;
+    }
+    .img {
+		height: 110px;
+		position: absolute;
+		right: 0;
+		top: 18px;
+		width: 110px;
+		z-index: 3;
+    }
+	.stats {
+		color: #ffffff;
+		font-family: 'DINPro-Bold', 'Open Sans', sans-serif !important;
+		font-size: 18px;
+		font-weight: bold;
+		position: absolute;
+		top: 138px;
+		z-index: 5;
+		.stat-name {
+			font-family: 'DINPro-Medium', 'Open Sans', sans-serif !important;
+    		font-weight: normal;
+		}
+		&.right {
+			left: 90px;
+		}
+	    &.left {
+			left: 10px;
+		}
+    }
+    .stats-bg {
+		background: rgba(0,0,0,0.3);
+		height: 100px;
+		left: 0;
+		position: absolute;
+		top: 128px;
+		width: 100%;
+		z-index: 4;
+    }
+    a {
+		cursor: pointer;
+		text-decoration: underline;
+		.clicktrap {
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 5;
+		}
+    }
+}
+
 main {
 	.phases-selector, .groups-selector {
 	    list-style: none;

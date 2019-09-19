@@ -1501,6 +1501,47 @@
 	}
 }
 
+.negotiations {
+	background: #f9f9f9;
+	.header {
+		background: #EEEEEE;
+		border-bottom: 1px solid #f1eff3;
+		padding: .5rem 0;
+		ul {
+			font-size: .8em;
+			text-align: center;
+			width: 100%;
+		}
+	}
+	.content {
+		.tab-content {
+			padding: 1rem 0;
+			table {
+				font-size: .9em;
+				width: 100%;
+				.date {
+					td {
+						padding-top: .5em;
+					}
+				}
+				.data {
+					border-bottom: 1px solid #f1eff3;
+					td {
+						padding: .25em .25em .5em .25em;
+					}
+				}
+				.detail {
+					border-bottom: 1px solid #f1eff3;
+					td {
+						padding: .5em 0;
+					}
+				}
+			}
+		}
+
+	}
+}
+
 .searchbox {
 	margin: .75rem .25rem 0 .25rem;
 	font-size: 1em;
@@ -1529,6 +1570,26 @@
 }
 
 .scrolling-wrapper {
+	ul {
+		display: inline-block;
+		li {
+			border: none;
+			display: inline-block;
+			padding: .25em;
+			text-align: center;
+			&.active {
+				// background: rgba(0, 0, 0, .30);
+				pointer-events: none;
+			}
+			&:hover {
+				// background: rgba(0, 0, 0, .1);
+			}
+			a {
+				text-align: center;
+			}
+		}
+
+	}
 	.card {
 		display: inline-block;
 		background: transparent;

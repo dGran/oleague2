@@ -1,4 +1,18 @@
 @font-face {
+  font-family: 'DINPro-Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('../fonts/DINPro-Medium'), url('../fonts/DINPro-Medium_13936.woff') format('woff');
+}
+
+@font-face {
+font-family: 'DINPro-Bold';
+font-style: normal;
+font-weight: normal;
+src: local('../fonts/DINPro-Bold'), url('../fonts/DINPro-Bold_13934.woff') format('woff');
+}
+
+@font-face {
   font-family: 'icomoon';
   src:  url('../fonts/icomoon.eot?mmooqf');
   src:  url('../fonts/icomoon.eot?mmooqf#iefix') format('embedded-opentype'),

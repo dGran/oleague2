@@ -32,11 +32,11 @@
 					<span>Mi equipo</span>
 				</a>
 			</li>
-			<li class="item {{ \Route::current()->getName() == 'club.press' ? 'active' : '' }}">
-				<a href="{{ route('club.press', 'ss') }}">
+			<li class="item {{ \Request::is('mercado/negociaciones*') ? 'active' : '' }}">
+				<a href="{{ route('market.trades') }}">
 					<i class="icon-negotiation"></i>
 					<span>Negocios</span>
-					<span class="counter badge badge-danger rounded-circle">5</span>
+					{{-- <span class="counter badge badge-danger rounded-circle">5</span> --}}
 				</a>
 			</li>
 			<li class="item {{ \Route::current()->getName() == 'market.favorites' ? 'active' : '' }}">

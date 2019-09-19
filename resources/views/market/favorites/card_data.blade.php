@@ -44,8 +44,7 @@
 	@if (!$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()))
 		@if (!$player->season_player->allow_clause_pay && $player->season_player->participant)
 			<small class="clause-pay">Claúsula pagada</small>
-		@endif
-		@if ($player->season_player->participant && $player->season_player->participant->clauses_received_limit())
+		@elseif ($player->season_player->participant && $player->season_player->participant->clauses_received_limit())
 			<small class="clause-pay">Límite claúsulas</small>
 		@endif
 	@endif

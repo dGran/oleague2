@@ -71,6 +71,8 @@ Route::get('mercado/mi-equipo/jugador/declarar-cedible/{id}', 'MarketController@
 Route::get('mercado/mi-equipo/jugador/eliminar-etiquetas/{id}', 'MarketController@tagsDelete')->name('market.my_team.player.tags.delete');
 Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
 
+Route::get('mercado/negociaciones', 'MarketController@trades')->name('market.trades');
+
 Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
 Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');
 

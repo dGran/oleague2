@@ -1657,6 +1657,51 @@
   color: #5ac200;
 }
 
+.negotiations {
+  background: #f9f9f9;
+}
+
+.negotiations .header {
+  background: #EEEEEE;
+  border-bottom: 1px solid #f1eff3;
+  padding: .5rem 0;
+}
+
+.negotiations .header ul {
+  font-size: .8em;
+  text-align: center;
+  width: 100%;
+}
+
+.negotiations .content .tab-content {
+  padding: 1rem 0;
+}
+
+.negotiations .content .tab-content table {
+  font-size: .9em;
+  width: 100%;
+}
+
+.negotiations .content .tab-content table .date td {
+  padding-top: .5em;
+}
+
+.negotiations .content .tab-content table .data {
+  border-bottom: 1px solid #f1eff3;
+}
+
+.negotiations .content .tab-content table .data td {
+  padding: .25em .25em .5em .25em;
+}
+
+.negotiations .content .tab-content table .detail {
+  border-bottom: 1px solid #f1eff3;
+}
+
+.negotiations .content .tab-content table .detail td {
+  padding: .5em 0;
+}
+
 .searchbox {
   margin: .75rem .25rem 0 .25rem;
   font-size: 1em;
@@ -1686,6 +1731,25 @@
 
 .searchbox span:hover {
   color: #1694CA;
+}
+
+.scrolling-wrapper ul {
+  display: inline-block;
+}
+
+.scrolling-wrapper ul li {
+  border: none;
+  display: inline-block;
+  padding: .25em;
+  text-align: center;
+}
+
+.scrolling-wrapper ul li.active {
+  pointer-events: none;
+}
+
+.scrolling-wrapper ul li a {
+  text-align: center;
 }
 
 .scrolling-wrapper .card {

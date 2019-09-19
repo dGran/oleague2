@@ -49,8 +49,7 @@
 	@if (!$player->allow_clause_pay || ($player->participant && $player->participant->clauses_received_limit()))
 		@if (!$player->allow_clause_pay && $player->participant)
 			<small class="clause-pay">Claúsula pagada</small>
-		@endif
-		@if ($player->participant && $player->participant->clauses_received_limit())
+		@elseif ($player->participant && $player->participant->clauses_received_limit())
 			<small class="clause-pay">Límite claúsulas</small>
 		@endif
 	@endif

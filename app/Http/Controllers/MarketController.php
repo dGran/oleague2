@@ -14,6 +14,7 @@ use App\SeasonParticipant;
 use App\SeasonParticipantCashHistory as Cash;
 use App\Transfer;
 use App\Post;
+use App\Trade;
 
 
 class MarketController extends Controller
@@ -1020,6 +1021,33 @@ class MarketController extends Controller
 	        }
 	        return back();
     	}
+    }
+
+    public function trades()
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
+					->where('user_id', '=', auth()->user()->id)->first();
+
+				$offers_sent = Trade::where('season_id', '=', active_season()->id)
+					->where('state', '=', 'pending')
+					->where('participant1_id', '=', participant_of_user()->id)
+					->orderBy('created_at', 'desc')
+					->get();
+				$offers_received = Trade::where('season_id', '=', active_season()->id)
+					->where('state', '=', 'pending')
+					->where('participant2_id', '=', participant_of_user()->id)
+					->orderBy('created_at', 'desc')
+					->get();
+
+				return view('market.trades', compact('participant', 'offers_sent', 'offers_received'));
+			}
+    	}
+
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
 
