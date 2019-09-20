@@ -15,7 +15,7 @@ class CreateSeasonsTable extends Migration
     {
         Schema::create('seasons', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->index();
             $table->integer('num_participants')->default(0);
             $table->boolean('participant_has_team')->default(1);
             $table->boolean('use_economy')->default(1);
@@ -29,8 +29,8 @@ class CreateSeasonsTable extends Migration
             $table->integer('players_db_id')->unsigned()->index();
             $table->integer('min_players')->default(0);
             $table->integer('max_players')->default(0);
-            $table->integer('max_clauses_paid', 2)->nullable();
-            $table->integer('max_clauses_received', 2)->nullable();
+            $table->integer('max_clauses_paid')->length(2)->nullable();
+            $table->integer('max_clauses_received')->length(2)->nullable();
             $table->boolean('change_salaries_period')->default(0);
             $table->boolean('transfers_period')->default(0);
             $table->boolean('free_players_period')->default(0);
