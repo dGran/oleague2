@@ -49,3 +49,16 @@
         });
     </script>
 @endif
+
+@if (session('status'))
+    <script>
+        $(function(){
+            swal({
+                className: "swal-success",
+                text : '{{ session('status') }}',
+                timer: 3000,
+                button: false,
+            })
+        });
+    </script>
+@endif
