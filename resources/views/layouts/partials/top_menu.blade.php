@@ -47,7 +47,7 @@
                                 </figure>
                             </a>
                         @else
-                            <a id="btn-user-menu">
+                            <a id="btn-user-menu" class="btn-user-menu">
                                 <figure class="user-img">
                                     <img class="default" src="{{ asset('img/avatars/default.png') }}" alt="">
                                 </figure>
