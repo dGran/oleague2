@@ -33,7 +33,7 @@
                         <img class="d-none" id="btn-user-close" src="{{ asset('img/avatars/close.png') }}">
                         {{-- end img patch for javascript --}}
                         <div class="btn-group dropup">
-                            <a id="btn-user-menu">
+                            <a class="btn-user-menu" href="{{ route('login') }}">
                                 <figure class="user-img ml-3">
                                     <img class="guest" src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
                                 </figure>
@@ -41,7 +41,7 @@
                         </div>
                     @else
                         @if (auth()->user()->hasProfile())
-                            <a id="btn-user-menu">
+                            <a id="btn-user-menu" class="btn-user-menu">
                                 <figure class="user-img">
                                     <img class="{{ auth()->user()->profile->avatar ? '' : 'default' }}" src="{{ auth()->user()->profile->getAvatarFormatted() }}" alt="">
                                 </figure>

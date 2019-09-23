@@ -10852,11 +10852,11 @@ header .top-menu .user a:hover {
   color: #f8f9fa;
 }
 
-header .top-menu .user #btn-user-menu {
+header .top-menu .user .btn-user-menu {
   cursor: pointer;
 }
 
-header .top-menu .user #btn-user-menu .user-img {
+header .top-menu .user .btn-user-menu .user-img {
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -10866,7 +10866,7 @@ header .top-menu .user #btn-user-menu .user-img {
   width: 40px;
 }
 
-header .top-menu .user #btn-user-menu .user-img img {
+header .top-menu .user .btn-user-menu .user-img img {
   border-radius: 50%;
   height: 100%;
   width: auto;
@@ -10875,9 +10875,9 @@ header .top-menu .user #btn-user-menu .user-img img {
   vertical-align: middle;
 }
 
-header .top-menu .user #btn-user-menu .user-img img.guest,
-header .top-menu .user #btn-user-menu .user-img img.default,
-header .top-menu .user #btn-user-menu .user-img img.menu-close {
+header .top-menu .user .btn-user-menu .user-img img.guest,
+header .top-menu .user .btn-user-menu .user-img img.default,
+header .top-menu .user .btn-user-menu .user-img img.menu-close {
   border-radius: 0%;
   -webkit-filter: invert(100%);
           filter: invert(100%);
