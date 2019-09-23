@@ -10,8 +10,14 @@
         <span>Clubs</span>
     </a>
 </li>
-<li class="nav-item {{ \Request::is('competiciones*') ? 'current' : '' }}">
+{{-- <li class="nav-item {{ \Request::is('competiciones*') ? 'current' : '' }}">
     <a class="nav-link {{ \Request::is('competiciones*') ? 'disabled' : '' }}" href="{{ route('competitions') }}">
+        <i class="icon-trophy"></i>
+        <span>Competiciones</span>
+    </a>
+</li> --}}
+<li class="nav-item {{ \Request::is('competiciones*') ? 'current' : '' }}">
+    <a class="nav-link {{ \Request::is('competiciones*') ? 'disabled' : '' }}" href="">
         <i class="icon-trophy"></i>
         <span>Competiciones</span>
     </a>
@@ -22,8 +28,14 @@
         <span>Mercado</span>
     </a>
 </li>
-<li class="nav-item {{ \Request::is('reglamento*') ? 'current' : '' }}">
+{{-- <li class="nav-item {{ \Request::is('reglamento*') ? 'current' : '' }}">
     <a class="nav-link {{ \Request::is('reglamento*') ? 'disabled' : '' }}" href="{{ route('rules') }}">
+        <i class="icon-judge"></i>
+        <span>Reglas</span>
+    </a>
+</li> --}}
+<li class="nav-item {{ \Request::is('reglamento*') ? 'current' : '' }}">
+    <a class="nav-link {{ \Request::is('reglamento*') ? 'disabled' : '' }}" href="">
         <i class="icon-judge"></i>
         <span>Reglas</span>
     </a>
