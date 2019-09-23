@@ -68,11 +68,6 @@
                                         <strong><small>{{ $errors->first('password') }}</small></strong>
                                     </span>
                                 @endif
-                                <div class="pt-1">
-                                    <a href="{{ route('password.request') }}" style="font-size: .8em;" class="text-warning">
-                                        Olvidé mi contraseña
-                                    </a>
-                                </div>
                             </div>
 
                             <div class="form-group">
@@ -85,8 +80,14 @@
 
                         </form>
 
+                        <div class="text-center mt-3">
+                            <a href="{{ route('password.request') }}" style="font-size: .8em; color: #ab045e; display: block">
+                                Olvidé mi contraseña
+                            </a>
+                        </div>
+
                         <div class="text-center mt-4">
-                            <a href="{{ route('register') }}" class="text-warning">
+                            <a href="{{ route('register') }}" class="btn" style="background: #ab045e; color: #fff">
                                 ¿NO TIENES CUENTA?<br>REGÍSTRATE!
                             </a>
                         </div>
