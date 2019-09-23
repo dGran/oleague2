@@ -1,3 +1,11 @@
+<div class="announcement">
+    <div class="container text-center">
+        <a class="text-white" href="https://t.me/lpx_telegram" target="_blank">
+            Sigue todas las noticias desde <strong><i class="fab fa-telegram-plane ml-2 mr-1"></i> Telegram</strong>
+        </a>
+    </div>
+</div>
+
 <div class="corporate">
     <div class="container">
         <div class="logo text-center">
@@ -5,9 +13,6 @@
             <span>
                 LigasPesXbox
             </span>
-            <a class="text-white" href="https://t.me/lpx_telegram" target="_blank">
-                <i class="fab fa-telegram-plane"></i> Canal Telegram
-            </a>
         </div>
 
 

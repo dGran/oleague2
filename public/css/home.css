@@ -1,27 +1,3 @@
-.section-title {
-    background: #161b35;
-    border-bottom: 1px solid #292C5E;
-    border-top: 1px solid #292C5E;
-    padding: 1em .5em;
-}
-.section-title h3 {
-    color: #00d4e4;
-    font-family: 'DINPro-Bold', 'Open Sans', sans-serif;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0;
-    text-transform: uppercase;
-}
-.section-title .navigation-buttons a {
-    color: #00d4e4;
-    font-size: 10px;
-    font-weight: bold;
-}
-.section-title .navigation-buttons span {
-    color: #00d4e4;
-    font-size: 10px;
-}
-
 .cover-page-wrap {
     background-image: url('../img/bg_sp.jpg');
     background-position: top center;
@@ -67,22 +43,30 @@
     height: 40px;
 }
 
-.slogan {
-    background-color: rgba(0,0,0,.7);
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
+.section-title {
+    background: #161b35;
+    border-bottom: 1px solid #292C5E;
+    border-top: 1px solid #292C5E;
+    padding: 1em .5em;
 }
-
-.slogan p {
-    padding: 1rem;
-    margin: 0;
-    text-align: center;
+.section-title h3 {
     color: #00d4e4;
-    font-size: 1.25em;
+    font-family: 'DINPro-Bold', 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    text-transform: uppercase;
+}
+.section-title .navigation-buttons a {
+    color: #00d4e4;
+    font-size: 10px;
     font-weight: bold;
 }
+.section-title .navigation-buttons span {
+    color: #00d4e4;
+    font-size: 10px;
+}
+
 
 @media screen and (min-width: 520px) {
     .cover-page-wrap {

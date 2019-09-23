@@ -11331,6 +11331,12 @@ header .section .match .visitor .participant {
   color: #fff;
 }
 
+.footer .announcement {
+  background: #ab045e;
+  color: #fff;
+  padding: 1em;
+}
+
 .footer .corporate {
   background: #3f4b55;
   border-top: 1px solid #44515d;

@@ -228,22 +228,26 @@
             </div>
         </div>
 
-
-            <div class="section-title">
-                <div class="container">
-                    <h3>
-                        Recién llegados
-                    </h3>
-                </div>
+        <div class="section-title">
+            <div class="container">
+                <h3>
+                    Recién llegados
+                </h3>
             </div>
-            <div class="container py-md-3 p-0">
-                <p class="p-3 bg-white m-0">
-                    @foreach ($last_users as $user)
-                        {{ $user->name }}
-                    @endforeach
-                </p>
+        </div>
+        <div class="container p-3 text-white">
+            <p>
+                Últimos usuarios registrados en LPX
+            </p>
+            <ul>
+                @foreach ($last_users as $user)
+                    <li>{{ $user->name }}</li>
 
-            </div>
+                @endforeach
+            </ul>
+
+        </div>
+
 
     </div> {{-- wrapper --}}
 
