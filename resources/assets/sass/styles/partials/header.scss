@@ -218,7 +218,7 @@ header {
 		}
 	}
 	#user-menu {
-		background: rgba(22, 27, 53, .99);
+		background: rgba(29, 36, 74, 0.99);
 		-webkit-box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
 		-moz-box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
 		box-shadow: 0px 3px 7px -1px rgba(53,63,72,1);
@@ -232,12 +232,12 @@ header {
 			.nav {
 				.nav-item {
 					border-left: 4px solid transparent;
-					border-top: 1px solid lighten(#161b35, 7%);
+					border-top: 1px solid lighten(#1D244A, 7%);
 					display: block;
 					font-size: 1em;
 					padding: .25em .75em;
 					&:hover {
-						background: lighten(#161b35, 6%);
+						background: lighten(#1D244A, 6%);
 						border-left: 4px solid #00d4e4;
 						.nav-link {
 							i, span {
@@ -328,7 +328,7 @@ header {
 						}
 					}
 					&.current {
-						background: lighten(#161b35, 7%);
+						background: lighten(#1D244A, 7%);
 						border-left: 4px solid #00d4e4;
 						.nav-link {
 							i, span {

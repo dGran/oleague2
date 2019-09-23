@@ -81,9 +81,10 @@ class HomeController extends Controller
                 $onlineUsersCount++;
             }
         }
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate();
+        $last_users = User::where('verified', '=', 1)->orderBy('created_at', 'desc')->take(5)->get();
 
-        return view('home', compact('onlineUsersCount', 'posts'));
+        return view('home', compact('onlineUsersCount', 'posts', 'last_users'));
     }
 
 

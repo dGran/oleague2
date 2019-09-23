@@ -38,7 +38,7 @@
                                             <i class="fas fa-user"></i>
                                         </span>
                                     </div>
-                                    <input type="name" class="form-control" name="name" id="email" value="{{ old('name') }}" placeholder="Nombre de usuario" aria-label="name" aria-describedby="basic-addon0" required autofocus>
+                                    <input type="name" class="form-control" name="name" id="name" value="{{ old('name') }}" placeholder="Nombre de usuario" aria-label="name" aria-describedby="basic-addon0" required autofocus>
                                 </div>
                                 @if ($errors->has('name'))
                                     <span class="text-danger" role="alert">

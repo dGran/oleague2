@@ -5357,7 +5357,7 @@ input[type="button"].btn-block {
 .breadcrumb-item + .breadcrumb-item::before {
   display: inline-block;
   padding-right: 0.5rem;
-  color: #ffb44e;
+  color: #89be38;
   content: "/";
 }
 
@@ -5370,7 +5370,7 @@ input[type="button"].btn-block {
 }
 
 .breadcrumb-item.active {
-  color: #ffb44e;
+  color: #89be38;
 }
 
 .pagination {
@@ -10992,7 +10992,7 @@ header #menu nav .nav .nav-item.current .nav-link span {
 }
 
 header #user-menu {
-  background: rgba(22, 27, 53, 0.99);
+  background: rgba(29, 36, 74, 0.99);
   -webkit-box-shadow: 0px 3px 7px -1px #353f48;
   box-shadow: 0px 3px 7px -1px #353f48;
   display: none;
@@ -11005,14 +11005,14 @@ header #user-menu {
 
 header #user-menu nav .nav .nav-item {
   border-left: 4px solid transparent;
-  border-top: 1px solid #20284e;
+  border-top: 1px solid #273064;
   display: block;
   font-size: 1em;
   padding: .25em .75em;
 }
 
 header #user-menu nav .nav .nav-item:hover {
-  background: #1f264b;
+  background: #262f60;
   border-left: 4px solid #00d4e4;
 }
 
@@ -11120,7 +11120,7 @@ header #user-menu nav .nav .nav-item .nav-link.disabled {
 }
 
 header #user-menu nav .nav .nav-item.current {
-  background: #20284e;
+  background: #273064;
   border-left: 4px solid #00d4e4;
 }
 
@@ -11338,24 +11338,25 @@ header .section .match .visitor .participant {
 }
 
 .footer .corporate .logo {
-  font-size: 1.15em;
   margin: 0;
+  padding: 1em 0;
   text-align: center;
 }
 
-.footer .corporate .logo figure {
-  display: inline-block;
+.footer .corporate .logo i {
+  display: block;
+  font-size: 2.5em;
+  margin-bottom: .25rem;
 }
 
-.footer .corporate .logo figure img {
-  height: 24px;
-  width: auto;
+.footer .corporate .logo span {
+  font-size: 1.25em;
 }
 
 .footer .corporate .cookies {
   border-top: 1px solid #44515d;
   font-size: .9em;
-  margin: 0;
+  margin: 1em 0 0 0;
   padding: 1em 0;
   text-align: center;
 }

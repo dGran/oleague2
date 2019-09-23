@@ -1,58 +1,60 @@
-    <section class="top-menu">
-    <div class="row align-items-center mx-2 mx-md-5 mx-lg-2" style="max-height: 54px; min-height: 54px;">
-        <div class="col d-inline-block d-md-none">
-            <button class="hamburger hamburger-cancel">
-                <span class="icon"></span>
-            </button>
-        </div>
-        <div class="col-auto ">
-            <h1>
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <i class="icon-logo"></i>
-                    <span>LigasPesXbox</span>
-                </a>
-            </h1>
-        </div>
-        <div class="col-auto d-none d-md-inline-block">
-            <nav>
-                <ul class="nav">
-                    @include('layouts.partials.menu')
-                </ul>
-            </nav>
-        </div>
-        <div class="col user text-right">
-            <div class="btn-group dropright">
-                @guest
-                    <div class="d-none d-lg-inline-block">
-                        <a class="text-white" href="{{ route('login') }}">Iniciar sesión</a>
-                        <span class="text-white">/</span>
-                        <a  class="text-white" href="{{ route('register') }}">Regístrate</a>
-                    </div>
-                    {{-- img patch for javascript --}}
-                    <img class="d-none" id="btn-user-close" src="{{ asset('img/avatars/close.png') }}">
-                    {{-- end img patch for javascript --}}
-                    <div class="btn-group dropup">
-                        <a id="btn-user-menu">
-                            <figure class="user-img ml-3">
-                                <img class="guest" src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
-                            </figure>
-                        </a>
-                    </div>
-                @else
-                    @if (auth()->user()->hasProfile())
-                        <a id="btn-user-menu">
-                            <figure class="user-img">
-                                <img class="{{ auth()->user()->profile->avatar ? '' : 'default' }}" src="{{ auth()->user()->profile->getAvatarFormatted() }}" alt="">
-                            </figure>
-                        </a>
+<section class="top-menu">
+    <div class="container px-3">
+        <div class="row align-items-center" style="max-height: 54px; min-height: 54px;">
+            <div class="col d-inline-block d-md-none">
+                <button class="hamburger hamburger-cancel">
+                    <span class="icon"></span>
+                </button>
+            </div>
+            <div class="col-auto ">
+                <h1>
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        <i class="icon-logo"></i>
+                        <span>LigasPesXbox</span>
+                    </a>
+                </h1>
+            </div>
+            <div class="col-auto d-none d-md-inline-block">
+                <nav>
+                    <ul class="nav">
+                        @include('layouts.partials.menu')
+                    </ul>
+                </nav>
+            </div>
+            <div class="col user text-right">
+                <div class="btn-group dropright">
+                    @guest
+                        <div class="d-none d-lg-inline-block">
+                            <a class="text-white" href="{{ route('login') }}">Iniciar sesión</a>
+                            <span class="text-white">/</span>
+                            <a  class="text-white" href="{{ route('register') }}">Regístrate</a>
+                        </div>
+                        {{-- img patch for javascript --}}
+                        <img class="d-none" id="btn-user-close" src="{{ asset('img/avatars/close.png') }}">
+                        {{-- end img patch for javascript --}}
+                        <div class="btn-group dropup">
+                            <a id="btn-user-menu">
+                                <figure class="user-img ml-3">
+                                    <img class="guest" src="{{ asset('img/avatars/guest.png') }}" alt="" class="rounded-circle">
+                                </figure>
+                            </a>
+                        </div>
                     @else
-                        <a id="btn-user-menu">
-                            <figure class="user-img">
-                                <img class="default" src="{{ asset('img/avatars/default.png') }}" alt="">
-                            </figure>
-                        </a>
-                    @endif
-                @endguest
+                        @if (auth()->user()->hasProfile())
+                            <a id="btn-user-menu">
+                                <figure class="user-img">
+                                    <img class="{{ auth()->user()->profile->avatar ? '' : 'default' }}" src="{{ auth()->user()->profile->getAvatarFormatted() }}" alt="">
+                                </figure>
+                            </a>
+                        @else
+                            <a id="btn-user-menu">
+                                <figure class="user-img">
+                                    <img class="default" src="{{ asset('img/avatars/default.png') }}" alt="">
+                                </figure>
+                            </a>
+                        @endif
+                    @endguest
+                </div>
             </div>
         </div>
     </div>

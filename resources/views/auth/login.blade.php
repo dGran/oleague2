@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="email" style="color: #00d4e4;">Contraseña</label>
+                                <label for="password" style="color: #00d4e4;">Contraseña</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon2">
