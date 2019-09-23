@@ -15,13 +15,9 @@
 				</div>
 			</div>
 		</div>
-	</div> {{-- wrapper --}}
+	</div>
 @endsection
 
 @section('breadcrumb')
 	@include('users.profile.breadcrumb')
-@endsection
-
-@section('bottom-fixed')
-	{{-- @include('rules.partials.bottom_fixed') --}}
 @endsection

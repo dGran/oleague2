@@ -10876,7 +10876,6 @@ header .top-menu .user .btn-user-menu .user-img img {
 }
 
 header .top-menu .user .btn-user-menu .user-img img.guest,
-header .top-menu .user .btn-user-menu .user-img img.default,
 header .top-menu .user .btn-user-menu .user-img img.menu-close {
   border-radius: 0%;
   -webkit-filter: invert(100%);

@@ -102,6 +102,8 @@ class RegisterController extends Controller
             }
             $profile = new Profile;
             $profile->user_id = $user->id;
+            $avatar = rand(1, 48);
+            $profile->avatar = 'img/avatars/gallery/' . $avatar . '.png';
             $profile->save();
         } else {
             return redirect('/login')->with('warning', "Lo siento, tu correo electrónico no puede ser identificado.");

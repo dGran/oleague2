@@ -111,7 +111,7 @@ header {
 						width: auto;
 						transition: all 0.25s;
 						vertical-align: middle;
-						&.guest, &.default, &.menu-close {
+						&.guest, &.menu-close {
 							// border: 1px solid #000;
 							border-radius: 0%;
 							filter: invert(100%);
