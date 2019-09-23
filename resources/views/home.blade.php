@@ -47,15 +47,17 @@
                     <h3 class="float-left">
                         Últimas noticias
                     </h3>
-                    <div class="navigation-buttons float-right">
-                        <a href="{{ $posts->previousPageUrl() }}" class="mr-2">
-                            <i class="fas fa-chevron-left"></i>
-                        </a>
-                        <span>{{ $posts->currentPage() }}</span>
-                        <a href="{{ $posts->nextPageUrl() }}" class="ml-2">
-                            <i class="fas fa-chevron-right"></i>
-                        </a>
-                    </div>
+                    @if ($posts->lastPage() > 1)
+                        <div class="navigation-buttons float-right">
+                            <a href="{{ $posts->previousPageUrl() }}" class="mr-2 {{ $posts->currentPage() == 1 ? 'disabled' : '' }}">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                            <span>{{ $posts->currentPage() }}</span>
+                            <a href="{{ $posts->nextPageUrl() }}" class="ml-2 {{ $posts->currentPage() == $posts->lastPage() ? 'disabled' : '' }}">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

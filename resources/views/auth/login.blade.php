@@ -81,13 +81,13 @@
                         </form>
 
                         <div class="text-center mt-3">
-                            <a href="{{ route('password.request') }}" style="font-size: .8em; color: #ab045e; display: block">
+                            <a href="{{ route('password.request') }}" class="text-warning" style="font-size: .8em; display: block">
                                 Olvidé mi contraseña
                             </a>
                         </div>
 
                         <div class="text-center mt-4">
-                            <a href="{{ route('register') }}" class="btn" style="background: #ab045e; color: #fff">
+                            <a href="{{ route('register') }}" class="btn" style="background: #ab045e; color: #fff;">
                                 ¿NO TIENES CUENTA?<br>REGÍSTRATE!
                             </a>
                         </div>
