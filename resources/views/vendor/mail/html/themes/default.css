@@ -1,7 +1,8 @@
 /* Base */
 
 body, body *:not(html):not(style):not(br):not(tr):not(code) {
-    font-family: Avenir, Helvetica, sans-serif;
+    /*font-family: Avenir, Helvetica, sans-serif;*/
+    font-family: 'Fira Sans', sans-serif;
     box-sizing: border-box;
 }
 
@@ -103,16 +104,17 @@ img {
 /* Header */
 
 .header {
+    background-color: #be0346;
     padding: 25px 0;
     text-align: center;
 }
 
 .header a {
-    color: #bbbfc3;
+    color: #fff;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 0 1px 0 white;
+    /*text-shadow: 0 1px 0 white;*/
 }
 
 /* Body */
@@ -210,10 +212,17 @@ img {
 }
 
 .button {
+    background-color: #3097D1;
+    border-top: 10px solid #3097D1;
+    border-right: 18px solid #3097D1;
+    border-bottom: 10px solid #3097D1;
+    border-left: 18px solid #3097D1;
+
     border-radius: 3px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
     color: #FFF;
     display: inline-block;
+    padding: 6px 10px;
     text-decoration: none;
     -webkit-text-size-adjust: none;
 }

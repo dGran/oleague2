@@ -92,14 +92,6 @@
 <li class="item pending">
     <a>
         <span>
-            <i class="fas fa-users fa-fw mr-2"></i>
-            Comunidades (89,9 anual - 49,90 semestral - 9,90 mensual - 1 mes de prueba)
-        </span>
-    </a>
-</li>
-<li class="item pending">
-    <a>
-        <span>
             <i class="fas fa-table fa-fw mr-2"></i>
             Usuarios
         </span>
