@@ -297,6 +297,7 @@ class MarketController extends Controller
     	$players = Showcase::select('showcase.*')
 	        ->join('players', 'players.id', '=', 'showcase.player_id')
 	        ->join('season_players', 'season_players.id', '=', 'showcase.player_id');
+        $players = $players->where('season_players.season_id', '=', $filterSeason);
         if ($filterParticipant > 0) {
             $players = $players->where('season_players.participant_id', '=', $filterParticipant);
         }
