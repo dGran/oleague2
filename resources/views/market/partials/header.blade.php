@@ -8,7 +8,7 @@
     			Mercado de fichajes
     		</h3>
     		<span class="subtitle">
-    			Temporada 7
+    			{{ active_season()->name }}
     		</span>
 		</div>
 	</div>
