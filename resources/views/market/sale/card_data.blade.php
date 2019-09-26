@@ -9,8 +9,8 @@
 		{{ $player->season_player->player->position }}
 	</div> {{-- position --}}
 	@if (!auth()->guest() && user_is_participant(auth()->user()->id))
-		<div id="player_favorite{{ $player->id}}" class="d-inline-block">
-			@include('market.partials.favorite')
+	<div id="player_favorite{{ $player->season_player->id}}" class="d-inline-block">
+			@include('market.sale.favorite')
 		</div>
 	@endif
 	<img class="player-ball" src="{{ asset($player->season_player->player->getBall()) }}">
