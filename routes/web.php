@@ -73,6 +73,7 @@ Route::get('mercado/mi-equipo/jugador/eliminar-etiquetas/{id}', 'MarketControlle
 Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
 
 Route::get('mercado/negociaciones', 'MarketController@trades')->name('market.trades');
+Route::get('mercado/negociaciones/nueva/{id}', 'MarketController@tradesAdd')->name('market.trades.add');
 
 Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
 Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');

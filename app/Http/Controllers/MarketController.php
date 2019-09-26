@@ -1141,6 +1141,23 @@ class MarketController extends Controller
 		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
+    public function tradesAdd($id)
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+    		if (user_is_participant(auth()->user()->id)) {
+		    	$participant = SeasonParticipant::find($id);
+
+
+
+		    	return view('market.trades_add', compact('participant'));
+		    }
+	    }
+
+	    return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
+
 
 
 

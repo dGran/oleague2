@@ -10411,7 +10411,8 @@ a.text-dark:focus {
   }
 }
 
-.modal {
+.modal,
+.dropdown-menu {
   -webkit-overflow-scrolling: touch;
 }
 

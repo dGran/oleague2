@@ -16,6 +16,7 @@
 	</div> {{-- header --}}
 
 	<div class="container">
+
 		<section class="content">
 			<div class="tab-content" id="pills-tabContent">
 				<div class="tab-pane fade show active" id="received" role="tabpanel" aria-labelledby="home-tab">

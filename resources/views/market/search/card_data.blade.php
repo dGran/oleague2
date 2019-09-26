@@ -67,7 +67,7 @@
 						@endif
 					</h6>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item {{ !$player->participant ? 'disabled' : '' }}" href="">
+					<a class="dropdown-item {{ !$player->participant || participant_of_user()->id == $player->participant_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', $player->participant_id) }}">
 						Abrir negociación
 					</a>
 					<a class="dropdown-item {{ !$player->participant || !$player->allow_clause_pay || ($player->participant && $player->participant->clauses_received_limit()) || ($player->participant && participant_of_user()->clauses_paid_limit()) || $player->participant && $player->participant->id == participant_of_user()->id || participant_of_user()->budget() < $player->clause_price() || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->id }}', '{{ $player->player->name }}', '{{ number_format($player->price, 2, ',', '.') }}')">

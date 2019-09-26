@@ -74,7 +74,7 @@
 					Fichar ya!
 				</a>
 			@endif
-			<a class="btn btn-primary btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="" >
+			<a class="btn btn-primary btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', $player->season_player->participant_id) }}">
 				Abrir negociación
 			</a>
 		</div> {{-- buy-now --}}
