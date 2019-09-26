@@ -75,6 +75,9 @@
                                     <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
                                     <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
                                 @endif
+                                @elseif ($post->type == "default")
+                                    <img src="{{ $post->img }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
+                                @endif
                             </figure>
                             <div style="display: table-cell; padding-left: 8px;" class="align-top">
                                 <ul style="list-style: none; margin:0; padding: 0">
