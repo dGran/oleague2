@@ -8,8 +8,8 @@
 		</div> {{-- container --}}
 	</div> {{-- header --}}
 
-<div class="scrolling-wrapper">
-<ul class="nav nav-pills justify-content-center my-3 mx-0" style="font-size: .8em">
+{{-- <div class="scrolling-wrapper"> --}}
+{{-- <ul class="nav nav-pills justify-content-center my-3 mx-0" style="font-size: .8em">
   <li class="nav-item">
     <a class="nav-link active" href="#">Todos</a>
   </li>
@@ -28,8 +28,8 @@
   <li class="nav-item">
     <a class="nav-link disabled" href="#">Negociaciones</a>
   </li>
-</ul>
-</div>
+</ul> --}}
+{{-- </div> --}}
 
 	<div class="container">
 		<section class="content">

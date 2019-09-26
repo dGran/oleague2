@@ -49,6 +49,7 @@ Route::get('mercado/agregar-favorito/{player_id}/{participant_id}', 'MarketContr
 Route::get('mercado/eliminar-favorito/{player_id}/{participant_id}', 'MarketController@removeFavoritePlayer')->name('market.favorite_player.remove');
 Route::get('mercado/fichar-jugador-libre/{id}', 'MarketController@signFreePlayer')->name('market.sign_free_player');
 Route::get('mercado/pagar-clausula-jugador/{id}', 'MarketController@payClausePlayer')->name('market.pay_clause_player');
+Route::get('mercado/fichar-ya-jugador/{id}', 'MarketController@signNowPlayer')->name('market.sign_now_player');
 
 Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.playerView');
 

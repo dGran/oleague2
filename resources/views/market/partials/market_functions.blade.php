@@ -104,4 +104,38 @@
             }
         });
     }
+
+    function sign_now_player(id, name, remuneration) {
+        window.event.preventDefault();
+        value = parseFloat(remuneration);
+        swal({
+            title: 'Compra directa de "' + name + '"',
+            text: 'Coste: ' + value + ' millones.',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger btn-sm",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary btn-sm",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+            closeOnEsc: false,
+        })
+        .then((value) => {
+            if (value) {
+                var url = '{{ route("market.sign_now_player", ":id") }}';
+                url = url.replace(':id', id);
+                window.location.href = url;
+            }
+        });
+    }
 </script>

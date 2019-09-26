@@ -269,6 +269,89 @@ class MarketController extends Controller
     	}
     }
 
+    public function signNowPlayer($id)
+    {
+    	if (auth()->guest()) {
+    		return back()->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+	        $player = SeasonPlayer::find($id);
+	        if ($player) {
+	        	if (user_is_participant(auth()->user()->id)) {
+	        		$participant_from = $player->participant;
+	        		$participant_to = participant_of_user();
+
+	        		// validations
+	        		if (!$player->sale_auto_accept) {
+	        			return back()->with('error', 'Compra cancelada. El jugador ya no está en venta directa.');
+	        		}
+	        		if ($participant_to->id == $player->participant_id) {
+	        			return back()->with('error', 'No puedes comprar a un jugador de tu equipo.');
+	        		}
+	        		if ($participant_to->max_players_limit()) {
+	        			return back()->with('error', 'No puedes fichar al jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
+	        		}
+	        		if ($participant_to->budget() < $player->sale_price) {
+	        			return back()->with('error', 'No puedes comprar al jugador. No dispones de los ' . $player->sale_price . ' mill. que cuesta el jugador en tu presupuesto.');
+	        		}
+	        		// END::validations
+
+	        		// generate cash movements
+		        	$this->add_cash_history(
+		        		$participant_to->id,
+		        		'Compra directa del jugador ' . $player->player->name,
+		        		$player->sale_price,
+		        		'S'
+		        	);
+		        	$this->add_cash_history(
+		        		$participant_from->id,
+		        		'Venta directa del jugador ' . $player->player->name,
+		        		$player->sale_price,
+		        		'E'
+		        	);
+		        	// END::generate cash movements
+
+		        	// save transfer
+		        	$this->add_transfer(
+		        		'negotiation',
+		        		$player->id,
+		        		$participant_from->id,
+		        		$participant_to->id,
+		        		$player->sale_price
+		        	);
+
+		        	// generate post (new)
+		        	$transfer = Transfer::orderBy('id', 'desc')->first();
+					$this->generate_new(
+						'transfer',
+						$transfer->id,
+						NULL
+		        	);
+
+		        	// reset player market data
+		        	$player->participant_id = $participant_to->id;
+		        	$player->market_phrase = null;
+		        	$player->untransferable = 0;
+		        	$player->player_on_loan = 0;
+		        	$player->transferable = 0;
+		        	$player->sale_price = 0;
+		        	$player->sale_auto_accept = 0;
+		        	$player->price = $player->price;
+		        	$player->salary = $player->salary;
+		        	$player->save();
+		        	if ($player->save()) {
+		        		$this->manage_player_showcase($player);
+		            	return back()->with('success', 'Has realizado una compra directa por el jugador ' . $player->player->name . ' y se ha incorporado por tu equipo.');
+		        	} else {
+		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+		        	}
+	        	} else {
+	        		return back()->with('error', 'Acción cancelada. No eres participante.');
+	        	}
+	        }
+	        return back();
+    	}
+    }
+
     public function onSale()
     {
     	$order = request()->order;
@@ -1217,7 +1300,10 @@ class MarketController extends Controller
 						$img = $transfer->season_player->player->getImgFormatted();
 						break;
 					case 'negotiation':
-						# code...
+						$category = "Fichajes - " . $transfer->participantTo->team->name;
+						$title = $transfer->season_player->player->name . " firma por " . $transfer->participantTo->team->name;
+						$description = "Tras pagar los " . $transfer->season_player->sale_price . " millones por los que el " . $transfer->participantFrom->team->name . " lo puso en el mercado de venta directa";
+						$img = $transfer->season_player->player->getImgFormatted();
 						break;
 					case 'cession':
 						# code...
