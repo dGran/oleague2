@@ -67,16 +67,18 @@
 			</span>
 		</div> {{-- price-data --}}
 	@endif
-	<div class="buy-now">
-		@if ($player->season_player->sale_price > 0 && $player->season_player->sale_auto_accept)
-			<a class="btn btn-success btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="" onclick="sign_now_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->sale_price, 2, ',', '.') }}')">
-				Fichar ya!
+	@if (!auth()->guest() && user_is_participant(auth()->user()->id))
+		<div class="buy-now">
+			@if ($player->season_player->sale_price > 0 && $player->season_player->sale_auto_accept)
+				<a class="btn btn-success btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="" onclick="sign_now_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->sale_price, 2, ',', '.') }}')">
+					Fichar ya!
+				</a>
+			@endif
+			<a class="btn btn-primary btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="" >
+				Abrir negociación
 			</a>
-		@endif
-		<a class="btn btn-primary btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="" >
-			Abrir negociación
-		</a>
-	</div> {{-- buy-now --}}
+		</div> {{-- buy-now --}}
+	@endif
 </div> {{-- item --}}
 <div class="item-bottom">
 	@if ($player->season_player->market_phrase)
