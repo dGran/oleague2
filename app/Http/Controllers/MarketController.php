@@ -294,7 +294,7 @@ class MarketController extends Controller
 			$filterState = request()->filterState;
 		}
 
-    	$players = Showcase::select('showcase.*' 'players.position', 'players.overall_rating')
+    	$players = Showcase::select('showcase.*', 'players.position', 'players.overall_rating')
 	        ->join('players', 'players.id', '=', 'showcase.player_id')
 	        ->join('season_players', 'season_players.id', '=', 'showcase.player_id');
         $players = $players->where('season_players.season_id', '=', $filterSeason);
