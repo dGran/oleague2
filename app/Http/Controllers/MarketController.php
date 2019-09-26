@@ -107,6 +107,10 @@ class MarketController extends Controller
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
 	        	if (user_is_participant(auth()->user()->id)) {
+	        		// validations
+	        		if ($player->participant_id > 0) {
+	        			return back()->with('error', 'No puedes fichar al jugador, ya ha sido fichado por ' . $player->participant->name() . '.');
+	        		}
 	        		if (participant_of_user()->max_players_limit()) {
 	        			return back()->with('error', 'No puedes fichar al jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
 	        		}
@@ -175,6 +179,9 @@ class MarketController extends Controller
 	        		$participant_to = participant_of_user();
 
 	        		// validations
+	        		if (!$player->allow_clause_pay) {
+	        			return back()->with('error', 'No puedes pagar la claúsula de un jugador al cual ya le han pagado la claúsula.');
+	        		}
 	        		if ($participant_to->id == $player->participant_id) {
 	        			return back()->with('error', 'No puedes pagar la claúsula de un jugador de tu equipo.');
 	        		}
