@@ -7,18 +7,16 @@
 @section('content')
 
 <div class="club-header">
-	<div class="container py-2">
+	<div class="container">
 		<div class="d-table-cell align-top">
-			{{-- <img src="{{ $participant->logo() }}" alt=""> --}}
+			<i class="icon-clubs"></i>
 		</div>
-		<div class="d-table-cell pl-2 align-middle">
+		<div class="d-table-cell pl-3 align-middle">
     		<h3>
-    			{{-- {{ $participant->name() }} --}}
     			Clubs
     		</h3>
     		<span class="subname">
-    			{{-- {{ $participant->sub_name() }} --}}
-    			Temporada 7
+    			{{ active_season()->name }}
     		</span>
 		</div>
 	</div>

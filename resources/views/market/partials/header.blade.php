@@ -1,7 +1,7 @@
 <div class="market-header">
 	<div class="container">
 		<div class="logo">
-			<img src="{{ asset('img/transfer_icon.png') }}">
+			<i class="icon-transfer"></i>
 		</div>
 		<div class="title">
     		<h3>

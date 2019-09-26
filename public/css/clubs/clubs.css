@@ -1,16 +1,26 @@
 .club-header {
   background: #353f48;
-  margin-top: 54px;
-  padding: .75em 0;
+  margin-top: 55px;
+  padding: .75rem .25rem;
 }
 
 .club-header h3 {
   color: #fff;
+  font-size: 1.5em;
   margin: 0;
 }
 
 .club-header img {
   width: 55px;
+}
+
+.club-header i {
+  background: #fff;
+  border-radius: 50%;
+  color: #be0346;
+  display: block;
+  font-size: 3em;
+  padding: 5px;
 }
 
 .club-header .subname {

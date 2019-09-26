@@ -4,17 +4,22 @@
 
 .market-header {
   background: #353f48;
-  margin-top: 54px;
-  padding: .75em 0;
+  margin-top: 55px;
+  padding: .75rem .25rem;
 }
 
 .market-header .logo {
   display: table-cell;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
-.market-header .logo img {
-  width: 55px;
+.market-header .logo i {
+  background: #fff;
+  border-radius: 50%;
+  color: #be0346;
+  display: block;
+  font-size: 3em;
+  padding: 5px;
 }
 
 .market-header .title {

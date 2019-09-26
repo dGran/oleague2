@@ -1,9 +1,9 @@
 <div class="club-header">
-	<div class="container py-2">
+	<div class="container">
 		<div class="d-table-cell align-top">
 			<img src="{{ $participant->logo() }}" alt="">
 		</div>
-		<div class="d-table-cell pl-2 align-middle">
+		<div class="d-table-cell pl-3 align-middle">
     		<h3>
     			{{ $participant->name() }}
     		</h3>

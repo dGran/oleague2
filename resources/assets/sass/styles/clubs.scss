@@ -4,22 +4,23 @@
 
 .club-header {
 	background: #353f48;
-	margin-top: 54px;
-	padding: .75em 0;
- //    background: rgba(22,28,51,1);
-	// background: -moz-linear-gradient(top, rgba(22,28,51,1) 0%, rgba(64,88,158,1) 100%);
-	// background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(22,28,51,1)), color-stop(100%, rgba(64,88,158,1)));
-	// background: -webkit-linear-gradient(top, rgba(22,28,51,1) 0%, rgba(64,88,158,1) 100%);
-	// background: -o-linear-gradient(top, rgba(22,28,51,1) 0%, rgba(64,88,158,1) 100%);
-	// background: -ms-linear-gradient(top, rgba(22,28,51,1) 0%, rgba(64,88,158,1) 100%);
-	// background: linear-gradient(to bottom, rgba(22,28,51,1) 0%, rgba(64,88,158,1) 100%);
-	// filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#161c33', endColorstr='#40589e', GradientType=0 );
+	margin-top: 55px;
+	padding: .75rem .25rem;
 	h3 {
 		color: #fff;
+		font-size: 1.5em;
 		margin: 0;
 	}
 	img {
 		width: 55px;
+	}
+	i {
+		background: #fff;
+		border-radius: 50%;
+		color: #be0346;
+		display: block;
+		font-size: 3em;
+		padding: 5px;
 	}
 	.subname {
 		color: #979797;
