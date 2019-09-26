@@ -2,12 +2,6 @@
 	<div class="date">
 		<i class="fas fa-history"></i>
 		{{ $player->created_at->diffForHumans() }}
-		<br>
-		{{ $player->id }}
-		<br>
-		{{ $player->season_player->id }}
-		<br>
-		{{ $player->season_player->player->id }}
 	</div>
 </div> {{-- item-header --}}
 <div class="item">

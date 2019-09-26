@@ -38,7 +38,8 @@ class MarketController extends Controller
         }
 
     	//list of players
-        $players = Transfer::select('transfers.*', 'season_players.*', 'players.*', 'season_participants.clauses_received')
+        $players = Transfer::select('transfers.*', 'season_players.participant_id', 'season_players.season_id', 'players.name', 'season_participants.clauses_received')
+        // $players = Transfer::select('transfers.*', 'season_players.*', 'players.*', 'season_participants.*')
         	->leftjoin('season_players', 'season_players.id', '=', 'transfers.player_id')
         	->leftjoin('players', 'players.id', '=', 'season_players.player_id')
         	->leftjoin('season_participants', 'season_participants.id', '=', 'season_players.participant_id');
@@ -64,7 +65,6 @@ class MarketController extends Controller
             ->select('season_participants.*', 'users.name as user_name')
             ->seasonId($filterSeason)->orderBy('user_name', 'asc')->get();
         }
-
 		//return view
         return view('market.index', compact('players', 'participants', 'filterName', 'filterParticipant', 'page'));
     }
@@ -1183,11 +1183,11 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
 					break;
 			}
-			Telegram::sendMessage([
-			    'chat_id' => '-1001241759649',
-			    'parse_mode' => 'HTML',
-			    'text' => $text
-			]);
+			// Telegram::sendMessage([
+			//     'chat_id' => '-1001241759649',
+			//     'parse_mode' => 'HTML',
+			//     'text' => $text
+			// ]);
 	    }
 	}
 
