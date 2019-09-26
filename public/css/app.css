@@ -10411,6 +10411,10 @@ a.text-dark:focus {
   }
 }
 
+.modal {
+  -webkit-overflow-scrolling: touch;
+}
+
 a:focus,
 button:focus,
 input:focus,
