@@ -90,8 +90,8 @@
 				</div>
 
 				<div class="form-group">
-					<label for="p1_players">Solicitar jugadores</label>
-		            <select name="p1_players[]" id="p1_players" class="form-control selectpicker show-tick" data-size="5" title="Selecciona jugadores..." multiple>
+					<label for="p2_players">Solicitar jugadores</label>
+		            <select name="p2_players[]" id="p2_players" class="form-control selectpicker show-tick" data-size="5" title="Selecciona jugadores..." multiple>
 		                @foreach ($participant->players as $player)
 		                	<option title="{{ $player->player->name }}" data-content="<img class='mr-1' src='{{ $player->player->getImgFormatted() }}' width='20'><span>{{ $player->player->name }}</span><small class='text-muted'>{{ $player->player->position }}-{{ $player->player->overall_rating }}</small>" value="{{ $player->id }}" style="font-size: .8em"></option>
 		                @endforeach
