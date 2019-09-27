@@ -27,6 +27,16 @@ class SeasonParticipant extends Model
         return $this->hasmany('App\SeasonPlayer', 'participant_id', 'id');
     }
 
+    public function trades_received()
+    {
+        return $this->hasmany('App\Trade', 'participant2_id', 'id');
+    }
+
+    public function trades_sent()
+    {
+        return $this->hasmany('App\Trade', 'participant1_id', 'id');
+    }
+
     public function user()
     {
         return $this->hasOne('App\User', 'id', 'user_id');

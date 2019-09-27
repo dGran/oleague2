@@ -74,6 +74,7 @@ Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss'
 
 Route::get('mercado/negociaciones', 'MarketController@trades')->name('market.trades');
 Route::get('mercado/negociaciones/nueva/{id}', 'MarketController@tradesAdd')->name('market.trades.add');
+Route::post('mercado/negociaciones/nueva/{id}', 'MarketController@tradesSave')->name('market.trades.save');
 
 Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
 Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');

@@ -28,25 +28,63 @@
                     </div>
                 </div>
 
-        {{--         <div class="slogan">
-                    <p>
-                        <span style="text-shadow: 0 0 20px #ed1e79;">
-                            ligaspesxbox.com
-                        </span>
-                        Enjoy!
-                    </p>
-
-                </div> --}}
-
             </div>
 
         </div>
 
         <div class="section-title">
             <div class="container">
-<div data-type="countdown" data-id="1470929" class="tickcounter" style="width: 100%; position: relative; padding-bottom: 25%"><a href="//www.tickcounter.com/countdown/1470929/sorteo-de-packs" title="SORTEO DE PACKS">SORTEO DE PACKS</a><a href="//www.tickcounter.com/" title="Countdown">Countdown</a></div><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script>
+                <div data-type="countdown" data-id="1470929" class="tickcounter" style="width: 100%; position: relative; padding-bottom: 25%"><a href="//www.tickcounter.com/countdown/1470929/sorteo-de-packs" title="SORTEO DE PACKS" style="margin: 10px 0" onclick="return false;">SORTEO DE PACKS</a><a class="countdown" href="//www.tickcounter.com/" title="Countdown"></a></div><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script>
             </div>
         </div>
+
+{{--         <div class="section-title text-white">
+            <div class="container">
+                <h3>
+                    Sorteo de Packs
+                </h3>
+                <div id="countdown">
+                    <span id="days" style="font-size: 40px; display: inline-block;"></span>
+                    <span>días</span>
+                    <span id="hours"></span>
+                    <span id="minutes"></span>
+                    <span id="seconds"></span>
+                </div>
+                <script>
+                var end = new Date('09/28/2019 1:33 AM');
+
+                    var _second = 1000;
+                    var _minute = _second * 60;
+                    var _hour = _minute * 60;
+                    var _day = _hour * 24;
+                    var timer;
+
+                    function showRemaining() {
+                        var now = new Date();
+                        var distance = end - now;
+                        if (distance < 0) {
+
+                            clearInterval(timer);
+                            document.getElementById('countdown').innerHTML = 'EXPIRED!';
+
+                            return;
+                        }
+                        var days = Math.floor(distance / _day);
+                        var hours = Math.floor((distance % _day) / _hour);
+                        var minutes = Math.floor((distance % _hour) / _minute);
+                        var seconds = Math.floor((distance % _minute) / _second);
+
+                        $('.days').val(days);
+                        document.getElementById('days').innerHTML = days;
+                        document.getElementById('hours').innerHTML = hours;
+                        document.getElementById('minutes').innerHTML = minutes;
+                        document.getElementById('seconds').innerHTML = seconds;
+                    }
+
+                    timer = setInterval(showRemaining, 1000);
+                </script>
+            </div>
+        </div> --}}
 
         <div class="section-title">
             <div class="container">

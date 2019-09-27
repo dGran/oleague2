@@ -15,6 +15,7 @@ use App\SeasonParticipantCashHistory as Cash;
 use App\Transfer;
 use App\Post;
 use App\Trade;
+use App\TradeDetail;
 
 
 class MarketController extends Controller
@@ -1148,10 +1149,56 @@ class MarketController extends Controller
     	} else {
     		if (user_is_participant(auth()->user()->id)) {
 		    	$participant = SeasonParticipant::find($id);
-
-
-
 		    	return view('market.trades_add', compact('participant'));
+		    }
+	    }
+
+	    return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
+
+    public function tradesSave($id)
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+    		if (user_is_participant(auth()->user()->id)) {
+		    	$participant = SeasonParticipant::find($id);
+		    	if ($participant) {
+
+		    		if (!request()->p1_players && !request()->p2_players) {
+		    			return redirect()->route('market.trades')->with('error', 'No se permiten ofertas sin jugadores. La oferta no ha sido enviada');
+		    		} else {
+			    		$trade = new Trade;
+			    		$trade->season_id = $participant->season_id;
+			    		$trade->participant1_id = participant_of_user()->id;
+			    		$trade->participant2_id = $participant->id;
+			    		$trade->cash1 = request()->p1_cash;
+			    		$trade->cash2 = request()->p2_cash;
+			    		$trade->state = 'pending';
+			    		$trade->read = 0;
+			    		$trade->save();
+
+			    		if (request()->p1_players) {
+					    	for ($i=0; $i < count(request()->p1_players); $i++) {
+					    		$trade_detail = new TradeDetail;
+					    		$trade_detail->trade_id = $trade->id;
+					    		$trade_detail->player1_id = request()->p1_players[$i];
+					    		$trade_detail->save();
+					    	}
+			    		}
+						if (request()->p2_players) {
+					    	for ($i=0; $i < count(request()->p2_players); $i++) {
+					    		$trade_detail = new TradeDetail;
+					    		$trade_detail->trade_id = $trade->id;
+					    		$trade_detail->player2_id = request()->p2_players[$i];
+					    		$trade_detail->save();
+					    	}
+						}
+				    	return redirect()->route('market.trades')->with('success', 'Oferta enviada correctamente.');
+		    		}
+		    	} else {
+		    		return redirect()->route('market.trades')->with('error', 'El participante no existe.');
+		    	}
 		    }
 	    }
 

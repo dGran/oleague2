@@ -16,8 +16,8 @@ class CreateTradesDetailTable extends Migration
         Schema::create('trades_detail', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer("trade_id")->unsigned();
-            $table->integer("player1_id")->unsigned();
-            $table->integer("player2_id")->unsigned();
+            $table->integer("player1_id")->unsigned()->nullable();
+            $table->integer("player2_id")->unsigned()->nullable();
         });
     }
 

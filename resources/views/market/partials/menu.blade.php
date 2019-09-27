@@ -36,7 +36,11 @@
 				<a href="{{ route('market.trades') }}">
 					<i class="icon-negotiation"></i>
 					<span>Negocios</span>
-					{{-- <span class="counter badge badge-danger rounded-circle">5</span> --}}
+					@if (participant_of_user()->trades_received->count() > 0)
+						<span class="counter badge badge-danger rounded-circle">
+							{{ participant_of_user()->trades_received->count() }}
+						</span>
+					@endif
 				</a>
 			</li>
 			<li class="item {{ \Route::current()->getName() == 'market.favorites' ? 'active' : '' }}">
