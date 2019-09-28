@@ -1,7 +1,7 @@
 <div class="announcement">
     <div class="container text-center">
         <a class="text-white" href="https://t.me/lpx_telegram" target="_blank">
-            Sigue todas las noticias desde <strong><i class="fab fa-telegram-plane ml-2 mr-1"></i> Telegram</strong>
+            <i class="fab fa-telegram-plane mr-1"></i> Únete a nuestro canal de Telegram
         </a>
     </div>
 </div>

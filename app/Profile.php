@@ -7,10 +7,11 @@ use Carbon\Carbon;
 
 class Profile extends Model
 {
+    public $timestamps = false;
 	protected $primaryKey = 'user_id';
 
     protected $fillable = [
-        'gamertag', 'slack_id', 'avatar', 'signature', 'location', 'country_id', 'slack_notifications', 'email_notifications'
+        'gamertag', 'avatar', 'location', 'nation_id', 'birthdate', 'email_notifications'
     ];
 
     public function user()

@@ -23,17 +23,60 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 Route::get('/', 'HomeController@index')->name('home');
 
 // Clubs routes
-Route::get('clubs', 'ClubController@clubs')->name('clubs');
-Route::get('clubs/{slug}', 'ClubController@club')->name('club');
-Route::get('clubs/{slug}/plantilla', 'ClubController@clubRoster')->name('club.roster');
-Route::get('clubs/{slug}/economia', 'ClubController@clubEconomy')->name('club.economy');
-Route::get('clubs/{slug}/calendario', 'ClubController@clubCalendar')->name('club.calendar');
-Route::get('clubs/{slug}/sala-de-prensa', 'ClubController@clubPress')->name('club.press');
-Route::post('clubs/{slug}/sala-de-prensa/nueva', 'ClubController@clubPressAdd')->name('club.press.add');
+Route::middleware('check_active_season')->group(function () {
+	Route::get('clubs', 'ClubController@clubs')->name('clubs');
+	Route::get('clubs/{slug}', 'ClubController@club')->name('club');
+	Route::get('clubs/{slug}/plantilla', 'ClubController@clubRoster')->name('club.roster');
+	Route::get('clubs/{slug}/economia', 'ClubController@clubEconomy')->name('club.economy');
+	Route::get('clubs/{slug}/calendario', 'ClubController@clubCalendar')->name('club.calendar');
+	Route::get('clubs/{slug}/sala-de-prensa', 'ClubController@clubPress')->name('club.press');
+	Route::post('clubs/{slug}/sala-de-prensa/nueva', 'ClubController@clubPressAdd')->name('club.press.add');
+});
+
+// Market Routes
+Route::middleware('check_active_season')->group(function () {
+	// comun utils
+	Route::get('mercado/agregar-favorito/{player_id}/{participant_id}', 'MarketController@addFavoritePlayer')->name('market.favorite_player.add');
+	Route::get('mercado/eliminar-favorito/{player_id}/{participant_id}', 'MarketController@removeFavoritePlayer')->name('market.favorite_player.remove');
+	Route::get('mercado/fichar-jugador-libre/{id}', 'MarketController@signFreePlayer')->name('market.sign_free_player');
+	Route::get('mercado/pagar-clausula-jugador/{id}', 'MarketController@payClausePlayer')->name('market.pay_clause_player');
+	Route::get('mercado/fichar-ya-jugador/{id}', 'MarketController@signNowPlayer')->name('market.sign_now_player');
+
+	Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.playerView');
+
+	Route::get('mercado', 'MarketController@index')->name('market');
+
+	Route::get('mercado/buscador', 'MarketController@search')->name('market.search');
+
+	Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
+
+	Route::get('mercado/equipos', 'MarketController@teams')->name('market.teams');
+	Route::get('mercado/equipos/{slug}', 'MarketController@team')->name('market.team');
+
+	Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
+	Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
+	Route::get('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerEdit')->name('market.my_team.player.edit');
+	Route::put('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerUpdate')->name('market.my_team.player.update');
+	Route::get('mercado/mi-equipo/jugador/declarar-transferible/{id}', 'MarketController@tagsTransferable')->name('market.my_team.player.tags.transferable');
+	Route::get('mercado/mi-equipo/jugador/declarar-intransferible/{id}', 'MarketController@tagsUntransferable')->name('market.my_team.player.tags.untransferable');
+	Route::get('mercado/mi-equipo/jugador/declarar-cedible/{id}', 'MarketController@tagsOnLoan')->name('market.my_team.player.tags.on_loan');
+	Route::get('mercado/mi-equipo/jugador/eliminar-etiquetas/{id}', 'MarketController@tagsDelete')->name('market.my_team.player.tags.delete');
+	Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
+
+	Route::get('mercado/negociaciones', 'MarketController@trades')->name('market.trades');
+	Route::get('mercado/negociaciones/nueva/{id}', 'MarketController@tradesAdd')->name('market.trades.add');
+	Route::post('mercado/negociaciones/nueva/{id}', 'MarketController@tradesSave')->name('market.trades.save');
+	Route::get('mercado/negociaciones/{id}/rechazar', 'MarketController@tradesDecline')->name('market.trades.decline');
+
+	Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
+	Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');
+});
+
+// User routes
+Route::get('perfil', 'ProfileController@edit')->name('profileEdit');
+Route::put('perfil/{id}', 'ProfileController@update')->name('profileUpdate');
 
 Route::get('reglamento', 'HomeController@rules')->name('rules');
-
-
 Route::get('participantes', 'HomeController@participants')->name('participants');
 Route::get('competiciones', 'HomeController@competitions')->name('competitions');
 Route::get('competiciones/competicion', 'HomeController@competition')->name('competition');
@@ -42,46 +85,6 @@ Route::get('competiciones/competicion/calendario', 'HomeController@competition_s
 Route::get('competiciones/competicion/estadisticas', 'HomeController@competition_statistics')->name('competition.league.statistics');
 Route::get('competiciones/competicion/partido', 'HomeController@competition_match')->name('competition.match');
 
-
-// Market Routes
-// comun utils
-Route::get('mercado/agregar-favorito/{player_id}/{participant_id}', 'MarketController@addFavoritePlayer')->name('market.favorite_player.add');
-Route::get('mercado/eliminar-favorito/{player_id}/{participant_id}', 'MarketController@removeFavoritePlayer')->name('market.favorite_player.remove');
-Route::get('mercado/fichar-jugador-libre/{id}', 'MarketController@signFreePlayer')->name('market.sign_free_player');
-Route::get('mercado/pagar-clausula-jugador/{id}', 'MarketController@payClausePlayer')->name('market.pay_clause_player');
-Route::get('mercado/fichar-ya-jugador/{id}', 'MarketController@signNowPlayer')->name('market.sign_now_player');
-
-Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.playerView');
-
-Route::get('mercado', 'MarketController@index')->name('market');
-
-Route::get('mercado/buscador', 'MarketController@search')->name('market.search');
-
-Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
-
-Route::get('mercado/equipos', 'MarketController@teams')->name('market.teams');
-Route::get('mercado/equipos/{slug}', 'MarketController@team')->name('market.team');
-
-Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
-Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
-Route::get('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerEdit')->name('market.my_team.player.edit');
-Route::put('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerUpdate')->name('market.my_team.player.update');
-Route::get('mercado/mi-equipo/jugador/declarar-transferible/{id}', 'MarketController@tagsTransferable')->name('market.my_team.player.tags.transferable');
-Route::get('mercado/mi-equipo/jugador/declarar-intransferible/{id}', 'MarketController@tagsUntransferable')->name('market.my_team.player.tags.untransferable');
-Route::get('mercado/mi-equipo/jugador/declarar-cedible/{id}', 'MarketController@tagsOnLoan')->name('market.my_team.player.tags.on_loan');
-Route::get('mercado/mi-equipo/jugador/eliminar-etiquetas/{id}', 'MarketController@tagsDelete')->name('market.my_team.player.tags.delete');
-Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
-
-Route::get('mercado/negociaciones', 'MarketController@trades')->name('market.trades');
-Route::get('mercado/negociaciones/nueva/{id}', 'MarketController@tradesAdd')->name('market.trades.add');
-Route::post('mercado/negociaciones/nueva/{id}', 'MarketController@tradesSave')->name('market.trades.save');
-
-Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
-Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');
-
-// User routes
-Route::get('perfil', 'ProfileController@edit')->name('profileEdit');
-Route::put('perfil/{id}', 'ProfileController@update')->name('profileUpdate');
 
 // Admin Routes
 Route::middleware('auth', 'role:admin')->group(function () {

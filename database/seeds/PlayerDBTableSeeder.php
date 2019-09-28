@@ -13,13 +13,8 @@ class PlayerDBTableSeeder extends Seeder
     public function run()
     {
         $player = PlayerDB::create([
-            'name' => 'PES 2018 - May/18',
-            'slug' => str_slug('PES 2018 - May/18')
-        ]);
-
-        $player = PlayerDB::create([
-            'name' => 'PES 2019 - Sep/18',
-            'slug' => str_slug('PES 2019 - Sep/18')
+            'name' => 'PES 2020 - Sep19',
+            'slug' => str_slug('PES 2020 - Sep19')
         ]);
     }
 }

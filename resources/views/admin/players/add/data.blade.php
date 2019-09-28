@@ -127,6 +127,17 @@
         </div>
 
         <div class="form-group row">
+            <label for="foot" class="col-sm-3 col-form-label">Pie</label>
+            <div class="col-sm-9">
+                <select class="selectpicker form-control" name="foot" id="foot" data-size="3">
+                    <option value="">No definido</option>
+                    <option value="right">Derecho</option>
+                    <option value="left">Izquierdo</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
             <label for="game_id" class="col-sm-3 col-form-label">Game ID</label>
             <div class="col-sm-9">
                 <input type="number" class="form-control" id="game_id" name="game_id" placeholder="Identificador (ID) del jugador en el juego" value="{{ old('game_id') }}">

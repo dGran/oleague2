@@ -21,7 +21,7 @@ class CreateTradesTable extends Migration
             $table->decimal('cash1')->nullable();
             $table->decimal('cash2')->nullable();
             $table->enum('state', ['pending', 'blocked', 'confirmed', 'refushed'])->index();
-            $table->boolean('read')->default(false);
+            $table->boolean('cession')->default(false);
             $table->timestamps();
         });
     }

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Player;
 use App\PlayerDB;
 use App\AdminFilter;
-
 use App\Team;
 use App\TeamCategory;
+use App\Nation;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -517,6 +517,18 @@ class PlayerController extends Controller
             if ($data->count()) {
                 foreach ($data as $key => $value) {
                     try {
+                        // update nations table
+                        if ($value->nation_name) {
+                            $nation = Nation::where('name', '=', $value->nation_name)->first();
+                            if (!$nation) {
+                                $nation = Nation::create([
+                                    'name' => $value->nation_name,
+                                    'flag' => 'img/flags/' . str_slug($value->nation_name) . '.png'
+                                ]);
+                                event(new TableWasSaved($nation, $nation->name));
+                            }
+                        }
+                        ////////
                         if (request()->add_categories) {
                             if ($value->league_name) {
                                 $category = TeamCategory::where('name', '=', $value->league_name)->first();
@@ -555,6 +567,7 @@ class PlayerController extends Controller
                         $player->position = $value->position;
                         $player->height = $value->height;
                         $player->age = $value->age;
+                        $player->foot = $value->foot;
                         $player->overall_rating = $value->overall_rating;
                         $player->slug = str_slug($value->name);
 

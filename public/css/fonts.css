@@ -38,6 +38,9 @@ src: local('../fonts/DINPro-Bold'), url('../fonts/DINPro-Bold_13934.woff') forma
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-agreement:before {
+  content: "\e91e";
+}
 .icon-teams:before {
   content: "\e91c";
 }

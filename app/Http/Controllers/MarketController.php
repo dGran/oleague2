@@ -16,6 +16,7 @@ use App\Transfer;
 use App\Post;
 use App\Trade;
 use App\TradeDetail;
+use App\Mailbox;
 
 
 class MarketController extends Controller
@@ -1125,12 +1126,10 @@ class MarketController extends Controller
 					->where('user_id', '=', auth()->user()->id)->first();
 
 				$offers_sent = Trade::where('season_id', '=', active_season()->id)
-					->where('state', '=', 'pending')
 					->where('participant1_id', '=', participant_of_user()->id)
 					->orderBy('created_at', 'desc')
 					->get();
 				$offers_received = Trade::where('season_id', '=', active_season()->id)
-					->where('state', '=', 'pending')
 					->where('participant2_id', '=', participant_of_user()->id)
 					->orderBy('created_at', 'desc')
 					->get();
@@ -1158,6 +1157,15 @@ class MarketController extends Controller
 
     public function tradesSave($id)
     {
+    	dd(request()->cesion);
+    	//falta verificar si es cesion o si es intercambio para hacer lo que corresponda en cada caso
+    	//
+    	//
+    	//
+    	//
+    	//
+
+
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
@@ -1165,37 +1173,50 @@ class MarketController extends Controller
 		    	$participant = SeasonParticipant::find($id);
 		    	if ($participant) {
 
+		    		// validations
 		    		if (!request()->p1_players && !request()->p2_players) {
-		    			return redirect()->route('market.trades')->with('error', 'No se permiten ofertas sin jugadores. La oferta no ha sido enviada');
-		    		} else {
-			    		$trade = new Trade;
-			    		$trade->season_id = $participant->season_id;
-			    		$trade->participant1_id = participant_of_user()->id;
-			    		$trade->participant2_id = $participant->id;
-			    		$trade->cash1 = request()->p1_cash;
-			    		$trade->cash2 = request()->p2_cash;
-			    		$trade->state = 'pending';
-			    		$trade->read = 0;
-			    		$trade->save();
-
-			    		if (request()->p1_players) {
-					    	for ($i=0; $i < count(request()->p1_players); $i++) {
-					    		$trade_detail = new TradeDetail;
-					    		$trade_detail->trade_id = $trade->id;
-					    		$trade_detail->player1_id = request()->p1_players[$i];
-					    		$trade_detail->save();
-					    	}
-			    		}
-						if (request()->p2_players) {
-					    	for ($i=0; $i < count(request()->p2_players); $i++) {
-					    		$trade_detail = new TradeDetail;
-					    		$trade_detail->trade_id = $trade->id;
-					    		$trade_detail->player2_id = request()->p2_players[$i];
-					    		$trade_detail->save();
-					    	}
-						}
-				    	return redirect()->route('market.trades')->with('success', 'Oferta enviada correctamente.');
+		    			return back()->with('error', 'No se permiten ofertas sin jugadores. La oferta no ha sido enviada');
 		    		}
+	    			if (!request()->p1_players && request()->p1_cash == 0) {
+	    				return back()->with('error', 'No se permiten ofertas sin ofrecer ni jugadores ni dinero');
+	    			}
+	    			if (!request()->p2_players && request()->p2_cash == 0) {
+	    				return back()->with('error', 'No se permiten ofertas sin solicitar ni jugadores ni dinero');
+	    			}
+	    			if (request()->cesion) {
+		    			if (!request()->p2_players) {
+		    				return back()->with('error', 'No se permiten ofertas de cesión sin solicitar jugadores');
+		    			}
+	    			}
+
+		    		$trade = new Trade;
+		    		$trade->season_id = $participant->season_id;
+		    		$trade->participant1_id = participant_of_user()->id;
+		    		$trade->participant2_id = $participant->id;
+		    		$trade->cash1 = request()->p1_cash;
+		    		$trade->cash2 = request()->p2_cash;
+		    		$trade->state = 'pending';
+		    		$trade->cession = request()->cesion;
+		    		$trade->save();
+
+		    		if (request()->p1_players) {
+				    	for ($i=0; $i < count(request()->p1_players); $i++) {
+				    		$trade_detail = new TradeDetail;
+				    		$trade_detail->trade_id = $trade->id;
+				    		$trade_detail->player1_id = request()->p1_players[$i];
+				    		$trade_detail->save();
+				    	}
+		    		}
+					if (request()->p2_players) {
+				    	for ($i=0; $i < count(request()->p2_players); $i++) {
+				    		$trade_detail = new TradeDetail;
+				    		$trade_detail->trade_id = $trade->id;
+				    		$trade_detail->player2_id = request()->p2_players[$i];
+				    		$trade_detail->save();
+				    	}
+					}
+			    	return redirect()->route('market.trades')->with('success', 'Oferta enviada correctamente.');
+
 		    	} else {
 		    		return redirect()->route('market.trades')->with('error', 'El participante no existe.');
 		    	}
@@ -1203,6 +1224,32 @@ class MarketController extends Controller
 	    }
 
 	    return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
+
+    public function tradesDecline($id)
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+		    	$trade = Trade::find($id);
+		    	if ($trade) {
+		    		$trade->state = 'refushed';
+		    		$trade->save();
+
+		    		if ($trade->cession) { $trade_type = 'cesión'; } else { $trade_type = 'intercambio'; }
+			        $this->add_notification(
+			        	$trade->participant1->user_id,
+			        	$trade->id,
+			        	$trade->participant2->name() . ' ha rechazado tu oferta de ' . $trade_type
+			        );
+
+		    		return back()->with('info', 'Has rechazado la oferta de ' . $trade->participant1->name());
+		    	}
+			}
+    	}
+
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
 
@@ -1536,5 +1583,15 @@ class MarketController extends Controller
             ->seasonId(active_season()->id)
             ->where('teams.slug', '=', $slug)
             ->first();
+    }
+
+    protected function add_notification($user_id, $trade_id, $text)
+    {
+	    $mailbox = Mailbox::create([
+	        'user_id' => $user_id,
+	        'trade_id' => $trade_id,
+	        'text' => $text,
+	        'read' => 0
+	    ]);
     }
 }

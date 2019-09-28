@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Trade extends Model
 {
 	protected $table = 'trades';
-    protected $fillable = ['season_id', 'participant1_id', 'participant2_id', 'cash1', 'cash2', 'state'];
+    protected $fillable = ['season_id', 'participant1_id', 'participant2_id', 'cash1', 'cash2', 'state', 'cession'];
 
     public function season()
     {

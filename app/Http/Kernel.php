@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'role' => \App\Http\Middleware\CheckRole::class,
         'check_seasons' => \App\Http\Middleware\CheckSeasons::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'check_active_season' => \App\Http\Middleware\CheckActiveSeason::class,
     ];
 }

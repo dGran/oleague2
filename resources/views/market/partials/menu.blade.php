@@ -8,6 +8,12 @@
 		</li>
 		<li class="item {{ \Route::current()->getName() == 'market.search' ? 'active' : '' }}">
 			<a href="{{ route('market.search') }}">
+				<i class="icon-agreement"></i>
+				<span>Acuerdos</span>
+			</a>
+		</li>
+		<li class="item {{ \Route::current()->getName() == 'market.search' ? 'active' : '' }}">
+			<a href="{{ route('market.search') }}">
 				<i class="icon-search-player"></i>
 				<span>Buscador</span>
 			</a>

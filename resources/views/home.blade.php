@@ -110,39 +110,46 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <ul style="list-style: none; margin:0; padding: 0;">
-                    @foreach ($posts as $post)
-                        <li class="py-2 d-block" style="display: table; border-bottom: 1px solid #292C5E">
-                            <figure style="width: 96px; height: 96px; display: table-cell; position: relative; line-height: 1.1em;" class="m-0 text-center align-top px-2">
-                                @if ($post->type == "transfer")
-                                    <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
-                                @elseif ($post->type == "press")
-                                    <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
-                                    <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
-                                @elseif ($post->type == "default")
-                                    <img src="{{ $post->img }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
-                                @endif
-                            </figure>
-                            <div style="display: table-cell; padding-left: 8px;" class="align-top">
-                                <ul style="list-style: none; margin:0; padding: 0">
-                                    <li>
-                                        <span class="text-white d-block" style="font-size: .7em">
-                                            {{ $post->created_at->diffForHumans() }}
-                                        </span>
-                                        <span style="display: block; margin-bottom: 6px; font-size: 11px; color: #00d4e4">
-                                            {{ $post->category }}
-                                        </span>
-                                        <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
-                                            {{ $post->title }}
-                                        </span>
-                                        <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
-                                            {{ $post->description }}
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    @endforeach
+                    @if ($posts->count() == 0)
+                        <div class="px-2 py-4 text-white">
+                            Todavía no tenemos actividad
+                        </div>
+                    @else
+                        <ul style="list-style: none; margin:0; padding: 0;">
+                            @foreach ($posts as $post)
+                                <li class="py-2 d-block" style="display: table; border-bottom: 1px solid #292C5E">
+                                    <figure style="width: 96px; height: 96px; display: table-cell; position: relative; line-height: 1.1em;" class="m-0 text-center align-top px-2">
+                                        @if ($post->type == "transfer")
+                                            <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
+                                        @elseif ($post->type == "press")
+                                            <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
+                                            <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
+                                        @elseif ($post->type == "default")
+                                            <img src="{{ $post->img }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
+                                        @endif
+                                    </figure>
+                                    <div style="display: table-cell; padding-left: 8px;" class="align-top">
+                                        <ul style="list-style: none; margin:0; padding: 0">
+                                            <li>
+                                                <span class="text-white d-block" style="font-size: .7em">
+                                                    {{ $post->created_at->diffForHumans() }}
+                                                </span>
+                                                <span style="display: block; margin-bottom: 6px; font-size: 11px; color: #00d4e4">
+                                                    {{ $post->category }}
+                                                </span>
+                                                <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
+                                                    {{ $post->title }}
+                                                </span>
+                                                <span style="display: block; font-size: 13px;line-height: 18px; color: #A4A4A4" class="mt-1">
+                                                    {{ $post->description }}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
 
 
 
@@ -271,8 +278,6 @@
                             </div>
                         </li> --}}
 
-                    </ul>
-
                 </div>
             </div>
         </div>
@@ -284,13 +289,15 @@
                 </h3>
             </div>
         </div>
-        <div class="container p-3 text-white">
-            <p>
-                Últimos usuarios registrados en LPX
-            </p>
-            <ul>
+        <div class="container p-3 text-white text-center">
+            <ul style="padding: 0">
                 @foreach ($last_users as $user)
-                    <li>{{ $user->name }}</li>
+                    <li class="m-2" style="list-style: none; display: inline-block;">
+                        <div class="text-center">
+                            <img src="{{ asset($user->profile->avatar) }}" width="64">
+                            <small class="d-block">{{ $user->name }}</small>
+                        </div>
+                    </li>
 
                 @endforeach
             </ul>

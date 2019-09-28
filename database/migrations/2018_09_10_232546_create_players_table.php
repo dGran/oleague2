@@ -25,6 +25,7 @@ class CreatePlayersTable extends Migration
             $table->string('position')->nullable()->index();
             $table->integer('height')->nullable()->index();
             $table->integer('age')->nullable()->index();
+            $table->enum('foot', ['left', 'right'])->nullable()->index();
             $table->integer('overall_rating')->nullable()->index();
             $table->string('slug')->index();
         });

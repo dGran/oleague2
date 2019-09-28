@@ -15,7 +15,9 @@
 		</small>
 	</td>
 	<td width="40" class="text-right">
-		<span class="badge badge-primary">pendiente</span>
+		<span class="p-2 badge badge-{{ $trade->state == 'pending' ? 'primary' : '' }}{{ $trade->state == 'refushed' ? 'danger' : '' }}{{ $trade->state == 'confirmed' ? 'success' : '' }}">
+			{{ $trade->state }}
+		</span>
 	</td>
 </tr> {{-- data --}}
 
@@ -61,7 +63,7 @@
 			</div>
 		</div> {{-- row --}}
 
-		<div class="row">
+		<div class="row {{ $trade->state == 'pending' ? 'd-block' : 'd-none' }}">
 			<div class="col-12 text-center py-2">
 				<span class="text-success d-block py-2">
 					<i class="fas fa-check"></i> Oferta valida
@@ -70,13 +72,13 @@
 				<a href="" class="btn btn-primary brn-sm" style="font-size: .9em">
 					Aceptar oferta
 				</a>
-				<a href="" class="btn btn-danger brn-sm" style="font-size: .9em">
+				<a href="{{ route('market.trades.decline', $trade->id) }}" class="btn btn-danger brn-sm" style="font-size: .9em">
 					Rechazar oferta
 				</a>
 			</div>
 		</div> {{-- row --}}
 
-		<div class="row">
+		<div class="row {{ $trade->state == 'pending' ? 'd-block' : 'd-none' }}">
 			<div class="col-12" style="font-size: .8em">
 				<span class="text-warning d-block">
 					<i class="fas fa-exclamation-triangle"></i> Plantilla de {{ $trade->participant1->name() }} quedará fuera de los līmites
