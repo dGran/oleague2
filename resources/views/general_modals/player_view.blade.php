@@ -10,7 +10,7 @@
     <div class="modal-body">
     	<div class="row justify-content-center p-1 p-lg-3">
 			<div class="col-12 col-sm-5 mb-3 mb-md-0">
-				<div class="player-card">
+{{-- 				<div class="player-card">
 				    <div class="overall">{{ $player->player->overall_rating }}</div>
 			    	<div class="position">{{ $player->player->position }}</div>
 			    	<div class="name">{{ $player->player->name }}</div>
@@ -34,9 +34,9 @@
 			        <a target="_blank" href="{{ pesdb_player_info_path($player->player->game_id) }}">
 			        	<div class="clicktrap"></div>
 			    	</a>
-			    </div>
+			    </div> --}}
 
-{{-- 				<div class="card">
+				<div class="card">
 					<img class="img" src="{{ $player->player->getImgFormatted() }}">
 					<span class="position">
 						{{ $player->player->position }}
@@ -47,7 +47,7 @@
 					<figure class="ball">
 						<img src="{{ asset($player->player->getBall()) }}">
 					</figure>
-				</div> --}}
+				</div>
 			</div>
 
 			<div class="col-12 col-sm-7">
@@ -99,6 +99,17 @@
 
 	            	<div class="detail-item clearfix mt-3">
 	            		<span class="title">
+	            			Nacionalidad
+	            		</span>
+	            		<div class="data">
+	                        @if ($player->player->nation_name)
+	                        	<img src="{{ asset($player->player->nation_flag()) }}" width="24" class="mr-2">
+	                            {{ $player->player->nation_name }}
+	                        @endif
+	            		</div>
+	            	</div>
+	            	<div class="detail-item clearfix">
+	            		<span class="title">
 	            			Edad
 	            		</span>
 	            		<div class="data">
@@ -119,11 +130,11 @@
 	            	</div>
 	            	<div class="detail-item clearfix">
 	            		<span class="title">
-	            			Nacionalidad
+	            			Pie
 	            		</span>
 	            		<div class="data">
-	                        @if ($player->player->nation_name)
-	                            {{ $player->player->nation_name }}
+	                        @if ($player->player->foot)
+	                            {{ $player->player->foot == 'right' ? 'Derecho' : 'Izquierdo' }}
 	                        @endif
 	            		</div>
 	            	</div>
@@ -154,8 +165,8 @@
 
     <div class="modal-bottom">
         @if ($player->player->game_id)
-            <a target="_blank" href="{{ pesdb_player_info_path($player->player->game_id) }}">+info en pesdb.net</a>
-            <a target="_blank" href="{{ pesmaster_player_info_path($player->player->game_id) }}">+info en pesmaster.com</a>
+            <a target="_blank" href="{{ $player->player->pesdb2020_link() }}">+info en pesdb.net</a>
+            <a target="_blank" href="{{ $player->player->pesmaster2020_link() }}">+info en pesmaster.com</a>
         @endif
     </div>
 

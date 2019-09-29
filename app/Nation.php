@@ -12,4 +12,9 @@ class Nation extends Model
     protected $fillable = [
         'name', 'flag'
     ];
+
+    public function flag()
+    {
+		return 'img/flags/' . str_slug($this->name) . '.png';
+	}
 }

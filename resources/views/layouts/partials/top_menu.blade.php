@@ -42,8 +42,11 @@
                     @else
                         @if (auth()->user()->hasProfile())
                             <a id="btn-user-menu" class="btn-user-menu">
+                                @if (auth()->user()->uread_notifications() > 0)
+                                    <img class="counter animated tada infinite" src="{{ asset('img/notifications.png') }}" alt="">
+                                @endif
                                 <figure class="user-img">
-                                    <img class="{{ auth()->user()->profile->avatar ? '' : 'default' }}" src="{{ auth()->user()->profile->getAvatarFormatted() }}" alt="">
+                                    <img class="{{ auth()->user()->profile->avatar ? '' : 'default' }}" src="{{ asset(auth()->user()->profile->getAvatarFormatted()) }}" alt="">
                                 </figure>
                             </a>
                         @else

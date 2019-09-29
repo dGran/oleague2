@@ -10849,6 +10849,13 @@ header .top-menu .user {
   vertical-align: middle;
 }
 
+header .top-menu .user .counter {
+  bottom: 0px;
+  left: -12px;
+  width: 20px;
+  position: absolute;
+}
+
 header .top-menu .user a {
   color: #ced4da;
 }
@@ -11100,7 +11107,20 @@ header #user-menu nav .nav .nav-item .nav-link {
   border-bottom: 1px solid transparent;
   color: #f9f9f9;
   padding: .25em;
+  position: relative;
   text-transform: uppercase;
+}
+
+header #user-menu nav .nav .nav-item .nav-link.notifications .counter {
+  bottom: 0px;
+  color: #fff;
+  display: inline-block;
+  font-size: .8em;
+  left: -8px;
+  margin-right: .5em;
+  min-width: 20px;
+  padding: .5em;
+  position: absolute;
 }
 
 header #user-menu nav .nav .nav-item .nav-link i {

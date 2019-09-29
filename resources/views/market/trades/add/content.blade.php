@@ -95,7 +95,7 @@
 					<label for="p2_players">Solicitar jugadores</label>
 		            <select name="p2_players[]" id="p2_players" class="form-control selectpicker show-tick" data-size="8" title="Selecciona jugadores..." multiple>
 		                @foreach ($participant->players as $player)
-		                	<option title="{{ $player->player->name }}" data-content="<img class='mr-1' src='{{ $player->player->getImgFormatted() }}' width='28'><span>{{ $player->player->name }}</span><small class='text-muted'>{{ $player->player->position }}-{{ $player->player->overall_rating }}</small>" value="{{ $player->id }}" style="font-size: .9em"></option>
+		                	<option {{ $player->id == $player_selected ? 'selected' : '' }} title="{{ $player->player->name }}" data-content="<img class='mr-1' src='{{ $player->player->getImgFormatted() }}' width='28'><span>{{ $player->player->name }}</span><small class='text-muted'>{{ $player->player->position }}-{{ $player->player->overall_rating }}</small>" value="{{ $player->id }}" style="font-size: .9em"></option>
 		                @endforeach
 		            </select>
 				</div>

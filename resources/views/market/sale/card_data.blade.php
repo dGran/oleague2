@@ -31,7 +31,7 @@
 	<span class="participant-subname">
 		{{ $player->season_player->participant->sub_name() }}
 	</span> {{-- participant-subname --}}
-	<img class="nation-logo" src="https://www.pesmaster.com/pes-2019/graphics/nteamlogos/flag_HRV.png">
+	<img class="nation-logo" src="{{ asset($player->season_player->player->nation_flag()) }}">
 	<span class="nation-name">
 		{{ $player->season_player->player->nation_name }}
 	</span> {{-- nation-name --}}
@@ -74,7 +74,7 @@
 					Fichar ya!
 				</a>
 			@endif
-			<a class="btn btn-primary btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', $player->season_player->participant_id) }}">
+			<a class="btn btn-primary btn-sm {{ participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', [$player->season_player->participant_id, $player->season_player->id]) }}">
 				Abrir negociación
 			</a>
 		</div> {{-- buy-now --}}

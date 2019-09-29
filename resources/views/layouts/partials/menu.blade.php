@@ -10,14 +10,8 @@
         <span>Clubs</span>
     </a>
 </li>
-{{-- <li class="nav-item {{ \Request::is('competiciones*') ? 'current' : '' }}">
-    <a class="nav-link {{ \Request::is('competiciones*') ? 'disabled' : '' }}" href="{{ route('competitions') }}">
-        <i class="icon-trophy"></i>
-        <span>Competiciones</span>
-    </a>
-</li> --}}
 <li class="nav-item {{ \Request::is('competiciones*') ? 'current' : '' }}">
-    <a class="nav-link {{ \Request::is('competiciones*') ? 'disabled' : '' }}" href="">
+    <a class="nav-link {{ \Request::is('competiciones*') ? 'disabled' : '' }}" href="{{ route('competitions') }}">
         <i class="icon-trophy"></i>
         <span>Competiciones</span>
     </a>

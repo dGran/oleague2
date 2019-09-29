@@ -84,6 +84,55 @@
                 <input type="number" class="form-control" id="max_players" name="max_players" placeholder="Número máximo de jugadores por plantilla" autofocus value="{{ old('max_players', $season->max_players) }}">
             </div>
         </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="salary_cap">Tope salarial de la plantilla</label>
+                <input type="number" class="form-control" id="salary_cap" name="salary_cap" placeholder="Tope salarial de la plantilla" autofocus value="{{ old('salary_cap', $season->salary_cap) }}">
+                <small class="text-info">
+                    <i class="fas fa-info mr-1"></i>Tope salarial permitido en el periodo de edición de salarios
+                </small>
+            </div>
+        </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="free_players_salary">Salario jugadores libres</label>
+                <input type="number" step="0.5" min="0.5" class="form-control" id="free_players_salary" name="free_players_salary" placeholder="Salario jugadores libres" autofocus value="{{ old('free_players_salary', $season->free_players_salary) }}">
+            </div>
+        </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="free_players_new_salary">Salario jugadores libres fichados</label>
+                <input type="number" step="0.5" min="0.5" class="form-control" id="free_players_new_salary" name="free_players_new_salary" placeholder="Salario jugadores libres fichados" autofocus value="{{ old('free_players_new_salary', $season->free_players_new_salary) }}">
+                <small class="text-info">
+                    <i class="fas fa-info mr-1"></i>Nuevo salario de los jugadores libres una vez son fichados
+                </small>
+            </div>
+        </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="free_players_cost">Coste de los jugadores libres</label>
+                <input type="number" step="0.5" min="0.5" class="form-control" id="free_players_cost" name="free_players_cost" placeholder="Coste de los jugadores libres" autofocus value="{{ old('free_players_cost', $season->free_players_cost) }}">
+            </div>
+
+        </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="free_players_remuneration">Remuneración al liberar jugador</label>
+                <input type="number" step="0.5" min="0.5" class="form-control" id="free_players_remuneration" name="free_players_remuneration" placeholder="Remuneración al liberar jugador" autofocus value="{{ old('free_players_remuneration', $season->free_players_remuneration) }}">
+            </div>
+        </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="max_clauses_paid">Máximo claúsulas pagadas permitido</label>
+                <input type="number" min="0" class="form-control" id="max_clauses_paid" name="max_clauses_paid" placeholder="Máximo claúsulas pagadas permitido" autofocus value="{{ old('max_clauses_paid', $season->max_clauses_paid) }}">
+            </div>
+        </div>
+        <div class="form-group row roster_options {{ $season->use_rosters ? 'd-block' : 'd-none'}}">
+            <div class="col-sm-9 offset-sm-3">
+                <label for="max_clauses_received">Máximo claúsulas recibidas permitido</label>
+                <input type="number" min="0" class="form-control" id="max_clauses_received" name="max_clauses_received" placeholder="Máximo claúsulas recibidas permitido" autofocus value="{{ old('max_clauses_received', $season->max_clauses_received) }}">
+            </div>
+        </div>
 
         <div class="form-group row">
             <div class="col-sm-10">

@@ -1,7 +1,30 @@
 @extends('layouts.app')
 
 @section('style')
-    <link href="{{ asset('css/clubs/clubs.css') }}" rel="stylesheet">
+    <style>
+		.profile-header {
+			background: #353f48;
+			margin-top: 55px;
+			padding: .75rem .25rem;
+		}
+		.profile-header h3 {
+			color: #fff;
+			font-size: 1.5em;
+			margin: 0;
+		}
+		.profile-header img {
+			width: 65px;
+		}
+		.profile-header .subname {
+			color: #B2B2B2;
+			display: block;
+			font-weight: bold;
+			font-size: .8em;
+		}
+		.wrapper {
+			background: #f9f9f9;
+		}
+    </style>
 @endsection
 
 @section('content')

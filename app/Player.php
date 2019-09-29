@@ -17,6 +17,29 @@ class Player extends Model
         return $this->hasOne('App\PlayerDB', 'id', 'players_db_id');
     }
 
+    public function nation_flag()
+    {
+    	if ($this->nation_name) {
+    		return 'img/flags/' . str_slug($this->nation_name) . '.png';
+    	}
+    }
+
+    public function pesdb2019_link() {
+    	return 'http://pesdb.net/pes2019/?id=' . $this->game_id;
+    }
+
+    public function pesdb2020_link() {
+    	return 'http://pesdb.net/pes2020/?id=' . $this->game_id;
+    }
+
+    public function pesmaster2019_link() {
+    	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2019/player/' . $this->game_id .'/';
+    }
+
+    public function pesmaster2020_link() {
+    	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2020/player/' . $this->game_id .'/';
+    }
+
 	public function scopeName($query, $name)
 	{
 		if (trim($name) !="") {
@@ -121,6 +144,16 @@ class Player extends Model
 		    case ($this->overall_rating <=74):
 		        return "#ffffff";
 		}
+	}
+
+	public function getOverallRatingColorText() {
+		if ($this->overall_rating >89) {
+			$text_color = '#ffffff';
+		} else {
+			$text_color = '#212529';
+		}
+
+		return $text_color;
 	}
 
 	public function getOverallRatingFormatted() {

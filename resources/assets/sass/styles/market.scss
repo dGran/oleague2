@@ -281,8 +281,6 @@
 				top: 86px;
 			}
 			.nation-logo {
-				border-radius: 50%;
-				border: 1px solid #ffffff;
 				height: 20px;
 				left: 32px;
 				position: absolute;
@@ -1021,8 +1019,6 @@
 				top: 46px;
 			}
 			.nation-logo {
-				border-radius: 50%;
-				border: 1px solid #ffffff;
 				height: 20px;
 				left: 32px;
 				position: absolute;
@@ -1509,41 +1505,130 @@
 .negotiations {
 	background: #f9f9f9;
 	.header {
-		background: #EEEEEE;
-		border-bottom: 1px solid #f1eff3;
+		background: #F2F2F2;
 		padding: .5rem 0;
-		ul {
-			font-size: .8em;
-			text-align: center;
-			width: 100%;
+		position: relative;
+		.logo {
+			-moz-box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+			-webkit-box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+			box-shadow: 14px 0px 9px -11px rgba(148,148,148,1);
+			margin-left: .5rem;
+			margin-right: 1rem;
+			padding-right: .5rem;
+			vertical-align: top;
+			width: 75px;
+		}
+		.participant {
+			display: inline-block;
+			padding-top: .5rem;
+			.name {
+				font-size: 1.25em;
+				font-weight: bold;
+				margin: 0;
+			}
+			.subname {
+				color: $gray-600;
+				display: block;
+				font-size: .8em;
+			}
+		}
+	}
+	.selector {
+		padding: 1em;
+		text-align: center;
+		a {
+			font-size: .9em;
 		}
 	}
 	.content {
-		.tab-content {
-			padding: 1rem 0;
-			table {
+		.offer {
+			background: #fff;
+			font-size: .9em;
+			width: 100%;
+			border-bottom: 1px solid #E9E9E9;
+			border-top: 1px solid #E9E9E9;
+			.info {
+				background: #F2F2F2;
+				border-bottom: 1px solid #E9E9E9;
+				// border-top: 1px solid #E9E9E9;
+				padding: .75em 1em;
+				h5 {
+					font-size: 1.25em;
+				}
+			}
+			.data {
+				border-bottom: 1px solid #E9E9E9;
+				padding: .75em 1em;
+				text-align: center;
+				img {
+					padding-bottom: .75em;
+				}
+			}
+			.detail {
 				font-size: .9em;
-				width: 100%;
-				.date {
-					td {
-						padding-top: .5em;
+				padding: .75em 1em;
+				.title {
+					display: block;
+					font-size: .9rem;
+					font-weight: bold;
+					text-transform: uppercase;
+				}
+				.cash {
+					display: block;
+					padding: .25em 0;
+				}
+				.players {
+					padding: 1em 0;
+					.player {
+						display: block;
+						padding: .25em 0;
+						.player-data {
+							display: inline-block;
+							font-size: .9em;
+							line-height: 1.25em;
+							vertical-align: bottom;
+							.name {
+							}
+							.sub-name {
+								display: block;
+								color: $gray-600;
+							}
+						}
+						.player-img {
+							display: inline-block;
+							margin-left: .25em;
+							vertical-align: top;
+							width: 28px;
+						}
 					}
 				}
-				.data {
-					border-bottom: 1px solid #f1eff3;
-					td {
-						padding: .25em .25em .5em .25em;
-					}
+			}
+			.actions {
+				padding: 0em 1em 1em 1em;
+				text-align: center;
+				a {
+					font-size: .9em;
 				}
-				.detail {
-					border-bottom: 1px solid #f1eff3;
-					td {
-						padding: .5em 0;
+			}
+			.validations {
+				border-top: 1px solid #E9E9E9;
+				padding: .75em 1em;
+				&.invalid {
+					background: #FFE1E5;
+				}
+				.state {
+					font-weight: bold;
+					text-align: center;
+				}
+				.warnings {
+					font-size: .8em;
+					padding-top: 1em;
+					.item {
+						color: $danger;
 					}
 				}
 			}
 		}
-
 	}
 }
 
@@ -1772,6 +1857,21 @@
 		.header {
 			.logo {
 				margin-left: 0;
+			}
+		}
+	}
+	.negotiations {
+		.content {
+			.offer {
+				background: #fff;
+				border-left: 1px solid #E9E9E9;
+				border-right: 1px solid #E9E9E9;
+				border-radius: 8px;
+				font-size: 1em;
+				margin-bottom: 1.5em;
+				.info {
+					border-radius: 8px 8px 0 0;
+				}
 			}
 		}
 	}

@@ -37,6 +37,11 @@ class SeasonParticipant extends Model
         return $this->hasmany('App\Trade', 'participant1_id', 'id');
     }
 
+    public function trades_received_pending()
+    {
+        return $trades = Trade::where('participant2_id', '=', $this->id)->where('state', '=', 'pending')->count();
+    }
+
     public function user()
     {
         return $this->hasOne('App\User', 'id', 'user_id');

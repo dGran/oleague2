@@ -2,15 +2,21 @@
 
 @else
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('profileEdit') }}">
+        <a class="nav-link" href="{{ route('competitions.pending_matches') }}">
             <i class="icon-xbox-controller"></i>
             <span>Partidas pendientes</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('profileEdit') }}">
+        <a class="nav-link notifications" href="{{ route('notifications') }}">
             <i class="icon-notification"></i>
-            <span>Notificaciones</span>
+            <span>
+                <span class="counter badge badge-warning rounded-circle {{ auth()->user()->uread_notifications() == 0 ? 'd-none' : '' }}">
+                    {{ auth()->user()->uread_notifications() > 9 ? '9+' : auth()->user()->uread_notifications() }}
+                </span>
+                Notificaciones
+            </span>
+
         </a>
     </li>
     <li class="nav-item {{ \Request::is('perfil*') ? 'current' : '' }}">

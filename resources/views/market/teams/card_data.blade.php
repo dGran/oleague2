@@ -1,3 +1,4 @@
+@if ($participant->team)
 <a href="{{ route('market.team', $participant->team->slug) }}">
 	<div class="item">
 		<img class="team-img" src="{{ $participant->logo() }}">
@@ -15,3 +16,4 @@
 		</div> {{-- budget --}}
 	</div> {{-- item --}}
 </a>
+@endif

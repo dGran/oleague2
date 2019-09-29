@@ -60,9 +60,11 @@
                         		<option {{ $filterParticipant == 0 ? 'selected' : '' }} data-content="<img class='mr-2' src='{{ asset('img/team_no_image.png') }}' width='20'><span>Agentes libres</span>" value="0">Agentes libres</option>
 			                    @foreach ($participants as $participant)
 			                        @if ($participant->id == $filterParticipant)
-		                            	<option selected data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}</span><small class='text-muted'>{{ $participant->sub_name() }}</small>" value="{{ $participant->id }}">{{ $participant->name() }}</option>
+		                            	<option selected title="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<span><small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small>" data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small></span>" value="{{ $participant->id }}">{{ $participant->name() }}
+		                            	</option>
 			                        @else
-		                            	<option data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}</span><small class='text-muted'>{{ $participant->sub_name() }}</small>" value="{{ $participant->id }}">{{ $participant->name() }}</option>
+		                            	<option title="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small>" data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small></span>" value="{{ $participant->id }}">{{ $participant->name() }}
+		                            	</option>
 			                        @endif
 			                    @endforeach
 			                </select>
@@ -75,7 +77,9 @@
 			                <select name="filterNation" id="filterNation" class="form-control selectpicker show-tick filterNation" data-size="5" data-live-search="true">
 			                    <option value="">Todas las nacionalidades</option>
 			                    @foreach ($nations as $nation)
-			                            <option {{ $nation->nation_name == $filterNation ? 'selected' : '' }} value="{{ $nation->nation_name }}">{{ $nation->nation_name }}</option>
+		                            <option {{ $nation->nation_name == $filterNation ? 'selected' : '' }} value="{{ $nation->nation_name }}">
+		                            	{{ $nation->nation_name }}
+		                            </option>
 			                    @endforeach
 			                </select>
 			            </div> {{-- col --}}
@@ -196,6 +200,17 @@
 
 						</div> {{-- col --}}
 					</div> {{-- row --}}
+
+				    <div class="form-group row">
+			            <div class="col-12">
+			                <label for="filterFoot" class="col-form-label">Pie</label>
+			                <select name="filterFoot" id="filterFoot" class="form-control selectpicker show-tick filterFoot">
+			                    <option value="">Todos</option>
+	                            <option {{ $filterFoot == 'right' ? 'selected' : '' }} value="right">Derecho</option>
+	                            <option {{ $filterFoot == 'left' ? 'selected' : '' }} value="left">Izquierdo</option>
+			                </select>
+			            </div> {{-- col --}}
+			        </div> {{-- row --}}
 
 					<hr>
 

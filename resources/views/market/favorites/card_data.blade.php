@@ -17,7 +17,7 @@
 		</a>
 	</span> {{-- name --}}
 	<img class="icon-position" src="{{ asset($player->season_player->player->getIconPosition()) }}">
-	<div class="overall" style="background: {{ $player->season_player->player->getOverallRatingColor() }};">
+	<div class="overall" style="background: {{ $player->season_player->player->getOverallRatingColor() }}; color: {{ $player->season_player->player->getOverallRatingColorText() }}">
         {{ $player->season_player->player->overall_rating }}
 	</div> {{-- overall --}}
 	@if ($player->season_player->participant)

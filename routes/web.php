@@ -22,6 +22,12 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 // Home Routes
 Route::get('/', 'HomeController@index')->name('home');
 
+// Competitions routes
+Route::middleware('check_active_season')->group(function () {
+	Route::get('competiciones', 'CompetitionController@index')->name('competitions');
+	Route::get('competiciones/partidas-pendientes', 'CompetitionController@pendingMatches')->name('competitions.pending_matches');
+});
+
 // Clubs routes
 Route::middleware('check_active_season')->group(function () {
 	Route::get('clubs', 'ClubController@clubs')->name('clubs');
@@ -35,24 +41,12 @@ Route::middleware('check_active_season')->group(function () {
 
 // Market Routes
 Route::middleware('check_active_season')->group(function () {
-	// comun utils
-	Route::get('mercado/agregar-favorito/{player_id}/{participant_id}', 'MarketController@addFavoritePlayer')->name('market.favorite_player.add');
-	Route::get('mercado/eliminar-favorito/{player_id}/{participant_id}', 'MarketController@removeFavoritePlayer')->name('market.favorite_player.remove');
-	Route::get('mercado/fichar-jugador-libre/{id}', 'MarketController@signFreePlayer')->name('market.sign_free_player');
-	Route::get('mercado/pagar-clausula-jugador/{id}', 'MarketController@payClausePlayer')->name('market.pay_clause_player');
-	Route::get('mercado/fichar-ya-jugador/{id}', 'MarketController@signNowPlayer')->name('market.sign_now_player');
-
-	Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.playerView');
-
 	Route::get('mercado', 'MarketController@index')->name('market');
-
+	Route::get('mercado/acuerdos', 'MarketController@agreements')->name('market.agreements');
 	Route::get('mercado/buscador', 'MarketController@search')->name('market.search');
-
 	Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
-
 	Route::get('mercado/equipos', 'MarketController@teams')->name('market.teams');
 	Route::get('mercado/equipos/{slug}', 'MarketController@team')->name('market.team');
-
 	Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
 	Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
 	Route::get('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerEdit')->name('market.my_team.player.edit');
@@ -64,26 +58,44 @@ Route::middleware('check_active_season')->group(function () {
 	Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
 
 	Route::get('mercado/negociaciones', 'MarketController@trades')->name('market.trades');
-	Route::get('mercado/negociaciones/nueva/{id}', 'MarketController@tradesAdd')->name('market.trades.add');
+	Route::get('mercado/negociaciones/ofertas-recibidas', 'MarketController@tradesReceived')->name('market.trades.received');
+	Route::get('mercado/negociaciones/ofertas-enviadas', 'MarketController@tradesSent')->name('market.trades.sent');
+
+	Route::get('mercado/negociaciones/nueva/{participant_id}/{player_id?}', 'MarketController@tradesAdd')->name('market.trades.add');
 	Route::post('mercado/negociaciones/nueva/{id}', 'MarketController@tradesSave')->name('market.trades.save');
+	Route::get('mercado/negociaciones/{id}/aceptar', 'MarketController@tradesAccept')->name('market.trades.accept');
 	Route::get('mercado/negociaciones/{id}/rechazar', 'MarketController@tradesDecline')->name('market.trades.decline');
+	Route::get('mercado/negociaciones/{id}/retirar', 'MarketController@tradesRetire')->name('market.trades.retire');
+	Route::get('mercado/negociaciones/{id}/eliminar', 'MarketController@tradesDelete')->name('market.trades.delete');
 
 	Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
 	Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');
+	// market utils routes
+	Route::get('mercado/agregar-favorito/{player_id}/{participant_id}', 'MarketController@addFavoritePlayer')->name('market.favorite_player.add');
+	Route::get('mercado/eliminar-favorito/{player_id}/{participant_id}', 'MarketController@removeFavoritePlayer')->name('market.favorite_player.remove');
+	Route::get('mercado/fichar-jugador-libre/{id}', 'MarketController@signFreePlayer')->name('market.sign_free_player');
+	Route::get('mercado/pagar-clausula-jugador/{id}', 'MarketController@payClausePlayer')->name('market.pay_clause_player');
+	Route::get('mercado/fichar-ya-jugador/{id}', 'MarketController@signNowPlayer')->name('market.sign_now_player');
+	Route::get('mercado/jugador/{id}', 'MarketController@playerView')->name('market.playerView');
 });
 
 // User routes
 Route::get('perfil', 'ProfileController@edit')->name('profileEdit');
 Route::put('perfil/{id}', 'ProfileController@update')->name('profileUpdate');
+Route::get('notificaciones', 'MailboxController@index')->name('notifications');
+Route::get('notificaciones/marcar-como-leida/{id}', 'MailboxController@read')->name('notifications.read');
+Route::get('notificaciones/marcar-todas-como-leidas', 'MailboxController@readAll')->name('notifications.read_all');
+Route::get('notificaciones/eliminar/{id}', 'MailboxController@destroy')->name('notifications.destroy');
+Route::get('notificaciones/eliminar-todas', 'MailboxController@destroyAll')->name('notifications.destroy_all');
 
 Route::get('reglamento', 'HomeController@rules')->name('rules');
 Route::get('participantes', 'HomeController@participants')->name('participants');
-Route::get('competiciones', 'HomeController@competitions')->name('competitions');
-Route::get('competiciones/competicion', 'HomeController@competition')->name('competition');
-Route::get('competiciones/competicion/clasificacion', 'HomeController@competition_standing')->name('competition.league.standing');
-Route::get('competiciones/competicion/calendario', 'HomeController@competition_schedule')->name('competition.league.schedule');
-Route::get('competiciones/competicion/estadisticas', 'HomeController@competition_statistics')->name('competition.league.statistics');
-Route::get('competiciones/competicion/partido', 'HomeController@competition_match')->name('competition.match');
+// Route::get('competiciones', 'HomeController@competitions')->name('competitions');
+// Route::get('competiciones/competicion', 'HomeController@competition')->name('competition');
+// Route::get('competiciones/competicion/clasificacion', 'HomeController@competition_standing')->name('competition.league.standing');
+// Route::get('competiciones/competicion/calendario', 'HomeController@competition_schedule')->name('competition.league.schedule');
+// Route::get('competiciones/competicion/estadisticas', 'HomeController@competition_statistics')->name('competition.league.statistics');
+// Route::get('competiciones/competicion/partido', 'HomeController@competition_match')->name('competition.match');
 
 
 // Admin Routes

@@ -18,6 +18,8 @@ use App\Trade;
 use App\TradeDetail;
 use App\Mailbox;
 
+use App\Notifications\SendNotificationEmail;
+
 
 class MarketController extends Controller
 {
@@ -354,6 +356,16 @@ class MarketController extends Controller
     	}
     }
 
+    public function agreements()
+    {
+		$agreements = Trade::where('season_id', '=', active_season()->id)
+			->where('state', '=', 'confirmed')
+			->orderBy('updated_at', 'desc')
+			->get();
+
+		return view('market.agreements', compact('agreements'));
+    }
+
     public function onSale()
     {
     	$order = request()->order;
@@ -554,6 +566,8 @@ class MarketController extends Controller
 	    	$filterHeightRangeTo = 210;
     	}
 
+    	$filterFoot = request()->filterFoot;
+
     	//list of players
         $players = SeasonPlayer::select('season_players.*', 'season_participants.clauses_received')
         	->leftjoin('players', 'players.id', '=', 'season_players.player_id')
@@ -609,6 +623,9 @@ class MarketController extends Controller
         $players = $players->where('players.age', '<=', $filterAgeRangeTo);
         $players = $players->where('players.height', '>=', $filterHeightRangeFrom);
         $players = $players->where('players.height', '<=', $filterHeightRangeTo);
+        if ($filterFoot) {
+        	$players = $players->where('players.foot', '=', $filterFoot);
+        }
 		$players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection']);
 		if ($order_ext['sortField'] == 'players.overall_rating') {
 			$players = $players->orderBy('players.name', 'asc');
@@ -639,7 +656,7 @@ class MarketController extends Controller
 		$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
 
 		//return view
-        return view('market.search', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+        return view('market.search', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
     }
 
     public function teams()
@@ -774,6 +791,8 @@ class MarketController extends Controller
 			    	$filterHeightRangeTo = 210;
 		    	}
 
+		    	$filterFoot = request()->filterFoot;
+
 		    	//list of players
 		        $players = FavoritePlayer::select('favorite_players.*', 'season_participants.clauses_received')
 		        	->leftjoin('season_players', 'season_players.id', '=', 'favorite_players.player_id')
@@ -827,6 +846,9 @@ class MarketController extends Controller
 		        $players = $players->where('players.age', '<=', $filterAgeRangeTo);
 		        $players = $players->where('players.height', '>=', $filterHeightRangeFrom);
 		        $players = $players->where('players.height', '<=', $filterHeightRangeTo);
+		        if ($filterFoot) {
+		        	$players = $players->where('players.foot', '=', $filterFoot);
+		        }
 				$players = $players->orderBy($order_ext['sortField'], $order_ext['sortDirection']);
 				if ($order_ext['sortField'] == 'players.overall_rating') {
 					$players = $players->orderBy('players.name', 'asc');
@@ -857,7 +879,7 @@ class MarketController extends Controller
 				$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
 
 				//return view
-		        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+		        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
 			}
 		}
 
@@ -921,13 +943,13 @@ class MarketController extends Controller
 		        		$player->untransferable	= 1;
 		        		$player->player_on_loan = 0;
 		        		$player->transferable = 0;
-		        		$player->sale_price = null;
+		        		$player->sale_price = 0;
 		        		$player->sale_auto_accept = 0;
 		        	} else {
 		        		$player->untransferable	= 0;
 			        	$player->player_on_loan = request()->player_on_loan == 'on' ? 1 : 0;
 			        	$player->transferable = request()->transferable == 'on' ? 1 : 0;
-			        	$player->sale_price = request()->sale_price;
+			        	$player->sale_price = request()->sale_price == null ? 0 : request()->sale_price;
 			        	$player->sale_auto_accept = request()->sale_auto_accept == 'on' ? 1 : 0;
 		        	}
 		        	$player->market_phrase = request()->market_phrase;
@@ -1125,30 +1147,88 @@ class MarketController extends Controller
 				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
 					->where('user_id', '=', auth()->user()->id)->first();
 
-				$offers_sent = Trade::where('season_id', '=', active_season()->id)
-					->where('participant1_id', '=', participant_of_user()->id)
-					->orderBy('created_at', 'desc')
-					->get();
 				$offers_received = Trade::where('season_id', '=', active_season()->id)
 					->where('participant2_id', '=', participant_of_user()->id)
-					->orderBy('created_at', 'desc')
+					->where('state', '=', 'pending')
+					->count();
+				$offers_sent_pending = Trade::where('season_id', '=', active_season()->id)
+					->where('participant1_id', '=', participant_of_user()->id)
+					->where('state', '=', 'pending')
+					->count();
+				$offers_sent_refushed = Trade::where('season_id', '=', active_season()->id)
+					->where('participant1_id', '=', participant_of_user()->id)
+					->where('state', '=', 'refushed')
+					->count();
+
+				$participants = SeasonParticipant::
+					leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
+					->select('season_participants.*', 'teams.name as team_name')
+					->seasonId(active_season()->id)
+					->where('season_participants.id', '<>', participant_of_user()->id)
+					->orderBy('team_name', 'asc')
 					->get();
 
-				return view('market.trades', compact('participant', 'offers_sent', 'offers_received'));
+				return view('market.trades.index', compact('participant', 'offers_received', 'offers_sent_pending', 'offers_sent_refushed', 'participants'));
 			}
     	}
 
 		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
-    public function tradesAdd($id)
+    public function tradesReceived()
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
+					->where('user_id', '=', auth()->user()->id)->first();
+
+				$offers_received = Trade::where('season_id', '=', active_season()->id)
+					->where('participant2_id', '=', participant_of_user()->id)
+					->where('state', '=', 'pending')
+					->orderBy('created_at', 'desc')
+					->get();
+
+				return view('market.trades.received', compact('participant', 'offers_received'));
+			}
+    	}
+
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
+
+    public function tradesSent()
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
+					->where('user_id', '=', auth()->user()->id)->first();
+
+				$offers_sent = Trade::where('season_id', '=', active_season()->id)
+					->where('participant1_id', '=', participant_of_user()->id)
+					->where('state', '=', 'pending')
+					->orWhere('state', '=', 'refushed')
+					->orderBy('created_at', 'desc')
+					->get();
+
+				return view('market.trades.sent', compact('participant', 'offers_sent'));
+			}
+    	}
+
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
+
+    public function tradesAdd($participant_id, $player_id = null)
     {
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
     		if (user_is_participant(auth()->user()->id)) {
-		    	$participant = SeasonParticipant::find($id);
-		    	return view('market.trades_add', compact('participant'));
+		    	$participant = SeasonParticipant::find($participant_id);
+		    	$player_selected = $player_id;
+		    	return view('market.trades.add', compact('participant', 'player_selected'));
 		    }
 	    }
 
@@ -1157,15 +1237,6 @@ class MarketController extends Controller
 
     public function tradesSave($id)
     {
-    	dd(request()->cesion);
-    	//falta verificar si es cesion o si es intercambio para hacer lo que corresponda en cada caso
-    	//
-    	//
-    	//
-    	//
-    	//
-
-
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
@@ -1215,15 +1286,165 @@ class MarketController extends Controller
 				    		$trade_detail->save();
 				    	}
 					}
-			    	return redirect()->route('market.trades')->with('success', 'Oferta enviada correctamente.');
+
+		    		if ($trade->cession) { $trade_type = 'cesión'; } else { $trade_type = 'intercambio'; }
+		    		$text = $trade->participant1->name() . ' te ha enviado una oferta de ' . $trade_type;
+			        $this->add_notification(
+			        	$trade->participant2->user,
+			        	$trade->participant2->user_id,
+			        	$trade->id,
+			        	$text,
+			        	$trade->participant2->user->profile->email_notifications,
+			        	'Ofertas recibidas',
+			        	'market.trades.received'
+			        );
+
+			    	return redirect()->route('market.trades.sent')->with('success', 'Oferta enviada correctamente.');
 
 		    	} else {
-		    		return redirect()->route('market.trades')->with('error', 'El participante no existe.');
+		    		return back()->with('error', 'El participante no existe.');
 		    	}
 		    }
 	    }
 
 	    return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
+
+    public function tradesAccept($id)
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+		    	$trade = Trade::find($id);
+		    	if ($trade) {
+		    		if (count($trade->check_offer()) > 0) {
+		    			return back()->with('error', 'La oferta no es válida por lo que no se puede aceptar');
+		    		} else {
+			    		$trade->state = 'confirmed';
+			    		$trade->save();
+
+			    		if ($trade->cession) { $trade_type = 'cesión'; } else { $trade_type = 'intercambio'; }
+
+						$participant1 = SeasonParticipant::find($trade->participant1_id);
+				        $participant2 = SeasonParticipant::find($trade->participant2_id);
+
+						// generate cash movements
+				        if ($trade->cash1 > 0) {
+				        	$this->add_cash_history(
+				        		$trade->participant2_id,
+				        		'Acuerdo de ' . $trade_type . " con " . $trade->participant1->name(),
+				        		$trade->cash1,
+				        		'E'
+				        	);
+				        	$this->add_cash_history(
+				        		$trade->participant1_id,
+				        		'Acuerdo de ' . $trade_type . " con " . $trade->participant2->name(),
+				        		$trade->cash1,
+				        		'S'
+				        	);
+				        }
+				        if ($trade->cash2 > 0) {
+				        	$this->add_cash_history(
+				        		$trade->participant2_id,
+				        		'Acuerdo de ' . $trade_type . " con " . $trade->participant1->name(),
+				        		$trade->cash2,
+				        		'S'
+				        	);
+				        	$this->add_cash_history(
+				        		$trade->participant1_id,
+				        		'Acuerdo de ' . $trade_type . " con " . $trade->participant2->name(),
+				        		$trade->cash2,
+				        		'E'
+				        	);
+				        }
+
+				        // change team players and market data
+				        foreach ($trade->detail as $detail) {
+				            if ($detail->player1_id) {
+				                $player = SeasonPlayer::find($detail->player1_id);
+				                // change player team
+				                $player->participant_id = $participant2->id;
+					        	// reset player market data
+					        	$player->allow_clause_pay = 0;
+					        	$player->market_phrase = null;
+					        	$player->untransferable = 0;
+					        	$player->player_on_loan = 0;
+					        	$player->transferable = 0;
+					        	$player->sale_price = 0;
+					        	$player->sale_auto_accept = 0;
+					        	$player->save();
+					        	if ($player->save()) {
+		        					$this->manage_player_showcase($player);
+		        				}
+					        	// save transfer
+					        	$this->add_transfer(
+					        		'negotiation',
+					        		$player->id,
+					        		$participant1->id,
+					        		$participant2->id,
+					        		0
+					        	);
+					        	// generate post (new)
+					        	$transfer = Transfer::orderBy('id', 'desc')->first();
+								$this->generate_new(
+									'transfer',
+									$transfer->id,
+									NULL
+					        	);
+				            }
+				            if ($detail->player2_id) {
+				                $player = SeasonPlayer::find($detail->player2_id);
+				                // change player team
+				                $player->participant_id = $participant1->id;
+					        	// reset player market data
+					        	$player->allow_clause_pay = 0;
+					        	$player->market_phrase = null;
+					        	$player->untransferable = 0;
+					        	$player->player_on_loan = 0;
+					        	$player->transferable = 0;
+					        	$player->sale_price = 0;
+					        	$player->sale_auto_accept = 0;
+					        	$player->save();
+					        	if ($player->save()) {
+		        					$this->manage_player_showcase($player);
+		        				}
+					        	// save transfer
+					        	$this->add_transfer(
+					        		'negotiation',
+					        		$player->id,
+					        		$participant2->id,
+					        		$participant1->id,
+					        		0
+					        	);
+					        	// generate post (new)
+					        	$transfer = Transfer::orderBy('id', 'desc')->first();
+								$this->generate_new(
+									'transfer',
+									$transfer->id,
+									NULL
+					        	);
+				            }
+				        }
+
+			    		$text = $trade->participant2->name() . ' ha aceptado tu oferta de ' . $trade_type;
+				        $this->add_notification(
+				        	$trade->participant1->user,
+				        	$trade->participant1->user_id,
+				        	$trade->id,
+				        	$text,
+				        	$trade->participant1->user->profile->email_notifications,
+				        	'Acuerdos',
+				        	'market.agreements'
+				        );
+
+			    		return redirect()->route('market.agreements')->with('info', 'Has aceptado la oferta de ' . $trade_type . ' propuesta por ' . $trade->participant1->name());
+		    		}
+		    	}
+			}
+    	}
+
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
     public function tradesDecline($id)
@@ -1238,13 +1459,18 @@ class MarketController extends Controller
 		    		$trade->save();
 
 		    		if ($trade->cession) { $trade_type = 'cesión'; } else { $trade_type = 'intercambio'; }
+		    		$text = $trade->participant2->name() . ' ha rechazado tu oferta de ' . $trade_type;
 			        $this->add_notification(
+			        	$trade->participant1->user,
 			        	$trade->participant1->user_id,
 			        	$trade->id,
-			        	$trade->participant2->name() . ' ha rechazado tu oferta de ' . $trade_type
+			        	$text,
+			        	$trade->participant1->user->profile->email_notifications,
+			        	'Ofertas enviadas',
+			        	'market.trades.sent'
 			        );
 
-		    		return back()->with('info', 'Has rechazado la oferta de ' . $trade->participant1->name());
+		    		return back()->with('info', 'Has rechazado la oferta de ' . $trade_type . ' propuesta por ' . $trade->participant1->name());
 		    	}
 			}
     	}
@@ -1252,6 +1478,53 @@ class MarketController extends Controller
 		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
+    public function tradesRetire($id)
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+		    	$trade = Trade::find($id);
+		    	if ($trade) {
+		    		$trade->delete();
+
+		    		if ($trade->cession) { $trade_type = 'cesión'; } else { $trade_type = 'intercambio'; }
+		    		$text = $trade->participant1->name() . ' ha retirado su oferta de ' . $trade_type;
+			        $this->add_notification(
+			        	$trade->participant2->user,
+			        	$trade->participant2->user_id,
+			        	$trade->id,
+			        	$text,
+			        	$trade->participant2->user->profile->email_notifications,
+			        	'Negociaciones',
+			        	'market.trades'
+			        );
+
+		    		return back()->with('success', 'Se ha retirado la oferta correctamente');
+		    	}
+			}
+    	}
+
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
+
+    public function tradesDelete($id)
+    {
+    	if (auth()->guest()) {
+    		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
+    	} else {
+			if (user_is_participant(auth()->user()->id)) {
+		    	$trade = Trade::find($id);
+		    	if ($trade) {
+		    		$trade->delete();
+
+		    		return back()->with('success', 'Se ha eliminado la oferta correctamente');
+		    	}
+			}
+    	}
+
+		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
+    }
 
 
 
@@ -1585,7 +1858,7 @@ class MarketController extends Controller
             ->first();
     }
 
-    protected function add_notification($user_id, $trade_id, $text)
+    protected function add_notification($user, $user_id, $trade_id, $text, $email_notifications, $action_text, $action_route)
     {
 	    $mailbox = Mailbox::create([
 	        'user_id' => $user_id,
@@ -1593,5 +1866,12 @@ class MarketController extends Controller
 	        'text' => $text,
 	        'read' => 0
 	    ]);
+
+        if ($email_notifications) {
+        	$line1 = $text;
+        	$action_text = $action_text;
+        	$action_route = $action_route;
+			$user->notify(new SendNotificationEmail($text, $action_text, $action_route));
+        }
     }
 }

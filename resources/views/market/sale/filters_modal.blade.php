@@ -73,9 +73,11 @@
 			                    <option value="">Todos los equipos</option>
 			                    @foreach ($participants as $participant)
 			                        @if ($participant->id == $filterParticipant)
-			                            <option selected data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}</span><small class='text-muted'>{{ $participant->sub_name() }}</small>" value="{{ $participant->id }}">{{ $participant->name() }}</option>
+		                            	<option selected title="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small>" data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small></span>" value="{{ $participant->id }}">{{ $participant->name() }}
+		                            	</option>
 			                        @else
-			                            <option data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}</span><small class='text-muted'>{{ $participant->sub_name() }}</small>" value="{{ $participant->id }}">{{ $participant->name() }}</option>
+		                            	<option title="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small>" data-content="<img class='mr-2' src='{{ $participant->logo() }}' width='20'><span>{{ $participant->name() }}<small class='pl-1 text-muted'>{{ $participant->sub_name() }}<small></span>" value="{{ $participant->id }}">{{ $participant->name() }}
+		                            	</option>
 			                        @endif
 			                    @endforeach
 			                </select>
@@ -88,7 +90,9 @@
 			                <select name="filterPosition" id="filterPosition" class="form-control selectpicker show-tick filterPosition" data-header="Selecciona posición" data-size="5">
 			                    <option value="">Todas las posiciones</option>
 			                    @foreach ($positions as $position)
-			                            <option {{ $position->position == $filterPosition ? 'selected' : '' }} value="{{ $position->position }}">{{ $position->position }}</option>
+			                            <option {{ $position->position == $filterPosition ? 'selected' : '' }} value="{{ $position->position }}">
+			                            	{{ $position->position }}
+			                            </option>
 			                    @endforeach
 			                </select>
 			            </div> {{-- col --}}

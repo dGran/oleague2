@@ -314,8 +314,6 @@
 }
 
 .transfer .content .item .nation-logo {
-  border-radius: 50%;
-  border: 1px solid #ffffff;
   height: 20px;
   left: 32px;
   position: absolute;
@@ -1146,8 +1144,6 @@
 }
 
 .search .content .item .nation-logo {
-  border-radius: 50%;
-  border: 1px solid #ffffff;
   height: 20px;
   left: 32px;
   position: absolute;
@@ -1667,44 +1663,150 @@
 }
 
 .negotiations .header {
-  background: #EEEEEE;
-  border-bottom: 1px solid #f1eff3;
+  background: #F2F2F2;
   padding: .5rem 0;
+  position: relative;
 }
 
-.negotiations .header ul {
+.negotiations .header .logo {
+  -webkit-box-shadow: 14px 0px 9px -11px #949494;
+  box-shadow: 14px 0px 9px -11px #949494;
+  margin-left: .5rem;
+  margin-right: 1rem;
+  padding-right: .5rem;
+  vertical-align: top;
+  width: 75px;
+}
+
+.negotiations .header .participant {
+  display: inline-block;
+  padding-top: .5rem;
+}
+
+.negotiations .header .participant .name {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin: 0;
+}
+
+.negotiations .header .participant .subname {
+  color: #6c757d;
+  display: block;
   font-size: .8em;
+}
+
+.negotiations .selector {
+  padding: 1em;
   text-align: center;
-  width: 100%;
 }
 
-.negotiations .content .tab-content {
-  padding: 1rem 0;
+.negotiations .selector a {
+  font-size: .9em;
 }
 
-.negotiations .content .tab-content table {
+.negotiations .content .offer {
+  background: #fff;
   font-size: .9em;
   width: 100%;
+  border-bottom: 1px solid #E9E9E9;
+  border-top: 1px solid #E9E9E9;
 }
 
-.negotiations .content .tab-content table .date td {
-  padding-top: .5em;
+.negotiations .content .offer .info {
+  background: #F2F2F2;
+  border-bottom: 1px solid #E9E9E9;
+  padding: .75em 1em;
 }
 
-.negotiations .content .tab-content table .data {
-  border-bottom: 1px solid #f1eff3;
+.negotiations .content .offer .info h5 {
+  font-size: 1.25em;
 }
 
-.negotiations .content .tab-content table .data td {
-  padding: .25em .25em .5em .25em;
+.negotiations .content .offer .data {
+  border-bottom: 1px solid #E9E9E9;
+  padding: .75em 1em;
+  text-align: center;
 }
 
-.negotiations .content .tab-content table .detail {
-  border-bottom: 1px solid #f1eff3;
+.negotiations .content .offer .data img {
+  padding-bottom: .75em;
 }
 
-.negotiations .content .tab-content table .detail td {
-  padding: .5em 0;
+.negotiations .content .offer .detail {
+  font-size: .9em;
+  padding: .75em 1em;
+}
+
+.negotiations .content .offer .detail .title {
+  display: block;
+  font-size: .9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.negotiations .content .offer .detail .cash {
+  display: block;
+  padding: .25em 0;
+}
+
+.negotiations .content .offer .detail .players {
+  padding: 1em 0;
+}
+
+.negotiations .content .offer .detail .players .player {
+  display: block;
+  padding: .25em 0;
+}
+
+.negotiations .content .offer .detail .players .player .player-data {
+  display: inline-block;
+  font-size: .9em;
+  line-height: 1.25em;
+  vertical-align: bottom;
+}
+
+.negotiations .content .offer .detail .players .player .player-data .sub-name {
+  display: block;
+  color: #6c757d;
+}
+
+.negotiations .content .offer .detail .players .player .player-img {
+  display: inline-block;
+  margin-left: .25em;
+  vertical-align: top;
+  width: 28px;
+}
+
+.negotiations .content .offer .actions {
+  padding: 0em 1em 1em 1em;
+  text-align: center;
+}
+
+.negotiations .content .offer .actions a {
+  font-size: .9em;
+}
+
+.negotiations .content .offer .validations {
+  border-top: 1px solid #E9E9E9;
+  padding: .75em 1em;
+}
+
+.negotiations .content .offer .validations.invalid {
+  background: #FFE1E5;
+}
+
+.negotiations .content .offer .validations .state {
+  font-weight: bold;
+  text-align: center;
+}
+
+.negotiations .content .offer .validations .warnings {
+  font-size: .8em;
+  padding-top: 1em;
+}
+
+.negotiations .content .offer .validations .warnings .item {
+  color: #ef696c;
 }
 
 .searchbox {
@@ -1942,6 +2044,19 @@
 
   .my-team .header .logo {
     margin-left: 0;
+  }
+
+  .negotiations .content .offer {
+    background: #fff;
+    border-left: 1px solid #E9E9E9;
+    border-right: 1px solid #E9E9E9;
+    border-radius: 8px;
+    font-size: 1em;
+    margin-bottom: 1.5em;
+  }
+
+  .negotiations .content .offer .info {
+    border-radius: 8px 8px 0 0;
   }
 }
 

@@ -98,4 +98,14 @@ class User extends Authenticatable
     {
         return \Cache::has('user-is-online-' . $this->id);
     }
+
+    public function Notifications()
+    {
+        return $this->hasmany('App\Mailbox', 'user_id', 'id');
+    }
+
+    public function uread_notifications()
+    {
+        return Mailbox::where('user_id', '=', $this->id)->where('read', '=', 0)->count();
+    }
 }

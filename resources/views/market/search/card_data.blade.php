@@ -22,7 +22,7 @@
 		</a>
 	</span> {{-- name --}}
 	<img class="icon-position" src="{{ asset($player->player->getIconPosition()) }}">
-	<div class="overall" style="background: {{ $player->player->getOverallRatingColor() }};">
+	<div class="overall" style="background: {{ $player->player->getOverallRatingColor() }}; color: {{ $player->player->getOverallRatingColorText() }}">
         {{ $player->player->overall_rating }}
 	</div> {{-- overall --}}
 	@if ($player->participant)
@@ -39,7 +39,7 @@
 			Agente libre
 		</span> {{-- participant-name --}}
 	@endif
-	<img class="nation-logo" src="https://cdn10.bigcommerce.com/s-ey7tq/products/3606/images/4932/FISPA-2__55833.1407859367.1280.1280.jpg?c=2" data-toggle="tooltip" data-placement="top" title="{{ $player->player->nation_name}}">
+	<img class="nation-logo" src="{{ asset($player->player->nation_flag()) }}" data-toggle="tooltip" data-placement="top" title="{{ $player->player->nation_name }}">
 	@if ($player->participant)
 		<div class="clause-data">
 			<span class="units">Claúsula: {{ number_format($player->price, 2, ',', '.') }}</span>
@@ -67,7 +67,7 @@
 						@endif
 					</h6>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item {{ !$player->participant || participant_of_user()->id == $player->participant_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', $player->participant_id) }}">
+					<a class="dropdown-item {{ !$player->participant || participant_of_user()->id == $player->participant_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', [$player->participant_id, $player->id]) }}">
 						Abrir negociación
 					</a>
 					<a class="dropdown-item {{ !$player->participant || !$player->allow_clause_pay || ($player->participant && $player->participant->clauses_received_limit()) || ($player->participant && participant_of_user()->clauses_paid_limit()) || $player->participant && $player->participant->id == participant_of_user()->id || participant_of_user()->budget() < $player->clause_price() || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->id }}', '{{ $player->player->name }}', '{{ number_format($player->price, 2, ',', '.') }}')">

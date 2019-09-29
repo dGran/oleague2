@@ -60,7 +60,7 @@
 			jugadores libres
 		</span> {{-- participant-name --}}
 	@endif
-	<img class="nation-logo" src="https://cdn10.bigcommerce.com/s-ey7tq/products/3606/images/4932/FISPA-2__55833.1407859367.1280.1280.jpg?c=2" data-toggle="tooltip" data-placement="top" title="{{ $player->season_player->player->nation_name}}">
+	<img class="nation-logo" src="{{ asset($player->season_player->player->nation_flag()) }}" data-toggle="tooltip" data-placement="top" title="{{ $player->season_player->player->nation_name}}">
 </div> {{-- item --}}
 {{-- <div class="item-bottom">
 	<div class="phrase">

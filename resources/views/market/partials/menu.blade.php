@@ -6,8 +6,8 @@
 				<span>Resumen</span>
 			</a>
 		</li>
-		<li class="item {{ \Route::current()->getName() == 'market.search' ? 'active' : '' }}">
-			<a href="{{ route('market.search') }}">
+		<li class="item {{ \Route::current()->getName() == 'market.agreements' ? 'active' : '' }}">
+			<a href="{{ route('market.agreements') }}">
 				<i class="icon-agreement"></i>
 				<span>Acuerdos</span>
 			</a>
@@ -42,9 +42,9 @@
 				<a href="{{ route('market.trades') }}">
 					<i class="icon-negotiation"></i>
 					<span>Negocios</span>
-					@if (participant_of_user()->trades_received->count() > 0)
+					@if (participant_of_user()->trades_received_pending() > 0)
 						<span class="counter badge badge-danger rounded-circle">
-							{{ participant_of_user()->trades_received->count() }}
+							{{ participant_of_user()->trades_received_pending() }}
 						</span>
 					@endif
 				</a>

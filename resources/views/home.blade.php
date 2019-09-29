@@ -289,7 +289,7 @@
                 </h3>
             </div>
         </div>
-        <div class="container p-3 text-white text-center">
+        <div class="container py-2 text-white text-center">
             <ul style="padding: 0">
                 @foreach ($last_users as $user)
                     <li class="m-2" style="list-style: none; display: inline-block;">
