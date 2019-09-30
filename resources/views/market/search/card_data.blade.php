@@ -29,6 +29,9 @@
 		<img class="participant-logo" src="{{ $player->participant->logo() }}">
 		<span class="participant-name">
 			{{ $player->participant->name() }}
+			@if ($player->owner_id)
+				<span class="text-primary">(CESION)</span>
+			@endif
 		</span> {{-- participant-name --}}
 		<span class="participant-subname">
 			{{ $player->participant->sub_name() }}
@@ -67,7 +70,7 @@
 						@endif
 					</h6>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item {{ !$player->participant || participant_of_user()->id == $player->participant_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', [$player->participant_id, $player->id]) }}">
+					<a class="dropdown-item {{ !$player->participant || participant_of_user()->id == $player->participant_id || $player->owner_id ? 'disabled' : '' }}" href="{{ route('market.trades.add', [$player->participant_id, $player->id]) }}">
 						Abrir negociación
 					</a>
 					<a class="dropdown-item {{ !$player->participant || !$player->allow_clause_pay || ($player->participant && $player->participant->clauses_received_limit()) || ($player->participant && participant_of_user()->clauses_paid_limit()) || $player->participant && $player->participant->id == participant_of_user()->id || participant_of_user()->budget() < $player->clause_price() || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->id }}', '{{ $player->player->name }}', '{{ number_format($player->price, 2, ',', '.') }}')">

@@ -41,16 +41,18 @@
 
 		<div class="row">
 			<div class="col-6 text-right">
+				<div class="{{ $trade->cash1 == 0 && $trade->cash2 == 0 ? 'd-none' : '' }}">
+					<div class="title">
+						Recibe
+					</div>
+					<div class="cash {{ $trade->cash2 == 0 ? 'text-muted' : '' }}">
+						{{ $trade->cash2 }} M.
+					</div>
+				</div>
 				<div class="title">
-					Recibe
+					Se incorpora
 				</div>
-				<div class="cash {{ $trade->cash2 == 0 ? 'text-muted' : '' }}">
-					{{ $trade->cash2 }} M.
-				</div>
-				<div class="title">
-					Se incorporan
-				</div>
-				<div class="players">
+				<div class="players p-0">
 					@foreach ($trade->detail as $detail)
 						@if ($detail->player2)
 							<div class="player">
@@ -70,16 +72,18 @@
 			</div>
 
 			<div class="col-6 text-left">
+				<div class="{{ $trade->cash1 == 0 && $trade->cash2 == 0 ? 'd-none' : '' }}">
+					<div class="title">
+						Recibe
+					</div>
+					<div class="cash {{ $trade->cash1 == 0 ? 'text-muted' : '' }}">
+						{{ $trade->cash1 }} M.
+					</div>
+				</div>
 				<div class="title">
-					Recibe
+					Se incorpora
 				</div>
-				<div class="cash {{ $trade->cash1 == 0 ? 'text-muted' : '' }}">
-					{{ $trade->cash1 }} M.
-				</div>
-				<div class="title">
-					Se incorporan
-				</div>
-				<div class="players">
+				<div class="players p-0">
 					@foreach ($trade->detail as $detail)
 						@if ($detail->player1)
 							<div class="player">

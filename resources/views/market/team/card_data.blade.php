@@ -7,7 +7,7 @@
 				<small>{{ $player->player->position }}</small>
 			</span>
 		</div>
-		<img class="nation-logo" src="https://cdn10.bigcommerce.com/s-ey7tq/products/3606/images/4932/FISPA-2__55833.1407859367.1280.1280.jpg?c=2" data-toggle="tooltip" data-placement="top" title="{{ $player->player->nation_name}}">
+		<img class="nation-logo" src="{{ asset($player->player->nation_flag()) }}" data-toggle="tooltip" data-placement="top" title="{{ $player->player->nation_name}}">
 
 		@if (!auth()->guest() && user_is_participant(auth()->user()->id))
 			<div id="player_favorite{{ $player->id}}" class="d-inline-block">
@@ -16,14 +16,17 @@
 		@endif
 		<img class="ball-img" src="{{ asset($player->player->getBall()) }}">
 		<span class="player-name">
+			@if ($player->owner_id)
+				<small class="text-primary font-weight-bold" style="font-size: .7em">(CESION)</small>
+			@endif
 			{{ $player->player->name }}
 			<a class="player-info" data-toggle="modal" data-target="#viewModal" id="btnView" data-id="{{ $player->id }}">
 				<i class="fas fa-info-circle"></i>
 			</a>
 		</span>
 
-		<div class="overall" style="background: {{ $player->player->getOverallRatingColor() }};">
-		    <span>{{ $player->player->overall_rating }}</span>
+		<div class="overall" style="background: {{ $player->player->getOverallRatingColor() }}">
+		    <span style="color: {{ $player->player->getOverallRatingColorText() }}">{{ $player->player->overall_rating }}</span>
 		</div>
 
 		<div class="salary">

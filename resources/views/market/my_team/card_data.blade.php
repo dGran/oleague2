@@ -10,6 +10,9 @@
 
 		<img class="ball-img" src="{{ asset($player->player->getBall()) }}">
 		<span class="player-name">
+			@if ($player->owner_id)
+				<small class="text-primary font-weight-bold" style="font-size: .7em">(CESION)</small>
+			@endif
 			{{ $player->player->name }}
 			<a class="player-info" data-toggle="modal" data-target="#viewModal" id="btnView" data-id="{{ $player->id }}">
 				<i class="fas fa-info-circle"></i>
@@ -20,8 +23,8 @@
 			@include('market.partials.favorite')
 		</div>
 
-		<div class="overall" style="background: {{ $player->player->getOverallRatingColor() }};">
-		    <span>{{ $player->player->overall_rating }}</span>
+		<div class="overall" style="background: {{ $player->player->getOverallRatingColor() }}">
+		    <span style="color: {{ $player->player->getOverallRatingColorText() }}">{{ $player->player->overall_rating }}</span>
 		</div>
 
 		<div class="salary">
@@ -50,7 +53,7 @@
 
 		<div class="actions">
 			<div class="dropdown dropleft">
-				<button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<button class="btn btn-sm dropdown-toggle {{ $player->owner_id ? 'disabled' : '' }}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Acciones
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

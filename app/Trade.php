@@ -77,7 +77,7 @@ class Trade extends Model
 
         // check that the templates are in the max and min range allowed
         $p1_total_players = $participant1->players->count() + $p2_players_counter - $p1_players_counter;
-        $p2_total_players = $participant1->players->count() + $p1_players_counter - $p2_players_counter;
+        $p2_total_players = $participant2->players->count() + $p1_players_counter - $p2_players_counter;
         $season = Season::find($this->season_id);
         $max_players = $season->max_players;
         $min_players = $season->min_players;

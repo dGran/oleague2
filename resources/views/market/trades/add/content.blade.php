@@ -53,7 +53,7 @@
 					<label for="p1_players">Ofrecer jugadores</label>
 		            <select name="p1_players[]" id="p1_players" class="form-control selectpicker show-tick" data-size="8" title="Selecciona jugadores..." multiple>
 		                @foreach (participant_of_user()->players as $player)
-		                	<option title="{{ $player->player->name }}" data-content="<img class='mr-1' src='{{ $player->player->getImgFormatted() }}' width='28'><span>{{ $player->player->name }}</span><small class='text-muted'>{{ $player->player->position }}-{{ $player->player->overall_rating }}</small>" value="{{ $player->id }}" style="font-size: .9em"></option>
+		                	<option {{ $player->owner_id ? 'disabled' : '' }} title="{{ $player->player->name }}" data-content="<img class='mr-1' src='{{ $player->player->getImgFormatted() }}' width='28'><span>{{ $player->player->name }}</span><small class='text-muted'>{{ $player->player->position }}-{{ $player->player->overall_rating }}</small>" value="{{ $player->id }}" style="font-size: .9em"></option>
 		                @endforeach
 		            </select>
 				</div>
@@ -95,7 +95,7 @@
 					<label for="p2_players">Solicitar jugadores</label>
 		            <select name="p2_players[]" id="p2_players" class="form-control selectpicker show-tick" data-size="8" title="Selecciona jugadores..." multiple>
 		                @foreach ($participant->players as $player)
-		                	<option {{ $player->id == $player_selected ? 'selected' : '' }} title="{{ $player->player->name }}" data-content="<img class='mr-1' src='{{ $player->player->getImgFormatted() }}' width='28'><span>{{ $player->player->name }}</span><small class='text-muted'>{{ $player->player->position }}-{{ $player->player->overall_rating }}</small>" value="{{ $player->id }}" style="font-size: .9em"></option>
+		                	<option {{ $player->id == $player_selected ? 'selected' : '' }} {{ $player->owner_id ? 'disabled' : '' }} title="{{ $player->player->name }}" data-content="<img class='mr-1' src='{{ $player->player->getImgFormatted() }}' width='28'><span>{{ $player->player->name }}</span><small class='text-muted'>{{ $player->player->position }}-{{ $player->player->overall_rating }}</small>" value="{{ $player->id }}" style="font-size: .9em"></option>
 		                @endforeach
 		            </select>
 				</div>
@@ -125,10 +125,11 @@
 				<small>
 				*Los intercambios no serán validados si al aceptar la oferta alguno de los dos equipos se queda con un presupuesto negativo o el número de jugadores de su plantilla queda fuera del rango mínimo ({{active_season()->min_players}}) y máximo ({{active_season()->max_players}}).
 				</small>
-			</p>
-			<p class="text-justify">
-				<small>
+				<small class="d-block">
 				*En los acuerdos de cesión los jugadores retornarán a sus equipos al finalizar la temporada pero no el dinero ofrecido, que será parte del pago. El club que incorpora un jugador cedido se hace cargo del pago de la ficha del jugador en esa temporada.
+				</small>
+				<small class="d-block">
+				*Los jugadores cedidos no pueden entrar en negociaciones.
 				</small>
 			</p>
 		</div>

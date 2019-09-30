@@ -216,12 +216,22 @@ class MarketController extends Controller
 		        		$player->price * 0.10,
 		        		'S'
 		        	);
-		        	$this->add_cash_history(
-		        		$participant_from->id,
-		        		'Pago de claúsula del jugador ' . $player->player->name,
-		        		$player->price,
-		        		'E'
-		        	);
+
+	        		if ($player->owner_id) {
+			        	$this->add_cash_history(
+			        		$player->owner_id,
+			        		'Pago de claúsula del jugador ' . $player->player->name,
+			        		$player->price,
+			        		'E'
+			        	);
+	        		} else {
+			        	$this->add_cash_history(
+			        		$participant_from->id,
+			        		'Pago de claúsula del jugador ' . $player->player->name,
+			        		$player->price,
+			        		'E'
+			        	);
+	        		}
 		        	// END::generate cash movements
 
 		        	// save transfer
@@ -249,6 +259,7 @@ class MarketController extends Controller
 
 		        	// reset player market data
 		        	$player->participant_id = $participant_to->id;
+		        	$player->owner_id = null;
 		        	$player->allow_clause_pay = 0;
 		        	$player->market_phrase = null;
 		        	$player->untransferable = 0;
@@ -316,7 +327,7 @@ class MarketController extends Controller
 
 		        	// save transfer
 		        	$this->add_transfer(
-		        		'negotiation',
+		        		'buynow',
 		        		$player->id,
 		        		$participant_from->id,
 		        		$participant_to->id,
@@ -976,6 +987,9 @@ class MarketController extends Controller
     	} else {
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
+	        	if ($player->owner_id) {
+	        		return back()->with('error', 'No se puede declarar transferible a un jugador cedido.');
+	        	}
 	        	if (auth()->user()->id == $player->participant->user_id) {
 		        	$player->transferable = 1;
 		        	$player->untransferable = 0;
@@ -1001,6 +1015,9 @@ class MarketController extends Controller
     	} else {
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
+	        	if ($player->owner_id) {
+	        		return back()->with('error', 'No se puede declarar intransferible a un jugador cedido.');
+	        	}
 	        	if (auth()->user()->id == $player->participant->user_id) {
 		        	$player->untransferable = 1;
 		    		$player->player_on_loan = 0;
@@ -1030,6 +1047,9 @@ class MarketController extends Controller
     	} else {
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
+	        	if ($player->owner_id) {
+	        		return back()->with('error', 'No se puede declarar cedible a un jugador cedido.');
+	        	}
 	        	if (auth()->user()->id == $player->participant->user_id) {
 		        	$player->player_on_loan = 1;
 		        	$player->untransferable = 0;
@@ -1084,6 +1104,9 @@ class MarketController extends Controller
     	} else {
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
+	        	if ($player->owner_id) {
+	        		return back()->with('error', 'No se puede despedir a un jugador cedido.');
+	        	}
 	        	if (auth()->user()->id == $player->participant->user_id) {
 	        		if ($player->participant->min_players_limit()) {
 	        			return back()->with('error', 'No puedes despedir al jugador. Actualmente tienes el mínimo de jugadores en tu plantilla.');
@@ -1254,11 +1277,6 @@ class MarketController extends Controller
 	    			if (!request()->p2_players && request()->p2_cash == 0) {
 	    				return back()->with('error', 'No se permiten ofertas sin solicitar ni jugadores ni dinero');
 	    			}
-	    			if (request()->cesion) {
-		    			if (!request()->p2_players) {
-		    				return back()->with('error', 'No se permiten ofertas de cesión sin solicitar jugadores');
-		    			}
-	    			}
 
 		    		$trade = new Trade;
 		    		$trade->season_id = $participant->season_id;
@@ -1324,7 +1342,13 @@ class MarketController extends Controller
 			    		$trade->state = 'confirmed';
 			    		$trade->save();
 
-			    		if ($trade->cession) { $trade_type = 'cesión'; } else { $trade_type = 'intercambio'; }
+			    		if ($trade->cession) {
+			    			$trade_type = 'cesión';
+			    			$transfer_type = 'cession';
+			    		} else {
+			    			$trade_type = 'intercambio';
+			    			$transfer_type = 'negotiation';
+			    		}
 
 						$participant1 = SeasonParticipant::find($trade->participant1_id);
 				        $participant2 = SeasonParticipant::find($trade->participant2_id);
@@ -1365,6 +1389,9 @@ class MarketController extends Controller
 				                $player = SeasonPlayer::find($detail->player1_id);
 				                // change player team
 				                $player->participant_id = $participant2->id;
+				                if ($trade->cession) {
+				                	$player->owner_id = $participant1->id;
+				                }
 					        	// reset player market data
 					        	$player->allow_clause_pay = 0;
 					        	$player->market_phrase = null;
@@ -1379,7 +1406,7 @@ class MarketController extends Controller
 		        				}
 					        	// save transfer
 					        	$this->add_transfer(
-					        		'negotiation',
+					        		$transfer_type,
 					        		$player->id,
 					        		$participant1->id,
 					        		$participant2->id,
@@ -1397,6 +1424,9 @@ class MarketController extends Controller
 				                $player = SeasonPlayer::find($detail->player2_id);
 				                // change player team
 				                $player->participant_id = $participant1->id;
+				                if ($trade->cession) {
+				                	$player->owner_id = $participant2->id;
+				                }
 					        	// reset player market data
 					        	$player->allow_clause_pay = 0;
 					        	$player->market_phrase = null;
@@ -1411,7 +1441,7 @@ class MarketController extends Controller
 		        				}
 					        	// save transfer
 					        	$this->add_transfer(
-					        		'negotiation',
+					        		$transfer_type,
 					        		$player->id,
 					        		$participant2->id,
 					        		$participant1->id,
@@ -1440,6 +1470,8 @@ class MarketController extends Controller
 
 			    		return redirect()->route('market.agreements')->with('info', 'Has aceptado la oferta de ' . $trade_type . ' propuesta por ' . $trade->participant1->name());
 		    		}
+		    	} else {
+		    		return back()->with('error', 'La oferta ya no existe');
 		    	}
 			}
     	}
@@ -1471,6 +1503,8 @@ class MarketController extends Controller
 			        );
 
 		    		return back()->with('info', 'Has rechazado la oferta de ' . $trade_type . ' propuesta por ' . $trade->participant1->name());
+		    	} else {
+		    		return back()->with('error', 'La oferta ya no existe');
 		    	}
 			}
     	}
@@ -1501,6 +1535,8 @@ class MarketController extends Controller
 			        );
 
 		    		return back()->with('success', 'Se ha retirado la oferta correctamente');
+		    	} else {
+		    		return back()->with('error', 'La oferta ya no existe');
 		    	}
 			}
     	}
@@ -1519,6 +1555,8 @@ class MarketController extends Controller
 		    		$trade->delete();
 
 		    		return back()->with('success', 'Se ha eliminado la oferta correctamente');
+		    	} else {
+		    		return back()->with('error', 'La oferta ya no existe');
 		    	}
 			}
     	}
@@ -1632,6 +1670,9 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
 					break;
+				case 'buynow':
+					# code...
+					break;
 				case 'negotiation':
 					// $participant_from = SeasonParticipant::find($participant_from);
 					// $participant_to = SeasonParticipant::find($participant_to);
@@ -1699,14 +1740,23 @@ class MarketController extends Controller
 						$description = $transfer->participantTo->team->name . " deposita los " . $transfer->season_player->price . " mill. de su claúsula en las oficinas de " . $transfer->participantFrom->team->name . " para incorporar al jugador";
 						$img = $transfer->season_player->player->getImgFormatted();
 						break;
-					case 'negotiation':
+					case 'buynow':
 						$category = "Fichajes - " . $transfer->participantTo->team->name;
 						$title = $transfer->season_player->player->name . " firma por " . $transfer->participantTo->team->name;
 						$description = "Tras pagar los " . $transfer->season_player->sale_price . " millones por los que el " . $transfer->participantFrom->team->name . " lo puso en el mercado de venta directa";
 						$img = $transfer->season_player->player->getImgFormatted();
 						break;
+					case 'negotiation':
+						$category = "Fichajes - " . $transfer->participantTo->team->name;
+						$title = $transfer->season_player->player->name . " firma por " . $transfer->participantTo->team->name;
+						$description = "Tras llegar a un acuerdo con " . $transfer->participantFrom->team->name;
+						$img = $transfer->season_player->player->getImgFormatted();
+						break;
 					case 'cession':
-						# code...
+						$category = "Fichajes - " . $transfer->participantTo->team->name;
+						$title = $transfer->season_player->player->name . " llega cedido a " . $transfer->participantTo->team->name;
+						$description = "Tras llegar a un acuerdo de cesión con " . $transfer->participantFrom->team->name;
+						$img = $transfer->season_player->player->getImgFormatted();
 						break;
 					case 'dismiss':
 						$category = "Fichajes - " . $transfer->participantFrom->team->name;
