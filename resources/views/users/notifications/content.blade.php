@@ -50,6 +50,20 @@
                     </div>
                     <span class="text d-block px-4 py-2">
                         {{ $notification->text }}
+                        @if ($notification->trade)
+                            @if ($notification->trade->participant1_id == participant_of_user()->id)
+                                @if ($notification->trade->state == "refushed")
+                                    <a class="d-block pt-2" href="{{ route('market.trades.sent') }}">Ver ofertas enviadas</a>
+                                @endif
+                                @if ($notification->trade->state == "confirmed")
+                                    <a class="d-block pt-2" href="{{ route('market.trades.sent') }}">Ver acuerdos</a>
+                                @endif
+                            @elseif ($notification->trade->participant2_id == participant_of_user()->id)
+                                @if ($notification->trade->state == "pending")
+                                    <a class="d-block pt-2" href="{{ route('market.trades.received') }}">Ver ofertas recibidas</a>
+                                @endif
+                            @endif
+                        @endif
                     </span>
                 </div>
             @endforeach
