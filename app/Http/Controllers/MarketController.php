@@ -1227,16 +1227,13 @@ class MarketController extends Controller
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
 			if (user_is_participant(auth()->user()->id)) {
-				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
-					->where('user_id', '=', auth()->user()->id)->first();
-
 				$offers_received = Trade::where('season_id', '=', active_season()->id)
 					->where('participant2_id', '=', participant_of_user()->id)
 					->where('state', '=', 'pending')
 					->orderBy('created_at', 'desc')
 					->get();
 
-				return view('market.trades.received', compact('participant', 'offers_received'));
+				return view('market.trades.received', compact('offers_received'));
 			}
     	}
 
@@ -1249,17 +1246,16 @@ class MarketController extends Controller
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
 			if (user_is_participant(auth()->user()->id)) {
-				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
-					->where('user_id', '=', auth()->user()->id)->first();
-
 				$offers_sent = Trade::where('season_id', '=', active_season()->id)
 					->where('participant1_id', '=', participant_of_user()->id)
-					->where('state', '=', 'pending')
-					->orWhere('state', '=', 'refushed')
+					->where(function ($query) {
+					            $query->where('state', '=', 'pending')
+					                  ->orWhere('state', '=', 'refushed');
+					        })
 					->orderBy('created_at', 'desc')
 					->get();
 
-				return view('market.trades.sent', compact('participant', 'offers_sent'));
+				return view('market.trades.sent', compact('offers_sent'));
 			}
     	}
 
