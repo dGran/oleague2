@@ -315,7 +315,7 @@ class MarketController extends Controller
 	        		if ($participant_to->max_players_limit()) {
 	        			return back()->with('error', 'No puedes fichar al jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
 	        		}
-	        		if ($participant_from->mix_players_limit()) {
+	        		if ($participant_from->min_players_limit()) {
 	        			return back()->with('error', 'No puedes fichar al jugador. El equipo propietario tiene el mínimo de jugadores en su plantilla.');
 	        		}
 	        		if ($participant_to->budget() < $player->sale_price) {
