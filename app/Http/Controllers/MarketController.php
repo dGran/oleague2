@@ -1413,7 +1413,6 @@ class MarketController extends Controller
 				                	$player->owner_id = $participant1->id;
 				                }
 					        	// reset player market data
-					        	$player->allow_clause_pay = 0;
 					        	$player->market_phrase = null;
 					        	$player->untransferable = 0;
 					        	$player->player_on_loan = 0;
@@ -1448,7 +1447,6 @@ class MarketController extends Controller
 				                	$player->owner_id = $participant2->id;
 				                }
 					        	// reset player market data
-					        	$player->allow_clause_pay = 0;
 					        	$player->market_phrase = null;
 					        	$player->untransferable = 0;
 					        	$player->player_on_loan = 0;
