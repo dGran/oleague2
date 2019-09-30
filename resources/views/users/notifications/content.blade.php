@@ -56,7 +56,7 @@
                                     <a class="d-block pt-2" href="{{ route('market.trades.sent') }}">Ver ofertas enviadas</a>
                                 @endif
                                 @if ($notification->trade->state == "confirmed")
-                                    <a class="d-block pt-2" href="{{ route('market.trades.sent') }}">Ver acuerdos</a>
+                                    <a class="d-block pt-2" href="{{ route('market.agreements') }}">Ver acuerdos</a>
                                 @endif
                             @elseif ($notification->trade->participant2_id == participant_of_user()->id)
                                 @if ($notification->trade->state == "pending")
