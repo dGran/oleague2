@@ -121,12 +121,14 @@
 	.content {
 		.item {
 			background: #ffffff;
-			border: 1px solid #f1eff3;
-			border-radius: .25rem;
+			border-left: 1px solid #f1eff3;
+			border-radius: .25rem .25rem 0 0;
+			border-right: 1px solid #f1eff3;
+			border-top: 1px solid #f1eff3;
 			font-size: .9em;
 			height: 120px;
-			margin: 0 .25rem 1em .25rem;
 			line-height: 1.25em;
+			margin: 0 .25rem;
 			position: relative;
 			&.empty {
 				height: auto;
@@ -305,8 +307,13 @@
 			}
 		}
 		.item-bottom {
-			padding-top: .25rem;
-			padding-bottom: 1rem;
+			background: #EEEEEE;
+			border-radius: 0 0 .25rem .25rem;
+			border-bottom: 1px solid #f1eff3;
+			font-size: .9em;
+			line-height: 1.25em;
+			margin: 0 .25rem 1em .25rem;
+			padding: .5em;
 			.phrase {
 				font-size: .8em;
 			}

@@ -3,7 +3,7 @@
 	<div class="header">
 		<div class="container">
 			<h2 class="text-center">
-				Resumen del mercado
+				Resumen del mercado, todos los movimientos
 			</h2>
 		</div> {{-- container --}}
 	</div> {{-- header --}}
@@ -48,7 +48,7 @@
 			@if ($players->count() > 0)
 				<div class="row py-2">
 					@foreach ($players as $player)
-						<div class="col-12">
+						<div class="col-12 col-md-6">
 							@include('market.index.card_data')
 						</div>
 					@endforeach

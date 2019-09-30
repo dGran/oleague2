@@ -62,22 +62,41 @@
 	@endif
 	<img class="nation-logo" src="{{ asset($player->season_player->player->nation_flag()) }}" data-toggle="tooltip" data-placement="top" title="{{ $player->season_player->player->nation_name}}">
 </div> {{-- item --}}
-{{-- <div class="item-bottom">
-	<div class="phrase">
+<div class="item-bottom">
+	<div class="phrase" style="text-transform: uppercase;">
 		@if ($player->type == 'free')
-			{{ $player->season_player->player->name }} se incorpora a la disciplina de {{ $player->participantTo->name() }}
+			<div class="clearfix">
+				<strong class="float-left">Agente libre</strong>
+				<span class="float-right">coste {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			</div>
 		@endif
 		@if ($player->type == 'negotiation')
-				Negociación
+			<div class="clearfix">
+				<strong class="float-left">Negociación</strong>
+			</div>
+		@endif
+		@if ($player->type == 'buynow')
+			<div class="clearfix">
+				<strong class="float-left">Venta directa</strong>
+				<span class="float-right">coste {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			</div>
 		@endif
 		@if ($player->type == 'clause')
-				Clausulazo!!!
+			<div class="clearfix">
+				<strong class="float-left">Clausulazo!!!</strong>
+				<span class="float-right">coste {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			</div>
 		@endif
 		@if ($player->type == 'cession')
-				Cesión
+			<div class="clearfix">
+				<strong class="float-left">Cesión</strong>
+			</div>
 		@endif
 		@if ($player->type == 'dismiss')
-			{{ $player->season_player->player->name }} se va a cascarla a la bolsa de jugadores libres esperando que algún manager se apiade de el.
+			<div class="clearfix">
+				<strong class="float-left">Despido</strong>
+				<span class="float-right">remuneración {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			</div>
 		@endif
 	</div>
-</div> --}} {{-- item-bottom --}}
+</div> {{-- item-bottom --}}
