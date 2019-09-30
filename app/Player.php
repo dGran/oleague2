@@ -20,7 +20,7 @@ class Player extends Model
     public function nation_flag()
     {
     	if ($this->nation_name) {
-    		return 'img/flags/' . str_slug($this->nation_name) . '.png';
+    		return 'img/flags/' . uppercase(str_slug($this->nation_name)) . '.png';
     	}
     }
 
