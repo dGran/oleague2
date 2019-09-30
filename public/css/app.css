@@ -11111,7 +11111,8 @@ header #user-menu nav .nav .nav-item .nav-link {
   text-transform: uppercase;
 }
 
-header #user-menu nav .nav .nav-item .nav-link.notifications .counter {
+header #user-menu nav .nav .nav-item .nav-link.notifications .counter,
+header #user-menu nav .nav .nav-item .nav-link.offers .counter {
   bottom: 0px;
   color: #fff;
   display: inline-block;

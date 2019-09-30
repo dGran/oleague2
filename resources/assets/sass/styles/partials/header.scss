@@ -316,7 +316,7 @@ header {
 						padding: .25em;
 						position: relative;
 						text-transform: uppercase;
-						&.notifications {
+						&.notifications, &.offers {
 							.counter {
 								bottom: 0px;
 								color: #fff;
