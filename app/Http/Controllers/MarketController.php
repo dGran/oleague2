@@ -251,6 +251,16 @@ class MarketController extends Controller
 						NULL
 		        	);
 
+			        $this->add_notification(
+			        	$participant_from->user,
+			        	$participant_from->user->id,
+			        	null,
+			        	$participant_to->name() . ' ha pagado la claúsula (' . $player->price . ' M.) de tu jugador ' . $player->player->name,
+			        	$participant_from->user->profile->email_notifications,
+			        	'Mi equipo',
+			        	'market.my_team'
+			        );
+
 		        	// clauses counter for participants
 		        	$participant_from->clauses_received += 1;
 		        	$participant_from->save();
@@ -272,7 +282,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return back()->with('success', 'Has pagado la claúsula del jugador ' . $player->player->name . ' y se ha incorporado por tu equipo.');
+		            	return back()->with('success', 'Has pagado la claúsula del jugador ' . $player->player->name . ' y se ha incorporado a tu equipo.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -342,6 +352,16 @@ class MarketController extends Controller
 						NULL
 		        	);
 
+			        $this->add_notification(
+			        	$participant_from->user,
+			        	$participant_from->user->id,
+			        	null,
+			        	$participant_to->name() . ' ha pagado el valor de compra (' . $player->sale_price . ' M.) directa de tu jugador ' . $player->player->name,
+			        	$participant_from->user->profile->email_notifications,
+			        	'Mi equipo',
+			        	'market.my_team'
+			        );
+
 		        	// reset player market data
 		        	$player->participant_id = $participant_to->id;
 		        	$player->market_phrase = null;
@@ -355,7 +375,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return back()->with('success', 'Has realizado una compra directa por el jugador ' . $player->player->name . ' y se ha incorporado por tu equipo.');
+		            	return back()->with('success', 'Has realizado una compra directa por el jugador ' . $player->player->name . ' y se ha incorporado a tu equipo.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
