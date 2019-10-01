@@ -117,9 +117,10 @@
 			 float: right;
 		}
 	}
-	.player-card {
+	.club-player-card {
 		background: #fff;
 		border: 1px solid $default-border-color;
+		border-radius: 8px 8px 0 0;
 		margin: 1rem .5rem 0 .5rem;
 		position: relative;
 		text-align: center;
@@ -181,10 +182,8 @@
 			position: absolute;
 			top: .5em;
 			right: .5em;
-			width: 64px;
+			width: 55px;
 			padding: .25em;
-			border: 1px solid #DBDBDB;
-			background: #fff;
 		}
 		.details {
 			list-style: none;
@@ -352,20 +351,6 @@
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-	.wrapper {
-		.title-position {
-			background: none;
-			border-bottom: none;
-			border-top: none;
-			text-transform: none;
-			.container {
-				border-bottom: 1px solid #C7C7C7;
-			}
-		}
-		.player-card {
-			margin: 1rem 0 0 0;
-		}
-	}
 }
 
 // Large devices (desktops, 992px and up)

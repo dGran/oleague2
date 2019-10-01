@@ -8,18 +8,28 @@
 	@include('clubs.partials.header')
 
 	<div class="wrapper">
-		<div class="container">
+
 			<div class="row">
-				<div class="col-12 col-md-6">
+				<div class="col-12">
 					@include('clubs.club.manager')
 				</div>
-				<div class="col-12 col-md-6">
+			</div>
+			<div class="row">
+				<div class="col-12">
 					@include('clubs.club.economy')
 				</div>
 			</div>
-			@include('clubs.club.roster')
-		</div>
-		@include('clubs.club.results')
+			<div class="row">
+				<div class="col-12">
+					@include('clubs.club.roster')
+				</div>
+			</div>
+{{-- 			<div class="row">
+				<div class="col-12">
+					@include('clubs.club.results')
+				</div>
+			</div> --}}
+
 	</div> {{-- wrapper --}}
 @endsection
 

@@ -9,8 +9,6 @@
 		<div class="container pb-3">
 			<table>
 			@foreach ($participant->last_results() as $match)
-
-
 					<tr>
 						<td colspan=9>
 							{{ active_season()->name }}

@@ -7,12 +7,12 @@
 						<div class="text-center d-table-cell" style="width: 170px">
 							<a class="text-dark" href="{{route('club', $participant->team->slug) }}">
 								<img src="{{ $participant->logo() }}" alt="" width="72px">
-								<span class="d-block" style="font-size: .9em; font-weight: bold">{{ $participant->name() }}</span>
+								<span class="d-block mt-1" style="font-size: .9em; font-weight: bold">{{ $participant->name() }}</span>
 								<span class="d-block" style="font-size: .8em;">{{ $participant->sub_name() }}</span>
 							</a>
 						</div>
 						<div class="d-table-cell border-left align-top ">
-							<ul style="font-size: .9em; padding: 0 1em; list-style: none">
+							<ul style="font-size: .9em; padding: 0 1em; list-style: none; line-height: 1.4rem">
 								<li>
 									<a class="text-dark" href="{{route('club', $participant->team->slug) }}">
 										<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>

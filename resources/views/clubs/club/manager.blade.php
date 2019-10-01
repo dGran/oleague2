@@ -1,12 +1,12 @@
-<div class="club-info pt-2">
+<div class="club-info">
 	<h4 class="title-position border-bottom">
-		<div class="clearfix">
+		<div class="container clearfix">
 			<span>Manager</span>
 		</div>
 	</h4>
-	<div class="p-3">
+	<div class="container p-3">
 		@if ($participant->user && $participant->user->hasProfile())
-			<img class="avatar rounded-circle" src="{{ $participant->user->profile->avatar }}">
+			<img class="avatar" src="{{ asset($participant->user->profile->avatar) }}">
 		@endif
 		<ul class="details">
 			<li>

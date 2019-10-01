@@ -1,5 +1,5 @@
-<div class="col-6 col-md-4 col-lg-3 col-xl-2">
-	<div class="player-card">
+<div class="col-6 col-md-4 col-lg-3 col-xl-2 p-0">
+	<div class="club-player-card mb-3">
 		<figure class="player-img">
 			<img src="{{ $player->player->getImgFormatted() }}" alt="{{$player->player->name}}">
 		</figure>
@@ -16,6 +16,7 @@
 			</span>
 		</div>
 		<div class="more-data">
+			<img src="{{ asset($player->player->nation_flag()) }}" width="20">
 			<span>
 				{{ $player->player->nation_name }}
 			</span>

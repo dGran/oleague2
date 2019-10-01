@@ -21,7 +21,7 @@
 		</div>
 	</div>
 
-	<div class="wrapper" style="background: #f2f2f2">
+	<div class="wrapper" style="background: #f9f9f9">
 		@include('clubs.index.data')
 	</div> {{-- wrapper --}}
 @endsection
