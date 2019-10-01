@@ -267,6 +267,44 @@ class MarketController extends Controller
 		        	$participant_to->paid_clauses += 1;
 		        	$participant_to->save();
 
+	        		if ($participant_to->clauses_paid_limit()) {
+			        	// generate post (new)
+						$this->generate_default_new(
+							'default',
+							'Mercado - ' . $participant_to->name(),
+							$participant_to->name() . ' gasta su último clausulazo',
+							'Tras el pago de la claúsula de ' . $player->player->name . ' llega al límite de claúsulas pagadas',
+							$participant_to->logo()
+			        	);
+				        $this->add_notification(
+				        	$participant_to->user,
+				        	$participant_to->user->id,
+				        	null,
+				        	'Has llegado al límite de claúsulas pagadas tras el pago de la claúsula de ' . $player->player->name,
+				        	$participant_to->user->profile->email_notifications,
+				        	'Mi equipo',
+				        	'market.my_team'
+				        );
+	        		}
+	        		if ($participant_from->clauses_received_limit()) {
+						$this->generate_default_new(
+							'default',
+							'Mercado - ' . $participant_from->name(),
+							$participant_from->name() . ' recibe su último clausulazo',
+							'Tras recibir clausulazo por ' . $player->player->name . ' llega al límite de claúsulas recibidas, por lo que no le podrán fichar más jugadores sin su aprovación',
+							$participant_from->logo()
+			        	);
+				        $this->add_notification(
+				        	$participant_from->user,
+				        	$participant_from->user->id,
+				        	null,
+				        	'Has llegado al límite de claúsulas recibidas tras recibir el pago de la claúsula de ' . $player->player->name,
+				        	$participant_to->user->profile->email_notifications,
+				        	'Mi equipo',
+				        	'market.my_team'
+				        );
+	        		}
+
 		        	// reset player market data
 		        	$player->participant_id = $participant_to->id;
 		        	$player->owner_id = null;
@@ -1789,6 +1827,19 @@ class MarketController extends Controller
 		    'type' => $type,
 		    'transfer_id' => $transfer_id,
 		    'match_id' => $match_id,
+		    'category' => $category,
+		    'title' => $title,
+		    'description' => $description,
+		    'img' => $img,
+        ]);
+	}
+
+	protected function generate_default_new($type, $category, $title, $description, $img) {
+
+        $post = Post::create([
+		    'type' => $type,
+		    'transfer_id' => null,
+		    'match_id' => null,
 		    'category' => $category,
 		    'title' => $title,
 		    'description' => $description,
