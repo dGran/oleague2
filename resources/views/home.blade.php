@@ -32,12 +32,16 @@
 
         </div>
 
-        <div id="countdown_div" class="section-title text-white">
-            <div class="container">
-                <h3>
-                    Sorteo de Packs
-                </h3>
-                <div id="countdown" class="pt-3" style="font-size: 2.5em; text-align: center; font-family: Helvetica,Arial,sans-serif!important; line-height: 1em;">
+        <div id="countdown_div">
+            <div class="section-title">
+                <div class="container">
+                    <h3>
+                        Sorteo de Packs
+                    </h3>
+                </div>
+            </div>
+            <div class="container text-white py-3">
+                <div id="countdown" style="font-size: 2.5em; text-align: center; font-family: Helvetica,Arial,sans-serif!important; line-height: 1em;">
                     <div id="days" class="text-center" style="padding: 0 .15rem; display: inline-block;"></div>
                     <div class="text-center" style="min-width: 12px; display: inline-block;">:</div>
                     <div id="hours" class="text-center" style="padding: 0 .15rem; min-width: 47px; display: inline-block;"></div>
