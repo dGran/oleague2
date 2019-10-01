@@ -37,7 +37,7 @@
                 <h3>
                     Sorteo de Packs
                 </h3>
-                <div id="countdown" style="font-size: 2.25em; text-align: center; font-family: Helvetica,Arial,sans-serif!important;">
+                <div id="countdown" class="pt-3" style="font-size: 2.5em; text-align: center; font-family: Helvetica,Arial,sans-serif!important; line-height: 1em;">
                     <div id="days" class="text-center" style="padding: 0 .15rem; display: inline-block;"></div>
                     <div class="text-center" style="min-width: 12px; display: inline-block;">:</div>
                     <div id="hours" class="text-center" style="padding: 0 .15rem; min-width: 47px; display: inline-block;"></div>
@@ -46,7 +46,7 @@
                     <div class="text-center" style="min-width: 12px; display: inline-block;">:</div>
                     <div id="seconds" class="text-center" style="padding: 0 .15rem; min-width: 47px; display: inline-block; color: #ffdb03"></div>
                 </div>
-                <div id="countdown-text" style="font-size: 2.25em; text-align: center; line-height: .5rem; font-family: Helvetica,Arial,sans-serif!important;">
+                <div id="countdown-text" style="font-size: 2.5em; text-align: center; line-height: .5rem; font-family: Helvetica,Arial,sans-serif!important;">
                     <div id="days" class="text-center" style="display: inline-block;">
                         <span style="font-size: .5rem">DÍAS</span>
                     </div>
