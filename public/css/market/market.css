@@ -18,7 +18,7 @@
   border-radius: 50%;
   color: #be0346;
   display: block;
-  font-size: 3em;
+  font-size: 4em;
   padding: 5px;
 }
 
@@ -26,6 +26,7 @@
   display: table-cell;
   padding-left: 1em;
   vertical-align: middle;
+  position: relative;
 }
 
 .market-header .title h3 {
@@ -40,10 +41,16 @@
   font-size: .8em;
 }
 
+.market-header .market-state .badge {
+  display: inline;
+  font-size: .6rem;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
 .market-menu {
   background: #353f48;
   border-top: 1px solid #414E5B;
-  padding: 5px 0;
 }
 
 .market-menu ul {
@@ -1294,14 +1301,14 @@
 .teams .content .item {
   background: #ffffff;
   border: 1px solid #E5E5E5;
-  height: 88px;
+  height: 155px;
   position: relative;
   margin-top: 1em;
   widows: auto;
 }
 
 .teams .content .item:hover {
-  border: 1px solid #1cc7ff;
+  border: 1px solid #939ba2;
 }
 
 .teams .content .item:hover .team-img {
@@ -1312,7 +1319,7 @@
 
 .teams .content .item:hover .title .name,
 .teams .content .item:hover .title .subname {
-  color: #009bce;
+  color: #6c757d;
   -webkit-transition: all .5s ease;
   transition: all .5s ease;
 }
