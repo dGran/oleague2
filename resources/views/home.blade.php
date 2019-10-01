@@ -32,26 +32,39 @@
 
         </div>
 
-        <div class="section-title">
-            <div class="container">
-                <div data-type="countdown" data-id="1470929" class="tickcounter" style="width: 100%; position: relative; padding-bottom: 25%"><a href="//www.tickcounter.com/countdown/1470929/sorteo-de-packs" title="SORTEO DE PACKS" style="margin: 10px 0" onclick="return false;">SORTEO DE PACKS</a><a class="countdown" href="//www.tickcounter.com/" title="Countdown"></a></div><script>(function(d, s, id) { var js, pjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = "//www.tickcounter.com/static/js/loader.js"; pjs.parentNode.insertBefore(js, pjs); }(document, "script", "tickcounter-sdk"));</script>
-            </div>
-        </div>
-
-{{--         <div class="section-title text-white">
+        <div id="countdown_div" class="section-title text-white">
             <div class="container">
                 <h3>
                     Sorteo de Packs
                 </h3>
-                <div id="countdown">
-                    <span id="days" style="font-size: 40px; display: inline-block;"></span>
-                    <span>días</span>
-                    <span id="hours"></span>
-                    <span id="minutes"></span>
-                    <span id="seconds"></span>
+                <div id="countdown" style="font-size: 2.25em; text-align: center; font-family: Helvetica,Arial,sans-serif!important;">
+                    <div id="days" class="text-center" style="padding: 0 .15rem; display: inline-block;"></div>
+                    <div class="text-center" style="min-width: 12px; display: inline-block;">:</div>
+                    <div id="hours" class="text-center" style="padding: 0 .15rem; min-width: 47px; display: inline-block;"></div>
+                    <div class="text-center" style="min-width: 12px; display: inline-block;">:</div>
+                    <div id="minutes" class="text-center" style="padding: 0 .15rem; min-width: 47px; display: inline-block;"></div>
+                    <div class="text-center" style="min-width: 12px; display: inline-block;">:</div>
+                    <div id="seconds" class="text-center" style="padding: 0 .15rem; min-width: 47px; display: inline-block; color: #ffdb03"></div>
+                </div>
+                <div id="countdown-text" style="font-size: 2.25em; text-align: center; line-height: .5rem; font-family: Helvetica,Arial,sans-serif!important;">
+                    <div id="days" class="text-center" style="display: inline-block;">
+                        <span style="font-size: .5rem">DÍAS</span>
+                    </div>
+                    <div class="text-center" style="min-width: 12px; display: inline-block;"></div>
+                    <div id="hours" class="text-center" style="min-width: 47px; display: inline-block;">
+                        <span style="font-size: .5rem">HORAS</span>
+                    </div>
+                    <div class="text-center" style="min-width: 12px; display: inline-block;"></div>
+                    <div id="minutes" class="text-center" style="min-width: 47px; display: inline-block;">
+                        <span style="font-size: .5rem">MINUTOS</span>
+                    </div>
+                    <div class="text-center" style="min-width: 12px; display: inline-block;"></div>
+                    <div id="seconds" class="text-center" style="min-width: 47px; display: inline-block">
+                        <span style="font-size: .5rem">SEGUNDOS</span>
+                    </div>
                 </div>
                 <script>
-                var end = new Date('09/28/2019 1:33 AM');
+                    var end = new Date('10/03/2019 12:00 AM');
 
                     var _second = 1000;
                     var _minute = _second * 60;
@@ -65,7 +78,8 @@
                         if (distance < 0) {
 
                             clearInterval(timer);
-                            document.getElementById('countdown').innerHTML = 'EXPIRED!';
+                            $("#countdown_div").addClass('d-none');
+                            // document.getElementById('countdown_div').innerHTML = 'EXPIRED!';
 
                             return;
                         }
@@ -75,6 +89,9 @@
                         var seconds = Math.floor((distance % _minute) / _second);
 
                         $('.days').val(days);
+                        if (hours   < 10) {hours   = "0"+hours;}
+                        if (minutes < 10) {minutes = "0"+minutes;}
+                        if (seconds < 10) {seconds = "0"+seconds;}
                         document.getElementById('days').innerHTML = days;
                         document.getElementById('hours').innerHTML = hours;
                         document.getElementById('minutes').innerHTML = minutes;
@@ -84,7 +101,7 @@
                     timer = setInterval(showRemaining, 1000);
                 </script>
             </div>
-        </div> --}}
+        </div>
 
         <div class="section-title">
             <div class="container">
@@ -125,7 +142,7 @@
                                             <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
                                             <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
                                         @elseif ($post->type == "default")
-                                            <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
+                                            <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="">
                                         @endif
                                     </figure>
                                     <div style="display: table-cell; padding-left: 8px;" class="align-top">
