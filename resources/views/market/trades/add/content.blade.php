@@ -105,7 +105,7 @@
 		<div class="row">
 			<div class="col-12 pt-3 pb-2 text-center">
 				<div>
-					<input type="submit" value="Proponer intercambio" class="btn btn-primary btn_submit">
+					<input type="submit" value="Proponer intercambio" class="btn btn-primary btn_submit" onclick="submit_change()">
 				</div>
 				<div class="mt-3">
 					<input type="submit" value="Proponer cesión" class="btn btn-secondary btn-sm btn_submit" onclick="submit_cesion()">
