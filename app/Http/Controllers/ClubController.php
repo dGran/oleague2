@@ -13,7 +13,7 @@ class ClubController extends Controller
     public function clubs()
     {
         $participants = $this->get_participants();
-        return view('clubs.list', compact('participants'));
+        return view('clubs.index', compact('participants'));
     }
 
     public function club($slug)
@@ -26,7 +26,7 @@ class ClubController extends Controller
         $par = SeasonCompetitionPhaseGroupParticipant::where('participant_id', '=', $participant->id)->first();
         // dd($par);
 
-        return view('clubs.index', compact('participants', 'participant', 'par'));
+        return view('clubs.club', compact('participants', 'participant', 'par'));
     }
 
     public function clubRoster($slug)

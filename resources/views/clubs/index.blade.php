@@ -5,28 +5,27 @@
 @endsection
 
 @section('content')
-	@include('clubs.partials.header')
-
-	<div class="wrapper">
+	<div class="club-header">
 		<div class="container">
-			<div class="row">
-				<div class="col-12 col-md-6">
-					@include('clubs.club.manager')
-				</div>
-				<div class="col-12 col-md-6">
-					@include('clubs.club.economy')
-				</div>
+			<div class="d-table-cell align-top">
+				<i class="icon-clubs"></i>
 			</div>
-			@include('clubs.club.roster')
+			<div class="d-table-cell pl-3 align-middle">
+	    		<h3>
+	    			Clubs
+	    		</h3>
+	    		<span class="subname">
+	    			{{ active_season()->name }}
+	    		</span>
+			</div>
 		</div>
-		@include('clubs.club.results')
+	</div>
+
+	<div class="wrapper" style="background: #f2f2f2">
+		@include('clubs.index.data')
 	</div> {{-- wrapper --}}
 @endsection
 
 @section('breadcrumb')
-	@include('clubs.club.breadcrumb')
-@endsection
-
-@section('bottom-fixed')
-	@include('clubs.partials.bottom_fixed')
+	@include('clubs.index.breadcrumb')
 @endsection

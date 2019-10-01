@@ -1,35 +1,3 @@
-@extends('layouts.app')
-
-@section('style')
-    <link href="{{ asset('css/clubs/clubs.css') }}" rel="stylesheet">
-@endsection
-
-@section('content')
-
-<div class="club-header">
-	<div class="container">
-		<div class="d-table-cell align-top">
-			<i class="icon-clubs"></i>
-		</div>
-		<div class="d-table-cell pl-3 align-middle">
-    		<h3>
-    			Clubs
-    		</h3>
-    		<span class="subname">
-    			{{ active_season()->name }}
-    		</span>
-		</div>
-	</div>
-</div>
-
-<div class="club-menu">
-	<div class="container">
-		{{-- @include('clubs.partials.menu') --}}
-	</div>
-</div>
-
-<div class="wrapper" style="background: #f2f2f2">
-
 <div class="container">
     <div class="row" style="padding-bottom: 15px">
 		@foreach ($participants as $participant)
@@ -83,24 +51,4 @@
 		@endforeach
     </div>
 
-	<div class="p-3">
-	@foreach ($participants as $participant)
-		<div class="">
-			{{ $participant->name() }}
-		</div>
-		<div class="progress mb-2" style="height: 20px;">
-			<div class="progress-bar text-left p-2" role="progressbar" style="width: {{$participant->budget()/500*100}}%;" aria-valuenow="{{$participant->budget()}}" aria-valuemin="0" aria-valuemax="500">
-				{{ $participant->budget() }} mill.
-			</div>
-		</div>
-	@endforeach
-	</div>
-
 </div>
-
-</div>
-
-<div style="padding: .5rem 1rem; margin-top: 54px; font-family: 'Bad Script', cursive; font-weight: bold; font-size: .9em; color: #fff; border-bottom: 1px solid #292C5E">
-	Home - Competiciones - Champions League - Grupo A
-</div>
-@endsection
