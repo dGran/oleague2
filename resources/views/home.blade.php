@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <script>
-                    var end = new Date('10/03/2019 12:00 AM');
+                    var end = new Date('10/08/2019 12:00 PM');
 
                     var _second = 1000;
                     var _minute = _second * 60;

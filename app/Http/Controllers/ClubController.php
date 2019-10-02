@@ -91,7 +91,7 @@ class ClubController extends Controller
                             'description' => $press->description,
                             'img' => 'img/microphone.png',
                         ]);
-                        return back()->with('success', 'Nota de prensa guardada correctamente.');
+                        return back()->with('success', 'Nota de prensa enviada correctamente.');
                     }
                 }
             }
