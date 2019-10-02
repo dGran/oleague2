@@ -220,14 +220,14 @@ class MarketController extends Controller
 	        		if ($player->owner_id) {
 			        	$this->add_cash_history(
 			        		$player->owner_id,
-			        		'Pago de claúsula del jugador ' . $player->player->name,
+			        		'Ingreso de claúsula del jugador ' . $player->player->name,
 			        		$player->price,
 			        		'E'
 			        	);
 	        		} else {
 			        	$this->add_cash_history(
 			        		$participant_from->id,
-			        		'Pago de claúsula del jugador ' . $player->player->name,
+			        		'Ingreso de claúsula del jugador ' . $player->player->name,
 			        		$player->price,
 			        		'E'
 			        	);

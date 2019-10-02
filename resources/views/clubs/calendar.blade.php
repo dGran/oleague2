@@ -9,8 +9,13 @@
 	@include('clubs.partials.header')
 
 	<div class="wrapper">
-		<div class="container">
-			<h4 class="p-3">Resultados</h4>
+		<h4 class="title-position border-bottom">
+			<div class="container clearfix">
+				<span>Resultados</span>
+			</div>
+		</h4>
+		<div class="container p-3">
+			Próximamente...
 		</div>
 	</div>
 

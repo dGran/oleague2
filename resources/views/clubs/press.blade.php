@@ -9,9 +9,6 @@
 	@include('clubs.partials.header')
 
 	<div class="wrapper">
-		<div class="container">
-			<h4 class="p-3">Sala de prensa</h4>
-		</div>
 		@include('clubs.press.data')
 	</div>
 
