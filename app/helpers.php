@@ -7,6 +7,7 @@ use App\Season;
 use App\SeasonParticipant;
 use App\Showcase;
 use App\FavoritePlayer;
+use App\Press;
 
 function validateUrl($url)
 {
@@ -105,4 +106,15 @@ function player_in_showcase($player_id) {
 		return true;
 	}
 	return false;
+}
+
+function hours_to_new_press($participant_id)
+{
+	$last_press = Press::where('participant_id', '=', $participant_id)->orderBy('created_at', 'desc')->first();
+	$next_press_data = new \Carbon\Carbon($last_press->created_at);
+	$next_press_data->addDay();
+	$now = \Carbon\Carbon::now();
+	$testdate = $next_press_data->diffInHours($now);
+
+	return $testdate;
 }
