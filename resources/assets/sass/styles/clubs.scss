@@ -253,45 +253,38 @@
 			margin-left: .5rem;
 		}
 	}
-	.table-economy {
+
+	.economy-item {
+		border: 1px solid #f1eff3;
 		font-size: .9em;
-		width: 100%;
-		thead {
-			th {
-				padding: .5em 1em;
+		margin-bottom: 1em;
+		.description {
+			padding: 1em;
+			background: #fff;
+			td {
+				padding: 1em;
 			}
 		}
-		tbody {
-			.data {
-				background: #f9f9f9;
-				border: 1px solid #f1eff3;
-				td {
-					padding: .5em 0;
-				}
-				.date {
-					padding-left: 1em;
-				}
-				.type {
-
-				}
-				.movement {
-					text-align: right;
-				}
-				.cash {
-					padding-right: 1em;
-					text-align: right;
-
-				}
+		.data {
+			background: #FCFCFC;
+			border-top: 1px solid #f1eff3;
+			.type {
+				display: inline-block;
+				padding: .5em;
+				padding-left: 1em;
 			}
-			.description {
-				background: #fff;
-				border: 1px solid #f1eff3;
-				td {
-					padding: 1em 1.5em;
-				}
+			.amount {
+				display: inline-block;
+				padding: .5em;
+				text-align: right;
+			}
+			.cash {
+				display: inline-block;
+				padding: .5em;
+				padding-right: 1em;
+				text-align: right;
 			}
 		}
-
 	}
 }
 
