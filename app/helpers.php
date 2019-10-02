@@ -111,10 +111,14 @@ function player_in_showcase($player_id) {
 function hours_to_new_press($participant_id)
 {
 	$last_press = Press::where('participant_id', '=', $participant_id)->orderBy('created_at', 'desc')->first();
-	$next_press_data = new \Carbon\Carbon($last_press->created_at);
-	$next_press_data->addDay();
-	$now = \Carbon\Carbon::now();
-	$testdate = $next_press_data->diffInHours($now);
+	if ($last_press) {
+		$next_press_data = new \Carbon\Carbon($last_press->created_at);
+		$next_press_data->addDay();
+		$now = \Carbon\Carbon::now();
+		$testdate = $next_press_data->diffInHours($now);
 
-	return $testdate;
+		return $testdate;
+	} else {
+		return 0;
+	}
 }
