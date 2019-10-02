@@ -283,6 +283,46 @@
   margin-left: .5rem;
 }
 
+.wrapper .table-economy {
+  font-size: .9em;
+  width: 100%;
+}
+
+.wrapper .table-economy thead th {
+  padding: .5em 1em;
+}
+
+.wrapper .table-economy tbody .data {
+  background: #f9f9f9;
+  border: 1px solid #f1eff3;
+}
+
+.wrapper .table-economy tbody .data td {
+  padding: .5em 0;
+}
+
+.wrapper .table-economy tbody .data .date {
+  padding-left: 1em;
+}
+
+.wrapper .table-economy tbody .data .movement {
+  text-align: right;
+}
+
+.wrapper .table-economy tbody .data .cash {
+  padding-right: 1em;
+  text-align: right;
+}
+
+.wrapper .table-economy tbody .description {
+  background: #fff;
+  border: 1px solid #f1eff3;
+}
+
+.wrapper .table-economy tbody .description td {
+  padding: 1em 1.5em;
+}
+
 .scrolling-wrapper .card {
   display: inline-block;
   background: transparent;

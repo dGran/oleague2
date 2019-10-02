@@ -253,6 +253,46 @@
 			margin-left: .5rem;
 		}
 	}
+	.table-economy {
+		font-size: .9em;
+		width: 100%;
+		thead {
+			th {
+				padding: .5em 1em;
+			}
+		}
+		tbody {
+			.data {
+				background: #f9f9f9;
+				border: 1px solid #f1eff3;
+				td {
+					padding: .5em 0;
+				}
+				.date {
+					padding-left: 1em;
+				}
+				.type {
+
+				}
+				.movement {
+					text-align: right;
+				}
+				.cash {
+					padding-right: 1em;
+					text-align: right;
+
+				}
+			}
+			.description {
+				background: #fff;
+				border: 1px solid #f1eff3;
+				td {
+					padding: 1em 1.5em;
+				}
+			}
+		}
+
+	}
 }
 
 .scrolling-wrapper {
