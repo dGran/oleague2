@@ -1679,13 +1679,14 @@ class MarketController extends Controller
 					$text .= "    Presupuesto $pTo_team_name: " . number_format($participant_to->budget(), 2, ",", ".") . " mill.\n\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-					break;
 
 					Telegram::sendMessage([
 					    'chat_id' => '-1001241759649',
 					    'parse_mode' => 'HTML',
 					    'text' => $text
 					]);
+
+					break;
 				case 'clause':
 					$participant_from = SeasonParticipant::find($participant_from);
 					$participant_to = SeasonParticipant::find($participant_to);
@@ -1730,13 +1731,14 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-					break;
 
 					Telegram::sendMessage([
 					    'chat_id' => '-1001241759649',
 					    'parse_mode' => 'HTML',
 					    'text' => $text
 					]);
+
+					break;
 				case 'buynow':
 					# code...
 					break;
@@ -1779,13 +1781,14 @@ class MarketController extends Controller
 					$text .= "    Presupuesto $pFrom_team_name: " . number_format($participant_from->budget(), 2, ",", ".") . " mill.\n\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-					break;
 
 					Telegram::sendMessage([
 					    'chat_id' => '-1001241759649',
 					    'parse_mode' => 'HTML',
 					    'text' => $text
 					]);
+
+					break;
 			}
 			// Telegram::sendMessage([
 			//     'chat_id' => '-1001241759649',
