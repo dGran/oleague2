@@ -13,6 +13,9 @@
             <span>
                 LigasPesXbox
             </span>
+            <div class="pt-2">
+                <small class="{{ online_registered_users() > 0 ? 'text-success' : '' }}">Usuarios registrados en línea: {{ online_registered_users() }}</small>
+            </div>
         </div>
 
 

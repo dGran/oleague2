@@ -8,6 +8,7 @@ use App\SeasonParticipant;
 use App\Showcase;
 use App\FavoritePlayer;
 use App\Press;
+use App\User;
 
 function validateUrl($url)
 {
@@ -121,4 +122,18 @@ function hours_to_new_press($participant_id)
 	} else {
 		return 0;
 	}
+}
+
+function online_registered_users()
+{
+    $users = User::all();
+    $onlineUsersCount = 0;
+    foreach ( $users as $user )
+    {
+        if ($user->isOnline()) {
+            $onlineUsersCount++;
+        }
+    }
+
+    return $onlineUsersCount;
 }
