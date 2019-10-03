@@ -116,11 +116,13 @@
                 </div>
             </div>
         </div>
-
         <div class="container">
-            <div class="text-white p-3">
+            <div class="text-white p-2">
                 Puedes probar las funciones de mercado mientras ultimamos los preparativos. <a class="text-info" href="{{ route('register') }}">Regístrate</a> y pide equipo a los administradores.
                 <p class="m-0 pt-2">Todos los datos de juadores y equipos son de prueba.</p>
+                <p class="m-0 pt-2">Únete al canal de Telegram (el enlace al final de esta página) para recibir las notificaciones del mercaod de fichajes. No es funcional al 100%, pronto...</p>
+                <p>El objetivo de esta beta es la familiarización con el nuevo entorno antes de comenzar.</p>
+                <p class="text-center">🐥 🐤 🐣</p>
             </div>
         </div>
 
@@ -340,6 +342,21 @@
                 @endforeach
             </ul>
 
+        </div>
+
+        <div class="section-title">
+            <div class="container">
+                <div class="clearfix p-0">
+                    <h3 class="float-left">
+                        LPX Web App
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="text-white p-2">
+                Versión inicial de la App. Todavía faltan contenidos y secciones por implementar. Los diseños están preparados para versiones móviles y no de escritorio. De momento, omitir el reporte de fallos o errores encontrados tanto en diseño como en funcionalidad, gracias.
+            </div>
         </div>
 
 

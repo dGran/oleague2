@@ -1769,11 +1769,11 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
 					break;
 			}
-			// Telegram::sendMessage([
-			//     'chat_id' => '-1001241759649',
-			//     'parse_mode' => 'HTML',
-			//     'text' => $text
-			// ]);
+			Telegram::sendMessage([
+			    'chat_id' => '-1001241759649',
+			    'parse_mode' => 'HTML',
+			    'text' => $text
+			]);
 	    }
 	}
 
