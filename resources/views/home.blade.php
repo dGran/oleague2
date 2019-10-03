@@ -32,7 +32,7 @@
 
         </div>
 
-        <div id="countdown_div">
+{{--         <div id="countdown_div">
             <div class="section-title">
                 <div class="container">
                     <h3>
@@ -104,6 +104,23 @@
 
                     timer = setInterval(showRemaining, 1000);
                 </script>
+            </div>
+        </div> --}}
+
+        <div class="section-title">
+            <div class="container">
+                <div class="clearfix p-0">
+                    <h3 class="float-left">
+                        Bienvenido a la Open Beta
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="text-white p-3">
+                Puedes probar las funciones de mercado mientras ultimamos los preparativos. <a class="text-info" href="{{ route('register') }}">Regístrate</a> y pide equipo a los administradores.
+                <p class="m-0 pt-2">Todos los datos de juadores y equipos son de prueba.</p>
             </div>
         </div>
 

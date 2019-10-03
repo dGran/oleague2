@@ -62,41 +62,37 @@
 	@endif
 	<img class="nation-logo" src="{{ asset($player->season_player->player->nation_flag()) }}" data-toggle="tooltip" data-placement="top" title="{{ $player->season_player->player->nation_name}}">
 </div> {{-- item --}}
-<div class="item-bottom">
-	<div class="phrase" style="text-transform: uppercase;">
+
 		@if ($player->type == 'free')
-			<div class="clearfix">
-				<strong class="float-left">Agente libre</strong>
-				<span class="float-right">coste {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			<div class="item-bottom free clearfix">
+				<span class="float-left">Agente libre</span>
+				<span class="cost float-right">{{ number_format($player->price, 2, ',', '.') }} M.</span>
 			</div>
 		@endif
 		@if ($player->type == 'negotiation')
-			<div class="clearfix">
-				<strong class="float-left">Negociación</strong>
+			<div class="item-bottom clearfix">
+				<span class="float-left">Acuerdo de intercambio</span>
 			</div>
 		@endif
 		@if ($player->type == 'buynow')
-			<div class="clearfix">
-				<strong class="float-left">Venta directa</strong>
-				<span class="float-right">coste {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			<div class="item-bottom clearfix">
+				<span class="float-left">Venta directa</span>
+				<span class="cost float-right">{{ number_format($player->price, 2, ',', '.') }} M.</span>
 			</div>
 		@endif
 		@if ($player->type == 'clause')
-			<div class="clearfix">
-				<strong class="float-left">Clausulazo!!!</strong>
-				<span class="float-right">coste {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			<div class="item-bottom clause clearfix">
+				<span class="float-left">Clausulazo!!!</span>
+				<span class="cost float-right">{{ number_format($player->price, 2, ',', '.') }} M.</span>
 			</div>
 		@endif
 		@if ($player->type == 'cession')
-			<div class="clearfix">
-				<strong class="float-left">Cesión</strong>
+			<div class="item-bottom cession clearfix">
+				<span class="float-left">Acuerdo de cesión</span>
 			</div>
 		@endif
 		@if ($player->type == 'dismiss')
-			<div class="clearfix">
-				<strong class="float-left">Despido</strong>
-				<span class="float-right">remuneración {{ number_format($player->price, 2, ',', '.') }} M.</span>
+			<div class="item-bottom dismiss clearfix">
+				<span class="float-left">Despido</span>
 			</div>
 		@endif
-	</div>
-</div> {{-- item-bottom --}}

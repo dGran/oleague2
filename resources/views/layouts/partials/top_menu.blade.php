@@ -7,13 +7,19 @@
                 </button>
             </div>
             <div class="col-auto ">
-                <h1>
+                <h1 style="position: relative">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         <i class="icon-logo"></i>
                         <span>LigasPesXbox</span>
                     </a>
+
+                    <div style="position: absolute; top: 35px; left: 26px; font-size: .7em; color: #eeff41">
+                        Open Beta
+                    </div>
+
                 </h1>
             </div>
+
             <div class="col-auto d-none d-md-inline-block">
                 <nav>
                     <ul class="nav">

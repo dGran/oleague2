@@ -315,15 +315,34 @@
 			}
 		}
 		.item-bottom {
-			background: #f1eff3;
+			background: #e2e3e5;
 			border-radius: 0 0 .25rem .25rem;
-			border-bottom: 1px solid #f1eff3;
-			font-size: .9em;
+			color: #383d41;
+			// border-bottom: 1px solid #f1eff3;
+			font-size: .8em;
 			line-height: 1.25em;
 			margin: 0 .25rem 1em .25rem;
-			padding: .5em;
-			.phrase {
-				font-size: .8em;
+			padding: .75em;
+			text-transform: uppercase;
+			&.cession {
+				background: #d1ecf1;
+				color: #0c5460;
+			}
+			&.dismiss {
+				background: #f8d7da;
+				color: #721c24;
+			}
+			&.clause {
+				background: #d4edda;
+				color: #155724;
+			}
+			&.free {
+				background: #fff3cd;
+				color: #856404;
+			}
+			.cost {
+				font-size: 1.25em;
+				font-weight: bold;
 			}
 		}
 	}

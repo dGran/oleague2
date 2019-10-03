@@ -44,7 +44,7 @@
 	                            <i class="fas fa-euro-sign"></i>
 	                        </span>
 	                    </div>
-	                    <input type="number" class="form-control" name="p1_cash" id="p1_cash" value="0" step="any" min="0" max="{{ participant_of_user()->budget() }}">
+	                    <input type="number" class="form-control" name="p1_cash" id="p1_cash" value="0" step="any" min="{{ active_season()->free_players_cost }}" max="{{ participant_of_user()->budget() }}">
 	                </div> {{-- input-group --}}
                     <small class="text-muted">Máximo {{ number_format(participant_of_user()->budget(), 2, ',', '.') }} M.</small>
 				</div>
