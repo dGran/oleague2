@@ -1668,11 +1668,11 @@ class MarketController extends Controller
 					$player_name = $player->player->name;
 					$pTo_team_name = $participant_to->team->name;
 					$pTo_user_name = $participant_to->user->name;
-					$office_pTo_link = 'http://lpx.es/mercado/equipos/' . $participant_to->team->slug;
-					$bottom_link = 'http://lpx.es/mercado';
+					$office_pTo_link = 'https://lpx.es/mercado/equipos/' . $participant_to->team->slug;
+					$bottom_link = 'https://lpx.es/mercado';
 					$title = "\xF0\x9F\x86\x93Agente libre fichado\xE2\x9D\x97";
 
-					$text = "$title<a href='" . pesmaster_player_info_path($player->player->game_id) . "'>$player_name</a>\n\n";
+					$text = "$title<a href='" . $player->player->pesmaster2020_link() . "'>$player_name</a>\n\n";
 					$text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name) su nuevo destino tras desembolsar \xF0\x9F\x92\xB6 $price mill.</b>\n\n";
 					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
 					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
@@ -1699,9 +1699,9 @@ class MarketController extends Controller
 					$pTo_budget = $participant_to->budget();
 					$pFrom_budget = $participant_from->budget();
 					$money = number_format($player->price * 1.10, 2, ",", ".") . " mill. (" . number_format($player->price, 2, ",", ".") . " + " . number_format($player->price * 0.10, 2, ",", ".") . ")";
-					$office_pTo_link = 'http://lpx.es/mercado/equipos/' . $participant_to->team->slug;
-					$office_pFrom_link = 'http://lpx.es/mercado/equipos/' . $participant_from->team->slug;
-					$bottom_link = 'http://lpx.es/mercado';
+					$office_pTo_link = 'https://lpx.es/mercado/equipos/' . $participant_to->team->slug;
+					$office_pFrom_link = 'https://lpx.es/mercado/equipos/' . $participant_from->team->slug;
+					$bottom_link = 'https://lpx.es/mercado';
 
 					switch ($player->price) {
 						case ($player->price <= 10):
@@ -1720,7 +1720,7 @@ class MarketController extends Controller
 							$title = "\xF0\x9F\x94\x9D\xF0\x9F\x92\xB0\xF0\x9F\x92\xB0\xF0\x9F\x94\x9DClausulazo TOP\xE2\x9D\x97";
 							break;
 					}
-					$text = "$title<a href='" . pesmaster_player_info_path($player->player->game_id) . "'>$player_name</a>\n\n";
+					$text = "$title<a href='" . $player->player->pesmaster2020_link() . "'>$player_name</a>\n\n";
 					$text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name)</b>\n";
 					$text .= "    \xF0\x9F\x92\xB6 $money\n\n";
 					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
@@ -1770,11 +1770,11 @@ class MarketController extends Controller
 					$player_name = $player->player->name;
 					$pFrom_team_name = $participant_from->team->name;
 					$pFrom_user_name = $participant_from->user->name;
-					$office_pFrom_link = 'http://lpx.es/mercado/equipos/' . $participant_from->team->slug;
-					$bottom_link = 'http://lpx.es/mercado';
+					$office_pFrom_link = 'https://lpx.es/mercado/equipos/' . $participant_from->team->slug;
+					$bottom_link = 'https://lpx.es/mercado';
 					$title = "\xF0\x9F\x9A\xAA\xF0\x9F\x91\x88 Jugador despedido\xE2\x9D\x97";
 
-					$text = "$title<a href='" . pesmaster_player_info_path($player->player->game_id) . "'>$player_name</a>\n\n";
+					$text = "$title<a href='" . $player->player->pesmaster2020_link() . "'>$player_name</a>\n\n";
 					$text .= "    <b>$pFrom_team_name ($pFrom_user_name) prescinde de sus servicios y recibe \xF0\x9F\x92\xB6 $price mill.</b>\n\n";
 					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
 					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
