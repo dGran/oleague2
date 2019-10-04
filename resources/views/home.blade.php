@@ -67,6 +67,9 @@
                         <span style="font-size: .5rem">SEGUNDOS</span>
                     </div>
                 </div>
+                <div class="pt-3 text-center">
+                    <small>Sentimos la demora, se os recompensará con 10.000 GPS 😆</small>
+                </div>
                 <script>
                     var end = new Date('10/08/2019 3:00 PM');
 
