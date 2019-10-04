@@ -32,7 +32,7 @@
 
         </div>
 
-{{--         <div id="countdown_div">
+        <div id="countdown_div">
             <div class="section-title">
                 <div class="container">
                     <h3>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <script>
-                    var end = new Date('10/08/2019 12:00 PM');
+                    var end = new Date('10/08/2019 3:00 PM');
 
                     var _second = 1000;
                     var _minute = _second * 60;
@@ -105,7 +105,7 @@
                     timer = setInterval(showRemaining, 1000);
                 </script>
             </div>
-        </div> --}}
+        </div>
 
         <div class="section-title">
             <div class="container">
