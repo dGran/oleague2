@@ -1,10 +1,4 @@
 @auth
-    <li class="nav-item {{ \Request::is('perfil*') ? 'current' : '' }}">
-        <a class="nav-link {{ \Request::is('perfil*') ? 'disabled' : '' }}" href="{{ route('profileEdit') }}">
-            <i class="icon-user-card"></i>
-            <span>LPX Perfil</span>
-        </a>
-    </li>
     <li class="nav-item">
         <a class="nav-link notifications" href="{{ route('notifications') }}">
             <i class="icon-notification"></i>
@@ -16,7 +10,26 @@
             </span>
         </a>
     </li>
+    @if (Auth::user()->hasRole('admin'))
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin') }}">
+                <i class="icon-admin-panel"></i>
+                <span>Panel de administración</span>
+            </a>
+        </li>
+    @endif
     @if (user_is_participant(auth()->user()->id))
+        <li class="nav-item category">
+            ACCESOS RAPIDOS
+        </li>
+        <li class="nav-item">
+            <a class="nav-link offers" href="{{ route('market.my_team') }}">
+                <i class="icon-my-team"></i>
+                <span>
+                    Mi Equipo
+                </span>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link offers" href="{{ route('market.trades.received') }}">
                 <i class="icon-sale"></i>
@@ -28,21 +41,22 @@
                 </span>
             </a>
         </li>
-    @endif
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('competitions.pending_matches') }}">
-            <i class="icon-xbox-controller"></i>
-            <span>Partidas pendientes</span>
-        </a>
-    </li>
-    @if (Auth::user()->hasRole('admin'))
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin') }}">
-                <i class="icon-admin-panel"></i>
-                <span>Panel de administración</span>
+            <a class="nav-link" href="{{ route('competitions.pending_matches') }}">
+                <i class="icon-xbox-controller"></i>
+                <span>Partidas pendientes</span>
             </a>
         </li>
     @endif
+    <li class="nav-item category">
+        MI CUENTA
+    </li>
+    <li class="nav-item {{ \Request::is('perfil*') ? 'current' : '' }}">
+        <a class="nav-link {{ \Request::is('perfil*') ? 'disabled' : '' }}" href="{{ route('profileEdit') }}">
+            <i class="icon-user-card"></i>
+            <span>Perfil</span>
+        </a>
+    </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('logout') }}">
             <i class="icon-logout"></i>

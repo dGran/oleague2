@@ -8,7 +8,7 @@
     			Mercado de fichajes
     		</h3>
     		<span class="subtitle">
-    			PES2020 / {{ active_season()->name }}
+    			{{ active_season()->name }}
     		</span>
 			<div class="market-state">
 				<span class="badge badge-{{ active_season()->change_salaries_period ? 'success' : 'secondary' }}">Salarios</span>

@@ -11014,12 +11014,30 @@ header #user-menu {
   z-index: 999;
 }
 
+header #user-menu .user-menu-header {
+  background: #191f3f;
+  color: #fff;
+  text-align: center;
+}
+
 header #user-menu nav .nav .nav-item {
   border-left: 4px solid transparent;
   border-top: 1px solid #273064;
   display: block;
   font-size: 1em;
   padding: .25em .75em;
+}
+
+header #user-menu nav .nav .nav-item.category {
+  background: #191f3f;
+  color: #90a4ae;
+  font-size: .7em;
+  padding: .75em 1.5em;
+}
+
+header #user-menu nav .nav .nav-item.category:hover {
+  background: #191f3f;
+  border-left: 4px solid transparent;
 }
 
 header #user-menu nav .nav .nav-item:hover {

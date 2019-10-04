@@ -79,7 +79,6 @@
 
 <aside id="user-menu">
     <nav>
-        <div class="p-3">
             @guest
                 <div class="row">
                     <div class="col-6 text-right">
@@ -95,12 +94,12 @@
                 </div>
             @else
                 <div class="row">
-                    <div class="col-12 text-center text-white">
+                    <div class="user-menu-header col-12 p-3">
                         Hola, {{ auth()->user()->name }}
+                        <img src="{{ asset(auth()->user()->profile->avatar) }}" width="24" class="d-inline-block ml-2">
                     </div>
                 </div>
             @endguest
-        </div>
         <ul class="nav flex-column">
             @include('layouts.partials.user_menu')
         </ul>
