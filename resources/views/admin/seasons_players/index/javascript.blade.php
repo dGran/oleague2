@@ -2,7 +2,9 @@
     var filterName = {!! json_encode($filterName) !!};
     var filterSeason = {!! json_encode($filterSeason) !!};
     var filterParticipant = {!! json_encode($filterParticipant) !!};
+    var filterPack = {!! json_encode($filterPack) !!};
     var filterTeam = {!! json_encode($filterTeam) !!};
+    var filterLeague = {!! json_encode($filterLeague) !!};
     var filterNation = {!! json_encode($filterNation) !!};
     var filterPosition = {!! json_encode($filterPosition) !!};
     var filterActive = {!! json_encode($filterActive) !!};
@@ -56,7 +58,7 @@
     function cancelFilterName() {
         window.event.preventDefault();
         $('.filterName').val('');
-        if (filterParticipant || filterTeam || filterNation || filterPosition || order || pagination) {
+        if (filterParticipant || filterPack || filterTeam || filterLeague || filterNation || filterPosition || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -66,7 +68,17 @@
     function cancelFilterParticipant() {
         window.event.preventDefault();
         $('.filterParticipant').val('-1');
-        if (filterName || filterTeam || filterNation || filterPosition || order || pagination) {
+        if (filterName || filterPack || filterTeam || filterLeague || filterNation || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterPack() {
+        window.event.preventDefault();
+        $('.filterPack').val('0');
+        if (filterName || filterParticipant || filterTeam || filterLeague || filterNation || filterPosition || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -76,7 +88,17 @@
     function cancelFilterTeam() {
         window.event.preventDefault();
         $('.filterTeam').val('');
-        if (filterName || filterParticipant || filterNation || filterPosition || order || pagination) {
+        if (filterName || filterPack || filterParticipant || filterLeague || filterNation || filterPosition || order || pagination) {
+            $('.frmFilter').submit();
+        } else {
+            cancelFilters();
+        }
+    }
+
+    function cancelFilterLeague() {
+        window.event.preventDefault();
+        $('.filterLeague').val('');
+        if (filterName || filterPack || filterParticipant || filterTeam || filterNation || filterPosition || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -86,7 +108,7 @@
     function cancelFilterNation() {
         window.event.preventDefault();
         $('.filterNation').val('');
-        if (filterName || filterParticipant || filterTeam || filterPosition || order || pagination) {
+        if (filterName || filterPack || filterParticipant || filterTeam || filterLeague || filterPosition || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();
@@ -96,7 +118,7 @@
     function cancelFilterPosition() {
         window.event.preventDefault();
         $('.filterPosition').val('');
-        if (filterName || filterParticipant || filterTeam || filterNation || order || pagination) {
+        if (filterName || filterPack || filterParticipant || filterTeam || filterLeague || filterNation || order || pagination) {
             $('.frmFilter').submit();
         } else {
             cancelFilters();

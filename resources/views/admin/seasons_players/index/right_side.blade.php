@@ -148,7 +148,7 @@
 </div>
 
 <div class="mt-4">
-    @if ($filterName || $filterParticipant >= 0 || $filterTeam || $filterNation || $filterPosition)
+    @if ($filterName || $filterParticipant >= 0 || $filterPack > 0 || $filterTeam || $filterLeague || $filterNation || $filterPosition)
         <ul class="nav mb-2">
             @if ($filterName)
                 <li class="nav-item">
@@ -166,10 +166,26 @@
                     </a>
                 </li>
             @endif
+            @if ($filterPack > 0)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterPack()">
+                        <span class="r-1">Packs</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
             @if ($filterTeam)
                 <li class="nav-item">
                     <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterTeam()">
                         <span class="r-1">Equipo</span>
+                        <i class="fas fa-times"></i>
+                    </a>
+                </li>
+            @endif
+            @if ($filterLeague)
+                <li class="nav-item">
+                    <a href="" class="badge badge-secondary mr-1" onclick="cancelFilterLeague()">
+                        <span class="r-1">Liga</span>
                         <i class="fas fa-times"></i>
                     </a>
                 </li>
@@ -240,6 +256,18 @@
                 <option value="">Todas los equipos</option>
                 @foreach ($teams as $team)
                     <option {{ $team->team_name == $filterTeam ? 'selected' : '' }} value="{{ $team->team_name }}">{{ $team->team_name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterLeague" class="mb-1">Liga</label>
+            <select name="filterLeague" id="filterLeague" class="selectpicker form-control filterLeague" onchange="applyfilters()" data-live-search="true" data-size="5">
+                <option value="">Todas las ligas</option>
+                @foreach ($leagues as $league)
+                    <option {{ $league->league_name == $filterLeague ? 'selected' : '' }} value="{{ $league->league_name }}">{{ $league->league_name }}</option>
                 @endforeach
             </select>
         </div>
