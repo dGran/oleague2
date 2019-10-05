@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Season;
 use App\SeasonPlayer;
+use App\SeasonPlayerPack;
 use App\SeasonParticipant;
 use App\Player;
 use App\AdminFilter;
@@ -41,6 +42,7 @@ class SeasonPlayerController extends Controller
             $filterTeam = request()->filterTeam;
             $filterNation = request()->filterNation;
             $filterPosition = request()->filterPosition;
+            $filterPack = request()->filterPack;
             if (request()->filterActive) {
                 $filterActive = 1;
             } else {
@@ -76,6 +78,9 @@ class SeasonPlayerController extends Controller
                 if ($admin->seasonPlayers_filterPosition) {
                     $filterPosition = $admin->seasonPlayers_filterPosition;
                 }
+                if ($admin->seasonPlayers_filterPack) {
+                    $filterPack = $admin->seasonPlayers_filterPack;
+                }
                 if ($admin->seasonPlayers_filterActive) {
                     $filterActive = $admin->seasonPlayers_filterActive;
                 }
@@ -109,6 +114,7 @@ class SeasonPlayerController extends Controller
             $filterTeam = request()->filterTeam;
             $filterNation = request()->filterNation;
             $filterPosition = request()->filterPosition;
+            $filterPack = request()->filterPack;
             if (request()->filterActive) {
                 $filterActive = 1;
             } else {
@@ -127,6 +133,7 @@ class SeasonPlayerController extends Controller
         $adminFilter->seasonPlayers_filterTeam = $filterTeam;
         $adminFilter->seasonPlayers_filterNation = $filterNation;
         $adminFilter->seasonPlayers_filterPosition = $filterPosition;
+        $adminFilter->seasonPlayers_filterPack = $filterPack;
         $adminFilter->seasonPlayers_filterActive = $filterActive;
         $adminFilter->seasonPlayers_order = $order;
         $adminFilter->seasonPlayers_pagination = $pagination;
@@ -168,6 +175,9 @@ class SeasonPlayerController extends Controller
         if ($filterPosition != NULL) {
             $players = $players->where('players.position', '=', $filterPosition);
         }
+        if ($filterPack > 0) {
+            $players = $players->where('season_players.pack_id', '=', $filterPack);
+        }
         if ($filterActive == 1) {
             $players->where('active', '=', $filterActive);
         }
@@ -179,6 +189,8 @@ class SeasonPlayerController extends Controller
         $positions = Player::select('position')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('position', 'asc')->get();
         $nations = Player::select('nation_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('nation_name', 'asc')->get();
         $teams = Player::select('team_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('team_name', 'asc')->get();
+        $packs = SeasonPlayerPack::where('season_id', '=', $filterSeason)->orderBy('name', 'asc')->get();
+
         if (Season::find($filterSeason)->participant_has_team) {
             $participants = SeasonParticipant::
             leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
@@ -214,6 +226,9 @@ class SeasonPlayerController extends Controller
             if ($filterPosition != NULL) {
                 $players = $players->where('players.position', '=', $filterPosition);
             }
+            if ($filterPack > 0) {
+                $players = $players->where('season_players.pack_id', '=', $filterPack);
+            }
             if ($filterActive == 1) {
                 $players->where('active', '=', $filterActive);
             }
@@ -223,7 +238,7 @@ class SeasonPlayerController extends Controller
             $adminFilter->seasonPlayers_page = $page;
             $adminFilter->save();
         }
-        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'teams', 'nations', 'positions', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'filterActive', 'active_season', 'order', 'pagination', 'page'));
+        return view('admin.seasons_players.index', compact('players', 'seasons', 'participants', 'teams', 'nations', 'positions', 'packs', 'filterSeason', 'filterParticipant', 'filterName', 'filterTeam', 'filterNation', 'filterPosition', 'filterPack', 'filterActive', 'active_season', 'order', 'pagination', 'page'));
     }
 
     public function add($season_id)
@@ -484,6 +499,30 @@ class SeasonPlayerController extends Controller
             return redirect()->route('admin.season_players')->with('success', 'Se han asignado los jugadores seleccionados al participante ' . $participant->name() . ' correctamente.');
         }
         return redirect()->route('admin.season_players')->with('success', 'Se han convertido en agentes libres los jugadores seleccionados correctamente.');
+    }
+
+    public function transferPackMany($ids, $pack_id)
+    {
+        $pack = SeasonPlayerPack::find($pack_id);
+        $ids=explode(",",$ids);
+        for ($i=0; $i < count($ids); $i++)
+        {
+            $player = SeasonPlayer::find($ids[$i]);
+            if ($player) {
+                $player->pack_id = $pack_id;
+                $player->save();
+                if ($pack) {
+                    $text = "Jugador asignado al pack " . $pack->name;
+                } else {
+                    $text = "Jugador liberado de los packs";
+                }
+                event(new TableWasUpdated($player, $player->player->name, $text));
+            }
+        }
+        if ($pack) {
+            return redirect()->route('admin.season_players')->with('success', 'Se han asignado los jugadores seleccionados al pack ' . $pack->name . ' correctamente.');
+        }
+        return redirect()->route('admin.season_players')->with('success', 'Se han liberado de los packs a los jugadores seleccionados correctamente.');
     }
 
     public function activeAllPlayers($season_id)

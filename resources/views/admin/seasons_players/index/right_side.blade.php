@@ -62,6 +62,12 @@
                 <span>Asignar / Liberar</span>
             </a>
         </li>
+        <li class="rowOptions-AssignPack list-group-item border-0 px-0 d-none">
+            <a href="" data-toggle="modal" data-target="#assignPackModal">
+                <span class="fas fa-exchange-alt fa-fw mr-1"></span>
+                <span>Asignar / Liberar (Pack)</span>
+            </a>
+        </li>
         <li class="rowOptions-View list-group-item border-0 px-0 d-none">
             <a href="" onclick="view(this)">
                 <i class="fas fa-id-card fa-fw mr-1"></i>
@@ -210,6 +216,18 @@
                 <option {{ $filterParticipant == 0 ? 'selected' : '' }} value="0">Agentes libres</option>
                 @foreach ($participants as $participant)
                     <option {{ $participant->id == $filterParticipant ? 'selected' : '' }} value="{{ $participant->id }}">{{ $participant->name() }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-12">
+            <label for="filterPackLarge" class="mb-1">Packs</label>
+            <select name="filterPack" id="filterPackLarge" class="selectpicker form-control filterPack" onchange="applyfilters()">
+                <option {{ $filterPack == 0 ? 'selected' : '' }} value="0">Ninguno</option>
+                @foreach ($packs as $pack)
+                    <option {{ $pack->id == $filterPack ? 'selected' : '' }} value="{{ $pack->id }}">{{ $pack->name }}</option>
                 @endforeach
             </select>
         </div>

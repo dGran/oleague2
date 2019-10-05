@@ -74,7 +74,12 @@
                         @if (!$player->active)
                             <span class="badge badge-danger mr-1">OFF</span>
                         @endif
-                        <span>{{ $player->player->name }}</span>
+                        <span>
+                            {{ $player->player->name }}
+                            @if ($player->pack)
+                                <small class="text-success">{{ $player->pack->name }}</small>
+                            @endif
+                        </span>
                         <small class="d-block d-sm-none text-black-50 text-uppercase">
                             @if ($player->participant_id && $player->participant->team_id)
                                 {{ $player->participant->team->name }}

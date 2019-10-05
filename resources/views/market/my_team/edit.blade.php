@@ -41,12 +41,13 @@
 					<div class="row">
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Salario</label>
-							<input type="number" step="any" min="0.5" max="{{ ($player->salary + active_season()->salary_cap - $player->participant->salaries()) }}" class="form-control py-1" name="salary" id="salary" value="{{ $player->salary }}" onkeyup="changeSalary()" onblur="salaryBlur()">
+							<input type="number" step="0.5" min="0.5" max="{{ ($player->salary + active_season()->salary_cap - $player->participant->salaries()) }}" class="form-control py-1" name="salary" id="salary" value="{{ $player->salary }}" onkeyup="changeSalary()" onblur="salaryBlur()">
 							<small id="salaryHelp" class="form-text text-muted">Salario máximo: {{ $player->salary + active_season()->salary_cap - $player->participant->salaries() }} M.</small>
+							<small id="salaryHelp" class="form-text text-muted">Total salarios: {{ $player->participant->salaries() }} M.</small>
 						</div>
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Claúsula</label>
-							<input type="number" class="form-control py-1" name="price" id="price" value="{{ $player->price }}" onkeyup="changePrice()" onblur="priceBlur()">
+							<input type="number" class="form-control py-1" step="5" name="price" id="price" value="{{ $player->price }}" onkeyup="changePrice()" onblur="priceBlur()">
 						</div>
 					</div>
 
@@ -83,7 +84,7 @@
 
 					<div class="col-6 m-0 p-0 mb-1 form-group">
 						<label class="m-0" for="sale_price">Precio</label>
-						<input type="number" step="any" name="sale_price" id="sale_price" class="form-control py-1" value="{{ $player->sale_price }}" {{ !$player->transferable ? 'disabled' : '' }}>
+						<input type="number" step="0.5" name="sale_price" id="sale_price" class="form-control py-1" value="{{ $player->sale_price }}" {{ !$player->transferable ? 'disabled' : '' }}>
 					</div>
 					<div class="d-block">
 					    <div class="pretty p-switch p-fill">

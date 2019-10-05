@@ -36,13 +36,12 @@
     }
 
     function salaryBlur() {
-        var value = $('#salary').val();
-        var min = $('#salary').attr('min');
-        var max = $('#salary').attr('max');
+        var value = parseFloat($('#salary').val());
+        var min = parseFloat($('#salary').attr('min'));
+        var max = parseFloat($('#salary').attr('max'));
 
         if (value < min) {
             $('#salary').val(min);
-            $('#price').val($('#salary').val() * 10);
         }
         if (value > max) {
             $('#salary').val(max);
@@ -55,13 +54,12 @@
     }
 
     function priceBlur() {
-        var value = $('#price').val();
-        var min = $('#salary').attr('min') * 10;
-        var max = $('#salary').attr('max') * 10;
+        var value = parseFloat($('#price').val());
+        var min = parseFloat($('#salary').attr('min')*10);
+        var max = parseFloat($('#salary').attr('max')*10);
 
         if (value < min) {
             $('#price').val(min);
-            $('#salary').val($('#price').val() / 10);
         }
         if (value > max) {
             $('#price').val(max);

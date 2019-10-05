@@ -244,6 +244,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/temporada-jugadores/jugadores/resetear-seleccionados/{ids}', 'SeasonPlayerController@resetMany')->name('admin.season_players.reset.many');
 
 		Route::get('/admin/temporada-jugadores/jugadores/asignar-seleccionados/{ids}/{participant_id}', 'SeasonPlayerController@transferMany')->name('admin.season_players.transfer.many');
+	Route::get('/admin/temporada-jugadores/jugadores/asignar-seleccionados-a-pack/{ids}/{pack_id}', 'SeasonPlayerController@transferPackMany')->name('admin.season_players.transferPack.many');
 
 		Route::get('/admin/temporada-jugadores/jugadores/acciones/activar/{season_id}', 'SeasonPlayerController@activeAllPlayers')->name('admin.players.active.all.players');
 		Route::get('/admin/temporada-jugadores/jugadores/acciones/desactivar/{season_id}', 'SeasonPlayerController@desactiveAllPlayers')->name('admin.players.desactive.all.players');

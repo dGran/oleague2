@@ -301,6 +301,21 @@
         window.location.href=url;
     }
 
+    function assingPackMany() {
+        window.event.preventDefault();
+        disabledActionsButtons();
+        pack_id = $(".packs option:selected").val();
+
+        var ids = [];
+        $(".mark:checked").each(function() {
+            ids.push($(this).val());
+        });
+        var url = '{{ route("admin.season_players.transferPack.many", [":ids", ":pack_id"]) }}';
+        url = url.replace(':ids', ids);
+        url = url.replace(':pack_id', pack_id);
+        window.location.href=url;
+    }
+
     function edit(element) {
         $(".mark:checked").each(function() {
             id = $(this).val();
@@ -394,6 +409,7 @@
                 $(".rowOptions-Edit").removeClass('d-none');
                 $(".rowOptions-View").removeClass('d-none');
                 $(".rowOptions-Assign").addClass('d-none');
+                $(".rowOptions-AssignPack").addClass('d-none');
                 var active = $(".mark:checked").parents('tr').attr("data-active");
                 if (active == 1) {
                     $(".rowOptions-Activate").addClass('d-none');
@@ -411,6 +427,7 @@
                 $(".rowOptions-Activate").addClass('d-none');
                 $(".rowOptions-Desactivate").addClass('d-none');
                 $(".rowOptions-Assign").removeClass('d-none');
+                $(".rowOptions-AssignPack").removeClass('d-none');
             }
         } else {
             if ($(".rowOptions").is(':visible')) {

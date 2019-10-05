@@ -17,6 +17,11 @@ class Player extends Model
         return $this->hasOne('App\PlayerDB', 'id', 'players_db_id');
     }
 
+    public function pack()
+    {
+        return $this->hasOne('App\SeasonPlayerPack', 'id', 'pack_id');
+    }
+
     public function nation_flag()
     {
     	if ($this->nation_name) {

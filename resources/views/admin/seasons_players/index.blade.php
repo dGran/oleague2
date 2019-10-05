@@ -23,6 +23,7 @@
 @section('modal')
     @include('admin.seasons_players.index.filter_modal')
     @include('admin.seasons_players.index.assign_modal')
+    @include('admin.seasons_players.index.assignPack_modal')
     @include('admin.players.index.view_modal')
 @endsection
 
