@@ -17,6 +17,7 @@ class CreatePlayersTable extends Migration
             $table->increments('id');
             $table->integer('players_db_id')->unsigned()->index();
             $table->string('game_id')->nullable()->index();
+            $table->integer('pack_id')->nullable()->index();
             $table->string('name')->index();
             $table->string('img')->nullable();
             $table->string('team_name')->nullable();
@@ -27,7 +28,6 @@ class CreatePlayersTable extends Migration
             $table->integer('age')->nullable()->index();
             $table->enum('foot', ['left', 'right'])->nullable()->index();
             $table->integer('overall_rating')->nullable()->index();
-            $table->integer('pack_id')->nullable()->index();
             $table->string('slug')->index();
         });
     }
