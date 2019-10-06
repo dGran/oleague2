@@ -38,7 +38,7 @@
 					<span>Mi equipo</span>
 				</a>
 			</li>
-			<li class="item {{ \Request::is('mercado/negociaciones*') ? 'active' : '' }}">
+			<li class="item {{ \Request::is('mercado/negociaciones*') ? 'active' : '' }} {{ !active_season()->transfers_period ? 'd-none' : '' }}">
 				<a href="{{ route('market.trades') }}">
 					<i class="icon-negotiation"></i>
 					<span>Negocios</span>

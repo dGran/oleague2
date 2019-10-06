@@ -126,6 +126,50 @@
                                 <i class="fas fa-clone fa-fw mr-1"></i>
                                 Duplicar
                             </a>
+                            @if ($season->change_salaries_period)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.salaries.desactivate', $season->id) }}">
+                                    <i class="fas fa-toggle-off fa-fw mr-1"></i>
+                                    Desactivar periodo edición de salarios
+                                </a>
+                            @else
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.salaries.activate', $season->id) }}">
+                                    <i class="fas fa-toggle-on fa-fw mr-1"></i>
+                                    Activar periodo edición de salarios
+                                </a>
+                            @endif
+                            @if ($season->transfers_period)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.transfers.desactivate', $season->id) }}">
+                                    <i class="fas fa-toggle-off fa-fw mr-1"></i>
+                                    Desactivar periodo negociaciones
+                                </a>
+                            @else
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.transfers.activate', $season->id) }}">
+                                    <i class="fas fa-toggle-on fa-fw mr-1"></i>
+                                    Activar periodo negociaciones
+                                </a>
+                            @endif
+                            @if ($season->free_players_period)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.free.desactivate', $season->id) }}">
+                                    <i class="fas fa-toggle-off fa-fw mr-1"></i>
+                                    Desactivar periodo agentes libres
+                                </a>
+                            @else
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.free.activate', $season->id) }}">
+                                    <i class="fas fa-toggle-on fa-fw mr-1"></i>
+                                    Activar periodo agentes libres
+                                </a>
+                            @endif
+                            @if ($season->clausules_period)
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.clausules.desactivate', $season->id) }}">
+                                    <i class="fas fa-toggle-off fa-fw mr-1"></i>
+                                    Desactivar periodo pago de claúsulas
+                                </a>
+                            @else
+                                <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.clausules.activate', $season->id) }}">
+                                    <i class="fas fa-toggle-on fa-fw mr-1"></i>
+                                    Activar periodo pago de claúsulas
+                                </a>
+                            @endif
                             <a href="" class="btn-delete dropdown-item text-danger" value="Eliminar">
                                 <i class="fas fa-trash fa-fw mr-1"></i>
                                 Eliminar

@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
 	    // Users will need the previously generated roles
 	    $this->call(UserTableSeeder::class);
         $this->call(PlayerDBTableSeeder::class);
+
+        // $this->call(TeamTableSeeder::class);
     }
 }

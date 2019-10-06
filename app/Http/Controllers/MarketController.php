@@ -108,66 +108,70 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return back()->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
-	        $player = SeasonPlayer::find($id);
-	        if ($player) {
-	        	if (user_is_participant(auth()->user()->id)) {
-	        		// validations
-	        		if ($player->participant_id > 0) {
-	        			return back()->with('error', 'No puedes fichar al jugador, ya ha sido fichado por ' . $player->participant->name() . '.');
-	        		}
-	        		if (participant_of_user()->max_players_limit()) {
-	        			return back()->with('error', 'No puedes fichar al jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
-	        		}
-	        		if (participant_of_user()->budget() < $player->season->free_players_cost) {
-	        			return back()->with('error', 'No puedes fichar al jugador. No dispones de los ' . $player->season->free_players_cost . ' mill. que cuesta el jugador en tu presupuesto.');
-	        		}
+	    	if (!active_season()->free_players_period) {
+	    		return back()->with('error', 'El periodo de fichajes de jugadores libres no está activo.');
+	    	} else {
+		        $player = SeasonPlayer::find($id);
+		        if ($player) {
+		        	if (user_is_participant(auth()->user()->id)) {
+		        		// validations
+		        		if ($player->participant_id > 0) {
+		        			return back()->with('error', 'No puedes fichar al jugador, ya ha sido fichado por ' . $player->participant->name() . '.');
+		        		}
+		        		if (participant_of_user()->max_players_limit()) {
+		        			return back()->with('error', 'No puedes fichar al jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
+		        		}
+		        		if (participant_of_user()->budget() < $player->season->free_players_cost) {
+		        			return back()->with('error', 'No puedes fichar al jugador. No dispones de los ' . $player->season->free_players_cost . ' mill. que cuesta el jugador en tu presupuesto.');
+		        		}
 
-	        		$participant_from = $player->participant_id;
-	        		$participant_to = participant_of_user()->id;
+		        		$participant_from = $player->participant_id;
+		        		$participant_to = participant_of_user()->id;
 
-		        	$this->add_cash_history(
-		        		$participant_to,
-		        		'Fichaje del agente libre ' . $player->player->name,
-		        		$player->season->free_players_cost,
-		        		'S'
-		        	);
+			        	$this->add_cash_history(
+			        		$participant_to,
+			        		'Fichaje del agente libre ' . $player->player->name,
+			        		$player->season->free_players_cost,
+			        		'S'
+			        	);
 
-		        	$this->add_transfer(
-		        		'free',
-		        		$player->id,
-		        		$participant_from,
-		        		$participant_to,
-		        		$player->season->free_players_cost
-		        	);
-		        	$transfer = Transfer::orderBy('id', 'desc')->first();
+			        	$this->add_transfer(
+			        		'free',
+			        		$player->id,
+			        		$participant_from,
+			        		$participant_to,
+			        		$player->season->free_players_cost
+			        	);
+			        	$transfer = Transfer::orderBy('id', 'desc')->first();
 
-					$this->generate_new(
-						'transfer',
-						$transfer->id,
-						NULL
-		        	);
+						$this->generate_new(
+							'transfer',
+							$transfer->id,
+							NULL
+			        	);
 
-		        	$player->participant_id = $participant_to;
-		        	$player->market_phrase = null;
-		        	$player->untransferable = 0;
-		        	$player->player_on_loan = 0;
-		        	$player->transferable = 0;
-		        	$player->sale_price = 0;
-		        	$player->sale_auto_accept = 0;
-		        	$player->price = $player->season->free_players_new_salary * 10;
-		        	$player->salary = $player->season->free_players_new_salary;
-		        	$player->save();
-		        	if ($player->save()) {
-		        		$this->manage_player_showcase($player);
-		            	return back()->with('success', $player->player->name . ' ha fichado por tu equipo.');
+			        	$player->participant_id = $participant_to;
+			        	$player->market_phrase = null;
+			        	$player->untransferable = 0;
+			        	$player->player_on_loan = 0;
+			        	$player->transferable = 0;
+			        	$player->sale_price = 0;
+			        	$player->sale_auto_accept = 0;
+			        	$player->price = $player->season->free_players_new_salary * 10;
+			        	$player->salary = $player->season->free_players_new_salary;
+			        	$player->save();
+			        	if ($player->save()) {
+			        		$this->manage_player_showcase($player);
+			            	return back()->with('success', $player->player->name . ' ha fichado por tu equipo.');
+			        	} else {
+			        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+			        	}
 		        	} else {
-		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+		        		return back()->with('error', 'Acción cancelada. No eres participante.');
 		        	}
-	        	} else {
-	        		return back()->with('error', 'Acción cancelada. No eres participante.');
-	        	}
-	        }
-	        return back();
+		        }
+		        return back();
+    		}
     	}
     }
 
@@ -176,159 +180,163 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return back()->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
-	        $player = SeasonPlayer::find($id);
-	        if ($player) {
-	        	if (user_is_participant(auth()->user()->id)) {
-	        		$participant_from = $player->participant;
-	        		$participant_to = participant_of_user();
+	    	if (!active_season()->free_players_period) {
+	    		return back()->with('error', 'El periodo de pago de claúsulas no está activo.');
+	    	} else {
+		        $player = SeasonPlayer::find($id);
+		        if ($player) {
+		        	if (user_is_participant(auth()->user()->id)) {
+		        		$participant_from = $player->participant;
+		        		$participant_to = participant_of_user();
 
-	        		// validations
-	        		if (!$player->allow_clause_pay) {
-	        			return back()->with('error', 'No puedes pagar la claúsula de un jugador al cual ya le han pagado la claúsula.');
-	        		}
-	        		if ($participant_to->id == $player->participant_id) {
-	        			return back()->with('error', 'No puedes pagar la claúsula de un jugador de tu equipo.');
-	        		}
-	        		if ($participant_to->clauses_paid_limit()) {
-	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. Ya has llegado al límite de claúsulas pagadas.');
-	        		}
-	        		if ($participant_from->clauses_received_limit()) {
-	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. ' . $participant_from->team->name .' ya ha llegado al límite de claúsulas recibidas.');
-	        		}
-	        		if ($participant_to->max_players_limit()) {
-	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
-	        		}
-	        		if ($participant_to->budget() < $player->clause_price()) {
-	        			return back()->with('error', 'No puedes pagar la claúsula del jugador. No dispones de los ' . $player->clause_price() . ' mill. que cuesta el jugador en tu presupuesto.');
-	        		}
-	        		// END::validations
+		        		// validations
+		        		if (!$player->allow_clause_pay) {
+		        			return back()->with('error', 'No puedes pagar la claúsula de un jugador al cual ya le han pagado la claúsula.');
+		        		}
+		        		if ($participant_to->id == $player->participant_id) {
+		        			return back()->with('error', 'No puedes pagar la claúsula de un jugador de tu equipo.');
+		        		}
+		        		if ($participant_to->clauses_paid_limit()) {
+		        			return back()->with('error', 'No puedes pagar la claúsula del jugador. Ya has llegado al límite de claúsulas pagadas.');
+		        		}
+		        		if ($participant_from->clauses_received_limit()) {
+		        			return back()->with('error', 'No puedes pagar la claúsula del jugador. ' . $participant_from->team->name .' ya ha llegado al límite de claúsulas recibidas.');
+		        		}
+		        		if ($participant_to->max_players_limit()) {
+		        			return back()->with('error', 'No puedes pagar la claúsula del jugador. Actualmente tienes el máximo de jugadores en tu plantilla.');
+		        		}
+		        		if ($participant_to->budget() < $player->clause_price()) {
+		        			return back()->with('error', 'No puedes pagar la claúsula del jugador. No dispones de los ' . $player->clause_price() . ' mill. que cuesta el jugador en tu presupuesto.');
+		        		}
+		        		// END::validations
 
-	        		// generate cash movements
-		        	$this->add_cash_history(
-		        		$participant_to->id,
-		        		'Pago de claúsula del jugador ' . $player->player->name,
-		        		$player->price,
-		        		'S'
-		        	);
-		        	$this->add_cash_history(
-		        		$participant_to->id,
-		        		'Impuestos del pago de claúsula del jugador ' . $player->player->name,
-		        		$player->price * 0.10,
-		        		'S'
-		        	);
-
-	        		if ($player->owner_id) {
+		        		// generate cash movements
 			        	$this->add_cash_history(
-			        		$player->owner_id,
-			        		'Ingreso de claúsula del jugador ' . $player->player->name,
+			        		$participant_to->id,
+			        		'Pago de claúsula del jugador ' . $player->player->name,
 			        		$player->price,
-			        		'E'
+			        		'S'
 			        	);
-	        		} else {
 			        	$this->add_cash_history(
+			        		$participant_to->id,
+			        		'Impuestos del pago de claúsula del jugador ' . $player->player->name,
+			        		$player->price * 0.10,
+			        		'S'
+			        	);
+
+		        		if ($player->owner_id) {
+				        	$this->add_cash_history(
+				        		$player->owner_id,
+				        		'Ingreso de claúsula del jugador ' . $player->player->name,
+				        		$player->price,
+				        		'E'
+				        	);
+		        		} else {
+				        	$this->add_cash_history(
+				        		$participant_from->id,
+				        		'Ingreso de claúsula del jugador ' . $player->player->name,
+				        		$player->price,
+				        		'E'
+				        	);
+		        		}
+			        	// END::generate cash movements
+
+			        	// save transfer
+			        	$this->add_transfer(
+			        		'clause',
+			        		$player->id,
 			        		$participant_from->id,
-			        		'Ingreso de claúsula del jugador ' . $player->player->name,
-			        		$player->price,
-			        		'E'
+			        		$participant_to->id,
+			        		$player->price * 1.10
 			        	);
-	        		}
-		        	// END::generate cash movements
 
-		        	// save transfer
-		        	$this->add_transfer(
-		        		'clause',
-		        		$player->id,
-		        		$participant_from->id,
-		        		$participant_to->id,
-		        		$player->price * 1.10
-		        	);
-
-		        	// generate post (new)
-		        	$transfer = Transfer::orderBy('id', 'desc')->first();
-					$this->generate_new(
-						'transfer',
-						$transfer->id,
-						NULL
-		        	);
-
-			        $this->add_notification(
-			        	$participant_from->user,
-			        	$participant_from->user->id,
-			        	null,
-			        	$participant_to->name() . ' ha pagado la claúsula (' . $player->price . ' M.) de tu jugador ' . $player->player->name,
-			        	$participant_from->user->profile->email_notifications,
-			        	'Mi equipo',
-			        	'market.my_team'
-			        );
-
-		        	// clauses counter for participants
-		        	$participant_from->clauses_received += 1;
-		        	$participant_from->save();
-		        	$participant_to->paid_clauses += 1;
-		        	$participant_to->save();
-
-	        		if ($participant_to->clauses_paid_limit()) {
 			        	// generate post (new)
-						$this->generate_default_new(
-							'default',
-							'Mercado - ' . $participant_to->name(),
-							$participant_to->name() . ' gasta su último clausulazo',
-							'Tras el pago de la claúsula de ' . $player->player->name . ' llega al límite de claúsulas pagadas',
-							$participant_to->logo()
+			        	$transfer = Transfer::orderBy('id', 'desc')->first();
+						$this->generate_new(
+							'transfer',
+							$transfer->id,
+							NULL
 			        	);
-				        $this->add_notification(
-				        	$participant_to->user,
-				        	$participant_to->user->id,
-				        	null,
-				        	'Has llegado al límite de claúsulas pagadas tras el pago de la claúsula de ' . $player->player->name,
-				        	$participant_to->user->profile->email_notifications,
-				        	'Mi equipo',
-				        	'market.my_team'
-				        );
-	        		}
-	        		if ($participant_from->clauses_received_limit()) {
-						$this->generate_default_new(
-							'default',
-							'Mercado - ' . $participant_from->name(),
-							$participant_from->name() . ' recibe su último clausulazo',
-							'Tras recibir clausulazo por ' . $player->player->name . ' llega al límite de claúsulas recibidas, por lo que no le podrán fichar más jugadores sin su aprovación',
-							$participant_from->logo()
-			        	);
+
 				        $this->add_notification(
 				        	$participant_from->user,
 				        	$participant_from->user->id,
 				        	null,
-				        	'Has llegado al límite de claúsulas recibidas tras recibir el pago de la claúsula de ' . $player->player->name,
-				        	$participant_to->user->profile->email_notifications,
+				        	$participant_to->name() . ' ha pagado la claúsula (' . $player->price . ' M.) de tu jugador ' . $player->player->name,
+				        	$participant_from->user->profile->email_notifications,
 				        	'Mi equipo',
 				        	'market.my_team'
 				        );
-	        		}
 
-		        	// reset player market data
-		        	$player->participant_id = $participant_to->id;
-		        	$player->owner_id = null;
-		        	$player->allow_clause_pay = 0;
-		        	$player->market_phrase = null;
-		        	$player->untransferable = 0;
-		        	$player->player_on_loan = 0;
-		        	$player->transferable = 0;
-		        	$player->sale_price = 0;
-		        	$player->sale_auto_accept = 0;
-		        	$player->price = $player->price + 10;
-		        	$player->salary = $player->salary + 1;
-		        	$player->save();
-		        	if ($player->save()) {
-		        		$this->manage_player_showcase($player);
-		            	return back()->with('success', 'Has pagado la claúsula del jugador ' . $player->player->name . ' y se ha incorporado a tu equipo.');
+			        	// clauses counter for participants
+			        	$participant_from->clauses_received += 1;
+			        	$participant_from->save();
+			        	$participant_to->paid_clauses += 1;
+			        	$participant_to->save();
+
+		        		if ($participant_to->clauses_paid_limit()) {
+				        	// generate post (new)
+							$this->generate_default_new(
+								'default',
+								'Mercado - ' . $participant_to->name(),
+								$participant_to->name() . ' gasta su último clausulazo',
+								'Tras el pago de la claúsula de ' . $player->player->name . ' llega al límite de claúsulas pagadas',
+								$participant_to->logo()
+				        	);
+					        $this->add_notification(
+					        	$participant_to->user,
+					        	$participant_to->user->id,
+					        	null,
+					        	'Has llegado al límite de claúsulas pagadas tras el pago de la claúsula de ' . $player->player->name,
+					        	$participant_to->user->profile->email_notifications,
+					        	'Mi equipo',
+					        	'market.my_team'
+					        );
+		        		}
+		        		if ($participant_from->clauses_received_limit()) {
+							$this->generate_default_new(
+								'default',
+								'Mercado - ' . $participant_from->name(),
+								$participant_from->name() . ' recibe su último clausulazo',
+								'Tras recibir clausulazo por ' . $player->player->name . ' llega al límite de claúsulas recibidas, por lo que no le podrán fichar más jugadores sin su aprovación',
+								$participant_from->logo()
+				        	);
+					        $this->add_notification(
+					        	$participant_from->user,
+					        	$participant_from->user->id,
+					        	null,
+					        	'Has llegado al límite de claúsulas recibidas tras recibir el pago de la claúsula de ' . $player->player->name,
+					        	$participant_to->user->profile->email_notifications,
+					        	'Mi equipo',
+					        	'market.my_team'
+					        );
+		        		}
+
+			        	// reset player market data
+			        	$player->participant_id = $participant_to->id;
+			        	$player->owner_id = null;
+			        	$player->allow_clause_pay = 0;
+			        	$player->market_phrase = null;
+			        	$player->untransferable = 0;
+			        	$player->player_on_loan = 0;
+			        	$player->transferable = 0;
+			        	$player->sale_price = 0;
+			        	$player->sale_auto_accept = 0;
+			        	$player->price = $player->price + 10;
+			        	$player->salary = $player->salary + 1;
+			        	$player->save();
+			        	if ($player->save()) {
+			        		$this->manage_player_showcase($player);
+			            	return back()->with('success', 'Has pagado la claúsula del jugador ' . $player->player->name . ' y se ha incorporado a tu equipo.');
+			        	} else {
+			        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+			        	}
 		        	} else {
-		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
+		        		return back()->with('error', 'Acción cancelada. No eres participante.');
 		        	}
-	        	} else {
-	        		return back()->with('error', 'Acción cancelada. No eres participante.');
-	        	}
-	        }
-	        return back();
+		        }
+		        return back();
+		    }
     	}
     }
 
@@ -518,7 +526,7 @@ class MarketController extends Controller
         }
         $positions = Player::select('position')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('position', 'asc')->get();
 
-        return view('market.sale', compact('players', 'participants', 'positions', 'filterParticipant', 'filterPosition', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterState', 'filterSalePriceRangeFrom', 'filterSalePriceRangeTo', 'order'));
+        return view('market.sale', compact('players', 'participants', 'positions', 'filterParticipant', 'filterPosition', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterState', 'filterSalePriceRangeFrom', 'filterSalePriceRangeTo', 'order'));
     }
 
     public function onSalePlayer($id)
@@ -728,7 +736,7 @@ class MarketController extends Controller
 		$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
 
 		//return view
-        return view('market.search', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+        return view('market.search', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
     }
 
     public function teams()
@@ -951,7 +959,7 @@ class MarketController extends Controller
 				$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
 
 				//return view
-		        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterTransferable', 'filterOnLoan', 'filterBuyNow', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+		        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
 			}
 		}
 
@@ -1008,8 +1016,10 @@ class MarketController extends Controller
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
     			if (auth()->user()->id == $player->participant->user_id) {
-		        	$player->salary = request()->salary;
-		        	$player->price = request()->price;
+			    	if (active_season()->change_salaries_period) {
+			        	$player->salary = request()->salary;
+			        	$player->price = request()->price;
+		    		}
 
 		        	if (request()->untransferable == 'on') {
 		        		$player->untransferable	= 1;
@@ -1163,6 +1173,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return back()->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return back()->with('error', 'El periodo de negociaciones no está activo');
+    		}
 	        $player = SeasonPlayer::find($id);
 	        if ($player) {
 	        	if ($player->owner_id) {
@@ -1227,6 +1240,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
 			if (user_is_participant(auth()->user()->id)) {
 				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
 					->where('user_id', '=', auth()->user()->id)->first();
@@ -1264,6 +1280,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
 			if (user_is_participant(auth()->user()->id)) {
 				$offers_received = Trade::where('season_id', '=', active_season()->id)
 					->where('participant2_id', '=', participant_of_user()->id)
@@ -1283,6 +1302,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
 			if (user_is_participant(auth()->user()->id)) {
 				$offers_sent = Trade::where('season_id', '=', active_season()->id)
 					->where('participant1_id', '=', participant_of_user()->id)
@@ -1305,6 +1327,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
     		if (user_is_participant(auth()->user()->id)) {
 		    	$participant = SeasonParticipant::find($participant_id);
 		    	$player_selected = $player_id;
@@ -1320,6 +1345,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
     		if (user_is_participant(auth()->user()->id)) {
 		    	$participant = SeasonParticipant::find($id);
 		    	if ($participant) {
@@ -1390,6 +1418,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
 			if (user_is_participant(auth()->user()->id)) {
 		    	$trade = Trade::find($id);
 		    	if ($trade) {
@@ -1539,6 +1570,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
 			if (user_is_participant(auth()->user()->id)) {
 		    	$trade = Trade::find($id);
 		    	if ($trade) {
@@ -1572,6 +1606,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
 			if (user_is_participant(auth()->user()->id)) {
 		    	$trade = Trade::find($id);
 		    	if ($trade) {
@@ -1604,6 +1641,9 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
+    		if (!active_season()->transfers_period) {
+    			return redirect()->route('market')->with('error', 'El periodo de negociaciones no está activo');
+    		}
 			if (user_is_participant(auth()->user()->id)) {
 		    	$trade = Trade::find($id);
 		    	if ($trade) {

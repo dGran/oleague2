@@ -206,6 +206,15 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::get('/admin/temporadas/eliminar-seleccionados/{ids}', 'SeasonController@destroyMany')->name('admin.seasons.destroy.many');
 	Route::get('/admin/temporadas/duplicar/{id}', 'SeasonController@duplicate')->name('admin.seasons.duplicate');
 	Route::get('/admin/temporadas/duplicar-seleccionados/{ids}', 'SeasonController@duplicateMany')->name('admin.seasons.duplicate.many');
+	Route::get('/admin/temporadas/activar-periodo-edicion-salarios/{id}', 'SeasonController@salariesPeriodActivate')->name('admin.seasons.salaries.activate');
+	Route::get('/admin/temporadas/desactivar-periodo-edicion-salarios/{id}', 'SeasonController@salariesPeriodDesactivate')->name('admin.seasons.salaries.desactivate');
+	Route::get('/admin/temporadas/activar-periodo-negociaciones/{id}', 'SeasonController@transfersPeriodActivate')->name('admin.seasons.transfers.activate');
+	Route::get('/admin/temporadas/desactivar-periodo-negociaciones/{id}', 'SeasonController@transfersPeriodDesactivate')->name('admin.seasons.transfers.desactivate');
+	Route::get('/admin/temporadas/activar-periodo-jugadores-libres/{id}', 'SeasonController@freePeriodActivate')->name('admin.seasons.free.activate');
+	Route::get('/admin/temporadas/desactivar-periodo-jugadores-libres/{id}', 'SeasonController@freePeriodDesactivate')->name('admin.seasons.free.desactivate');
+	Route::get('/admin/temporadas/activar-periodo-pago-clausulas/{id}', 'SeasonController@clausulesPeriodActivate')->name('admin.seasons.clausules.activate');
+	Route::get('/admin/temporadas/desactivar-periodo-pago-clausulas/{id}', 'SeasonController@clausulesPeriodDesactivate')->name('admin.seasons.clausules.desactivate');
+
 	Route::get('/admin/temporadas/exportar/{filename}/{type}/{filterName}/{order}/{ids?}', 'SeasonController@exportFile')->name('admin.seasons.export.file');
 	Route::post('/admin/temporadas/importar', 'SeasonController@importFile')->name('admin.seasons.import.file');
 	Route::get('/admin/temporadas/marcar-temporada-activa/{id}', 'SeasonController@setActiveSeason')->name('admin.seasons.setActiveSeason');

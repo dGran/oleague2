@@ -81,6 +81,7 @@
                             @endif
                         </span>
                         <small class="d-block d-sm-none text-black-50 text-uppercase">
+                            {{$player}}
                             @if ($player->participant_id && $player->participant->team_id)
                                 {{ $player->participant->team->name }}
                             @else

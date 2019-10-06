@@ -41,13 +41,15 @@
 					<div class="row">
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Salario</label>
-							<input type="number" step="0.5" min="0.5" max="{{ ($player->salary + active_season()->salary_cap - $player->participant->salaries()) }}" class="form-control py-1" name="salary" id="salary" value="{{ $player->salary }}" onkeyup="changeSalary()" onblur="salaryBlur()">
-							<small id="salaryHelp" class="form-text text-muted">Salario máximo: {{ $player->salary + active_season()->salary_cap - $player->participant->salaries() }} M.</small>
-							<small id="salaryHelp" class="form-text text-muted">Total salarios: {{ $player->participant->salaries() }} M.</small>
+							<input type="number" step="0.5" min="0.5" max="{{ ($player->salary + active_season()->salary_cap - $player->participant->salaries()) }}" class="form-control py-1" name="salary" id="salary" value="{{ $player->salary }}" onkeyup="changeSalary()" onblur="salaryBlur()" {{ !active_season()->change_salaries_period ? 'disabled' : '' }}>
+							@if (active_season()->change_salaries_period)
+								<small id="salaryHelp" class="form-text text-muted">Salario máximo: {{ $player->salary + active_season()->salary_cap - $player->participant->salaries() }} M.</small>
+								<small id="salaryHelp" class="form-text text-muted">Total salarios: {{ $player->participant->salaries() }} M.</small>
+							@endif
 						</div>
 						<div class="form-group col-6">
 							<label class="m-0" for="salary">Claúsula</label>
-							<input type="number" class="form-control py-1" step="5" name="price" id="price" value="{{ $player->price }}" onkeyup="changePrice()" onblur="priceBlur()">
+							<input type="number" class="form-control py-1" step="5" name="price" id="price" value="{{ $player->price }}" onkeyup="changePrice()" onblur="priceBlur()" {{ !active_season()->change_salaries_period ? 'disabled' : '' }}>
 						</div>
 					</div>
 

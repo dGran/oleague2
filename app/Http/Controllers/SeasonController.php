@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Telegram\Bot\Laravel\Facades\Telegram;
+
 use Illuminate\Http\Request;
 use App\AdminFilter;
 use App\GeneralSetting;
@@ -463,6 +465,186 @@ class SeasonController extends Controller
         }
     }
 
+    public function salariesPeriodActivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->change_salaries_period = 1;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x93 Mercado: Se abre el periodo de edición de salarios</b>\n\n";
+                $text .= "Durante este periodo debes asignar los salarios y valores de claúsula a los jugadores de tu equipo";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de edición de salarios activado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
+    public function salariesPeriodDesactivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->change_salaries_period = 0;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x92 Mercado: Se cierra el periodo de edición de salarios</b>";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de edición de salarios desactivado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
+    public function transfersPeriodActivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->transfers_period = 1;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x93 Mercado: Se abre el periodo de negociaciones</b>\n\n";
+                $text .= "Durante este periodo puedes realizar acuerdos con los otros clubs y despedir a jugadores de tu equipo";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de negociaciones activado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
+    public function transfersPeriodDesactivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->transfers_period = 0;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x92 Mercado: Se cierra el periodo de negociaciones</b>";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de negociaciones desactivado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
+    public function freePeriodActivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->free_players_period = 1;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x93 Mercado: Se abre el periodo de jugadores libres</b>\n\n";
+                $text .= "Durante este periodo puedes incorporar agentes libres a tu equipo";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de agentes libres activado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
+    public function freePeriodDesactivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->free_players_period = 0;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x92 Mercado: Se cierra el periodo de jugadores libres</b>";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de agentes libres desactivado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
+    public function clausulesPeriodActivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->clausules_period = 1;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x93 Mercado: Se abre el periodo de pago de claúsulas</b>\n\n";
+                $text .= "Durante este periodo puedes incorporar jugadores a tu equipo mediante pago de claúsulas";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de claúsulas activado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
+    public function clausulesPeriodDesactivate($id)
+    {
+        $season = Season::find($id);
+
+        if ($season) {
+            $season->clausules_period = 0;
+            $season->save();
+            if ($season->save()) {
+                event(new TableWasSaved($season, $season->name));
+
+                $text = "<b>\xF0\x9F\x94\x92 Mercado: Se cierra el periodo de pago de claúsulas</b>";
+                Telegram::sendMessage([
+                    'chat_id' => '-1001241759649',
+                    'parse_mode' => 'HTML',
+                    'text' => $text
+                ]);
+                return back()->with('success', 'Periodo de claúsulas desactivado con éxito.');
+            }
+        }
+        return back()->with('warning', 'Acción cancelada. La temporada no existe. Se ha actualizado la lista.');
+    }
+
     public function exportFile($filename, $type, $filterName, $order, $ids = null)
     {
         if (!$order) {
@@ -610,6 +792,7 @@ class SeasonController extends Controller
         foreach ($players as $player) {
             $season_player = SeasonPlayer::create([
                 'season_id' => $season->id,
+                'participant_id' => $player->pack_id,
                 'player_id' => $player->id,
             ]);
             event(new TableWasImported($season_player, $player->name . " en " . $season->name));

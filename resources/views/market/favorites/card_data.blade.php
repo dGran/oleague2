@@ -49,7 +49,7 @@
 		@endif
 	@endif
 	@if (!auth()->guest() && user_is_participant(auth()->user()->id))
-		<div class="actions">
+		<div class="actions {{ participant_of_user()->id == $player->season_player->participant_id ? 'd-none' : '' }}">
 			<div class="dropdown dropleft">
 				<button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Acciones
@@ -65,13 +65,13 @@
 						Eliminar favorito
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item {{ !$player->season_player->participant ? 'disabled' : '' }}" href="">
+					<a class="dropdown-item {{ !active_season()->transfers_period || !$player->season_player->participant ? 'disabled' : '' }}" href="{{ route('market.trades.add', [$player->participant_id, $player->id]) }}">
 						Abrir negociación
 					</a>
-					<a class="dropdown-item {{ !$player->season_player->participant || !$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()) || ($player->season_player->participant && participant_of_user()->clauses_paid_limit()) || $player->season_player->participant && $player->season_player->participant->id == participant_of_user()->id || participant_of_user()->budget() < $player->season_player->clause_price() || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->price, 2, ',', '.') }}')">
+					<a class="dropdown-item {{ !active_season()->clausules_period || !$player->season_player->participant || !$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()) || ($player->season_player->participant && participant_of_user()->clauses_paid_limit()) || $player->season_player->participant && $player->season_player->participant->id == participant_of_user()->id || participant_of_user()->budget() < $player->season_player->clause_price() || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->price, 2, ',', '.') }}')">
 						Pagar claúsula
 					</a>
-					<a class="dropdown-item {{ $player->season_player->participant || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="sign_free_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->season->free_players_cost, 2, ',', '.') }}')">
+					<a class="dropdown-item {{ !active_season()->free_players_period || $player->season_player->participant || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="sign_free_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->season->free_players_cost, 2, ',', '.') }}')">
 						Fichar jugador
 					</a>
 				</div> {{-- dropdown-menu --}}

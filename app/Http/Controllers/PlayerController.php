@@ -528,7 +528,7 @@ class PlayerController extends Controller
                                 event(new TableWasSaved($nation, $nation->name));
                             }
                         }
-                        ////////
+                        //////
                         if (request()->add_categories) {
                             if ($value->league_name) {
                                 $category = TeamCategory::where('name', '=', $value->league_name)->first();
@@ -569,6 +569,7 @@ class PlayerController extends Controller
                         $player->age = $value->age;
                         $player->foot = $value->foot;
                         $player->overall_rating = $value->overall_rating;
+                        $player->pack_id = $value->pack_id;
                         $player->slug = str_slug($value->name);
 
                         if ($player) {
@@ -579,6 +580,7 @@ class PlayerController extends Controller
                         }
                     }
                     catch (\Exception $e) {
+                        dd($e);
                         return redirect()->route('admin.players')->with('error', 'Fallo al importar los datos, el archivo es inválido o no tiene el formato necesario.');
                     }
                 }
