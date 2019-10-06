@@ -18,7 +18,7 @@
             </a>
         </li>
     @endif
-    @if (user_is_participant(auth()->user()->id))
+{{--     @if (user_is_participant(auth()->user()->id))
         <li class="nav-item category">
             ACCESOS RAPIDOS
         </li>
@@ -47,7 +47,7 @@
                 <span>Partidas pendientes</span>
             </a>
         </li>
-    @endif
+    @endif --}}
     <li class="nav-item category">
         MI CUENTA
     </li>
