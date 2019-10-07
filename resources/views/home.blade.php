@@ -32,7 +32,7 @@
 
         </div>
 
-        <div id="countdown_div">
+{{--         <div id="countdown_div">
             <div class="section-title">
                 <div class="container">
                     <h3>
@@ -108,9 +108,9 @@
                     timer = setInterval(showRemaining, 1000);
                 </script>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="section-title">
+{{--         <div class="section-title">
             <div class="container">
                 <div class="clearfix p-0">
                     <h3 class="float-left">
@@ -128,7 +128,7 @@
                 <p class="m-0 pt-2">Habrán pequeñas actualizaciones durante el periodo de la beta.</p>
                 <p class="pt-2 m-0 text-center">🐥 🐤 🐣</p>
             </div>
-        </div>
+        </div> --}}
 
         <div class="section-title">
             <div class="container">
@@ -358,7 +358,7 @@
             </div>
         </div>
         <div class="container">
-            <div class="text-white p-2">
+            <div class="text-white px-2 py-4 ">
                 Versión inicial de la App. Todavía faltan contenidos y secciones por implementar. Los diseños están preparados para versiones móviles y no de escritorio. De momento, omitir el reporte de fallos o errores encontrados tanto en diseño como en funcionalidad, gracias.
             </div>
         </div>
