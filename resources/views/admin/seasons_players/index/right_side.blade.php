@@ -2,6 +2,10 @@
     <a href="{{ route('admin.season_players.add', $active_season->id) }}" class="btn btn-primary" id="btnAdd">
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
+
+    <a href="{{ route('admin.season_players.generate.packs', $active_season->id) }}" class="btn btn-primary d-block">
+        <span>Generar Packs</span>
+    </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
             <a href="{{ route('admin.season_players.reset', $filterSeason) }}" onclick="reset()" id="btnReset">

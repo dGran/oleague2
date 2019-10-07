@@ -261,6 +261,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/temporada-jugadores/jugadores/exportar/{filename}/{type}/{filterSeason}/{order}/{ids?}', 'SeasonPlayerController@exportFile')->name('admin.season_players.export.file');
 		Route::post('/admin/temporada-jugadores/jugadores/importar', 'SeasonPlayerController@importFile')->name('admin.season_players.import.file');
 
+		Route::get('/admin/temporada-jugadores/jugadores/generar-packs/{season_id}', 'SeasonPlayerController@generatePacks')->name('admin.season_players.generate.packs');
+
 		// Season Competitions
 		Route::get('/admin/competiciones', 'SeasonCompetitionController@index')->name('admin.season_competitions');
 		Route::get('/admin/competiciones/{season_id}/nuevo', 'SeasonCompetitionController@add')->name('admin.season_competitions.add');

@@ -163,8 +163,6 @@ class SeasonPlayerController extends Controller
 
         $active_season = Season::find($filterSeason);
 
-
-
         $players = SeasonPlayer::select('season_players.*')
         ->join('players', 'players.id', '=', 'season_players.player_id')
         ->seasonId($filterSeason);
@@ -562,6 +560,395 @@ class SeasonPlayerController extends Controller
             }
         }
         return redirect()->route('admin.season_players')->with('success', 'Se han desactivado todos los jugadores correctamente.');
+    }
+
+    public function generatePacks($season_id)
+    {
+        //player 1
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['DC', 'SD', 'EI', 'ED'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 2
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['PT'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 3
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['CT', 'LD', 'LI'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 4
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['MC', 'MCD'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 5
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['PT'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+            // dd($players);
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+                // return back();
+
+
+        //player 6
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['LD', 'LI'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+
+
+        //player 7
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['LD', 'LI'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 8
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['LD', 'LI'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 9
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['LD', 'LI'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 10
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['ED', 'EI', 'ID', 'II', 'MP'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 11
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['ED', 'EI', 'ID', 'II', 'MP'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 12
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['ED', 'EI', 'ID', 'II', 'MP'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 13
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['CT'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 14
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['CT'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 15
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['CT'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 16
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['CT'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 17
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['MC', 'MCD', 'MP'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 18
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['MC', 'MCD', 'MP'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 19
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['MC', 'MCD', 'MP'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 20
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['MC', 'MCD', 'MP'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 21
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['DC', 'SD'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+        //player 22
+        $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
+            ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
+            ->where('season_players.season_id', "=", $season_id)
+            ->where('season_players.active', '=', 1)
+            ->whereIn('players.position', ['DC', 'SD'])
+            ->orderBy('players.overall_rating', 'desc')
+            ->limit(32)
+            ->get();
+
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        foreach ($players as $key => $player) {
+            $season_player = SeasonPlayer::find($player->id);
+            $season_player->participant_id = $order[$key];
+            $season_player->save();
+        }
+
+
+
+
+        return back();
+
     }
 
 
