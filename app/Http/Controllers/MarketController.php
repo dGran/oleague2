@@ -1780,29 +1780,107 @@ class MarketController extends Controller
 
 					break;
 				case 'buynow':
-					# code...
+					$participant_from = SeasonParticipant::find($participant_from);
+					$participant_to = SeasonParticipant::find($participant_to);
+					$player = SeasonPlayer::find($player_id);
+					$player_name = $player->player->name;
+					$pTo_team_name = $participant_to->team->name;
+					$pTo_user_name = $participant_to->user->name;
+					$pFrom_team_name = $participant_from->team->name;
+					$pFrom_user_name = $participant_from->user->name;
+					$pTo_budget = $participant_to->budget();
+					$pFrom_budget = $participant_from->budget();
+					$money = number_format($player->sale_price, 2, ",", ".") . " mill.";
+					$office_pTo_link = 'https://lpx.es/mercado/equipos/' . $participant_to->team->slug;
+					$office_pFrom_link = 'https://lpx.es/mercado/equipos/' . $participant_from->team->slug;
+					$bottom_link = 'https://lpx.es/mercado';
+					$agreements_link = 'https://lpx.es/mercado/acuerdos';
+
+					$title = "\xF0\x9F\x92\xB0Acuerdo de venta directa\xE2\x9D\x97";
+					$text = "$title<a href='" . $player->player->pesmaster2020_link() . "'>$player_name</a>\n\n";
+					$text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name)</b>\n";
+					$text .= "    \xF0\x9F\x92\xB6 $money\n\n";
+					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
+					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
+					$text .= "    \xF0\x9F\x91\x88 $pFrom_team_name ($pFrom_user_name)\n\n";
+					$text .= "    Presupuesto $pTo_team_name: " . number_format($pTo_budget, 2, ",", ".") . " mill.\n";
+					$text .= "    Presupuesto $pFrom_team_name: " . number_format($pFrom_budget, 2, ",", ".") . " mill.\n\n";
+					$text .= "\xF0\x9F\x93\x9E <a href='$agreements_link'>Acuerdos</a>\n\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
+					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
+
+					Telegram::sendMessage([
+					    'chat_id' => '-1001241759649',
+					    'parse_mode' => 'HTML',
+					    'text' => $text
+					]);
 					break;
 				case 'negotiation':
-					// $participant_from = SeasonParticipant::find($participant_from);
-					// $participant_to = SeasonParticipant::find($participant_to);
-					// $player = SeasonPlayer::find($player_id);
-					// $player_name = $player->player->name;
-					// $pTo_team_name = $participant_to->team->name;
-					// $pTo_user_name = $participant_to->user->name;
-					// $office_pTo_link = 'http://lpx.es/mercado/equipos/' . $participant_to->team->slug;
-					// $bottom_link = 'http://lpx.es/mercado';
-					// $title = "\xF0\x9F\x98\x89Acuerdo entre \xE2\x9D\x97";
+					$participant_from = SeasonParticipant::find($participant_from);
+					$participant_to = SeasonParticipant::find($participant_to);
+					$player = SeasonPlayer::find($player_id);
+					$player_name = $player->player->name;
+					$pTo_team_name = $participant_to->team->name;
+					$pTo_user_name = $participant_to->user->name;
+					$pFrom_team_name = $participant_from->team->name;
+					$pFrom_user_name = $participant_from->user->name;
+					$pTo_budget = $participant_to->budget();
+					$pFrom_budget = $participant_from->budget();
+					$office_pTo_link = 'https://lpx.es/mercado/equipos/' . $participant_to->team->slug;
+					$office_pFrom_link = 'https://lpx.es/mercado/equipos/' . $participant_from->team->slug;
+					$bottom_link = 'https://lpx.es/mercado';
+					$agreements_link = 'https://lpx.es/mercado/acuerdos';
 
-					// $text = "$title<a href='" . pesmaster_player_info_path($player->player->game_id) . "'>$player_name</a>\n\n";
-					// $text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name) su nuevo destino tras desembolsar \xF0\x9F\x92\xB6 $price mill.</b>\n\n";
-					// $text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
-					// $text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
-					// $text .= "    Presupuesto $pTo_team_name: " . number_format($participant_to->budget(), 2, ",", ".") . " mill.\n\n";
-					// $text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n\n";
-					// $text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
+					$title = "Acuerdo de intercambio\xE2\x9D\x97";
+					$text = "$title<a href='" . $player->player->pesmaster2020_link() . "'>$player_name</a>\n\n";
+					$text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name)</b>\n\n";
+					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
+					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
+					$text .= "    \xF0\x9F\x91\x88 $pFrom_team_name ($pFrom_user_name)\n\n";
+					$text .= "\xF0\x9F\x93\x9E <a href='$agreements_link'>Acuerdos</a>\n\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
+					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
+
+					Telegram::sendMessage([
+					    'chat_id' => '-1001241759649',
+					    'parse_mode' => 'HTML',
+					    'text' => $text
+					]);
 					break;
 				case 'cession':
-					# code...
+					$participant_from = SeasonParticipant::find($participant_from);
+					$participant_to = SeasonParticipant::find($participant_to);
+					$player = SeasonPlayer::find($player_id);
+					$player_name = $player->player->name;
+					$pTo_team_name = $participant_to->team->name;
+					$pTo_user_name = $participant_to->user->name;
+					$pFrom_team_name = $participant_from->team->name;
+					$pFrom_user_name = $participant_from->user->name;
+					$pTo_budget = $participant_to->budget();
+					$pFrom_budget = $participant_from->budget();
+					$office_pTo_link = 'https://lpx.es/mercado/equipos/' . $participant_to->team->slug;
+					$office_pFrom_link = 'https://lpx.es/mercado/equipos/' . $participant_from->team->slug;
+					$bottom_link = 'https://lpx.es/mercado';
+					$agreements_link = 'https://lpx.es/mercado/acuerdos';
+
+					$title = "Acuerdo de cesión\xE2\x9D\x97";
+					$text = "$title<a href='" . $player->player->pesmaster2020_link() . "'>$player_name</a>\n\n";
+					$text .= "    <b>\xF0\x9F\x91\x89 $pTo_team_name ($pTo_user_name)</b>\n\n";
+					$text .= "        " . $player->player->name . " (" . $player->player->position . " - Media " . $player->player->overall_rating . ")\n";
+					$text .= "        " . $player->player->nation_name . ", " . $player->player->age . " años\n\n";
+					$text .= "    \xF0\x9F\x91\x88 $pFrom_team_name ($pFrom_user_name)\n\n";
+					$text .= "\xF0\x9F\x93\x9E <a href='$agreements_link'>Acuerdos</a>\n\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
+					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
+					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
+
+					Telegram::sendMessage([
+					    'chat_id' => '-1001241759649',
+					    'parse_mode' => 'HTML',
+					    'text' => $text
+					]);
 					break;
 				case 'dismiss':
 					$participant_from = SeasonParticipant::find($participant_from);
