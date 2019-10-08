@@ -129,7 +129,6 @@
 
     function dismiss_player(id, name, remuneration) {
         window.event.preventDefault();
-        name = name.replace(/["']/g, "");
         swal({
             title: 'Despedir a "' + name + '"',
             text: 'Recibirás ' + remuneration + ' millones.',
