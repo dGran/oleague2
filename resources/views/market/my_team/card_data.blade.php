@@ -77,7 +77,7 @@
 						Eliminar etiquetas
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item {{ !active_season()->transfers_period || participant_of_user()->min_players_limit() ? 'disabled' : 'text-danger' }}" href="" onclick="dismiss_player('{{ $player->id }}', "{{ $player->player->name }}", '{{ number_format($player->season->free_players_remuneration, 2, ',', '.') }}')">
+					<a class="dropdown-item {{ !active_season()->transfers_period || participant_of_user()->min_players_limit() ? 'disabled' : 'text-danger' }}" href="" onclick="dismiss_player('{{ $player->id }}', '{{ $player->player->slug }}', '{{ number_format($player->season->free_players_remuneration, 2, ',', '.') }}')">
 						Despedir
 					</a>
 				</div> {{-- dropdown-menu --}}
