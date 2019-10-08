@@ -984,7 +984,7 @@ class MarketController extends Controller
 					->where('user_id', '=', auth()->user()->id)->first();
 
 				$players = SeasonPlayer::select('season_players.*')
-			        ->join('players', 'players.id', '=', 'season_players.player_id')
+			        ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
 			        ->seasonId(active_season()->id);
 	            $players = $players->participantId($participant->id);
 		        $players = $players->orderBy('players.overall_rating', 'desc')
