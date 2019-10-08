@@ -131,7 +131,7 @@
 			<div class="detail container">
 				<div class="row pb-2">
 					@foreach ($players as $player)
-						@if ($player->player->position == 'MCD' || $player->player->position == 'MC' || $player->player->position == 'MP' || $player->player->position == 'MD' || $player->player->position == 'MI')
+						@if ($player->player->position == 'MCD' || $player->player->position == 'MC' || $player->player->position == 'MP' || $player->player->position == 'ID' || $player->player->position == 'II')
 							@include('market.team.card_data')
 						@endif
 					@endforeach
