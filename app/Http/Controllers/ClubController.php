@@ -8,6 +8,8 @@ use App\SeasonCompetitionPhaseGroupParticipant;
 use App\Post;
 use App\Press;
 
+use Telegram\Bot\Laravel\Facades\Telegram;
+
 class ClubController extends Controller
 {
     public function clubs()
@@ -90,6 +92,20 @@ class ClubController extends Controller
                             'title' => $press->title,
                             'description' => $press->description,
                             'img' => 'img/microphone.png',
+                        ]);
+
+                        $club_link = 'https://lpx.es/clubs/'.$participant->team->slug.'/sala-de-prensa';
+                        $club_name = $participant->team->name;
+                        $user_name = $participant->user->name;
+                        $title = "\xF0\x9F\x92\xAC Declaraciones de $user_name ($club_name) \xF0\x9F\x92\xAC";
+                        $text = "$title\n\n";
+                        $text .= "    <b>$press->title</b>\n";
+                        $text .= "    " . $press->description . "\n\n";
+                        $text .= "\xF0\x9F\x8F\xA0 <a href='$club_link'>Despacho $club_name</a>\n";
+                        Telegram::sendMessage([
+                            'chat_id' => '-1001241759649',
+                            'parse_mode' => 'HTML',
+                            'text' => $text
                         ]);
                         return back()->with('success', 'Nota de prensa enviada correctamente.');
                     }
