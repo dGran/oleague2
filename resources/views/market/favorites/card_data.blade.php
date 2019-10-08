@@ -65,7 +65,7 @@
 						Eliminar favorito
 					</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item {{ !active_season()->transfers_period || !$player->season_player->participant ? 'disabled' : '' }}" href="{{ route('market.trades.add', [$player->participant_id, $player->id]) }}">
+					<a class="dropdown-item {{ !active_season()->transfers_period || !$player->season_player->participant ? 'disabled' : '' }}" href="{{ route('market.trades.add', [$player->season_player->participant_id, $player->season_player->player->id]) }}">
 						Abrir negociación
 					</a>
 					<a class="dropdown-item {{ !active_season()->clausules_period || !$player->season_player->participant || !$player->season_player->allow_clause_pay || ($player->season_player->participant && $player->season_player->participant->clauses_received_limit()) || ($player->season_player->participant && participant_of_user()->clauses_paid_limit()) || $player->season_player->participant && $player->season_player->participant->id == participant_of_user()->id || participant_of_user()->budget() < $player->season_player->clause_price() || participant_of_user()->max_players_limit() ? 'disabled' : '' }}" href="" onclick="pay_clause_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->price, 2, ',', '.') }}')">
