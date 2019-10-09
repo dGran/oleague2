@@ -1222,7 +1222,7 @@ class MarketController extends Controller
 			        	$player->save();
 			        	if ($player->save()) {
 			        		$this->manage_player_showcase($player);
-			            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido despedido.');
+			            	return redirect()->route('market.my_team')->with('success', $player->player->name . " ha sido despedido.");
 			        	} else {
 			        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 			        	}
@@ -1719,13 +1719,6 @@ class MarketController extends Controller
 					$text .= "    Presupuesto $pTo_team_name: " . number_format($participant_to->budget(), 2, ",", ".") . " mill.\n\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
-
 					break;
 				case 'clause':
 					$participant_from = SeasonParticipant::find($participant_from);
@@ -1771,13 +1764,6 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
-
 					break;
 				case 'buynow':
 					$participant_from = SeasonParticipant::find($participant_from);
@@ -1809,12 +1795,6 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
 					break;
 				case 'negotiation':
 					$participant_from = SeasonParticipant::find($participant_from);
@@ -1842,12 +1822,6 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
 					break;
 				case 'cession':
 					$participant_from = SeasonParticipant::find($participant_from);
@@ -1875,12 +1849,6 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pTo_link'>Despacho $pTo_team_name</a>\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
 					break;
 				case 'dismiss':
 					$participant_from = SeasonParticipant::find($participant_from);
@@ -1899,20 +1867,13 @@ class MarketController extends Controller
 					$text .= "    Presupuesto $pFrom_team_name: " . number_format($participant_from->budget(), 2, ",", ".") . " mill.\n\n";
 					$text .= "\xF0\x9F\x8F\xA0 <a href='$office_pFrom_link'>Despacho $pFrom_team_name</a>\n\n";
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
-
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
-
 					break;
 			}
-			// Telegram::sendMessage([
-			//     'chat_id' => '-1001241759649',
-			//     'parse_mode' => 'HTML',
-			//     'text' => $text
-			// ]);
+			Telegram::sendMessage([
+			    'chat_id' => '-1001241759649',
+			    'parse_mode' => 'HTML',
+			    'text' => $text
+			]);
 	    }
 	}
 

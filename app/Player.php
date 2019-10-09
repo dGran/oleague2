@@ -22,6 +22,11 @@ class Player extends Model
         return $this->hasOne('App\SeasonPlayerPack', 'id', 'pack_id');
     }
 
+    public function name_addslashes()
+    {
+    	return addslashes($this->name);
+    }
+
     public function nation_flag()
     {
     	if ($this->nation_name) {

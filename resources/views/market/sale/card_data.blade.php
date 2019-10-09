@@ -70,7 +70,7 @@
 	@if (!auth()->guest() && user_is_participant(auth()->user()->id))
 		<div class="buy-now">
 			@if ($player->season_player->sale_price > 0 && $player->season_player->sale_auto_accept)
-				<a class="btn btn-success btn-sm {{ !active_season()->transfers_period || participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="" onclick="sign_now_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name }}', '{{ number_format($player->season_player->sale_price, 2, ',', '.') }}')">
+				<a class="btn btn-success btn-sm {{ !active_season()->transfers_period || participant_of_user()->id == $player->season_player->participant_id ? 'disabled' : '' }}" href="" onclick="sign_now_player('{{ $player->season_player->id }}', '{{ $player->season_player->player->name_addslashes() }}', '{{ number_format($player->season_player->sale_price, 2, ',', '.') }}')">
 					Fichar ya!
 				</a>
 			@endif
