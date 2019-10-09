@@ -1,32 +1,29 @@
-<nav id="navbar-example2" class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link" href="#fat">@fat</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#mdo">@mdo</a>
-    </li>
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#one">one</a>
-        <a class="dropdown-item" href="#two">two</a>
-        <div role="separator" class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#three">three</a>
-      </div>
-    </li>
-  </ul>
-</nav>
-<div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
-  <h4 id="fat">@fat</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam corrupti, quaerat quae voluptatem dolorum, illo laudantium cumque accusantium, aliquam non, impedit officia tempore. Repudiandae harum aperiam obcaecati corrupti dolor, non!</p>
-  <h4 id="mdo">@mdo</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum maiores nemo omnis sed aspernatur culpa sit, in nulla sequi facilis, recusandae rerum vero ut. Qui molestiae nihil doloribus dolorum repudiandae?</p>
-  <h4 id="one">one</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, ab, ea! Dolores, tempora nisi reiciendis a autem libero nesciunt quia aliquam. Quisquam porro accusantium quas, explicabo, eveniet illum fugiat. Eveniet.</p>
-  <h4 id="two">two</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Provident porro culpa cum dolorem ratione, tempora libero eos reiciendis, dolorum ipsa, voluptatem eaque quidem quisquam vel sapiente nihil quaerat enim veritatis.</p>
-  <h4 id="three">three</h4>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias quibusdam aliquam, quos culpa explicabo repellendus eum vel commodi at repudiandae odio, sit nam atque fuga! Iure labore ipsa, ullam qui.</p>
+<div class="row">
+    <div class="col-12 p-3">
+        <div style="font-size: .9em">
+            <h5>GANANCIAS POR PARTIDOS JUGADOS EN LIGA</h5>
+            <p>
+                Cada semana son 3 partidos de liga (excepto la cuarta semana que solo son 2) 3 millones por partido jugado y si se juegan los tres esa semana dentro del plazo correspondiente, 4 millones más. (Si no se juegan los tres partidos semanales, no se cobran estos 4 millones. <br>
+                Por cada punto ganado al final de liga, el equipo en cuestion recibir 0.5 millones por punto ganado... esto es que sin equipo hace 32 puntos al final de liga, se lleva 16 millones. Si una gana 37 serian 18.5 millones.
+            </p>
+
+            <h5>GANANCIAS DE COPA</h5>
+            <ul>
+                <li>3 millones por partido jugado (cuantas más rondas pase el gamer en cuestión, mas pasta se gana</li>
+                <li>5 millones los dos semifinalistas</li>
+                <li>7 millones el subcampeón</li>
+                <li>10 millones el campeón</li>
+            </ul>
+
+            <h5 class="pt-3">GANANCIAS DE CHAMPIONS</h5>
+            <ul>
+                <li>3 millones por partido jugado en fase de grupos y 3 millones por ronda jugada en eliminatorias</li>
+                <li>5 millones los dos semifinalistas</li>
+                <li>10 millones el subcampeón</li>
+                <li>15 millones el campeón</li>
+            </ul>
+            <br>
+            <strong>EL GAMER QUE JUEGUE LOS 6 PARTIDOS DE SU GRUPO EN LAS DOS SEMANAS ESTIPULADAS, COBRAR¡ UN PLUS DE 4 MILLONES EN ESTA COMPETICION</strong>
+        </div>
+    </div>
 </div>

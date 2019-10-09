@@ -150,6 +150,14 @@
                 <input type="number" class="form-control" id="initial_budget" name="initial_budget" placeholder="Presupuesto inicial" autofocus value="{{ old('initial_budget', $season->initial_budget) }}">
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-sm-12 border-top">
+                <div class="py-3">
+                    <strong>Reglas</strong>
+                </div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, expedita excepturi soluta iusto at officiis iure perferendis similique hic laborum debitis, corporis blanditiis rerum eligendi dicta aliquid dignissimos tenetur, consequuntur!
+            </div>
+        </div>
     </div>
 
 

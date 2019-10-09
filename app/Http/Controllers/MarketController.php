@@ -180,7 +180,7 @@ class MarketController extends Controller
     	if (auth()->guest()) {
     		return back()->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
-	    	if (!active_season()->free_players_period) {
+	    	if (!active_season()->clausules_period) {
 	    		return back()->with('error', 'El periodo de pago de claúsulas no está activo.');
 	    	} else {
 		        $player = SeasonPlayer::find($id);
