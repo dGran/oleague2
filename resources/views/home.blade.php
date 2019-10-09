@@ -32,11 +32,11 @@
 
         </div>
 
-{{--         <div id="countdown_div">
+        <div id="countdown_div">
             <div class="section-title">
                 <div class="container">
                     <h3>
-                        Sorteo de Packs
+                        Cierre edición salarios
                     </h3>
                 </div>
             </div>
@@ -67,11 +67,8 @@
                         <span style="font-size: .5rem">SEGUNDOS</span>
                     </div>
                 </div>
-                <div class="pt-3 text-center">
-                    <small>Sentimos la demora, se os recompensará con 10.000 GPS 😆</small>
-                </div>
                 <script>
-                    var end = new Date('10/08/2019 3:00 PM');
+                    var end = new Date('10/09/2019 8:00 PM');
 
                     var _second = 1000;
                     var _minute = _second * 60;
@@ -108,7 +105,7 @@
                     timer = setInterval(showRemaining, 1000);
                 </script>
             </div>
-        </div> --}}
+        </div>
 
 {{--         <div class="section-title">
             <div class="container">
