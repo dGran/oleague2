@@ -36,7 +36,7 @@
             <div class="section-title">
                 <div class="container">
                     <h3>
-                        Cierre edición salarios
+                        Apertura periodo claúsulas
                     </h3>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <script>
-                    var end = new Date('10/09/2019 8:00 PM');
+                    var end = new Date('10/09/2019 10:00 PM');
 
                     var _second = 1000;
                     var _minute = _second * 60;
