@@ -21,6 +21,9 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 
 // Home Routes
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('politica-privacidad', 'HomeController@privacity')->name('privacity');
+Route::get('contacto', 'HomeController@contact')->name('contact');
+Route::post('contacto/enviar', 'HomeController@contactSent')->name('contact.sent');
 
 // Competitions routes
 Route::middleware('check_active_season')->group(function () {

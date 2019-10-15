@@ -13,27 +13,19 @@
             <span>
                 LigasPesXbox
             </span>
-            <div class="pt-2">
+            <div class="py-2">
                 <small class="{{ online_registered_users() > 0 ? 'text-success' : '' }}">Usuarios registrados en línea: {{ online_registered_users() }}</small>
             </div>
         </div>
-
-
-        <p class="cookies">
-            Utilizamos cookies propias y de terceros para mejorar la experiencia de navegación y ofrecer contenidos y publicidad de interés. Al continuar navegando entendemos que aceptas el <a href="">uso de cookies</a>
-        </p>
 
         <div class="legal">
             <div class="container">
                 <ul class="menu">
                     <li>
-                        <a href="">Contacto</a>
+                        <a href="{{ route('contact') }}">Contacto</a>
                     </li>
                     <li>
-                        <a href="">Política de privacidad</a>
-                    </li>
-                    <li>
-                        <a href="">Política de cookies</a>
+                        <a href="{{ route('privacity') }}">Política de privacidad</a>
                     </li>
                 </ul>
             </div>
@@ -43,7 +35,7 @@
 
 <div class="container py-2">
     <div class="text-center">
-        <p class="m-0 py-1">© 2019 LigasPesXbox. Todos los derechos reservados.</p>
+        <p class="m-0 py-1">© 2019 Derechos Reservados - LigasPesXbox</p>
 {{--         <div class="social mt-2">
             <ul>
                 <li>

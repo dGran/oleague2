@@ -46,6 +46,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.0/css/ion.rangeSlider.min.css"/>
         {{-- Summernote --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
+        {{-- cookies --}}
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
         {{-- My styles --}}
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -93,6 +95,30 @@
         @yield('js')
         <!-- Scripts -->
         <script src="{{ asset('js/main.js') }}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+        <script>
+            window.cookieconsent.initialise({
+              "palette": {
+                "popup": {
+                  "background": "#3c404d",
+                  "text": "#d6d6d6"
+                },
+                "button": {
+                  "background": "#8bed4f"
+                }
+              },
+              "theme": "edgeless",
+              "position": "bottom-right",
+              "content": {
+                "message": "Este sitio web utiliza cookies para garantizar que obtenga la mejor experiencia en nuestro sitio web.",
+                "dismiss": "Aceptar",
+                "link": "Leer más",
+                "href": "politica-privacidad"
+              }
+            });
+        </script>
     </body>
+
 
 </html>

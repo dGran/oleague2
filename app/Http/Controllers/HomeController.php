@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
+use App\Mail\Contact;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
@@ -62,9 +64,6 @@ class HomeController extends Controller
 // ]);
 
 
-
-
-
 // $messageId = $response->getMessageId();
 
         // dd($username);
@@ -78,6 +77,34 @@ class HomeController extends Controller
         return view('home', compact('posts', 'last_users'));
     }
 
+
+    public function privacity()
+    {
+        return view('privacity');
+    }
+
+    public function contact()
+    {
+        return view('contact');
+    }
+
+    public function contactSent(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'mensaje'=>'required|string|min:20'
+        ]);
+
+        $forminput = [
+            'nombre' => $request->input('nombre'),
+            'email' => $request->input('email'),
+            'mensaje' => $request->input('mensaje')
+        ];
+
+        Mail::to('lpx.torneos@gmail.com')->send(new Contact($forminput));
+         return redirect('contacto')->with('success', '¡Mensaje enviado! Gracias por contactarnos.');
+    }
 
     public function participants()
     {
