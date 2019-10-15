@@ -36,7 +36,7 @@
             <div class="section-title">
                 <div class="container">
                     <h3>
-                        Cierre periodo claúsulas
+                        Comienzo de temporada
                     </h3>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <script>
-                    var end = new Date('10/12/2019 10:00 PM');
+                    var end = new Date('10/17/2019 12:00 AM');
 
                     var _second = 1000;
                     var _minute = _second * 60;
