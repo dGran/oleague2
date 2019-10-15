@@ -6,7 +6,9 @@
 /.idea
 /.vscode
 /.vagrant
-/public/img
+/public/img/teams
+/public/img/players
+/public/img/competitions
 Homestead.json
 Homestead.yaml
 npm-debug.log
