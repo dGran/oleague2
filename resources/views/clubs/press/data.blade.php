@@ -30,8 +30,6 @@
 		@endif
 	</div>
 
-	{{hours_to_new_press(participant_of_user()->id)}}
-
 	@auth
 		@if (user_is_participant(auth()->user()->id) && participant_of_user()->id == $participant->id)
 			<div class="text-info mb-3">
