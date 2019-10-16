@@ -18,6 +18,6 @@ class SeasonCompetitionPhaseGroupLeagueDay extends Model
 
     public function matches()
     {
-        return $this->hasMany('App\SeasonCompetitionPhaseGroupLeagueDayMatch', 'day_id', 'id');
+        return $this->hasMany('App\SeasonCompetitionMatch', 'day_id', 'id');
     }
 }

@@ -10,7 +10,7 @@ use App\SeasonCompetitionPhaseGroup;
 use App\SeasonCompetitionPhaseGroupParticipant;
 use App\SeasonCompetitionPhaseGroupLeague;
 use App\SeasonCompetitionPhaseGroupLeagueDay;
-use App\SeasonCompetitionPhaseGroupLeagueDayMatch;
+use App\SeasonCompetitionMatch;
 use App\SeasonCompetitionPhaseGroupLeagueTableZone;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -176,7 +176,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     public function editMatch($competition_slug, $phase_slug, $group_slug, $id)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
+        $match = SeasonCompetitionMatch::find($id);
 
         return view('admin.seasons_competitions_phases_groups_leagues.calendar.match', compact('match', 'group'))->render();
     }
@@ -184,7 +184,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     public function updateMatch($competition_slug, $phase_slug, $group_slug, $id)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
+        $match = SeasonCompetitionMatch::find($id);
 
         $match->local_score = request()->local_score;
         $match->visitor_score = request()->visitor_score;
@@ -273,7 +273,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     public function resetMatch($competition_slug, $phase_slug, $group_slug, $id)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        $match = SeasonCompetitionPhaseGroupLeagueDayMatch::find($id);
+        $match = SeasonCompetitionMatch::find($id);
 
         $match->local_score = null;
         $match->visitor_score = null;
@@ -390,7 +390,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	                    if (($player + $opponent) % 2 == 0 xor $player < $opponent) {
 	                    	if ($participants[$player]->id > 0 && $participants[$opponent]->id > 0) {
 
-							   	$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+							   	$match = new SeasonCompetitionMatch;
 							   	$match->day_id = $day->id;
 							   	$match->local_id = $participants[$player]->id;
 							   	$match->local_user_id = $participants[$player]->participant->user->id;
@@ -400,7 +400,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	                    	}
 	                    } else {
 	                        if ($participants[$opponent]->id > 0 && $participants[$player]->id > 0) {
-							   	$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+							   	$match = new SeasonCompetitionMatch;
 							   	$match->day_id = $day->id;
 							   	$match->local_id = $participants[$opponent]->id;
 							   	$match->local_user_id = $participants[$opponent]->participant->user->id;
@@ -421,7 +421,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	            $opponent = ($round + $num_players) / 2;
 	            if ($participants[$num_players]->id > 0 && $participants[$opponent]->id > 0) {
 
-				   	$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+				   	$match = new SeasonCompetitionMatch;
 				   	$match->day_id = $day->id;
 				   	$match->local_id = $participants[$num_players]->id;
 				   	$match->local_user_id = $participants[$num_players]->participant->user->id;
@@ -432,7 +432,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	        } else {
 	            $opponent = ($round + 1) / 2;
 				if ($participants[$opponent]->id > 0 && $participants[$num_players]->id > 0) {
-				   	$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+				   	$match = new SeasonCompetitionMatch;
 				   	$match->day_id = $day->id;
 				   	$match->local_id = $participants[$opponent]->id;
 				   	$match->local_user_id = $participants[$opponent]->participant->user->id;
@@ -458,7 +458,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 
 					// now we create the matches of the day going through the matches of the day of the first round
 		    		foreach ($copy_day->matches as $copy_match) {
-		    			$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+		    			$match = new SeasonCompetitionMatch;
 		    			$match->day_id = $day->id;
 		    			$match->local_id = $copy_match->visitor_id;
 		    			$match->local_user_id = $copy_match->visitor_user_id;
@@ -480,7 +480,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 
 					// now we create the matches of the day going through the matches of the day of the first round
 		    		foreach ($copy_day->matches as $copy_match) {
-		    			$match = new SeasonCompetitionPhaseGroupLeagueDayMatch;
+		    			$match = new SeasonCompetitionMatch;
 		    			$match->day_id = $day->id;
 		    			$match->local_id = $copy_match->visitor_id;
 		    			$match->local_user_id = $copy_match->visitor_user_id;
@@ -497,10 +497,10 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     protected function get_table_data_participant($league_id, $participant_id)
     {
 
-        $matches = SeasonCompetitionPhaseGroupLeagueDay::select('season_competitions_phases_groups_leagues_days.*', 'season_competitions_phases_groups_leagues_days_matches.*')
-        	->join('season_competitions_phases_groups_leagues_days_matches', 'season_competitions_phases_groups_leagues_days_matches.day_id', '=', 'season_competitions_phases_groups_leagues_days.id')
-        	->where('season_competitions_phases_groups_leagues_days_matches.local_id', '=', $participant_id)
-        	->orwhere('season_competitions_phases_groups_leagues_days_matches.visitor_id', '=', $participant_id)
+        $matches = SeasonCompetitionPhaseGroupLeagueDay::select('season_competitions_phases_groups_leagues_days.*', 'season_competitions_matches.*')
+        	->join('season_competitions_matches', 'season_competitions_matches.day_id', '=', 'season_competitions_phases_groups_leagues_days.id')
+        	->where('season_competitions_matches.local_id', '=', $participant_id)
+        	->orwhere('season_competitions_matches.visitor_id', '=', $participant_id)
 	        ->get();
 
 	    $data = [

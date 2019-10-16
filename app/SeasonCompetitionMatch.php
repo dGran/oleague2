@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SeasonCompetitionPhaseGroupLeagueDayMatch extends Model
+class SeasonCompetitionMatch extends Model
 {
 	public $timestamps = false;
-	protected $table = 'season_competitions_phases_groups_leagues_days_matches';
+	protected $table = 'season_competitions_matches';
 
-    protected $fillable = ['day_id', 'local_id', 'local_user_id', 'local_score', 'visitor_id', 'visitor_user_id', 'visitor_score', 'santioned_id', 'date_limit', 'active'];
+    protected $fillable = ['day_id', 'clash_id', 'local_id', 'local_user_id', 'local_score', 'visitor_id', 'visitor_user_id', 'visitor_score', 'santioned_id', 'date_limit', 'active'];
 
     public function day()
     {
