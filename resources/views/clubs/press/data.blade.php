@@ -30,13 +30,16 @@
 		@endif
 	</div>
 
+	{{hours_to_new_press(participant_of_user()->id)}}
+
 	@auth
 		@if (user_is_participant(auth()->user()->id) && participant_of_user()->id == $participant->id)
 			<div class="text-info mb-3">
 				<small>Como manager del club, puedes convocar a la prensa para realizar breves declaraciones sobre cualquier tema relacionado con tu club <strong>una vez al día</strong>. Tus declaraciones además de aquí serán visibles en portada y en el canal de Telegram.</small>
 			</div>
 
-			@if (hours_to_new_press(participant_of_user()->id) == 0)
+
+			@if (allow_new_press(participant_of_user()->id))
 				<h5>Nueva declaración</h5>
 				<form
 				    id="frmEdit"
@@ -72,7 +75,7 @@
 				</form>
 			@else
 				<div class="text-danger">
-					Debes esperar {{ hours_to_new_press(participant_of_user()->id) }} horas para poder publicar una nueva declaración...
+					Debes esperar {{ hours_to_new_press(participant_of_user()->id) }} hora(s) para poder publicar una nueva declaración...
 				</div>
 			@endif
 		@endif
