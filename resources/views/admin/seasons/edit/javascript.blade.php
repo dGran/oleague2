@@ -54,6 +54,23 @@
                 $(".roster_options").removeClass('d-block');
             }
         });
+
+        $('#rules').summernote({
+            height: '150px',
+            // placeholder: 'Escribe el contenido de la publicación',
+            dialogsFade: true,
+            fontNames: ['Arial', 'Arial Black'],
+            lang: 'es-ES',
+            height: 200,
+            toolbar: [
+                [['style', 'bold', 'italic', 'underline']],
+                ['fontsize', ['color', 'fontname', 'fontsize', 'clear', 'codeview']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['hr']],
+                ['view', ['fullscreen']],
+            ]
+        });
     });
 
 </script>

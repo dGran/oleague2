@@ -152,10 +152,10 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-12 border-top">
-                <div class="py-3">
-                    <strong>Reglas</strong>
+                <div class="pt-3">
+                    <label for="rules py-3">Reglas</label>
                 </div>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, expedita excepturi soluta iusto at officiis iure perferendis similique hic laborum debitis, corporis blanditiis rerum eligendi dicta aliquid dignissimos tenetur, consequuntur!
+                <textarea class="form-control summernote" name="rules" id="rules" rows="30" value="{!! old('rules', $season->rules) !!}"></textarea>
             </div>
         </div>
     </div>
