@@ -64,11 +64,11 @@
             height: 200,
             toolbar: [
                 [['style', 'bold', 'italic', 'underline']],
-                ['fontsize', ['color', 'fontname', 'fontsize', 'clear', 'codeview']],
+                ['fontsize', ['color', 'fontname', 'fontsize', 'bold', 'italic', 'underline']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['table', ['table']],
                 ['insert', ['hr']],
-                ['view', ['fullscreen']],
+                ['view', ['codeview', 'fullscreen']],
             ]
         });
     });
