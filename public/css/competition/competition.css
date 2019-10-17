@@ -1,0 +1,180 @@
+.wrapper {
+  background: #f9f9f9;
+}
+
+.competition-header {
+  background: #353f48;
+  margin-top: 55px;
+  padding: .75rem .25rem;
+}
+
+.competition-header .logo {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.competition-header .logo i {
+  background: #fff;
+  border-radius: 50%;
+  color: #4ea800;
+  display: block;
+  font-size: 2.75em;
+  padding: 8px;
+}
+
+.competition-header .title {
+  display: table-cell;
+  padding-left: 1em;
+  vertical-align: middle;
+  position: relative;
+}
+
+.competition-header .title h3 {
+  color: #fff;
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.competition-header .title .subtitle {
+  color: #AAAAAA;
+  display: block;
+  font-size: .8em;
+}
+
+.competition-menu {
+  background: #353f48;
+  border-top: 1px solid #414E5B;
+}
+
+.competition-menu ul {
+  padding: 0;
+}
+
+.competition-menu ul .item {
+  display: inline-block;
+  min-width: 55px;
+  padding: .25em;
+  text-align: center;
+}
+
+.competition-menu ul .item.new-section {
+  border-left: 1px solid #414E5B;
+  margin-left: .5em;
+  padding-left: 1em;
+}
+
+.competition-menu ul .item.active a {
+  color: #89be38;
+  pointer-events: none;
+}
+
+.competition-menu ul .item.active a:hover {
+  color: #89be38;
+}
+
+.competition-menu ul .item a {
+  color: #ccc;
+  display: block;
+  position: relative;
+}
+
+.competition-menu ul .item a:hover {
+  color: #fff;
+}
+
+.competition-menu ul .item a i {
+  display: block;
+  font-size: 32px;
+}
+
+.competition-menu ul .item a span {
+  font-size: .7em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.competition-menu ul .item a .counter {
+  border: 1px solid #353f48;
+  font-size: .9em;
+  min-width: 21px;
+  position: absolute;
+  right: -5px;
+  top: 16px;
+}
+
+.table-results {
+  font-size: .9em;
+  line-height: 1.2em;
+  margin-bottom: 1em;
+  padding: 0;
+}
+
+.table-results thead th {
+  border: none;
+  padding: 1em .25em;
+  text-transform: uppercase;
+}
+
+.table-results tbody tr td {
+  border-top: 1px solid #E5E3E7;
+  font-size: .8rem;
+  padding: .35em .25em;
+  vertical-align: middle;
+}
+
+.table-results tbody tr .zones img {
+  width: 16px;
+}
+
+.table-results tbody tr .pos {
+  border-right: 1px solid #E5E3E7;
+  padding: .5em;
+}
+
+.table-results tbody tr .img {
+  padding-left: .5em;
+}
+
+.table-results tbody tr .img img {
+  width: 24px;
+}
+
+.table-results tbody tr .pt {
+  background: #f8f9fa;
+  border-left: 1px solid #E5E3E7;
+}
+
+thead tr .select,
+thead tr .date,
+thead tr .user {
+  padding: .5em;
+}
+
+tbody tr:hover {
+  background: #f8f9fa;
+}
+
+tbody tr:hover .name,
+tbody tr:hover .description {
+  color: #eb9114;
+}
+
+tbody tr:hover .pt {
+  background: #eb9114;
+  color: #fff;
+}
+
+tbody tr .select,
+tbody tr .date,
+tbody tr .user {
+  padding: .5em;
+}
+
+tbody tr .actions {
+  padding: .5em;
+}
+
+tbody tr .actions .dropdown-toggle {
+  border: 1px solid transparent;
+}
+
