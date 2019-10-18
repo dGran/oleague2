@@ -96,9 +96,9 @@
 .table-results {
 	font-size: .9em;
 	line-height: 1.2em;
-	margin-bottom: 1em;
 	padding: 0;
-	// border-bottom: 1px solid #E5E3E7;
+	margin: 0;
+	margin-bottom: 3em;
 	thead {
 		th {
 			border: none;
@@ -108,13 +108,34 @@
 	}
 	tbody {
 		tr {
+			&:hover {
+				td {
+					background: #F6FAF0;
+				}
+				.name, .pos {
+					color: #eb9114;
+				}
+				.pt {
+					background: #eb9114;
+					border: none;
+					color: #fff;
+				}
+			}
+			&:last-child {
+				border-bottom: 1px solid #E5E3E7;
+			}
 			td {
+				background: #fff;
 				border-top: 1px solid #E5E3E7;
 				font-size: .8rem;
 				padding: .35em .25em;
 				vertical-align: middle;
 			}
+			.data {
+				min-width: 23px;
+			}
 			.zones {
+				padding-left: .5em;
 				img {
 					width: 16px;
 				}
@@ -130,40 +151,47 @@
 				}
 			}
 			.pt {
-				background: #f8f9fa;
+				padding: 0 .5em;
+				background: #f9f9f9;
 				border-left: 1px solid #E5E3E7;
 			}
 		}
 
 	}
 }
-thead {
-	tr {
-		.select, .date, .user {
-			padding: .5em;
+
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+	.table-results {
+		tbody {
+			.zones {
+				border-left: 1px solid #E5E3E7;
+			}
+			.pt {
+				border-right: 1px solid #E5E3E7;
+			}
 		}
 	}
 }
-tbody {
-	tr {
-		&:hover {
-			background: #f8f9fa;
-			.name, .description {
-				color: #eb9114;
-			}
-			.pt {
-				background: #eb9114;
-				color: #fff;
-			}
-		}
-		.select, .date, .user {
-			padding: .5em;
-		}
-		.actions {
-			padding: .5em;
-			.dropdown-toggle {
-				border: 1px solid transparent;
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+	.table-results {
+		tbody {
+			.data {
+				min-width: 32px;
 			}
 		}
 	}
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
 }

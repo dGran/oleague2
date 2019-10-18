@@ -105,8 +105,9 @@
 .table-results {
   font-size: .9em;
   line-height: 1.2em;
-  margin-bottom: 1em;
   padding: 0;
+  margin: 0;
+  margin-bottom: 3em;
 }
 
 .table-results thead th {
@@ -115,11 +116,39 @@
   text-transform: uppercase;
 }
 
+.table-results tbody tr:hover td {
+  background: #F6FAF0;
+}
+
+.table-results tbody tr:hover .name,
+.table-results tbody tr:hover .pos {
+  color: #eb9114;
+}
+
+.table-results tbody tr:hover .pt {
+  background: #eb9114;
+  border: none;
+  color: #fff;
+}
+
+.table-results tbody tr:last-child {
+  border-bottom: 1px solid #E5E3E7;
+}
+
 .table-results tbody tr td {
+  background: #fff;
   border-top: 1px solid #E5E3E7;
   font-size: .8rem;
   padding: .35em .25em;
   vertical-align: middle;
+}
+
+.table-results tbody tr .data {
+  min-width: 23px;
+}
+
+.table-results tbody tr .zones {
+  padding-left: .5em;
 }
 
 .table-results tbody tr .zones img {
@@ -140,41 +169,24 @@
 }
 
 .table-results tbody tr .pt {
-  background: #f8f9fa;
+  padding: 0 .5em;
+  background: #f9f9f9;
   border-left: 1px solid #E5E3E7;
 }
 
-thead tr .select,
-thead tr .date,
-thead tr .user {
-  padding: .5em;
+@media (min-width: 576px) {
+  .table-results tbody .zones {
+    border-left: 1px solid #E5E3E7;
+  }
+
+  .table-results tbody .pt {
+    border-right: 1px solid #E5E3E7;
+  }
 }
 
-tbody tr:hover {
-  background: #f8f9fa;
-}
-
-tbody tr:hover .name,
-tbody tr:hover .description {
-  color: #eb9114;
-}
-
-tbody tr:hover .pt {
-  background: #eb9114;
-  color: #fff;
-}
-
-tbody tr .select,
-tbody tr .date,
-tbody tr .user {
-  padding: .5em;
-}
-
-tbody tr .actions {
-  padding: .5em;
-}
-
-tbody tr .actions .dropdown-toggle {
-  border: 1px solid transparent;
+@media (min-width: 768px) {
+  .table-results tbody .data {
+    min-width: 32px;
+  }
 }
 
