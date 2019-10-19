@@ -18,7 +18,7 @@
 						</tr>
 					    @foreach ($day->matches as $match)
 					    	<tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
-						        <td class="local text-right text-truncate" style="max-width: 90px;">
+						        <td class="local text-right text-truncate" style="max-width: 95px;">
 		                            <span class="text-uppercase {{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
 		                            @if (($match->sanctioned_id) && ($match->local_id == $match->sanctioned_id))
 		                            	<i class="fas fa-exclamation ml-1 text-danger"></i>
@@ -34,7 +34,7 @@
 		                        <td class="img text-right" width="32">
 		                            <img src="{{ $match->local_participant->participant->logo() }}" alt="">
 		                        </td>
-						        <td class="score text-center" width="90">
+						        <td class="score text-center" width="70">
 						        	@if (is_null($match->local_score) && is_null($match->visitor_score))
 					        			@if (!auth()->guest() && user_is_participant(auth()->user()->id) && (participant_of_user()->id == $match->local_participant->participant->id || participant_of_user()->id == $match->visitor_participant->participant->id))
 							        		<a href="{{ route('home') }}" data-toggle="modal" data-target="#updateModal">
@@ -54,7 +54,7 @@
 		                        <td class="img text-left" width="32">
 		                            <img src="{{ $match->visitor_participant->participant->logo() }}" alt="">
 		                        </td>
-						        <td class="visitor text-left text-truncate" style="max-width: 90px;">
+						        <td class="visitor text-left text-truncate" style="max-width: 95px;">
 		                            @if (($match->sanctioned_id) && ($match->visitor_id == $match->sanctioned_id))
 		                            	<i class="fas fa-exclamation mr-1 text-danger"></i>
 		                            @endif
