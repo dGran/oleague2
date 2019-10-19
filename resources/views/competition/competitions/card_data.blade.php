@@ -1,7 +1,7 @@
 <div class="col-12 col-md-6 col-lg-4">
 	<div class="border" style="background: #fff; margin: 15px 5px 0 5px; padding: 1em 0">
 		<div class="text-center d-table-cell" style="width: 170px">
-			<a class="text-dark" href="">
+			<a class="text-dark" href="{{ route('competitions.competition.table', [active_season()->slug, $competition->slug]) }}">
 				<img src="{{ asset($competition->img) }}" alt="" width="72px">
 				<span class="d-block mt-1" style="font-size: .9em; font-weight: bold">{{ $competition->name }}</span>
 			</a>
@@ -15,7 +15,7 @@
 					</a>
 				</li>
 				<li>
-					<a class="text-dark" href="">
+					<a class="text-dark" href="{{ route('competitions.competition.calendar', [active_season()->slug, $competition->slug]) }}">
 						<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 						Partidos
 					</a>

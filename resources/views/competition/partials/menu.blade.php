@@ -9,7 +9,7 @@
 
 		<li class="item {{ \Route::current()->getName() == 'competitions.competition.calendar' ? 'active' : '' }}">
 			<a href="{{ route('competitions.competition.calendar', [active_season()->slug, $group->phase->competition->slug]) }}">
-				<i class="fas fa-futbol"></i>
+				<i class="icon-soccer-ball"></i>
 				<span>Partidos</span>
 			</a>
 		</li>

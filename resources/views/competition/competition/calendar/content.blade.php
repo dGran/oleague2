@@ -1,24 +1,24 @@
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col-12 col-md-10 col-lg-8 p-0">
+		<div class="col-12 col-md-10 col-lg-8 px-0 py-0 py-md-4">
 			@if ($league->days->count() == 0)
-			    <div class="text-center border-top py-4">
+			    <div class="text-center py-4">
 		            <figure>
 		                <img src="{{ asset('img/table-empty.png') }}" alt="" width="72">
 		            </figure>
 		            Actualmente no existen partidos
 			    </div>
 			@else
-			    <table class="table calendar">
+			    <table class="calendar">
 					@foreach ($league->days as $day)
 						<tr class="days">
-							<td colspan="6" class="px-3 py-2">
+							<td colspan="6" class="px-3 px-md-0 py-2">
 								<strong class="text-uppercase">Jornada {{ $day->order }}</strong>
 							</td>
 						</tr>
 					    @foreach ($day->matches as $match)
 					    	<tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
-						        <td class="text-right text-truncate" style="max-width: 90px;">
+						        <td class="local text-right text-truncate" style="max-width: 90px;">
 		                            <span class="text-uppercase {{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
 		                            @if (($match->sanctioned_id) && ($match->local_id == $match->sanctioned_id))
 		                            	<i class="fas fa-exclamation ml-1 text-danger"></i>
@@ -54,7 +54,7 @@
 		                        <td class="img text-left" width="32">
 		                            <img src="{{ $match->visitor_participant->participant->logo() }}" alt="">
 		                        </td>
-						        <td class="text-left text-truncate" style="max-width: 90px;">
+						        <td class="visitor text-left text-truncate" style="max-width: 90px;">
 		                            @if (($match->sanctioned_id) && ($match->visitor_id == $match->sanctioned_id))
 		                            	<i class="fas fa-exclamation mr-1 text-danger"></i>
 		                            @endif

@@ -116,6 +116,9 @@ src: local('../fonts/DINPro-Bold'), url('../fonts/DINPro-Bold_13934.woff') forma
 .icon-economy:before {
   content: "\e908";
 }
+.icon-soccer-ball:before {
+  content: "\e91f";
+}
 .icon-safe-box:before {
   content: "\e91d";
 }
