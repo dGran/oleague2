@@ -163,6 +163,42 @@
 	}
 }
 
+.calendar {
+	margin-bottom: 0;
+	th {
+		&:first-child {
+			border-top: none;
+		}
+	}
+	.days {
+		td {
+			border-top: 1px solid #E5E3E7;
+		}
+	}
+	.matches {
+		font-size: .9em;
+		line-height: 1.2em;
+		td {
+			background: #fff;
+			border-top: 1px solid #E5E3E7;
+			padding: .6em .3em;
+			vertical-align: middle;
+		}
+		.img {
+			img {
+				width: 28px;
+			}
+		}
+		.score {
+			font-weight: bold;
+			.result {
+				background: #eb9114;
+				color: #fff;
+			}
+		}
+	}
+}
+
 .scrolling-wrapper {
 	.card {
 		display: inline-block;

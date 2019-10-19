@@ -178,6 +178,43 @@
   border-left: 1px solid #E5E3E7;
 }
 
+.calendar {
+  margin-bottom: 0;
+}
+
+.calendar th:first-child {
+  border-top: none;
+}
+
+.calendar .days td {
+  border-top: 1px solid #E5E3E7;
+}
+
+.calendar .matches {
+  font-size: .9em;
+  line-height: 1.2em;
+}
+
+.calendar .matches td {
+  background: #fff;
+  border-top: 1px solid #E5E3E7;
+  padding: .6em .3em;
+  vertical-align: middle;
+}
+
+.calendar .matches .img img {
+  width: 28px;
+}
+
+.calendar .matches .score {
+  font-weight: bold;
+}
+
+.calendar .matches .score .result {
+  background: #eb9114;
+  color: #fff;
+}
+
 .scrolling-wrapper .card {
   display: inline-block;
   background: transparent;

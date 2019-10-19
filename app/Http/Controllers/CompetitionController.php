@@ -26,31 +26,22 @@ class CompetitionController extends Controller
     	return back()->with('info', 'Partidas pendientes - Próximamente...');
     }
 
-    public function leagueTable($season_slug, $competition_slug)
+    public function table($season_slug, $competition_slug)
     {
     	$competition = SeasonCompetition::where('slug', '=', $competition_slug)->firstOrFail();
+    	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
 
-    	// if ($phase_slug) {
-    		// $phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->firstOrFail();
-    	// } else {
-    		if ($competition->phases->count()>0) {
-    			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
-    		} else {
-    			return back()->with('error', 'La competición está en fase de configuración');
-    		}
-    	// }
-
-    	// if ($group_slug) {
-    		// $group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        	// $league = $this->check_league($group);
-    	// } else {
-    		if ($phase->groups->count()>0) {
-    			$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
-    			$league = $this->check_league($group);
-    		} else {
-    			return back()->with('error', 'La competición está en fase de configuración');
-    		}
-    	// }
+		if ($competition->phases->count()>0) {
+			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+		} else {
+			return back()->with('error', 'La competición está en fase de configuración');
+		}
+		if ($phase->groups->count()>0) {
+			$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
+			$league = $this->check_league($group);
+		} else {
+			return back()->with('error', 'La competición está en fase de configuración');
+		}
 
     	$table_participants = collect();
 		$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $league->group->id)->get();
@@ -94,9 +85,29 @@ class CompetitionController extends Controller
 		}
 		$table_participants = $table_participants2;
 
-		$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
-
         return view('competition.competition.table', compact('group', 'league', 'table_participants', 'competitions', 'competition'));
+    }
+
+    public function calendar($season_slug, $competition_slug)
+    {
+    	$competition = SeasonCompetition::where('slug', '=', $competition_slug)->firstOrFail();
+    	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
+
+		if ($competition->phases->count()>0) {
+			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+		} else {
+			return back()->with('error', 'La competición está en fase de configuración');
+		}
+		if ($phase->groups->count()>0) {
+			$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
+			$league = $this->check_league($group);
+		} else {
+			return back()->with('error', 'La competición está en fase de configuración');
+		}
+
+        $league = $this->check_league($group);
+
+        return view('competition.competition.calendar', compact('group', 'league', 'competitions', 'competition'));
     }
 
 

@@ -27,10 +27,10 @@
 
 	<div class="row justify-content-center">
 		<div class="col-12 col-md-10 col-lg-8 p-0" style="position: relative;">
-			<figure style="position: absolute; top: 0; left: 96px; z-index: 0">
+			<figure style="position: absolute; top: 0; left: 96px;">
 				{{-- <img src="https://media.giphy.com/media/VeNDn269qsn3sFdhZg/giphy.gif" alt="" width="120" > --}}
 			</figure>
-		    <table class="table-results" style="z-index: 1">
+		    <table class="table-results">
 		        <colgroup>
 		        	<col width="0%" />
 		            <col width="0%" />

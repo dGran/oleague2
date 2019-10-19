@@ -29,7 +29,8 @@ Route::post('contacto/enviar', 'HomeController@contactSent')->name('contact.sent
 Route::middleware('check_active_season')->group(function () {
 	Route::get('competiciones', 'CompetitionController@index')->name('competitions');
 	Route::get('competiciones/partidas-pendientes', 'CompetitionController@pendingMatches')->name('competitions.pending_matches');
-	Route::get('competiciones/{season_slug}/{competition_slug}/clasificacion', 'CompetitionController@leagueTable')->name('competitions.competition.table');
+	Route::get('competiciones/{season_slug}/{competition_slug}/clasificacion', 'CompetitionController@table')->name('competitions.competition.table');
+	Route::get('competiciones/{season_slug}/{competition_slug}/partidos', 'CompetitionController@calendar')->name('competitions.competition.calendar');
 });
 
 // Clubs routes

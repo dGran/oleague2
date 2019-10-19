@@ -101,7 +101,7 @@ class ClubController extends Controller
                         $text = "$title\n\n";
                         $text .= "    <b>$press->title</b>\n";
                         $text .= "    " . $press->description . "\n\n";
-                        $text .= "\xF0\x9F\x8F\xA0 <a href='$club_link'>Despacho $club_name</a>\n";
+                        $text .= "\xF0\x9F\x8F\xA0 <a href='$club_link'>Sala de prensa de $club_name</a>\n";
                         Telegram::sendMessage([
                             'chat_id' => '-1001241759649',
                             'parse_mode' => 'HTML',
