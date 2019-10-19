@@ -130,6 +130,9 @@
 				font-size: .8rem;
 				padding: .35em .25em;
 				vertical-align: middle;
+				&.text-zero {
+					color: $gray-500;
+				}
 			}
 			.data {
 				min-width: 23px;
@@ -157,6 +160,46 @@
 			}
 		}
 
+	}
+}
+
+.scrolling-wrapper {
+	.card {
+		display: inline-block;
+		background: transparent;
+		&.competitions {
+			border: none;
+			max-width: 48px;
+			min-width: 48px;
+			padding: .25em;
+			text-align: center;
+			&.active {
+				background: rgba(0, 0, 0, .30);
+				pointer-events: none;
+			}
+			&:hover {
+				background: rgba(0, 0, 0, .1);
+			}
+			a {
+				text-align: center;
+				img {
+					display: block;
+					height: auto;
+					margin: 0 auto;
+					width: 32px;
+				}
+				span {
+					color: #fff;
+					display: block;
+					font-size: .6em;
+					margin-top: 3px;
+  					overflow: hidden;
+  					text-overflow: ellipsis;
+					text-transform: uppercase;
+					white-space: nowrap;
+				}
+			}
+		}
 	}
 }
 

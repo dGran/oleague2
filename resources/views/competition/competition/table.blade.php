@@ -16,3 +16,7 @@
 @section('breadcrumb')
 	@include('competition.competition.table.breadcrumb')
 @endsection
+
+@section('bottom-fixed')
+	@include('competition.partials.bottom_fixed')
+@endsection

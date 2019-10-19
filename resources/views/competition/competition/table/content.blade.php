@@ -1,22 +1,36 @@
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col-12 col-md-10 col-lg-8 animated fadeIn px-3 px-md-0 pt-3 pb-2">
-			<div class="d-inline-block align-middle">
-				<figure class="bg-white border rounded-circle m-0" style="padding: 10px">
-					<img src="{{ $table_participants->first()['participant']->participant->logo() }}" width="40">
-				</figure>
-			</div>
-			<div class="d-inline-block align-middle pl-2">
-				<strong>{{ $table_participants->first()['participant']->participant->name() }}</strong>
-				<small class="text-muted d-block">
-					{{ $table_participants->first()['participant']->participant->sub_name() }}
-				</small>
+		<div class="col-12 col-md-10 col-lg-8 px-3 px-md-0 py-3">
+			<div class="clearfix">
+				<div class="float-left animated rubberBand">
+					<div class="d-inline-block align-middle">
+						<figure class="bg-white border rounded-circle m-0 shadow" style="padding: 10px">
+							<img src="{{ $table_participants->first()['participant']->participant->logo() }}" width="40">
+						</figure>
+					</div>
+					<div class="d-inline-block align-middle pl-2">
+						<strong>{{ $table_participants->first()['participant']->participant->name() }}</strong>
+						<small class="text-muted d-block">
+							{{ $table_participants->first()['participant']->participant->sub_name() }}
+						</small>
+					</div>
+				</div>
+				<div class="float-right text-center animated bounceInDown delay-2s">
+					<img src="https://media.giphy.com/media/eMmj4M254X9sFu06jQ/giphy.gif" alt="" width="40">
+					{{-- <img src="https://thumbs.gfycat.com/SpryGrotesqueIvorybilledwoodpecker-max-1mb.gif" width="60"> --}}
+					{{-- <img src="https://media.tenor.com/images/9f208823ef7db08e4b3c2aeef043266e/tenor.gif" width="48"> --}}
+					<div style="font-size: .7em; font-weight: bold; text-transform: uppercase; padding-top: 4px">Líder</div>
+				</div>
 			</div>
 		</div>
 	</div>
+
 	<div class="row justify-content-center">
-		<div class="col-12 col-md-10 col-lg-8 animated fadeIn p-0">
-		    <table class="table-results">
+		<div class="col-12 col-md-10 col-lg-8 p-0" style="position: relative;">
+			<figure style="position: absolute; top: 0; left: 96px; z-index: 0">
+				{{-- <img src="https://media.giphy.com/media/VeNDn269qsn3sFdhZg/giphy.gif" alt="" width="120" > --}}
+			</figure>
+		    <table class="table-results" style="z-index: 1">
 		        <colgroup>
 		        	<col width="0%" />
 		            <col width="0%" />
@@ -73,28 +87,28 @@
 		                        @endif
 		                    </small>
 						</td>
-						<td class="data text-center">
+						<td class="data text-center {{ $tp['pj'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['pj'] }}
 						</td>
-						<td class="data text-center">
+						<td class="data text-center {{ $tp['pg'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['pg'] }}
 						</td>
-						<td class="data text-center">
+						<td class="data text-center {{ $tp['pe'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['pe'] }}
 						</td>
-						<td class="data text-center">
+						<td class="data text-center {{ $tp['pp'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['pp'] }}
 						</td>
-						<td class="data text-center d-none d-sm-table-cell {{ $tp['ps'] > 0 ? 'text-danger' : '' }}">
+						<td class="data text-center d-none d-sm-table-cell {{ $tp['ps'] == 0 ? 'text-zero' : '' }} {{ $tp['ps'] > 0 ? 'text-danger' : '' }}">
 							{{ $tp['ps'] }}
 						</td>
-						<td class="data text-center d-none d-sm-table-cell">
+						<td class="data text-center d-none d-sm-table-cell {{ $tp['gf'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['gf'] }}
 						</td>
-						<td class="data text-center d-none d-sm-table-cell">
+						<td class="data text-center d-none d-sm-table-cell {{ $tp['gc'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['gc'] }}
 						</td>
-						<td class="data text-center d-none d-sm-table-cell">
+						<td class="data text-center d-none d-sm-table-cell {{ $tp['avg'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['avg'] }}
 						</td>
 						<td class="data pt text-center">

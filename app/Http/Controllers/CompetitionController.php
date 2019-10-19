@@ -17,7 +17,7 @@ class CompetitionController extends Controller
     {
     	// return back()->with('info', 'Competiciones - Próximamente...');
 
-    	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'desc')->get();
+    	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
         return view('competition.competitions', compact('competitions'));
     }
 
@@ -94,7 +94,9 @@ class CompetitionController extends Controller
 		}
 		$table_participants = $table_participants2;
 
-        return view('competition.competition.table', compact('group', 'league', 'table_participants'));
+		$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
+
+        return view('competition.competition.table', compact('group', 'league', 'table_participants', 'competitions', 'competition'));
     }
 
 

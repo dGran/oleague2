@@ -143,6 +143,10 @@
   vertical-align: middle;
 }
 
+.table-results tbody tr td.text-zero {
+  color: #adb5bd;
+}
+
 .table-results tbody tr .data {
   min-width: 23px;
 }
@@ -172,6 +176,50 @@
   padding: 0 .5em;
   background: #f9f9f9;
   border-left: 1px solid #E5E3E7;
+}
+
+.scrolling-wrapper .card {
+  display: inline-block;
+  background: transparent;
+}
+
+.scrolling-wrapper .card.competitions {
+  border: none;
+  max-width: 48px;
+  min-width: 48px;
+  padding: .25em;
+  text-align: center;
+}
+
+.scrolling-wrapper .card.competitions.active {
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.scrolling-wrapper .card.competitions:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.scrolling-wrapper .card.competitions a {
+  text-align: center;
+}
+
+.scrolling-wrapper .card.competitions a img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  width: 32px;
+}
+
+.scrolling-wrapper .card.competitions a span {
+  color: #fff;
+  display: block;
+  font-size: .6em;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 @media (min-width: 576px) {
