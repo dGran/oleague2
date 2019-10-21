@@ -110,9 +110,17 @@
 		tr {
 			&:hover {
 				td {
-					background: #F6FAF0;
+					background: #f5f5f5;
 				}
-				.name, .pos {
+				.names {
+					.name {
+						color: #eb9114;
+					}
+					.description {
+						color: #eb9114;
+					}
+				}
+				.pos {
 					color: #eb9114;
 				}
 				.pt {
@@ -122,16 +130,25 @@
 				}
 			}
 			&:last-child {
-				border-bottom: 1px solid #E5E3E7;
+				border-bottom: 1px solid #f2f2f2;
 			}
 			td {
 				background: #fff;
-				border-top: 1px solid #E5E3E7;
+				border-top: 1px solid #f2f2f2;
 				font-size: .8rem;
 				padding: .35em .25em;
 				vertical-align: middle;
 				&.text-zero {
 					color: $gray-500;
+				}
+			}
+			.names {
+				a {
+					color: $gray-900;
+					.description {
+						color: $gray-600;
+						text-transform: none;
+					}
 				}
 			}
 			.data {
@@ -144,7 +161,7 @@
 				}
 			}
 			.pos {
-				border-right: 1px solid #E5E3E7;
+				border-right: 1px solid #f2f2f2;
 				padding: .5em;
 			}
 			.img {
@@ -156,7 +173,7 @@
 			.pt {
 				padding: 0 .5em;
 				background: #f9f9f9;
-				border-left: 1px solid #E5E3E7;
+				border-left: 1px solid #f2f2f2;
 			}
 		}
 
@@ -166,16 +183,31 @@
 .calendar {
 	width: 100%;
 	.days {
+		&.inactive {
+			opacity: .6;
+		}
 		td {
-			border-bottom: 1px solid #E5E3E7;
+			border-bottom: 1px solid #f2f2f2;
 		}
 	}
 	.matches {
 		font-size: .9em;
 		line-height: 1.2em;
+		&.inactive {
+			td {
+				background: #f9f9f9;
+				opacity: .6;
+			}
+			.img {
+				img {
+  					-webkit-filter: grayscale(100%);
+  					filter: grayscale(100%);
+				}
+			}
+		}
 		td {
 			background: #fff;
-			border-bottom: 1px solid #E5E3E7;
+			border-bottom: 1px solid #f2f2f2;
 			padding: .6em .3em;
 			vertical-align: middle;
 		}
@@ -234,6 +266,10 @@
 	}
 }
 
+#updateModal {
+	margin-top: 55px;
+}
+
 
 
 // Small devices (landscape phones, 576px and up)
@@ -241,20 +277,20 @@
 	.table-results {
 		tbody {
 			.zones {
-				border-left: 1px solid #E5E3E7;
+				border-left: 1px solid #f2f2f2;
 			}
 			.pt {
-				border-right: 1px solid #E5E3E7;
+				border-right: 1px solid #f2f2f2;
 			}
 		}
 	}
 	.calendar {
 		.matches {
 			.local {
-				border-left: 1px solid #E5E3E7;
+				border-left: 1px solid #f2f2f2;
 			}
 			.visitor {
-				border-right: 1px solid #E5E3E7;
+				border-right: 1px solid #f2f2f2;
 			}
 		}
 	}

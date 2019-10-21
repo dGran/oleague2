@@ -20,3 +20,11 @@
 @section('bottom-fixed')
 	@include('competition.partials.bottom_fixed')
 @endsection
+
+@section('modal')
+    @include('competition.competition.calendar.update_modal')
+@endsection
+
+@section('js')
+    @include('competition.competition.calendar.javascript')
+@endsection

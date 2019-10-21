@@ -11,13 +11,21 @@
 			@else
 			    <table class="calendar">
 					@foreach ($league->days as $day)
-						<tr class="days">
-							<td colspan="6" class="px-3 px-md-0 py-2">
-								<strong class="text-uppercase">Jornada {{ $day->order }}</strong>
+						<tr class="days {{ $day->active ? '' : 'inactive' }}">
+							<td colspan="2" class="px-3 px-md-0 py-2">
+								<i class="fas fa-circle mr-2 {{ $day->active ? 'text-success' : 'text-secondary' }}"></i><strong class="text-uppercase">Jornada {{ $day->order }}</strong>
+							</td>
+							<td colspan="3" class="px-3 px-md-0 py-2 text-right">
+								@if ($day->date_limit)
+									<small class="text-muted">
+										<strong>Límite: </strong>{{ \Carbon\Carbon::parse($day->date_limit)->format('j M, H:m') }}
+									</small>
+									{{-- {{ $day->date_limit->format('m/d/Y') }} --}}
+								@endif
 							</td>
 						</tr>
 					    @foreach ($day->matches as $match)
-					    	<tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
+					    	<tr class="matches {{ $day->active ? '' : 'inactive' }}" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
 						        <td class="local text-right text-truncate" style="max-width: 95px;">
 		                            <span class="text-uppercase {{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
 		                            @if (($match->sanctioned_id) && ($match->local_id == $match->sanctioned_id))
@@ -36,8 +44,8 @@
 		                        </td>
 						        <td class="score text-center" width="70">
 						        	@if (is_null($match->local_score) && is_null($match->visitor_score))
-					        			@if (!auth()->guest() && user_is_participant(auth()->user()->id) && (participant_of_user()->id == $match->local_participant->participant->id || participant_of_user()->id == $match->visitor_participant->participant->id))
-							        		<a href="{{ route('home') }}" data-toggle="modal" data-target="#updateModal">
+					        			@if ($day->active && !auth()->guest() && user_is_participant(auth()->user()->id) && (participant_of_user()->id == $match->local_participant->participant->id || participant_of_user()->id == $match->visitor_participant->participant->id))
+							        		<a href="" data-toggle="modal" data-target="#updateModal">
 								        		<small class="bg-primary rounded px-2 py-1 text-white">
 								        			EDITAR
 								        		</small>

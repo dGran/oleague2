@@ -10,6 +10,9 @@ use App\SeasonCompetitionPhaseGroupLeague;
 use App\SeasonCompetitionPhaseGroupLeagueDay;
 use App\SeasonCompetitionPhaseGroupParticipant;
 use App\SeasonCompetitionPhaseGroupLeagueTableZone;
+use App\SeasonCompetitionMatch;
+use App\SeasonPlayer;
+use App\LeagueStat;
 
 class CompetitionController extends Controller
 {
@@ -108,6 +111,101 @@ class CompetitionController extends Controller
         $league = $this->check_league($group);
 
         return view('competition.competition.calendar', compact('group', 'league', 'competitions', 'competition'));
+    }
+
+    public function editMatch($season_slug, $competition_slug, $match_id)
+    {
+    	$competition = SeasonCompetition::where('slug', '=', $competition_slug)->firstOrFail();
+        $match = SeasonCompetitionMatch::find($match_id);
+
+        return view('competition.competition.calendar.match', compact('match', 'competition'))->render();
+    }
+
+    public function updateMatch($season_slug, $competition_slug, $match_id) {
+        $match = SeasonCompetitionMatch::find($match_id);
+
+        $match->local_score = request()->local_score;
+        $match->visitor_score = request()->visitor_score;
+        if (request()->sanctioned_id > 0) {
+        	$match->sanctioned_id = request()->sanctioned_id;
+        }
+        $match->save();
+
+        if ($match->day->league->has_stats()) {
+    		$local_players = SeasonPlayer::where('participant_id', '=', $match->local_participant->participant->id)->get();
+    		foreach ($local_players as $player) {
+    			if ($match->day->league->stats_goals) {
+        			$goals = request()->{"stats_goals_".$player->id};
+        		} else {
+                    $goals = 0;
+                }
+    			if ($match->day->league->stats_assists) {
+        			$assists = request()->{"stats_assists_".$player->id};
+                } else {
+                    $assists = 0;
+                }
+    			if ($match->day->league->stats_yellow_cards) {
+        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+                } else {
+                    $yellow_cards = 0;
+                }
+    			if ($match->day->league->stats_red_cards) {
+        			$red_cards = request()->{"stats_red_cards_".$player->id};
+                } else {
+                    $red_cards = 0;
+                }
+    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+    				$stat = new LeagueStat;
+    				$stat->match_id = $match->id;
+    				$stat->day_id = $match->day->id;
+    				$stat->league_id = $match->day->league->id;
+    				$stat->player_id = $player->id;
+    				if ($goals > 0) { $stat->goals = $goals; }
+    				if ($assists > 0) { $stat->assists = $assists; }
+    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+    				$stat->save();
+    			}
+    		}
+
+    		$visitor_players = SeasonPlayer::where('participant_id', '=', $match->visitor_participant->participant->id)->get();
+    		foreach ($visitor_players as $player) {
+    			if ($match->day->league->stats_goals) {
+        			$goals = request()->{"stats_goals_".$player->id};
+                } else {
+                    $goals = 0;
+                }
+    			if ($match->day->league->stats_assists) {
+        			$assists = request()->{"stats_assists_".$player->id};
+                } else {
+                    $assists = 0;
+                }
+    			if ($match->day->league->stats_yellow_cards) {
+        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+                } else {
+                    $yellow_cards = 0;
+                }
+    			if ($match->day->league->stats_red_cards) {
+        			$red_cards = request()->{"stats_red_cards_".$player->id};
+                } else {
+                    $red_cards = 0;
+                }
+    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+    				$stat = new LeagueStat;
+    				$stat->match_id = $match->id;
+    				$stat->day_id = $match->day->id;
+    				$stat->league_id = $match->day->league->id;
+    				$stat->player_id = $player->id;
+    				if ($goals > 0) { $stat->goals = $goals; }
+    				if ($assists > 0) { $stat->assists = $assists; }
+    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+    				$stat->save();
+    			}
+    		}
+        }
+
+        return back()->with('success', 'Resultado registrado correctamente.');
     }
 
 

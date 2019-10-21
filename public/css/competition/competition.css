@@ -117,10 +117,17 @@
 }
 
 .table-results tbody tr:hover td {
-  background: #F6FAF0;
+  background: #f5f5f5;
 }
 
-.table-results tbody tr:hover .name,
+.table-results tbody tr:hover .names .name {
+  color: #eb9114;
+}
+
+.table-results tbody tr:hover .names .description {
+  color: #eb9114;
+}
+
 .table-results tbody tr:hover .pos {
   color: #eb9114;
 }
@@ -132,12 +139,12 @@
 }
 
 .table-results tbody tr:last-child {
-  border-bottom: 1px solid #E5E3E7;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .table-results tbody tr td {
   background: #fff;
-  border-top: 1px solid #E5E3E7;
+  border-top: 1px solid #f2f2f2;
   font-size: .8rem;
   padding: .35em .25em;
   vertical-align: middle;
@@ -145,6 +152,15 @@
 
 .table-results tbody tr td.text-zero {
   color: #adb5bd;
+}
+
+.table-results tbody tr .names a {
+  color: #212529;
+}
+
+.table-results tbody tr .names a .description {
+  color: #6c757d;
+  text-transform: none;
 }
 
 .table-results tbody tr .data {
@@ -160,7 +176,7 @@
 }
 
 .table-results tbody tr .pos {
-  border-right: 1px solid #E5E3E7;
+  border-right: 1px solid #f2f2f2;
   padding: .5em;
 }
 
@@ -175,15 +191,19 @@
 .table-results tbody tr .pt {
   padding: 0 .5em;
   background: #f9f9f9;
-  border-left: 1px solid #E5E3E7;
+  border-left: 1px solid #f2f2f2;
 }
 
 .calendar {
   width: 100%;
 }
 
+.calendar .days.inactive {
+  opacity: .6;
+}
+
 .calendar .days td {
-  border-bottom: 1px solid #E5E3E7;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .calendar .matches {
@@ -191,9 +211,19 @@
   line-height: 1.2em;
 }
 
+.calendar .matches.inactive td {
+  background: #f9f9f9;
+  opacity: .6;
+}
+
+.calendar .matches.inactive .img img {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
 .calendar .matches td {
   background: #fff;
-  border-bottom: 1px solid #E5E3E7;
+  border-bottom: 1px solid #f2f2f2;
   padding: .6em .3em;
   vertical-align: middle;
 }
@@ -255,21 +285,25 @@
   white-space: nowrap;
 }
 
+#updateModal {
+  margin-top: 55px;
+}
+
 @media (min-width: 576px) {
   .table-results tbody .zones {
-    border-left: 1px solid #E5E3E7;
+    border-left: 1px solid #f2f2f2;
   }
 
   .table-results tbody .pt {
-    border-right: 1px solid #E5E3E7;
+    border-right: 1px solid #f2f2f2;
   }
 
   .calendar .matches .local {
-    border-left: 1px solid #E5E3E7;
+    border-left: 1px solid #f2f2f2;
   }
 
   .calendar .matches .visitor {
-    border-right: 1px solid #E5E3E7;
+    border-right: 1px solid #f2f2f2;
   }
 }
 
