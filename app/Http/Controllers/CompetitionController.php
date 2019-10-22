@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Telegram\Bot\Laravel\Facades\Telegram;
+
 use Illuminate\Http\Request;
 use App\SeasonCompetition;
 use App\SeasonCompetitionPhase;
@@ -13,6 +15,7 @@ use App\SeasonCompetitionPhaseGroupLeagueTableZone;
 use App\SeasonCompetitionMatch;
 use App\SeasonPlayer;
 use App\LeagueStat;
+use App\Post;
 
 class CompetitionController extends Controller
 {
@@ -126,9 +129,6 @@ class CompetitionController extends Controller
 
         $match->local_score = request()->local_score;
         $match->visitor_score = request()->visitor_score;
-        if (request()->sanctioned_id > 0) {
-        	$match->sanctioned_id = request()->sanctioned_id;
-        }
         $match->save();
 
         if ($match->day->league->has_stats()) {
@@ -204,6 +204,39 @@ class CompetitionController extends Controller
     			}
     		}
         }
+
+        // telegram notification
+        $competition = $match->day->league->group->phase->competition->name;
+		$team_local = $match->local_participant->participant->name();
+		$user_local = $match->local_participant->participant->sub_name();
+		$team_visitor = $match->visitor_participant->participant->name();
+		$user_visitor = $match->visitor_participant->participant->sub_name();
+		$score = $match->local_score . '-' . $match->visitor_score;
+		$table_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/clasificacion';
+		$calendar_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/partidos';
+		$title = "\xE2\x9A\xBD Partido jugado \xF0\x9F\x8E\xAE" . ' - ' . $match->match_name();
+
+		$text = "$title\n\n";
+		$text .= "    <b>$team_local ($user_local) $score ($user_visitor) $team_visitor</b>\n\n";
+		$text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
+		$text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
+
+		// Telegram::sendMessage([
+		//     'chat_id' => '-1001241759649',
+		//     'parse_mode' => 'HTML',
+		//     'text' => $text
+		// ]);
+
+        // generate new (post)
+        $post = Post::create([
+		    'type' => 'result',
+		    'transfer_id' => null,
+		    'match_id' => $match_id,
+		    'category' => $match->match_name(),
+		    'title' => "$team_local $score $team_visitor",
+		    'description' => null,
+		    'img' => 'img/score.png',
+        ]);
 
         return back()->with('success', 'Resultado registrado correctamente.');
     }

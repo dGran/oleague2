@@ -26,4 +26,10 @@
             $('#modal-dialog-update').html("");
         });
     });
+
+    function updateMatch() {
+        return false;
+        alert('toma');
+        // $("#frmUpdateMatch").submit();
+    }
 </script>

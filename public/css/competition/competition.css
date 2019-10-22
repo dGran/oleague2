@@ -289,6 +289,15 @@
   margin-top: 55px;
 }
 
+.match-stadistics {
+  width: 100%;
+}
+
+.match-stadistics tr td {
+  border-top: 1px solid #f2f2f2;
+  padding: .5em .25em;
+}
+
 @media (min-width: 576px) {
   .table-results tbody .zones {
     border-left: 1px solid #f2f2f2;

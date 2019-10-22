@@ -1,6 +1,6 @@
 <div class="modal-content">
-    <div class="modal-header bg-primary text-white">
-    	Jornada {{ $match->day->order }}
+    <div class="modal-header bg-light">
+    	{{ $match->match_name() }}
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -8,7 +8,7 @@
 
     <div class="modal-body p-0">
         <form
-            id="frmAdd"
+            id="frmUpdateMatch"
             lang="{{ app()->getLocale() }}"
             role="form"
             method="POST"
@@ -19,12 +19,12 @@
             {{ method_field('PUT') }}
             {{ csrf_field() }}
 
-                <table class="my-3" align="center">
+                <table class="mt-4 mb-2" align="center">
                     <tr class="matches">
-                        <td class="text-right pr-2" width="50%">
-                            <h5 class="text-uppercase m-0">
-                                {{ $match->local_participant->participant->name() }}
-                            </h5>
+                        <td class="text-right pr-2" width="50%" style="line-height: 1.2em">
+                            <div class="text-uppercase">
+                                <strong>{{ $match->local_participant->participant->name() }}</strong>
+                            </div>
                             <small class="text-black-50 d-block">
                                 @if ($match->local_participant->participant->sub_name() == 'undefined')
                                     <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
@@ -39,10 +39,10 @@
                         <td class="img text-center pl-2">
                             <img src="{{ $match->visitor_participant->participant->logo() }}" alt="" width="32">
                         </td>
-                        <td class="text-left pl-2" width="50%">
-                            <h5 class="text-uppercase m-0">
-                                {{ $match->visitor_participant->participant->name()}}
-                            </h5>
+                        <td class="text-left pl-2" width="50%" style="line-height: 1.2em">
+                            <div class="text-uppercase">
+                                <strong>{{ $match->visitor_participant->participant->name()}}</strong>
+                            </div>
                             <small class="text-black-50 d-block">
                                 @if ($match->visitor_participant->participant->sub_name() == 'undefined')
                                     <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
@@ -66,7 +66,7 @@
 
             	@if ($match->day->league->group->phase->competition->season->use_rosters)
                 	<div id="accordion" class="p-3">
-                    	<div class="card mb-1 mt-3">
+                    	<div class="card mb-1">
                         	<div class="card-header p-0 m-0 border-bottom-0">
                                 <a class="card-title accordion-toggle d-block m-0 px-3 py-2 {{ !$match->day->league->has_stats() ? 'disabled' : '' }}" data-toggle="collapse" data-parent="#accordion" href="#stats">Estadísticas</a>
                             </div>
@@ -80,30 +80,30 @@
                                         <li class="nav-item">
                                             <a class="nav-link {{ $match->visitor_participant->participant->players->count()==0 ? "disabled" : "" }}" id="visitor-tab" data-toggle="tab" href="#visitor" role="tab" aria-controls="visitor" aria-selected="false">{{ $match->visitor_participant->participant->name() }}</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link {{ $match->day->league->stats_mvp ? "" : "disabled" }}" id="mvp-tab" data-toggle="tab" href="#mvp" role="tab" aria-controls="mvp" aria-selected="false">MVP</a>
+                                        <li class="nav-item {{ $match->day->league->stats_mvp ? "" : "d-none" }}">
+                                            <a class="nav-link" id="mvp-tab" data-toggle="tab" href="#mvp" role="tab" aria-controls="mvp" aria-selected="false">MVP</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
 
                                         <div class="tab-pane fade show active" id="local" role="tabpanel" aria-labelledby="local-tab">
-                                            <table class="table">
+                                            <table class="match-stadistics">
                                                 @if ($match->local_participant->participant->players->count() > 0)
                                                     <tr class="">
                                                         <td></td>
-                                                        <td class="text-center">
+                                                        <td class="text-center {{ !$match->day->league->stats_goals ? 'd-none' : '' }}">
                                                             {{-- <small class="d-block">Goles</small> --}}
                                                             <i class="fas fa-futbol"></i>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center {{ !$match->day->league->stats_assists ? 'd-none' : '' }}">
                                                             {{-- <small class="d-block">Asis.</small> --}}
                                                             <i class="icon-soccer-assist"></i>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center {{ !$match->day->league->stats_yellow_cards ? 'd-none' : '' }}">
                                                             {{-- <small class="d-block">Amarilla</small> --}}
                                                             <i class="icon-soccer-card text-warning"></i>
                                                         </td>
-                                                        <td class="text-center">
+                                                        <td class="text-center {{ !$match->day->league->stats_red_cards ? 'd-none' : '' }}">
                                                             {{-- <small class="d-block">Roja</small> --}}
                                                             <i class="icon-soccer-card text-danger"></i>
                                                         </td>
@@ -114,17 +114,17 @@
                                                                 <img src="{{ $player->player->getImgFormatted() }}" alt="" width="24">
                                                                 <small>{{ $player->player->name }}</small>
                                                             </td>
-                                                            <td>
-                                                                <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_goals ? 'disabled' : '' }}>
+                                                            <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_goals_{{$player->id}}" class="local_goals form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
                                                             </td>
-                                                            <td>
-                                                                <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_assists ? 'disabled' : '' }}>
+                                                            <td class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_assists_{{$player->id}}" class="local_assists form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
                                                             </td>
-                                                            <td>
-                                                                <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_yellow_cards ? 'disabled' : '' }}>
+                                                            <td class="data {{ !$match->day->league->stats_yellow_cards ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_yellow_cards_{{$player->id}}" class="local_yellow-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
                                                             </td>
-                                                            <td>
-                                                                <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_red_cards ? 'disabled' : '' }}>
+                                                            <td class="data {{ !$match->day->league->stats_red_cards ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_red_cards_{{$player->id}}" class="local_red-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -141,46 +141,56 @@
                                         </div> {{-- tab-pane --}}
 
                                         <div class="tab-pane fade show" id="visitor" role="tabpanel" aria-labelledby="visitor-tab">
-                                            <table class="table">
-                                                <tr>
-                                                    <td></td>
-                                                    <td class="text-center">
-                                                        <small class="d-block">Goles</small>
-                                                        <i class="fas fa-futbol"></i>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <small class="d-block">Asis.</small>
-                                                        <i class="icon-soccer-assist"></i>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <small class="d-block">Amarilla</small>
-                                                        <i class="icon-soccer-card text-warning"></i>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <small class="d-block">Roja</small>
-                                                        <i class="icon-soccer-card text-danger"></i>
-                                                    </td>
-                                                </tr>
-                                                @foreach ($match->visitor_participant->participant->players as $player)
-                                                    <tr>
-                                                        <td width="100%">
-                                                            <img src="{{ $player->player->getImgFormatted() }}" alt="" width="24">
-                                                            <small>{{ $player->player->name }}</small>
+                                            <table class="match-stadistics">
+                                                @if ($match->visitor_participant->participant->players->count() > 0)
+                                                    <tr class="">
+                                                        <td></td>
+                                                        <td class="text-center {{ !$match->day->league->stats_goals ? 'd-none' : '' }}">
+                                                            {{-- <small class="d-block">Goles</small> --}}
+                                                            <i class="fas fa-futbol"></i>
                                                         </td>
-                                                        <td>
-                                                            <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_goals ? 'disabled' : '' }}>
+                                                        <td class="text-center {{ !$match->day->league->stats_assists ? 'd-none' : '' }}">
+                                                            {{-- <small class="d-block">Asis.</small> --}}
+                                                            <i class="icon-soccer-assist"></i>
                                                         </td>
-                                                        <td>
-                                                            <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_assists ? 'disabled' : '' }}>
+                                                        <td class="text-center {{ !$match->day->league->stats_yellow_cards ? 'd-none' : '' }}">
+                                                            {{-- <small class="d-block">Amarilla</small> --}}
+                                                            <i class="icon-soccer-card text-warning"></i>
                                                         </td>
-                                                        <td>
-                                                            <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_yellow_cards ? 'disabled' : '' }}>
-                                                        </td>
-                                                        <td>
-                                                            <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_red_cards ? 'disabled' : '' }}>
+                                                        <td class="text-center {{ !$match->day->league->stats_red_cards ? 'd-none' : '' }}">
+                                                            {{-- <small class="d-block">Roja</small> --}}
+                                                            <i class="icon-soccer-card text-danger"></i>
                                                         </td>
                                                     </tr>
-                                                @endforeach
+                                                    @foreach ($match->visitor_participant->participant->players as $player)
+                                                        <tr>
+                                                            <td width="100%">
+                                                                <img src="{{ $player->player->getImgFormatted() }}" alt="" width="24">
+                                                                <small>{{ $player->player->name }}</small>
+                                                            </td>
+                                                            <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_goals_{{$player->id}}" class="visitor_goals form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
+                                                            </td>
+                                                            <td class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_assists_{{$player->id}}" class="visitor_assists form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
+                                                            </td>
+                                                            <td class="data {{ !$match->day->league->stats_yellow_cards ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_yellow_cards_{{$player->id}}" class="visitor_yellow-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
+                                                            </td>
+                                                            <td class="data {{ !$match->day->league->stats_red_cards ? 'd-none' : '' }}">
+                                                                <input type="number" name="stats_red_cards_{{$player->id}}" class="visitor_red-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td colspan="9" class="p-3 text-center">
+                                                            {{ $match->visitor_participant->participant->name() }}
+                                                            <br>
+                                                            Plantilla vacía
+                                                        </td>
+                                                    </tr>
+                                                @endif
                                             </table>
                                         </div> {{-- tab-pane --}}
 
@@ -210,7 +220,9 @@
 
 
             <div class="border-top p-3 bg-light">
-                <input type="submit" class="btn btn-primary" value="Enviar resultado">
+                <a href="" class="btn btn-primary" onclick="updateMatch()">
+                	Enviar resultado
+                </a>
             </div>
 
         </form>

@@ -25,4 +25,25 @@ class SeasonCompetitionMatch extends Model
     {
         return $this->hasOne('App\SeasonCompetitionPhaseGroupParticipant', 'id', 'visitor_id');
     }
+
+    public function match_name()
+    {
+        if ($this->day) {
+            $competition = $this->day->league->group->phase->competition;
+            $phase = $this->day->league->group->phase;
+            $group = $this->day->league->group;
+
+            $match_name = $competition->name;
+            if ($competition->phases->count() > 1) {
+                $match_name .= ' - ' . $phase->name;
+            }
+            if ($phase->groups->count() > 1) {
+                $match_name .= ' - ' . $group->name;
+            }
+            return $match_name . ' - Jornada ' . $this->day->order;
+
+        } else { //playoffs
+
+        }
+    }
 }

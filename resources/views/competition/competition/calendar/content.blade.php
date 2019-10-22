@@ -18,7 +18,7 @@
 							<td colspan="3" class="px-3 px-md-0 py-2 text-right">
 								@if ($day->date_limit)
 									<small class="text-muted">
-										<strong>Límite: </strong>{{ \Carbon\Carbon::parse($day->date_limit)->format('j M, H:m') }}
+										<strong>Límite: </strong>{{ \Carbon\Carbon::parse($day->date_limit)->format('j M, H:i') }}
 									</small>
 									{{-- {{ $day->date_limit->format('m/d/Y') }} --}}
 								@endif

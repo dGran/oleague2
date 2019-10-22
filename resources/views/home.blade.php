@@ -32,7 +32,7 @@
 
         </div>
 
-        <div id="countdown_div">
+{{--         <div id="countdown_div">
             <div class="section-title">
                 <div class="container">
                     <h3>
@@ -105,7 +105,7 @@
                     timer = setInterval(showRemaining, 1000);
                 </script>
             </div>
-        </div>
+        </div> --}}
 
 {{--         <div class="section-title">
             <div class="container">
@@ -163,9 +163,11 @@
                                         @if ($post->type == "transfer")
                                             <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
                                         @elseif ($post->type == "press")
-                                            <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px" class="rounded">
+                                            <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px;" class="rounded">
                                             <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
                                         @elseif ($post->type == "default")
+                                            <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="">
+                                        @elseif ($post->type == "result")
                                             <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="">
                                         @endif
                                     </figure>
@@ -199,11 +201,11 @@
 
 
 
-                    {{-- <img src="https://www.mundodeportivo.com/r/GODO/MD/p6/Barca/Imagenes/2019/03/13/Recortada/img_rguillamet_20190313-224453_imagenes_md_otras_fuentes_champions-03-klvB-U461014157231diG-980x554@MundoDeportivo-Web.jpg" class="img-fluid" alt="" width="450"> --}}
+{{--                     <img src="https://www.mundodeportivo.com/r/GODO/MD/p6/Barca/Imagenes/2019/03/13/Recortada/img_rguillamet_20190313-224453_imagenes_md_otras_fuentes_champions-03-klvB-U461014157231diG-980x554@MundoDeportivo-Web.jpg" class="img-fluid" alt="" width="450">
+ --}}
 
 
-
-         {{--                <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
+{{--                         <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E; width: 100%">
                             <figure style="width: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
                                 <img src="https://image.flaticon.com/icons/svg/448/448003.svg" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
                             </figure>
@@ -222,12 +224,12 @@
                             <span class="text-right" style="display: block; font-size: 11px; color: #fafafa">
                                  hoy, a las 3:43
                             </span>
-                        </li>
+                        </li> --}}
 
 
 
 
-                        <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
+{{--                         <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
                             <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
 
                                 <img src="https://seeklogo.com/images/F/FC_Barcelona-logo-D941E13B46-seeklogo.com.png" alt="" style="position:absolute; left: 10px; top: 0; width: 50px; height: auto" class="rounded">
@@ -251,10 +253,10 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
 
 
-                        <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
+{{--                         <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
                             <figure style="width: 96px; height: 80px; display: table-cell; position: relative;" class="m-0 text-center align-top p-0">
 
                                 <img src="img/winner.png" alt="" style="padding: .5em .5em 0 ,5em; width: auto; height: 60px" class="rounded">
@@ -275,10 +277,10 @@
                                     </li>
                                 </ul>
                             </div>
-                        </li>
+                        </li> --}}
 
 
-                        <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
+{{--                         <li class="py-2 d-block" style="display: table; border-top: 1px solid #292C5E">
                             <figure style="width: 96px; height: 96px; display: table-cell; position: relative;" class="m-0 text-center align-top px-2">
 
                                 <img src="img/score.png" alt="" style="padding: .5em; width: 100%; height: auto;" class="rounded">
