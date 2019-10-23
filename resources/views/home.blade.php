@@ -168,7 +168,8 @@
                                         @elseif ($post->type == "default")
                                             <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="">
                                         @elseif ($post->type == "result")
-                                            <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="">
+                                            <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="rounded-circle">
+                                            <img src="{{ asset('img/competitions/whistle.png') }}" style="position: absolute; width: 40px; left: 25px; top: 25px;">
                                         @endif
                                     </figure>
                                     <div style="display: table-cell; padding-left: 8px;" class="align-top">

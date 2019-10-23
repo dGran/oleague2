@@ -14,8 +14,10 @@ use App\SeasonCompetitionPhaseGroupParticipant;
 use App\SeasonCompetitionPhaseGroupLeagueTableZone;
 use App\SeasonCompetitionMatch;
 use App\SeasonPlayer;
+use App\SeasonParticipant;
 use App\LeagueStat;
 use App\Post;
+use App\SeasonParticipantCashHistory as Cash;
 
 class CompetitionController extends Controller
 {
@@ -127,118 +129,175 @@ class CompetitionController extends Controller
     public function updateMatch($season_slug, $competition_slug, $match_id) {
         $match = SeasonCompetitionMatch::find($match_id);
 
-        $match->local_score = request()->local_score;
-        $match->visitor_score = request()->visitor_score;
-        $match->save();
+        if ($match->local_score == null && $match->visitor_score == null) {
+	        $match->local_score = request()->local_score;
+	        $match->visitor_score = request()->visitor_score;
+	        $match->user_update_result = auth()->user()->id;
+	        $match->date_update_result = now();
+	        $match->save();
 
-        if ($match->day->league->has_stats()) {
-    		$local_players = SeasonPlayer::where('participant_id', '=', $match->local_participant->participant->id)->get();
-    		foreach ($local_players as $player) {
-    			if ($match->day->league->stats_goals) {
-        			$goals = request()->{"stats_goals_".$player->id};
-        		} else {
-                    $goals = 0;
-                }
-    			if ($match->day->league->stats_assists) {
-        			$assists = request()->{"stats_assists_".$player->id};
-                } else {
-                    $assists = 0;
-                }
-    			if ($match->day->league->stats_yellow_cards) {
-        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
-                } else {
-                    $yellow_cards = 0;
-                }
-    			if ($match->day->league->stats_red_cards) {
-        			$red_cards = request()->{"stats_red_cards_".$player->id};
-                } else {
-                    $red_cards = 0;
-                }
-    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
-    				$stat = new LeagueStat;
-    				$stat->match_id = $match->id;
-    				$stat->day_id = $match->day->id;
-    				$stat->league_id = $match->day->league->id;
-    				$stat->player_id = $player->id;
-    				if ($goals > 0) { $stat->goals = $goals; }
-    				if ($assists > 0) { $stat->assists = $assists; }
-    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
-    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
-    				$stat->save();
-    			}
-    		}
+	        if ($match->day->league->has_stats()) {
+	    		$local_players = SeasonPlayer::where('participant_id', '=', $match->local_participant->participant->id)->get();
+	    		foreach ($local_players as $player) {
+	    			if ($match->day->league->stats_goals) {
+	        			$goals = request()->{"stats_goals_".$player->id};
+	        		} else {
+	                    $goals = 0;
+	                }
+	    			if ($match->day->league->stats_assists) {
+	        			$assists = request()->{"stats_assists_".$player->id};
+	                } else {
+	                    $assists = 0;
+	                }
+	    			if ($match->day->league->stats_yellow_cards) {
+	        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+	                } else {
+	                    $yellow_cards = 0;
+	                }
+	    			if ($match->day->league->stats_red_cards) {
+	        			$red_cards = request()->{"stats_red_cards_".$player->id};
+	                } else {
+	                    $red_cards = 0;
+	                }
+	    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+	    				$stat = new LeagueStat;
+	    				$stat->match_id = $match->id;
+	    				$stat->day_id = $match->day->id;
+	    				$stat->league_id = $match->day->league->id;
+	    				$stat->player_id = $player->id;
+	    				if ($goals > 0) { $stat->goals = $goals; }
+	    				if ($assists > 0) { $stat->assists = $assists; }
+	    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+	    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+	    				$stat->save();
+	    			}
+	    		}
 
-    		$visitor_players = SeasonPlayer::where('participant_id', '=', $match->visitor_participant->participant->id)->get();
-    		foreach ($visitor_players as $player) {
-    			if ($match->day->league->stats_goals) {
-        			$goals = request()->{"stats_goals_".$player->id};
-                } else {
-                    $goals = 0;
-                }
-    			if ($match->day->league->stats_assists) {
-        			$assists = request()->{"stats_assists_".$player->id};
-                } else {
-                    $assists = 0;
-                }
-    			if ($match->day->league->stats_yellow_cards) {
-        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
-                } else {
-                    $yellow_cards = 0;
-                }
-    			if ($match->day->league->stats_red_cards) {
-        			$red_cards = request()->{"stats_red_cards_".$player->id};
-                } else {
-                    $red_cards = 0;
-                }
-    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
-    				$stat = new LeagueStat;
-    				$stat->match_id = $match->id;
-    				$stat->day_id = $match->day->id;
-    				$stat->league_id = $match->day->league->id;
-    				$stat->player_id = $player->id;
-    				if ($goals > 0) { $stat->goals = $goals; }
-    				if ($assists > 0) { $stat->assists = $assists; }
-    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
-    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
-    				$stat->save();
-    			}
-    		}
-        }
+	    		$visitor_players = SeasonPlayer::where('participant_id', '=', $match->visitor_participant->participant->id)->get();
+	    		foreach ($visitor_players as $player) {
+	    			if ($match->day->league->stats_goals) {
+	        			$goals = request()->{"stats_goals_".$player->id};
+	                } else {
+	                    $goals = 0;
+	                }
+	    			if ($match->day->league->stats_assists) {
+	        			$assists = request()->{"stats_assists_".$player->id};
+	                } else {
+	                    $assists = 0;
+	                }
+	    			if ($match->day->league->stats_yellow_cards) {
+	        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+	                } else {
+	                    $yellow_cards = 0;
+	                }
+	    			if ($match->day->league->stats_red_cards) {
+	        			$red_cards = request()->{"stats_red_cards_".$player->id};
+	                } else {
+	                    $red_cards = 0;
+	                }
+	    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+	    				$stat = new LeagueStat;
+	    				$stat->match_id = $match->id;
+	    				$stat->day_id = $match->day->id;
+	    				$stat->league_id = $match->day->league->id;
+	    				$stat->player_id = $player->id;
+	    				if ($goals > 0) { $stat->goals = $goals; }
+	    				if ($assists > 0) { $stat->assists = $assists; }
+	    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+	    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+	    				$stat->save();
+	    			}
+	    		}
+	        }
 
-        // telegram notification
-        $competition = $match->day->league->group->phase->competition->name;
-		$team_local = $match->local_participant->participant->name();
-		$user_local = $match->local_participant->participant->sub_name();
-		$team_visitor = $match->visitor_participant->participant->name();
-		$user_visitor = $match->visitor_participant->participant->sub_name();
-		$score = $match->local_score . '-' . $match->visitor_score;
-		$table_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/clasificacion';
-		$calendar_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/partidos';
-		$title = "\xE2\x9A\xBD Partido jugado \xF0\x9F\x8E\xAE" . ' - ' . $match->match_name();
+	        // telegram notification
+	        $competition = $match->day->league->group->phase->competition->name;
+			$team_local = $match->local_participant->participant->name();
+			$user_local = $match->local_participant->participant->sub_name();
+			$team_visitor = $match->visitor_participant->participant->name();
+			$user_visitor = $match->visitor_participant->participant->sub_name();
+			$score = $match->local_score . '-' . $match->visitor_score;
+			$table_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/clasificacion';
+			$calendar_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/partidos';
+			$title = "\xE2\x9A\xBD Partido jugado \xF0\x9F\x8E\xAE" . ' - ' . $match->match_name();
 
-		$text = "$title\n\n";
-		$text .= "    <b>$team_local ($user_local) $score ($user_visitor) $team_visitor</b>\n\n";
-		$text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
-		$text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
+			$text = "$title\n\n";
+			$text .= "    <b>$team_local ($user_local) $score ($user_visitor) $team_visitor</b>\n\n";
+			$text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
+			$text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-		// Telegram::sendMessage([
-		//     'chat_id' => '-1001241759649',
-		//     'parse_mode' => 'HTML',
-		//     'text' => $text
-		// ]);
+			Telegram::sendMessage([
+			    'chat_id' => '-1001241759649',
+			    'parse_mode' => 'HTML',
+			    'text' => $text
+			]);
 
-        // generate new (post)
-        $post = Post::create([
-		    'type' => 'result',
-		    'transfer_id' => null,
-		    'match_id' => $match_id,
-		    'category' => $match->match_name(),
-		    'title' => "$team_local $score $team_visitor",
-		    'description' => null,
-		    'img' => 'img/score.png',
-        ]);
+	        // generate new (post)
+	        $post = Post::create([
+			    'type' => 'result',
+			    'transfer_id' => null,
+			    'match_id' => $match_id,
+			    'category' => $match->match_name(),
+			    'title' => "$team_local $score $team_visitor",
+			    'description' => null,
+			    'img' => $match->day->league->group->phase->competition->img,
+	        ]);
 
-        return back()->with('success', 'Resultado registrado correctamente.');
+	        // economy
+	        $match_limit = new \Carbon\Carbon($match->date_limit);
+	        $date_update_result = new \Carbon\Carbon($match->date_update_result);
+			if ($match_limit > $date_update_result) {
+				$play_in_limit = true;
+			} else {
+				$play_in_limit = false;
+			}
+
+	        if ($play_in_limit) {
+	        	$this->add_cash_history(
+	        		$match->local_participant->participant->id,
+	        		'Partido jugado en plazo, ' . $match->match_name(),
+	        		$match->day->league->play_amount,
+	        		'E'
+	        	);
+	        	$this->add_cash_history(
+	        		$match->visitor_participant->participant->id,
+	        		'Partido jugado en plazo, ' . $match->match_name(),
+	        		$match->day->league->play_amount,
+	        		'E'
+	        	);
+	        }
+
+        	if ($match->local_score > $match->visitor_score) {
+				$local_points = $match->day->league->win_amount;
+				$visitor_points = $match->day->league->lose_amount;
+        	} elseif ($match->local_score < $match->visitor_score) {
+				$local_points = $match->day->league->lose_amount;
+				$visitor_points = $match->day->league->win_amount;
+        	} else { // draw
+				$local_points = $match->day->league->draw_amount;
+				$visitor_points = $match->day->league->draw_amount;
+        	}
+        	if ($local_points > 0) {
+	        	$this->add_cash_history(
+	        		$match->local_participant->participant->id,
+	        		'Puntos en partido, ' . $match->match_name(),
+	        		$local_points,
+	        		'E'
+	        	);
+        	}
+        	if ($visitor_points > 0) {
+	        	$this->add_cash_history(
+	        		$match->visitor_participant->participant->id,
+	        		'Puntos en partido, ' . $match->match_name(),
+	        		$visitor_points,
+	        		'E'
+	        	);
+        	}
+
+	        return back()->with('success', 'Resultado registrado correctamente.');
+	    } else {
+	    	return back()->with('error', 'El resultado ya está registrado, contacta con los administradores si algún dato no es correcto.');
+	    }
     }
 
 
@@ -318,12 +377,41 @@ class CompetitionController extends Controller
 		    	if ($match->sanctioned_id && ($participant_id == $match->sanctioned_id )) {
 					$data['ps'] = $data['ps'] + 1;
 		    	}
-
-
 	    	}
 	    }
 	    $data['avg'] = $data['gf'] - $data['gc'];
 	    return $data;
     }
+
+	protected function add_cash_history($participant_id, $description, $amount, $movement) {
+	    $cash = new Cash;
+	    $cash->participant_id = $participant_id;
+	    $cash->description = $description;
+	    $cash->amount = $amount;
+	    $cash->movement = $movement;
+	    $cash->save();
+
+	    if ($cash->save()) {
+	    	$participant = SeasonParticipant::find($participant_id);
+	    	if ($movement == 'E') {
+	    		$action = 'ingresa';
+	    	} else {
+	    		$action = 'desembolsa';
+	    	}
+
+	        // telegram notification
+			$club_link = 'https://lpx.es/clubs/' . $participant->team->slug . '/economia';
+	    	$text = "\xF0\x9F\x92\xB0" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($amount, 2, ",", ".") . " mill.\n";
+	    	$text .= "    Concepto: " . $description . "\n\n";
+	    	$text .= "    Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.\n\n";
+	    	$text .= "\xF0\x9F\x92\xB8 <a href='$club_link'>Historial de economia de " . $participant->team->name . "</a>";
+			Telegram::sendMessage([
+			    'chat_id' => '-1001241759649',
+			    'parse_mode' => 'HTML',
+			    'text' => $text
+			]);
+	    }
+
+	}
 
 }

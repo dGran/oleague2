@@ -115,19 +115,31 @@
                                                                 <small>{{ $player->player->name }}</small>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_goals_{{$player->id}}" class="local_goals form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
+                                                                <input type="number" name="stats_goals_{{$player->id}}" class="local_goals form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_assists_{{$player->id}}" class="local_assists form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
+                                                                <input type="number" name="stats_assists_{{$player->id}}" class="local_assists form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_yellow_cards ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_yellow_cards_{{$player->id}}" class="local_yellow-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
+                                                                <input type="number" name="stats_yellow_cards_{{$player->id}}" class="local_yellow-cards form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0 max=1>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_red_cards ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_red_cards_{{$player->id}}" class="local_red-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
+                                                                <input type="number" name="stats_red_cards_{{$player->id}}" class="local_red-cards form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0 max=1>
                                                             </td>
                                                         </tr>
                                                     @endforeach
+                                                    <tr>
+                                                        <td width="100%" class="bg-light">
+                                                            <img src="{{ $match->visitor_participant->participant->logo() }}" alt="" width="24">
+                                                            <small class="text-uppercase">autogol</small>
+                                                        </td>
+                                                        <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }} bg-light">
+                                                            <input type="number" class="local_goals form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
+                                                        </td>
+                                                        <td colspan="3" class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }} bg-light">
+                                                            <input type="number" class="local_assists form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
+                                                        </td>
+                                                    </tr>
                                                 @else
                                                     <tr>
                                                         <td colspan="9" class="p-3 text-center">
@@ -169,19 +181,31 @@
                                                                 <small>{{ $player->player->name }}</small>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_goals_{{$player->id}}" class="visitor_goals form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
+                                                                <input type="number" name="stats_goals_{{$player->id}}" class="visitor_goals form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_assists_{{$player->id}}" class="visitor_assists form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0>
+                                                                <input type="number" name="stats_assists_{{$player->id}}" class="visitor_assists form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_yellow_cards ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_yellow_cards_{{$player->id}}" class="visitor_yellow-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
+                                                                <input type="number" name="stats_yellow_cards_{{$player->id}}" class="visitor_yellow-cards form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0 max=1>
                                                             </td>
                                                             <td class="data {{ !$match->day->league->stats_red_cards ? 'd-none' : '' }}">
-                                                                <input type="number" name="stats_red_cards_{{$player->id}}" class="visitor_red-cards form-control" style="font-size: 80%; width: 2.5em; padding: 0.2em 0.4em" min=0 max=1>
+                                                                <input type="number" name="stats_red_cards_{{$player->id}}" class="visitor_red-cards form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0 max=1>
                                                             </td>
                                                         </tr>
                                                     @endforeach
+                                                    <tr>
+                                                        <td width="100%" class="bg-light">
+                                                            <img src="{{ $match->local_participant->participant->logo() }}" alt="" width="24">
+                                                            <small class="text-uppercase">autogol</small>
+                                                        </td>
+                                                        <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }} bg-light">
+                                                            <input type="number" class="visitor_goals form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
+                                                        </td>
+                                                        <td colspan="3" class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }} bg-light">
+                                                            <input type="number" class="visitor_assists form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
+                                                        </td>
+                                                    </tr>
                                                 @else
                                                     <tr>
                                                         <td colspan="9" class="p-3 text-center">
@@ -220,7 +244,7 @@
 
 
             <div class="border-top p-3 bg-light">
-                <a href="" class="btn btn-primary" onclick="updateMatch()">
+                <a href="" id="btn_updateMatch" class="btn btn-primary" onclick="updateMatch({{ $match->day->league->stats_goals }}, {{ $match->day->league->stats_assists }})">
                 	Enviar resultado
                 </a>
             </div>
