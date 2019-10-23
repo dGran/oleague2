@@ -34,6 +34,7 @@ Route::middleware('check_active_season')->group(function () {
 	// Route::get('competiciones/{season_slug}/{competition_slug}/partidos/{match_id}', 'CompetitionController@match')->name('competitions.competition.match');
 	Route::get('competiciones/{season_slug}/{competition_slug}/partidos/editar/{match_id}', 'CompetitionController@editMatch')->name('competitions.competition.calendar.match.edit');
 	Route::put('competiciones/{season_slug}/{competition_slug}/partidos/editar/{match_id}', 'CompetitionController@updateMatch')->name('competitions.competition.calendar.match.update');
+	Route::get('competiciones/{season_slug}/{competition_slug}/estadisticas', 'CompetitionController@stats')->name('competitions.competition.stats');
 });
 
 // Clubs routes

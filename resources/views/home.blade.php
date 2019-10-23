@@ -142,7 +142,7 @@
                 Ya es posible registrar los resultados de los partidos de liga, se ha ampliado el plazo de las primeras jornadas debido al retraso.
                 <ul class="pt-3">
                     <li>Al registrar el resultado se actualiza la clasificación.</li>
-                    <li>Al registrar el resultado se actualiza la clasificación de goleadores, en breve.</li>
+                    <li>Al registrar el resultado se actualiza la clasificación de goleadores, en breve más "aseado".</li>
                     <li>Los administradores podrán registrar los resultados de todos los participantes.</li>
                 </ul>
                 <p class="pt-3 m-0"><strong>Fíjate bien antes de subir el resultado que todos los datos sean correctos, resultado, goleadores, tarjetas...</strong><p>

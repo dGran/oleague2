@@ -21,7 +21,7 @@
 					</a>
 				</li>
 				<li>
-					<a class="text-dark" href="">
+					<a class="text-dark" href="{{ route('competitions.competition.stats', [active_season()->slug, $competition->slug]) }}">
 						<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 						Estadísticas
 					</a>

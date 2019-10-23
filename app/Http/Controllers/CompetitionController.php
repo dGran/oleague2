@@ -300,6 +300,52 @@ class CompetitionController extends Controller
 	    }
     }
 
+    public function stats($season_slug, $competition_slug)
+    {
+    	$competition = SeasonCompetition::where('slug', '=', $competition_slug)->firstOrFail();
+    	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
+
+		if ($competition->phases->count()>0) {
+			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+		} else {
+			return back()->with('error', 'La competición está en fase de configuración');
+		}
+		if ($phase->groups->count()>0) {
+			$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
+			$league = $this->check_league($group);
+		} else {
+			return back()->with('error', 'La competición está en fase de configuración');
+		}
+        $league = $this->check_league($group);
+
+		$stats_goals = LeagueStat::select('player_id', \DB::raw('SUM(goals) as goals'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('goals')
+            ->groupBy('player_id')
+            ->orderBy('goals', 'desc')
+            ->get();
+		$stats_assists = LeagueStat::select('player_id', \DB::raw('SUM(assists) as assists'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('assists')
+            ->groupBy('player_id')
+            ->orderBy('assists', 'desc')
+            ->get();
+		$stats_yellow_cards = LeagueStat::select('player_id', \DB::raw('SUM(yellow_cards) as yellow_cards'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('yellow_cards')
+            ->groupBy('player_id')
+            ->orderBy('yellow_cards', 'desc')
+            ->get();
+		$stats_red_cards = LeagueStat::select('player_id', \DB::raw('SUM(red_cards) as red_cards'))
+			->where('league_id', '=', $league->id)
+			->whereNotNull('red_cards')
+            ->groupBy('player_id')
+            ->orderBy('red_cards', 'desc')
+            ->get();
+
+        return view('competition.competition.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
+    }
+
 
 
     ///helpers
