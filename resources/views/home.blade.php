@@ -131,6 +131,29 @@
             <div class="container">
                 <div class="clearfix p-0">
                     <h3 class="float-left">
+                        LPX Update
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="text-white p-2">
+                <h4>Módulo ligas operativo</h4>
+                Ya es posible registrar los resultados de los partidos de liga, se ha ampliado el plazo de las primeras jornadas debido al retraso.
+                <ul class="pt-3">
+                    <li>Al registrar el resultado se actualiza la clasificación.</li>
+                    <li>Al registrar el resultado se actualiza la clasificación de goleadores, en breve.</li>
+                    <li>Los administradores podrán registrar los resultados de todos los participantes.</li>
+                </ul>
+                <p class="pt-3 m-0"><strong>Fíjate bien antes de subir el resultado que todos los datos sean correctos, resultado, goleadores, tarjetas...</strong><p>
+                <p class="pt-2 m-0 text-center">🐥 🐤 🐣</p>
+            </div>
+        </div>
+
+        <div class="section-title">
+            <div class="container">
+                <div class="clearfix p-0">
+                    <h3 class="float-left">
                         Últimas noticias
                     </h3>
                     @if ($posts->lastPage() > 1)

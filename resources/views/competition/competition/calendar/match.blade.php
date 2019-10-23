@@ -133,7 +133,7 @@
                                                             <img src="{{ $match->visitor_participant->participant->logo() }}" alt="" width="24">
                                                             <small class="text-uppercase">autogol</small>
                                                         </td>
-                                                        <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }} bg-light">
+                                                        <td colspan="{{ !$match->day->league->stats_assists ? 4 : 0 }}" class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }} bg-light">
                                                             <input type="number" class="local_goals form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
                                                         </td>
                                                         <td colspan="3" class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }} bg-light">
@@ -199,7 +199,7 @@
                                                             <img src="{{ $match->local_participant->participant->logo() }}" alt="" width="24">
                                                             <small class="text-uppercase">autogol</small>
                                                         </td>
-                                                        <td class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }} bg-light">
+                                                        <td  colspan="{{ !$match->day->league->stats_assists ? 4 : 0 }}" class="data {{ !$match->day->league->stats_goals ? 'd-none' : '' }} bg-light">
                                                             <input type="number" class="visitor_goals form-control" style="font-size: 80%; width: 3em; padding: 0.2em 0.4em" min=0>
                                                         </td>
                                                         <td colspan="3" class="data {{ !$match->day->league->stats_assists ? 'd-none' : '' }} bg-light">
