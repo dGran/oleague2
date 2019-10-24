@@ -19,6 +19,17 @@
         </div>
 
         <div class="legal">
+            <div class="container py-2">
+                <span>
+                    Sitios recomendados
+                </span>
+                <a href="http://pesdb.net/" target="_blank" class="d-block pt-2">
+                    <img src="{{ asset('img/banner_pesdb.jpg') }}">
+                </a>
+            </div>
+        </div>
+
+        <div class="legal">
             <div class="container">
                 <ul class="menu">
                     <li>
