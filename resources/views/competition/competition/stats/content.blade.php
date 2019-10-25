@@ -8,32 +8,33 @@
 				</h4>
 
 				@if ($stats_goals->count() > 0)
-					<table class="table">
-						<thead>
+					<table class="stats">
+{{-- 						<thead>
 							<tr>
-								<th>Pos</th>
-								<th colspan="2">Jugador</th>
-								<th class="text-center">
+								<th class="pos">Pos</th>
+								<th colspan="2" class="player">Jugador</th>
+								<th class="total">
 									<i class="icon-soccer-ball"></i>
 								</th>
 							</tr>
-						</thead>
+						</thead> --}}
 						<tbody>
 						@foreach ($stats_goals as $stat)
 							<tr>
-								<td width="24" class="text-right align-middle">
+								<td class="pos">
 									{{ $loop->iteration }}
 								</td>
-								<td width="32" class="pl-2 text-center">
-									<img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="{{ $loop->iteration == 1 ? 48 : 32}}">
+								<td class="player-img">
+									<img src="{{ $stat->player->player->getImgFormatted() }}">
 								</td>
-								<td>
+								<td class="player-name">
 									{{ $stat->player->player->name }}
 									<small class="d-block">
-										{{ $stat->player->participant->name() }}
+										<img src="{{ $stat->player->participant->logo() }}" width="18">
+										{{ $stat->player->participant->name() }} - {{ $stat->player->participant->sub_name() }}
 									</small>
 								</td>
-								<td width="48" class="text-center align-middle">
+								<td class="total">
 									{{ $stat->goals }}
 								</td>
 							</tr>
