@@ -170,7 +170,7 @@
                                             <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="">
                                         @elseif ($post->type == "result")
                                             <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="rounded-circle">
-                                            <img src="{{ asset('img/competitions/whistle.png') }}" style="position: absolute; width: 40px; left: 25px; top: 25px;">
+                                            <img src="{{ asset('img/competitions/whistle.png') }}" style="position: absolute; width: 35px; left: 58px; top: 48px" class="">
                                         @endif
                                     </figure>
                                     <div style="display: table-cell; padding-left: 8px;" class="align-top">
