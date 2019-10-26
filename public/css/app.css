@@ -11146,7 +11146,6 @@ header #user-menu nav .nav .nav-item .nav-link i {
   color: #858585;
   display: table-cell;
   font-size: 1.75em;
-  font-weight: bold;
   vertical-align: middle;
 }
 
@@ -11160,6 +11159,7 @@ header #user-menu nav .nav .nav-item .nav-link span {
 
 header #user-menu nav .nav .nav-item .nav-link.disabled {
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 header #user-menu nav .nav .nav-item.current {

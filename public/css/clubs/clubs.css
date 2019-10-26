@@ -191,13 +191,9 @@
   font-size: .7em;
 }
 
-.wrapper .club-info {
-  position: relative;
-}
-
 .wrapper .club-info .avatar {
   position: absolute;
-  top: .5em;
+  top: -1.75em;
   right: .5em;
   width: 55px;
   padding: .25em;

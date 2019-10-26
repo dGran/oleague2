@@ -4,7 +4,7 @@
 			<span>Manager</span>
 		</div>
 	</h4>
-	<div class="container p-3">
+	<div class="container p-3" style="position : relative">
 		@if ($participant->user && $participant->user->hasProfile())
 			<img class="avatar" src="{{ asset($participant->user->profile->avatar) }}">
 		@endif
