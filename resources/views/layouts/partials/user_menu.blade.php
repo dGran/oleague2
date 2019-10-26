@@ -1,6 +1,6 @@
 @auth
-    <li class="nav-item">
-        <a class="nav-link notifications" href="{{ route('notifications') }}">
+    <li class="nav-item {{ \Request::is('notificaciones') ? 'current' : '' }}">
+        <a class="nav-link notifications {{ \Request::is('notificaciones') ? 'disabled' : '' }}" href="{{ route('notifications') }}">
             <i class="icon-notification"></i>
             <span>
                 <span class="counter badge badge-warning rounded-circle {{ auth()->user()->uread_notifications() == 0 ? 'd-none' : '' }}">
@@ -23,8 +23,16 @@
         <li class="nav-item category">
             ACCESOS RAPIDOS
         </li>
-        <li class="nav-item">
-            <a class="nav-link offers" href="{{ route('market.my_team') }}">
+        <li class="nav-item {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'current' : '' }}">
+            <a class="nav-link offers {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'disabled' : '' }}" href="{{ route('club', participant_of_user()->team->slug) }}">
+                <i class="icon-stadium"></i>
+                <span>
+                    Mi Club
+                </span>
+            </a>
+        </li>        
+        <li class="nav-item {{ \Request::is('mercado/mi-equipo') ? 'current' : '' }}">
+            <a class="nav-link offers {{ \Request::is('mercado/mi-equipo') ? 'disabled' : '' }}" href="{{ route('market.my_team') }}">
                 <i class="icon-my-team"></i>
                 <span>
                     Mi Equipo
