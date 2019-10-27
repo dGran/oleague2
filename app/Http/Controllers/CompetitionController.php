@@ -250,17 +250,23 @@ class CompetitionController extends Controller
         	if ($match->local_score > $match->visitor_score) {
 				$local_points = $match->day->league->win_amount;
 				$visitor_points = $match->day->league->lose_amount;
+				$local_result = "victoria";
+				$visitor_result = "derrota";
         	} elseif ($match->local_score < $match->visitor_score) {
 				$local_points = $match->day->league->lose_amount;
 				$visitor_points = $match->day->league->win_amount;
+				$local_result = "derrota";
+				$visitor_result = "victoria";
         	} else { // draw
 				$local_points = $match->day->league->draw_amount;
 				$visitor_points = $match->day->league->draw_amount;
+				$local_result = "empate";
+				$visitor_result = "empate";
         	}
         	if ($local_points > 0) {
 	        	$this->add_cash_history(
 	        		$match->local_participant->participant->id,
-	        		'Puntos obtenidos en partido, ' . $match->match_name(),
+	        		'Puntos obtenidos (' . $local_result . ') en partido, ' . $match->match_name(),
 	        		$local_points,
 	        		'E'
 	        	);
@@ -268,7 +274,7 @@ class CompetitionController extends Controller
         	if ($visitor_points > 0) {
 	        	$this->add_cash_history(
 	        		$match->visitor_participant->participant->id,
-	        		'Puntos obtenidos en partido, ' . $match->match_name(),
+	        		'Puntos obtenidos (' . $visitor_result . ') en partido, ' . $match->match_name(),
 	        		$visitor_points,
 	        		'E'
 	        	);
