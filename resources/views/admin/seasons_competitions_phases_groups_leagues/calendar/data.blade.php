@@ -1,4 +1,4 @@
-<div class="table-form-content px-3 col-12 animated fadeIn">
+<div class="table-form-content px-3 col-12 mb-0 mb-md-2 animated fadeIn">
 	<form
 	    id="frmGenerate"
 	    lang="{{ app()->getLocale() }}"
@@ -55,7 +55,25 @@
 			@foreach ($league->days as $day)
 				<tr class="days border">
 					<td colspan="6" class="p-2">
-						<strong class="text-uppercase">Jornada {{ $day->order }}</strong>
+						<div class="clearfix">
+							<div class="float-left">
+								<i class="fas fa-circle mr-2 {{ $day->active ? 'text-success' : 'text-secondary' }}"></i><strong class="text-uppercase">Jornada {{ $day->order }}</strong>
+							</div>
+							<div class="float-right">
+								@if ($day->date_limit)
+									<small class="text-muted">
+										<strong>Fecha límite: </strong>{{ \Carbon\Carbon::parse($day->date_limit)->format('j M, H:i') }}
+									</small>
+								@else
+									<small class="text-muted">
+										Plazo no establecido
+									</small>
+								@endif
+								<a href="" class="btn btn-light">
+									<i class="fas fa-ellipsis-v"></i>
+								</a>
+							</div>
+						</div>
 					</td>
 				</tr>
 			    @foreach ($day->matches as $match)

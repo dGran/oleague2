@@ -70,9 +70,15 @@
                     <label for="lose_amount"><i class="fas fa-euro-sign mr-2"></i>por derrota</label>
                     <input type="number" class="form-control" id="lose_amount" name="lose_amount" placeholder="Recompensa por derrota" min="0" step=".5" value="{{ old('lose_amount', $league ? $league->lose_amount : '') }}">
                 </div>
+            </div>
+            <div class="form-group row">
                 <div class="col-6 col-lg-3 mt-3 mt-lg-0">
                     <label for="play_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
                     <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Recompensa por jugar" min="0" step=".5" value="{{ old('play_amount', $league ? $league->play_amount : '') }}">
+                </div>
+                <div class="col-6 col-lg-3 mt-3 mt-lg-0">
+                    <label for="play_ontime_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar en plazo</label>
+                    <input type="number" class="form-control" id="play_ontime_amount" name="play_ontime_amount" placeholder="Recompensa por jugar" min="0" step=".5" value="{{ old('play_ontime_amount', $league ? $league->play_ontime_amount : '') }}">
                 </div>
             </div>
         @endif

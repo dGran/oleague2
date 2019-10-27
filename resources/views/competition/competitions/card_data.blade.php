@@ -2,7 +2,7 @@
 	<div class="border" style="background: #fff; margin: 15px 5px 0 5px; padding: 1em 0">
 		<div class="text-center d-table-cell" style="width: 170px">
 			<a class="text-dark" href="{{ route('competitions.competition.table', [active_season()->slug, $competition->slug]) }}">
-				<img src="{{ asset($competition->img) }}" alt="" width="72px">
+				<img src="{{ asset($competition->img) }}" width="72px" class="rounded">
 				<span class="d-block mt-1" style="font-size: .9em; font-weight: bold">{{ $competition->name }}</span>
 			</a>
 		</div>
