@@ -5,13 +5,7 @@
 </h4>
 
 <div class="container p-3">
-	@php $cash = 0; @endphp
 	@foreach ($participant->cash_history->sortByDesc('created_at') as $cash_history)
-		@if ($cash_history->movement == "E")
-			@php $cash += $cash_history->amount; @endphp
-		@else
-			@php $cash -= $cash_history->amount; @endphp
-		@endif
 		<div class="economy-item">
 			<div class="description">
 				<small class="text-muted d-block">{{ \Carbon\Carbon::parse($cash_history->created_at)->format('d/m/Y - h:m')}}</small>
@@ -35,7 +29,7 @@
 						{{ $cash_history->amount }} M
 					</div>
 					<div class="cash text-muted" style="min-width: 80px">
-						<small>Caja: {{ $cash }} M</small>
+						<small>Caja: {{ $cash_history->cash }} M</small>
 					</div>
 				</div>
 			</div>

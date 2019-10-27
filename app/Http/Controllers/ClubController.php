@@ -43,7 +43,18 @@ class ClubController extends Controller
         $participants = $this->get_participants();
         $participant = $this->get_participant($slug);
 
-        return view('clubs.economy', compact('participants', 'participant'));
+        $cash = 0;
+        foreach ($participant->cash_history as $cash_history) {
+            if ($cash_history->movement == "E") {
+                $cash += $cash_history->amount;
+                $cash_history['cash'] = $cash;
+            } else {
+                $cash -= $cash_history->amount;
+                $cash_history['cash'] = $cash;
+            }
+        }
+
+        return view('clubs.economy', compact('participants', 'participant', 'cash_history'));
     }
 
     public function clubCalendar($slug)
