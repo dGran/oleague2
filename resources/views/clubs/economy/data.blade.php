@@ -6,7 +6,7 @@
 
 <div class="container p-3">
 	@php $cash = 0; @endphp
-	@foreach ($participant->cash_history as $cash_history)
+	@foreach ($participant->cash_history->sortByDesc('created_at') as $cash_history)
 		@if ($cash_history->movement == "E")
 			@php $cash += $cash_history->amount; @endphp
 		@else
@@ -34,7 +34,7 @@
 						@endif
 						{{ $cash_history->amount }} M
 					</div>
-					<div class="cash text-muted" width="80">
+					<div class="cash text-muted" style="min-width: 80px">
 						<small>Caja: {{ $cash }} M</small>
 					</div>
 				</div>
