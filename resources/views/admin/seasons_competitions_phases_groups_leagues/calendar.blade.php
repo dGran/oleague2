@@ -18,6 +18,8 @@
 
 @section('modal')
     @include('admin.seasons_competitions_phases_groups_leagues.calendar.update_modal')
+    @include('admin.seasons_competitions_phases_groups_leagues.calendar.day_limit_modal')
+    @include('admin.seasons_competitions_phases_groups_leagues.calendar.match_limit_modal')
 @endsection
 
 @section('js')

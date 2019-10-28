@@ -33,6 +33,43 @@
             $('#modal-dialog-update').html("");
         });
 
+        $('#dayLimitModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
+            var url = '{{ route("admin.season_competitions_phases_groups_leagues.calendar.day.edit_limit", ":day_id") }}';
+            url = url.replace(':day_id', id);
+            $.ajax({
+                url         : url,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('#modal-dialog-day-limit').html(data);
+            });
+        });
+
+        $("#dayLimitModal").on("hidden.bs.modal", function(){
+            $('#modal-dialog-day-limit').html("");
+        });
+
+        $('#matchLimitModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
+            var url = '{{ route("admin.season_competitions_phases_groups_leagues.calendar.match.edit_limit", ":match_id") }}';
+            url = url.replace(':match_id', id);
+            $.ajax({
+                url         : url,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('#modal-dialog-match-limit').html(data);
+            });
+        });
+
+        $("#matchLimitModal").on("hidden.bs.modal", function(){
+            $('#modal-dialog-match-limit').html("");
+        });
+
+
         $("#btnGenerate").click(function(){
             swal({
                 text: "Generando calendario, por favor espera...",

@@ -12,6 +12,8 @@ use App\SeasonCompetitionPhaseGroupLeague;
 use App\SeasonCompetitionPhaseGroupLeagueDay;
 use App\SeasonCompetitionMatch;
 use App\SeasonCompetitionPhaseGroupLeagueTableZone;
+use App\Post;
+use Telegram\Bot\Laravel\Facades\Telegram;
 
 use Illuminate\Database\Eloquent\Collection;
 
@@ -120,6 +122,114 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         // comprobar si funciona cuando los participantes son impares y con otros numeros de participantes pares
 
         return back()->with('success', 'Se han generado las jornadas de la liga correctamente.');
+    }
+
+    public function activate_day($day_id)
+    {
+        $day = SeasonCompetitionPhaseGroupLeagueDay::find($day_id);
+        $day->active = 1;
+        $day->save();
+
+        if ($day->save()) {
+            foreach ($day->matches as $match) {
+                $match->active = $day->active;
+                $match->save();
+            }
+
+            // generate new (post)
+            $post = Post::create([
+                'type' => 'default',
+                'transfer_id' => null,
+                'match_id' => null,
+                'category' => $day->league->group->phase->competition->name,
+                'title' => "Jornada " . $day->order . " disponible",
+                'description' => "Los partidos ya están disponibles para jugar. Suerte a todos!",
+                'img' => $day->league->group->phase->competition->img,
+            ]);
+            // telegram notification
+            $season_slug = $day->league->group->phase->competition->season->slug;
+            $competition_slug = $day->league->group->phase->competition->slug;
+            $competition = $day->league->group->phase->competition->name;
+            $calendar_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/partidos';
+            $title = "\xE2\x9A\xBD " . $day->day_name() . ", partidos disponibles";
+            $text = "$title\n\n\n";
+            foreach ($day->matches as $match) {
+                $team_local = $match->local_participant->participant->name();
+                $team_visitor = $match->visitor_participant->participant->name();
+                $text .= "<b>    " . $team_local . " vs " .$team_visitor . "</b>\n";
+            }
+            $text .= "\n\n";
+            $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
+            Telegram::sendMessage([
+                'chat_id' => '-1001241759649',
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
+
+            return back()->with('success', 'Jornada activada correctamente');
+        } else {
+            return back()->with('error', 'Se ha producido un error, la jornada no se ha activado');
+        }
+    }
+
+    public function desactivate_day($day_id)
+    {
+        $day = SeasonCompetitionPhaseGroupLeagueDay::find($day_id);
+        $day->active = 0;
+        $day->save();
+
+        if ($day->save()) {
+            foreach ($day->matches as $match) {
+                $match->active = $day->active;
+                $match->save();
+            }
+            return back()->with('success', 'Jornada desactivada correctamente');
+        } else {
+            return back()->with('error', 'Se ha producido un error, la jornada no se ha desactivado');
+        }
+    }
+
+    public function edit_day_limit($day_id) {
+        $day = SeasonCompetitionPhaseGroupLeagueDay::find($day_id);
+        return view('admin.seasons_competitions_phases_groups_leagues.calendar.day_limit', compact('day'))->render();
+    }
+
+    public function update_day_limit($day_id) {
+        $day = SeasonCompetitionPhaseGroupLeagueDay::find($day_id);
+        $day->date_limit = request()->date_limit;
+        $day->save();
+
+        if ($day->save()) {
+            foreach ($day->matches as $match) {
+                $match->date_limit = $day->date_limit;
+                $match->save();
+                event(new TableWasUpdated($match, 'Editado plazo límite del partido ' . $match->id ));
+            }
+            event(new TableWasUpdated($day, 'Editado plazo límite de la jornada ' . $day->order ));
+
+            return back()->with('success', 'Actualizada fecha límite de la jornada correctamente');
+        }
+
+        return back()->with('error', 'Se ha producido un error, la fecha no se ha actualizado');
+    }
+
+    public function edit_match_limit($match_id) {
+        $match = SeasonCompetitionMatch::find($match_id);
+        return view('admin.seasons_competitions_phases_groups_leagues.calendar.match_limit', compact('match'))->render();
+    }
+
+    public function update_match_limit($match_id) {
+        $match = SeasonCompetitionMatch::find($match_id);
+        $match->date_limit = request()->date_limit;
+        $match->save();
+
+        if ($match->save()) {
+            event(new TableWasUpdated($match, 'Editado plazo límite del partido ' . $match->id ));
+
+            return back()->with('success', 'Actualizada fecha límite del partido correctamente');
+        }
+
+        return back()->with('error', 'Se ha producido un error, la fecha no se ha actualizado');
     }
 
     public function table($competition_slug, $phase_slug, $group_slug)

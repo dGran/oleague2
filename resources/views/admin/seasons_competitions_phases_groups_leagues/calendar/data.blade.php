@@ -53,13 +53,22 @@
 	            <col width="50%" />
 	        </colgroup> --}}
 			@foreach ($league->days as $day)
-				<tr class="days border">
+				<tr class="days border" data-id="{{ $day->id }}">
 					<td colspan="6" class="p-2">
 						<div class="clearfix">
 							<div class="float-left">
 								<i class="fas fa-circle mr-2 {{ $day->active ? 'text-success' : 'text-secondary' }}"></i><strong class="text-uppercase">Jornada {{ $day->order }}</strong>
+								@if ($day->active)
+									<a href="{{ route('admin.season_competitions_phases_groups_leagues.calendar.day.desactivate', $day->id) }}" class="d-block pt-1">
+										<small>Desactivar jornada</small>
+									</a>
+								@else
+									<a href="{{ route('admin.season_competitions_phases_groups_leagues.calendar.day.activate', $day->id) }}" class="d-block pt-1">
+										<small>Activar jornada</small>
+									</a>
+								@endif
 							</div>
-							<div class="float-right">
+							<div class="float-right text-right">
 								@if ($day->date_limit)
 									<small class="text-muted">
 										<strong>Fecha límite: </strong>{{ \Carbon\Carbon::parse($day->date_limit)->format('j M, H:i') }}
@@ -69,9 +78,11 @@
 										Plazo no establecido
 									</small>
 								@endif
-								<a href="" class="btn btn-light">
-									<i class="fas fa-ellipsis-v"></i>
-								</a>
+				        		<a href="" data-toggle="modal" data-target="#dayLimitModal" class="d-block pt-1">
+					        		<small>
+					        			Editar fecha límite
+					        		</small>
+				        		</a>
 							</div>
 						</div>
 					</td>
@@ -127,6 +138,23 @@
                             </small>
 				        </td>
 			        </tr>
+			        {{-- date limits --}}
+					<tr data-id="{{ $match->id }}">
+						<td colspan="6" class="text-center">
+							<small class="text-muted">
+								@if ($match->date_limit != $match->day->date_limit)
+									<strong>Fecha límite: </strong>{{ \Carbon\Carbon::parse($match->date_limit)->format('j M, H:i') }}
+								@else
+									Mismo límite de la jornada
+								@endif
+							</small>
+			        		<a href="" data-toggle="modal" data-target="#matchLimitModal" class="d-block pt-1">
+				        		<small>
+				        			Editar fecha límite
+				        		</small>
+			        		</a>
+						</td>
+					</tr>
 			    @endforeach
 			@endforeach
 	    </table>
