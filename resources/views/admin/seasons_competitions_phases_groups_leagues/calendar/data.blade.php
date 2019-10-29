@@ -116,9 +116,6 @@
 								<span class="bg-light rounded px-3 py-1 {{ $match->sanctioned_id ? 'border text-danger' : '' }}">
 									{{ $match->local_score }} - {{ $match->visitor_score }}
 								</span>
-{{-- 								<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $match->id]) }}" class="btnReset">
-									<i class="fas fa-undo-alt ml-1"></i>
-								</a> --}}
 				        	@endif
 				        </td>
                         <td class="img text-left" width="32">
@@ -139,12 +136,12 @@
 				        </td>
 			        </tr>
 			        {{-- date limits --}}
-					<tr data-id="{{ $match->id }}">
+					<tr data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
 						<td colspan="6" class="text-center">
 							@if (!is_null($match->local_score) && !is_null($match->visitor_score))
-				        		<a href="" data-toggle="modal" data-target="#matchLimitModal" class="d-block text-danger pb-1">
+				        		<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', $match->id) }}" class="btnReset text-danger">
 					        		<small>
-					        			Resetar
+					        			<i class="fas fa-undo-alt mr-1"></i>Resetar {{$match->stadistics}}
 					        		</small>
 				        		</a>
 				        		<a href="" data-toggle="modal" data-target="#matchLimitModal" class="d-block pb-1">

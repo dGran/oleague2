@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\TableZone;
 use App\SeasonPlayer;
 use App\LeagueStat;
+use App\SeasonParticipant;
+use App\SeasonParticipantCashHistory as Cash;
 use App\SeasonCompetitionPhaseGroup;
 use App\SeasonCompetitionPhaseGroupParticipant;
 use App\SeasonCompetitionPhaseGroupLeague;
@@ -13,8 +15,8 @@ use App\SeasonCompetitionPhaseGroupLeagueDay;
 use App\SeasonCompetitionMatch;
 use App\SeasonCompetitionPhaseGroupLeagueTableZone;
 use App\Post;
-use Telegram\Bot\Laravel\Facades\Telegram;
 
+use Telegram\Bot\Laravel\Facades\Telegram;
 use Illuminate\Database\Eloquent\Collection;
 
 use App\Events\TableWasSaved;
@@ -291,106 +293,444 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
         return view('admin.seasons_competitions_phases_groups_leagues.calendar.match', compact('match', 'group'))->render();
     }
 
-    public function updateMatch($competition_slug, $phase_slug, $group_slug, $id)
+    public function updateMatch($match_id)
     {
-    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        $match = SeasonCompetitionMatch::find($id);
+        $match = SeasonCompetitionMatch::find($match_id);
 
-        $match->local_score = request()->local_score;
-        $match->visitor_score = request()->visitor_score;
-        if (request()->sanctioned_id > 0) {
-        	$match->sanctioned_id = request()->sanctioned_id;
+        if ($match->local_score == null && $match->visitor_score == null) {
+            $match->local_score = request()->local_score;
+            $match->visitor_score = request()->visitor_score;
+            $match->user_update_result = auth()->user()->id;
+            $match->date_update_result = now();
+            if (request()->sanctioned_id > 0) {
+                $match->sanctioned_id = request()->sanctioned_id;
+            }
+            $match->save();
+
+            if ($match->day->league->has_stats()) {
+                $local_players = SeasonPlayer::where('participant_id', '=', $match->local_participant->participant->id)->get();
+                foreach ($local_players as $player) {
+                    if ($match->day->league->stats_goals) {
+                        $goals = request()->{"stats_goals_".$player->id};
+                    } else {
+                        $goals = 0;
+                    }
+                    if ($match->day->league->stats_assists) {
+                        $assists = request()->{"stats_assists_".$player->id};
+                    } else {
+                        $assists = 0;
+                    }
+                    if ($match->day->league->stats_yellow_cards) {
+                        $yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+                    } else {
+                        $yellow_cards = 0;
+                    }
+                    if ($match->day->league->stats_red_cards) {
+                        $red_cards = request()->{"stats_red_cards_".$player->id};
+                    } else {
+                        $red_cards = 0;
+                    }
+                    if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+                        $stat = new LeagueStat;
+                        $stat->match_id = $match->id;
+                        $stat->day_id = $match->day->id;
+                        $stat->league_id = $match->day->league->id;
+                        $stat->player_id = $player->id;
+                        if ($goals > 0) { $stat->goals = $goals; }
+                        if ($assists > 0) { $stat->assists = $assists; }
+                        if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+                        if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+                        $stat->save();
+                    }
+                }
+
+                $visitor_players = SeasonPlayer::where('participant_id', '=', $match->visitor_participant->participant->id)->get();
+                foreach ($visitor_players as $player) {
+                    if ($match->day->league->stats_goals) {
+                        $goals = request()->{"stats_goals_".$player->id};
+                    } else {
+                        $goals = 0;
+                    }
+                    if ($match->day->league->stats_assists) {
+                        $assists = request()->{"stats_assists_".$player->id};
+                    } else {
+                        $assists = 0;
+                    }
+                    if ($match->day->league->stats_yellow_cards) {
+                        $yellow_cards = request()->{"stats_yellow_cards_".$player->id};
+                    } else {
+                        $yellow_cards = 0;
+                    }
+                    if ($match->day->league->stats_red_cards) {
+                        $red_cards = request()->{"stats_red_cards_".$player->id};
+                    } else {
+                        $red_cards = 0;
+                    }
+                    if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
+                        $stat = new LeagueStat;
+                        $stat->match_id = $match->id;
+                        $stat->day_id = $match->day->id;
+                        $stat->league_id = $match->day->league->id;
+                        $stat->player_id = $player->id;
+                        if ($goals > 0) { $stat->goals = $goals; }
+                        if ($assists > 0) { $stat->assists = $assists; }
+                        if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
+                        if ($red_cards > 0) { $stat->red_cards = $red_cards; }
+                        $stat->save();
+                    }
+                }
+            }
+
+            // economy
+            if ($match->local_id != $match->sanctioned_id) {
+                $this->add_cash_history(
+                    $match->local_participant->participant->id,
+                    'Partido jugado, ' . $match->match_name(),
+                    $match->day->league->play_amount,
+                    'E'
+                );
+            }
+            if ($match->visitor_id != $match->sanctioned_id) {
+                $this->add_cash_history(
+                    $match->visitor_participant->participant->id,
+                    'Partido jugado, ' . $match->match_name(),
+                    $match->day->league->play_amount,
+                    'E'
+                );
+            }
+
+            if ($match->sanctioned_id == 0) {
+                $match_limit = new \Carbon\Carbon($match->date_limit);
+                $date_update_result = new \Carbon\Carbon($match->date_update_result);
+                if ($match_limit > $date_update_result) {
+                    $play_in_limit = true;
+                } else {
+                    $play_in_limit = false;
+                }
+
+                if ($play_in_limit) {
+                    $this->add_cash_history(
+                        $match->local_participant->participant->id,
+                        'Partido jugado en plazo, ' . $match->match_name(),
+                        $match->day->league->play_ontime_amount,
+                        'E'
+                    );
+                    $this->add_cash_history(
+                        $match->visitor_participant->participant->id,
+                        'Partido jugado en plazo, ' . $match->match_name(),
+                        $match->day->league->play_ontime_amount,
+                        'E'
+                    );
+                }
+            } else {
+                if ($match->local_id != $match->sanctioned_id) {
+                    $this->add_cash_history(
+                        $match->local_participant->participant->id,
+                        'Partido jugado en plazo, ' . $match->match_name(),
+                        $match->day->league->play_ontime_amount,
+                        'E'
+                    );
+                }
+                if ($match->visitor_id != $match->sanctioned_id) {
+                    $this->add_cash_history(
+                        $match->visitor_participant->participant->id,
+                        'Partido jugado en plazo, ' . $match->match_name(),
+                        $match->day->league->play_ontime_amount,
+                        'E'
+                    );
+                }
+            }
+
+            if ($match->local_score > $match->visitor_score) {
+                $local_points = $match->day->league->win_amount;
+                $visitor_points = $match->day->league->lose_amount;
+                $local_result = "victoria";
+                $visitor_result = "derrota";
+            } elseif ($match->local_score < $match->visitor_score) {
+                $local_points = $match->day->league->lose_amount;
+                $visitor_points = $match->day->league->win_amount;
+                $local_result = "derrota";
+                $visitor_result = "victoria";
+            } else { // draw
+                $local_points = $match->day->league->draw_amount;
+                $visitor_points = $match->day->league->draw_amount;
+                $local_result = "empate";
+                $visitor_result = "empate";
+            }
+            if ($match->sanctioned_id == 0) {
+                if ($local_points > 0) {
+                    $this->add_cash_history(
+                        $match->local_participant->participant->id,
+                        'Puntos obtenidos (' . $local_result . ') en partido, ' . $match->match_name(),
+                        $local_points,
+                        'E'
+                    );
+                }
+                if ($visitor_points > 0) {
+                    $this->add_cash_history(
+                        $match->visitor_participant->participant->id,
+                        'Puntos obtenidos (' . $visitor_result . ') en partido, ' . $match->match_name(),
+                        $visitor_points,
+                        'E'
+                    );
+                }
+            } else {
+                if ($match->local_id != $match->sanctioned_id) {
+                    if ($local_points > 0) {
+                        $this->add_cash_history(
+                            $match->local_participant->participant->id,
+                            'Puntos obtenidos (' . $local_result . ') en partido, ' . $match->match_name(),
+                            $local_points,
+                            'E'
+                        );
+                    }
+                }
+                if ($match->visitor_id != $match->sanctioned_id) {
+                    if ($visitor_points > 0) {
+                        $this->add_cash_history(
+                            $match->visitor_participant->participant->id,
+                            'Puntos obtenidos (' . $visitor_result . ') en partido, ' . $match->match_name(),
+                            $visitor_points,
+                            'E'
+                        );
+                    }
+                }
+            }
+
+            // telegram notification
+            $competition = $match->day->league->group->phase->competition->name;
+            $competition_slug = $match->day->league->group->phase->competition->slug;
+            $season_slug = $match->day->league->group->phase->competition->season->slug;
+            $team_local = $match->local_participant->participant->name();
+            $team_local_slug = $match->local_participant->participant->team->slug;
+            $team_local_budget = $match->local_participant->participant->budget();
+            $user_local = $match->local_participant->participant->sub_name();
+            $team_visitor = $match->visitor_participant->participant->name();
+            $team_visitor_slug = $match->visitor_participant->participant->team->slug;
+            $team_visitor_budget = $match->visitor_participant->participant->budget();
+            $user_visitor = $match->visitor_participant->participant->sub_name();
+            $score = $match->local_score . '-' . $match->visitor_score;
+            if ($match->sanctioned_id == 0) {
+                $local_amount = $match->day->league->play_amount + $local_points;
+                if ($play_in_limit) {
+                    $local_amount += $match->day->league->play_ontime_amount;
+                }
+                $visitor_amount = $match->day->league->play_amount + $visitor_points;
+                if ($play_in_limit) {
+                    $visitor_amount += $match->day->league->play_ontime_amount;
+                }
+            } else {
+                if ($match->local_id == $match->sanctioned_id) {
+                    $local_amount = 0;
+                    $visitor_amount = $match->day->league->play_amount + $visitor_points + $match->day->league->play_ontime_amount;
+                } else {
+                    $local_amount = $match->day->league->play_amount + $local_points + $match->day->league->play_ontime_amount;
+                    $visitor_amount = 0;
+                }
+            }
+            $local_economy = "    \xF0\x9F\x92\xB0" . $team_local . " (" . $user_local . ") <b>ingresa</b> " . number_format($local_amount, 2, ",", ".") . " mill.\n";
+            $local_club_link = 'https://lpx.es/clubs/' . $team_local_slug . '/economia';
+            $local_economy_link = "    <a href='$local_club_link'>Historial de economia</a>\n\n";
+
+            $visitor_economy = "    \xF0\x9F\x92\xB0" . $team_visitor . " (" . $user_visitor . ") <b>ingresa</b> " . number_format($visitor_amount, 2, ",", ".") . " mill.\n";
+            $visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
+            $visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
+
+            $table_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/clasificacion';
+            $calendar_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/partidos';
+            $title = "\xE2\x9A\xBD Partido jugado \xF0\x9F\x8E\xAE" . ' - ' . $match->match_name();
+
+            $text = "$title\n\n";
+            if ($match->sanctioned_id == 0) {
+                $text .= "    <b>$team_local $score $team_visitor</b>\n\n\n";
+            } else {
+                if ($match->local_id == $match->sanctioned_id) {
+                    $text .= "    <b>$team_local $score $team_visitor</b>\n";
+                    $text .= "    $team_local sancionado\n\n\n";
+                } else {
+                    $text .= "    <b>$team_local $score $team_visitor</b>\n";
+                    $text .= "    $team_visitor sancionado\n\n\n";
+                }
+            }
+            $text .= $local_economy;
+            $text .= $local_economy_link;
+            $text .= $visitor_economy;
+            $text .= $visitor_economy_link;
+            $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
+            $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
+
+            Telegram::sendMessage([
+                'chat_id' => '-1001241759649',
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
+
+            // generate new (post)
+            $post = Post::create([
+                'type' => 'result',
+                'transfer_id' => null,
+                'match_id' => $match_id,
+                'category' => $match->match_name(),
+                'title' => "$team_local $score $team_visitor",
+                'description' => null,
+                'img' => $match->day->league->group->phase->competition->img,
+            ]);
+
+            return back()->with('success', 'Resultado registrado correctamente.');
+        } else {
+            return back()->with('error', 'El resultado ya está registrado.');
         }
-        $match->save();
-
-        if ($match->day->league->has_stats()) {
-    		$local_players = SeasonPlayer::where('participant_id', '=', $match->local_participant->participant->id)->get();
-    		foreach ($local_players as $player) {
-    			if ($match->day->league->stats_goals) {
-        			$goals = request()->{"stats_goals_".$player->id};
-        		} else {
-                    $goals = 0;
-                }
-    			if ($match->day->league->stats_assists) {
-        			$assists = request()->{"stats_assists_".$player->id};
-                } else {
-                    $assists = 0;
-                }
-    			if ($match->day->league->stats_yellow_cards) {
-        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
-                } else {
-                    $yellow_cards = 0;
-                }
-    			if ($match->day->league->stats_red_cards) {
-        			$red_cards = request()->{"stats_red_cards_".$player->id};
-                } else {
-                    $red_cards = 0;
-                }
-    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
-    				$stat = new LeagueStat;
-    				$stat->match_id = $match->id;
-    				$stat->day_id = $match->day->id;
-    				$stat->league_id = $match->day->league->id;
-    				$stat->player_id = $player->id;
-    				if ($goals > 0) { $stat->goals = $goals; }
-    				if ($assists > 0) { $stat->assists = $assists; }
-    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
-    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
-    				$stat->save();
-    			}
-    		}
-
-    		$visitor_players = SeasonPlayer::where('participant_id', '=', $match->visitor_participant->participant->id)->get();
-    		foreach ($visitor_players as $player) {
-    			if ($match->day->league->stats_goals) {
-        			$goals = request()->{"stats_goals_".$player->id};
-                } else {
-                    $goals = 0;
-                }
-    			if ($match->day->league->stats_assists) {
-        			$assists = request()->{"stats_assists_".$player->id};
-                } else {
-                    $assists = 0;
-                }
-    			if ($match->day->league->stats_yellow_cards) {
-        			$yellow_cards = request()->{"stats_yellow_cards_".$player->id};
-                } else {
-                    $yellow_cards = 0;
-                }
-    			if ($match->day->league->stats_red_cards) {
-        			$red_cards = request()->{"stats_red_cards_".$player->id};
-                } else {
-                    $red_cards = 0;
-                }
-    			if ($goals > 0 || $assists > 0 || $yellow_cards > 0 || $red_cards > 0) {
-    				$stat = new LeagueStat;
-    				$stat->match_id = $match->id;
-    				$stat->day_id = $match->day->id;
-    				$stat->league_id = $match->day->league->id;
-    				$stat->player_id = $player->id;
-    				if ($goals > 0) { $stat->goals = $goals; }
-    				if ($assists > 0) { $stat->assists = $assists; }
-    				if ($yellow_cards > 0) { $stat->yellow_cards = $yellow_cards; }
-    				if ($red_cards > 0) { $stat->red_cards = $red_cards; }
-    				$stat->save();
-    			}
-    		}
-        }
-
-        return back()->with('success', 'Resultado registrado correctamente.');
     }
 
-    public function resetMatch($competition_slug, $phase_slug, $group_slug, $id)
+    public function resetMatch($match_id)
     {
-    	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        $match = SeasonCompetitionMatch::find($id);
+        $match = SeasonCompetitionMatch::find($match_id);
+
+        // obtains data before change $match
+        $match_limit = new \Carbon\Carbon($match->date_limit);
+        $date_update_result = new \Carbon\Carbon($match->date_update_result);
+        if ($match_limit > $date_update_result) {
+            $play_in_limit = true;
+        } else {
+            $play_in_limit = false;
+        }
+        if ($match->local_score > $match->visitor_score) {
+            $local_points = $match->day->league->win_amount;
+            $visitor_points = $match->day->league->lose_amount;
+            $local_result = "victoria";
+            $visitor_result = "derrota";
+        } elseif ($match->local_score < $match->visitor_score) {
+            $local_points = $match->day->league->lose_amount;
+            $visitor_points = $match->day->league->win_amount;
+            $local_result = "derrota";
+            $visitor_result = "victoria";
+        } else { // draw
+            $local_points = $match->day->league->draw_amount;
+            $visitor_points = $match->day->league->draw_amount;
+            $local_result = "empate";
+            $visitor_result = "empate";
+        }
+
+        if ($match->local_id == $match->sanctioned_id) {
+            $local_sanctioned = true;
+        } else {
+            $local_sanctioned = false;
+        }
+        if ($match->visitor_id == $match->sanctioned_id) {
+            $visitor_sanctioned = true;
+        } else {
+            $visitor_sanctioned = false;
+        }
 
         $match->local_score = null;
         $match->visitor_score = null;
         $match->sanctioned_id = null;
+        $match->user_update_result = null;
+        $match->date_update_result = null;
         $match->save();
 
-        return back()->with('success', 'Resultado reseteado correctamente.');
+        if ($match->save()) {
+            // delete stadistics
+            $stats = LeagueStat::where('match_id', '=', $match->id)->get();
+            foreach ($stats as $stat) {
+                $stat->delete();
+            }
+            // reset economy
+            if (!$local_sanctioned) {
+                $this->add_cash_history(
+                    $match->local_participant->participant->id,
+                    'Reset - Partido jugado, ' . $match->match_name(),
+                    $match->day->league->play_amount,
+                    'S'
+                );
+            }
+            if (!$visitor_sanctioned) {
+                $this->add_cash_history(
+                    $match->visitor_participant->participant->id,
+                    'Reset - Partido jugado, ' . $match->match_name(),
+                    $match->day->league->play_amount,
+                    'S'
+                );
+            }
+            if ($play_in_limit) {
+                if (!$local_sanctioned) {
+                    $this->add_cash_history(
+                        $match->local_participant->participant->id,
+                        'Reset - Partido jugado en plazo, ' . $match->match_name(),
+                        $match->day->league->play_ontime_amount,
+                        'S'
+                    );
+                }
+                if (!$visitor_sanctioned) {
+                    $this->add_cash_history(
+                        $match->visitor_participant->participant->id,
+                        'Reset - Partido jugado en plazo, ' . $match->match_name(),
+                        $match->day->league->play_ontime_amount,
+                        'S'
+                    );
+                }
+            }
+            if ($local_points > 0) {
+                if (!$local_sanctioned) {
+                    $this->add_cash_history(
+                        $match->local_participant->participant->id,
+                        'Reset - Puntos obtenidos (' . $local_result . ') en partido, ' . $match->match_name(),
+                        $local_points,
+                        'S'
+                    );
+                }
+            }
+            if ($visitor_points > 0) {
+                if (!$visitor_sanctioned) {
+                    $this->add_cash_history(
+                        $match->visitor_participant->participant->id,
+                        'Reset - Puntos obtenidos (' . $visitor_result . ') en partido, ' . $match->match_name(),
+                        $visitor_points,
+                        'S'
+                    );
+                }
+            }
+            // END::reset economy
+
+            // telegram notification
+            $competition = $match->day->league->group->phase->competition->name;
+            $competition_slug = $match->day->league->group->phase->competition->slug;
+            $season_slug = $match->day->league->group->phase->competition->season->slug;
+            $team_local = $match->local_participant->participant->name();
+            $team_visitor = $match->visitor_participant->participant->name();
+            $table_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/clasificacion';
+            $calendar_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/partidos';
+            $title = "\xF0\x9F\x9A\xA9 Partido reseteado \xF0\x9F\x94\x99" . ' - ' . $match->match_name();
+
+            $text = "$title\n\n";
+            $text .= "    <b>$team_local vs $team_visitor</b>\n";
+            $text .= "    Resetado por la administración\n\n\n";
+            $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
+            $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
+
+            Telegram::sendMessage([
+                'chat_id' => '-1001241759649',
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
+
+            // generate new (post)
+            $post = Post::create([
+                'type' => 'result',
+                'transfer_id' => null,
+                'match_id' => $match_id,
+                'category' => $match->match_name(),
+                'title' => "$team_local vs $team_visitor, reseteado",
+                'description' => 'Partido reseteado por la administración, resultado, estadísticas y economía',
+                'img' => $match->day->league->group->phase->competition->img,
+            ]);
+
+
+            return back()->with('success', 'Resultado reseteado correctamente.');
+        }
+
+        return back()->with('error', 'Se ha producido un error. El partido no se ha reseteado');
+
     }
 
     public function stats($competition_slug, $phase_slug, $group_slug)
@@ -669,6 +1009,25 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	    }
 	    $data['avg'] = $data['gf'] - $data['gc'];
 	    return $data;
+    }
+
+    protected function add_cash_history($participant_id, $description, $amount, $movement) {
+        $cash = new Cash;
+        $cash->participant_id = $participant_id;
+        $cash->description = $description;
+        $cash->amount = $amount;
+        $cash->movement = $movement;
+        $cash->save();
+
+        if ($cash->save()) {
+            $participant = SeasonParticipant::find($participant_id);
+            if ($movement == 'E') {
+                $action = 'ingresa';
+            } else {
+                $action = 'desembolsa';
+            }
+        }
+
     }
 
 }
