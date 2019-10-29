@@ -23,7 +23,7 @@
 
                 <div class="form-group">
                     <label for="date_limit">Fecha límite de partido</label>
-                    <input type="datetime" class="form-control" name="date_limit" id="date_limit" value="{{ $match->date_limit }}">
+                    <input type="datetime-local" class="form-control" name="date_limit" id="date_limit" value="{{ $match->getDateLimit_date() }}T{{ $match->getDateLimit_time() }}">
                 </div>
             </div> {{-- main-content --}}
 

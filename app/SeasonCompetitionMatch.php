@@ -26,6 +26,16 @@ class SeasonCompetitionMatch extends Model
         return $this->hasOne('App\SeasonCompetitionPhaseGroupParticipant', 'id', 'visitor_id');
     }
 
+    public function getDateLimit_date()
+    {
+        return $date = \Carbon\Carbon::parse($this->date_limit)->format('Y-m-d');
+    }
+
+    public function getDateLimit_time()
+    {
+        return $date = \Carbon\Carbon::parse($this->date_limit)->format('H:i');
+    }
+
     public function match_name()
     {
         if ($this->day) {

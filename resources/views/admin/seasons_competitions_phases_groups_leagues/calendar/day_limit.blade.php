@@ -22,7 +22,7 @@
             <div class="main-content">
                 <div class="form-group">
                     <label for="date_limit">Fecha límite de jornada</label>
-                    <input type="datetime" class="form-control" name="date_limit" id="date_limit" value="{{ $day->date_limit }}">
+                    <input type="datetime-local" class="form-control" name="date_limit" id="date_limit" value="{{ $day->getDateLimit_date() }}T{{ $day->getDateLimit_time() }}">
                 </div>
             </div> {{-- main-content --}}
 

@@ -141,6 +141,18 @@
 			        {{-- date limits --}}
 					<tr data-id="{{ $match->id }}">
 						<td colspan="6" class="text-center">
+							@if (!is_null($match->local_score) && !is_null($match->visitor_score))
+				        		<a href="" data-toggle="modal" data-target="#matchLimitModal" class="d-block text-danger pb-1">
+					        		<small>
+					        			Resetar
+					        		</small>
+				        		</a>
+				        		<a href="" data-toggle="modal" data-target="#matchLimitModal" class="d-block pb-1">
+					        		<small>
+					        			Editar estadísticas
+					        		</small>
+				        		</a>
+				        	@endif
 							<small class="text-muted">
 								@if ($match->date_limit != $match->day->date_limit)
 									<strong>Fecha límite: </strong>{{ \Carbon\Carbon::parse($match->date_limit)->format('j M, H:i') }}

@@ -36,4 +36,14 @@ class SeasonCompetitionPhaseGroupLeagueDay extends Model
         }
         return $day_name . ' - Jornada ' . $this->order;
     }
+
+    public function getDateLimit_date()
+    {
+        return $date = \Carbon\Carbon::parse($this->date_limit)->format('Y-m-d');
+    }
+
+    public function getDateLimit_time()
+    {
+        return $date = \Carbon\Carbon::parse($this->date_limit)->format('H:i');
+    }
 }
