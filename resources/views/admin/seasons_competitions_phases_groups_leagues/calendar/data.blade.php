@@ -25,7 +25,7 @@
 
 		<div class="form-group row">
 			<div class="col-12">
-				<a id="btnGenerate" href="" onclick="generate()" class="btn btn-primary border border-primary">
+				<a id="btnGenerate" href="" class="btn btn-primary border border-primary">
 		    		<i class="fas fa-magic mr-2"></i>
 		    		Generar calendario
 				</a>

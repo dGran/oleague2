@@ -71,12 +71,40 @@
 
 
         $("#btnGenerate").click(function(){
+            window.event.preventDefault();
             swal({
-                text: "Generando calendario, por favor espera...",
-                button: false,
+                title: "¿Estás seguro?",
+                text: 'Al generar el calendario se resetearán todos los resultados registrados',
+                buttons: {
+                    confirm: {
+                        text: "Sí, estoy seguro",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-danger",
+                        closeModal: true
+                    },
+                    cancel: {
+                        text: "No, cancelar",
+                        value: null,
+                        visible: true,
+                        className: "btn btn-secondary",
+                        closeModal: true,
+                    }
+                },
                 closeOnClickOutside: false,
-                closeOnEsc: false,
+            })
+            .then((value) => {
+                if (value) {
+                    swal({
+                        text: "Generando calendario, por favor espera...",
+                        button: false,
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+                    });
+                    $("#frmGenerate").submit();
+                }
             });
+
         });
 
         $(".btnReset").click(function(e){
@@ -154,12 +182,6 @@
 	    	$('#chk_local_sanctioned').prop('disabled', false);
 	    	$('#lb_local_sanctioned').removeClass('text-muted');
     	}
-    }
-
-
-    function generate() {
-		window.event.preventDefault();
-		$('#frmGenerate').submit();
     }
 
     function sanctioned(local, id) {

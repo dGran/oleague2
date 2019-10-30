@@ -99,31 +99,30 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $league = $this->check_league($group);
 
-        // we check if there are already days and games, if so, we eliminate them before generating
+        // we check if there are already days and games, if so, we don't generate new calendar
+        $played_matches = 0;
         if ($league->days->count() > 0) {
         	foreach ($league->days as $day) {
 				if ($day->matches->count() > 0) {
 					foreach ($day->matches as $match) {
-						$match->delete();
+                        if (!is_null($match->local_score) && !is_null($match->visitor_score)) {
+                            $played_matches++;
+                        }
 					}
 				}
-				$day->delete();
         	}
         }
-        // we check if the league has stats and we eliminate them
-        if ($league->has_stats()) {
-            $stats = LeagueStat::where('league_id', '=', $league->id)->get();
-            foreach ($stats as $stat) {
-                $stat->delete();
-            }
+
+        if ($played_matches == 0) {
+    		$second_round = request()->second_round ? 1 : 0;
+    		$inverse_order = request()->inverse_order ? 1 : 0;
+            $this->generate_days($league->id, $second_round, $inverse_order);
+            // comprobar si funciona cuando los participantes son impares y con otros numeros de participantes pares
+
+            return back()->with('success', 'Se han generado las jornadas de la liga correctamente.');
+        } else {
+            return back()->with('error', 'No es posible generar el calendario ya que existen partidos jugados, debes resetear todos los partidos jugados previamente.');
         }
-
-		$second_round = request()->second_round ? 1 : 0;
-		$inverse_order = request()->inverse_order ? 1 : 0;
-        $this->generate_days($league->id, $second_round, $inverse_order);
-        // comprobar si funciona cuando los participantes son impares y con otros numeros de participantes pares
-
-        return back()->with('success', 'Se han generado las jornadas de la liga correctamente.');
     }
 
     public function activate_day($day_id)
@@ -559,11 +558,11 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
             $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
             $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-            Telegram::sendMessage([
-                'chat_id' => '-1001241759649',
-                'parse_mode' => 'HTML',
-                'text' => $text
-            ]);
+            // Telegram::sendMessage([
+            //     'chat_id' => '-1001241759649',
+            //     'parse_mode' => 'HTML',
+            //     'text' => $text
+            // ]);
 
             // generate new (post)
             $post = Post::create([
