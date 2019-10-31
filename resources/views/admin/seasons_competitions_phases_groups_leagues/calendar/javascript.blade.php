@@ -2,6 +2,8 @@
     var competition_slug = {!! json_encode($group->phase->competition->slug) !!};
     var phase_slug = {!! json_encode($group->phase->slug) !!};
     var group_slug = {!! json_encode($group->slug) !!};
+    var goals = {!! json_encode($league->stats_goals) !!};
+    var assists = {!! json_encode($league->stats_assists) !!};
 
     $(function() {
     	$("#second_round").click(function(){
@@ -31,6 +33,25 @@
 
         $("#updateModal").on("hidden.bs.modal", function(){
             $('#modal-dialog-update').html("");
+        });
+
+        $('#updateStatsModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
+            var url = '{{ route("admin.season_competitions_phases_groups_leagues.edit_match_stats", ":match_id") }}';
+            url = url.replace(':match_id', id);
+            $.ajax({
+                url         : url,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('#modal-dialog-update-stats').html(data);
+                $('#stats_mvp').selectpicker('refresh');
+            });
+        });
+
+        $("#updateStatsModal").on("hidden.bs.modal", function(){
+            $('#modal-dialog-update-stats').html("");
         });
 
         $('#dayLimitModal').on('show.bs.modal', function(e) {
@@ -196,7 +217,7 @@
 		$("#sanctioned_id").val(id);
     }
 
-    function updateMatch(goals, assists) {
+    function updateMatch() {
         window.event.preventDefault();
         var validate = true;
         var local_score = parseInt($("#local_score").val());

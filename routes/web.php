@@ -335,7 +335,10 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/clasificacion', 'SeasonCompetitionPhaseGroupLeagueController@table')->name('admin.season_competitions_phases_groups_leagues.table');
 			// edit match - result and stadistics
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/liga/calendario/partido/{id}', 'SeasonCompetitionPhaseGroupLeagueController@editMatch')->name('admin.season_competitions_phases_groups_leagues.edit_match');
-		Route::put('/admin/competiciones/actuaizar-resultado-partido/{match_id}', 'SeasonCompetitionPhaseGroupLeagueController@updateMatch')->name('admin.season_competitions_phases_groups_leagues.update_match');
+		Route::put('/admin/competiciones/actualizar-resultado-partido/{match_id}', 'SeasonCompetitionPhaseGroupLeagueController@updateMatch')->name('admin.season_competitions_phases_groups_leagues.update_match');
+			// edit match - only stadistics
+		Route::get('/admin/competiciones/editar-estadisticas-partido/{match_id}', 'SeasonCompetitionPhaseGroupLeagueController@editMatchStats')->name('admin.season_competitions_phases_groups_leagues.edit_match_stats');
+		Route::put('/admin/competiciones/actualizar-estadisticas-partido/{match_id}', 'SeasonCompetitionPhaseGroupLeagueController@updateMatchStats')->name('admin.season_competitions_phases_groups_leagues.update_match_stats');
 			// edit day - date_limit
 		Route::get('/admin/competiciones/editar-fecha-limite-jornada/{day_id}', 'SeasonCompetitionPhaseGroupLeagueController@edit_day_limit')->name('admin.season_competitions_phases_groups_leagues.calendar.day.edit_limit');
 		Route::put('/admin/competiciones/actualizar-fecha-limite-jornada/{day_id}', 'SeasonCompetitionPhaseGroupLeagueController@update_day_limit')->name('admin.season_competitions_phases_groups_leagues.calendar.day.update_limit');

@@ -139,16 +139,18 @@
 					<tr data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
 						<td colspan="6" class="text-center">
 							@if (!is_null($match->local_score) && !is_null($match->visitor_score))
-				        		<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', $match->id) }}" class="btnReset text-danger">
+				        		<a href="{{ route('admin.season_competitions_phases_groups_leagues.reset_match', $match->id) }}" class="btnReset text-danger pb-1 d-block">
 					        		<small>
 					        			<i class="fas fa-undo-alt mr-1"></i>Resetar {{$match->stadistics}}
 					        		</small>
 				        		</a>
-				        		<a href="" data-toggle="modal" data-target="#matchLimitModal" class="d-block pb-1">
-					        		<small>
-					        			Editar estadísticas
-					        		</small>
-				        		</a>
+				        		@if (!$match->sanctioned_id)
+					        		<a href="" data-toggle="modal" data-target="#updateStatsModal" class="d-block pb-1">
+						        		<small>
+						        			Editar estadísticas
+						        		</small>
+					        		</a>
+				        		@endif
 				        	@endif
 							<small class="text-muted">
 								@if ($match->date_limit != $match->day->date_limit)
