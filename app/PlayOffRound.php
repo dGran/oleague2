@@ -20,4 +20,9 @@ class PlayOffRound extends Model
     {
         return $this->hasMany('App\PlayOffRoundClash', 'round_id', 'id');
     }
+
+    public function participants()
+    {
+        return $this->hasMany('App\PlayOffRoundParticipant', 'round_id', 'id');
+    }
 }

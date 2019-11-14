@@ -23,5 +23,5 @@
 @endsection
 
 @section('js')
-    {{-- @include('admin.seasons_competitions_phases_groups_playoffs.index.javascript') --}}
+    @include('admin.seasons_competitions_phases_groups_playoffs.index.javascript')
 @endsection

@@ -352,11 +352,17 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 		// Season Competitions Phases Groups PlayOffs
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs', 'PlayOffController@index')->name('admin.season_competitions_phases_groups_playoffs');
+		Route::get('/admin/competiciones/playoffs/generar-rondas/{playoff_id}/{num_rounds}', 'PlayOffController@generate_rounds')->name('admin.season_competitions_phases_groups_playoffs.generate_rounds');
+		Route::get('/admin/competiciones/playoffs/resetear-rondas/{playoff_id}', 'PlayOffController@reset_rounds')->name('admin.season_competitions_phases_groups_playoffs.reset_rounds');
 
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/sortear-emparejamientos/{round_id}', 'PlayOffController@generate_clashes')->name('admin.season_competitions_phases_groups_playoffs.generate_clashes');
 
 		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/{id}', 'PlayOffController@save')->name('admin.season_competitions_phases_groups_playoffs.save');
+
+
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/rondas', 'PlayOffController@rounds')->name('admin.season_competitions_phases_groups_playoffs.rounds');
+
+
 		Route::post('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/calendario/generar', 'PlayOffController@calendar_generate')->name('admin.season_competitions_phases_groups_playoffs.calendar.generate');
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/clasificacion', 'PlayOffController@table')->name('admin.season_competitions_phases_groups_playoffs.table');
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/calendario/partido/{id}', 'PlayOffController@editMatch')->name('admin.season_competitions_phases_groups_playoffs.edit_match');

@@ -558,11 +558,11 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
             $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
             $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-            // Telegram::sendMessage([
-            //     'chat_id' => '-1001241759649',
-            //     'parse_mode' => 'HTML',
-            //     'text' => $text
-            // ]);
+            Telegram::sendMessage([
+                'chat_id' => '-1001241759649',
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
 
             // generate new (post)
             $post = Post::create([
