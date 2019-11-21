@@ -4,6 +4,48 @@
     var group_slug = {!! json_encode($group->slug) !!};
 
     $(function() {
+
+        $('#assingLocalParticipantModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
+            var url = '{{ route("admin.season_competitions_phases_groups_playoffs.clashes.assing_local_participant", ":clash_id") }}';
+            url = url.replace(':clash_id', id);
+            $.ajax({
+                url         : url,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('#modal-dialog-assing-local-participant').html(data);
+            });
+        });
+
+        $("#assingLocalParticipantModal").on("hidden.bs.modal", function(){
+            $('#modal-dialog-assing-local-participant').html("");
+        });
+
+        $('#assingVisitorParticipantModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('tr');
+            var id = row.attr("data-id");
+            var url = '{{ route("admin.season_competitions_phases_groups_playoffs.clashes.assing_visitor_participant", ":clash_id") }}';
+            url = url.replace(':clash_id', id);
+            $.ajax({
+                url         : url,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('#modal-dialog-assing-visitor-participant').html(data);
+            });
+        });
+
+        $("#assingVisitorParticipantModal").on("hidden.bs.modal", function(){
+            $('#modal-dialog-assing-visitor-participant').html("");
+        });
+
+
+
+
+
+
     	$("#second_round").click(function(){
     		// $("#inverse_order").attr('disabled', !$("#inverse_order").attr('disabled'));
 	    	if ($("#second_round").prop('checked')) {

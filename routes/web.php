@@ -352,10 +352,26 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 		// Season Competitions Phases Groups PlayOffs
 		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs', 'PlayOffController@index')->name('admin.season_competitions_phases_groups_playoffs');
+			// update playoff configuration
+		Route::put('/admin/competiciones/playoffs/actualizar-configuración/{id}', 'PlayOffController@update')->name('admin.season_competitions_phases_groups_playoffs.update');
+			// update round configuration
+		Route::put('/admin/competiciones/playoffs/actualizar-configuración-ronda/{round_id}', 'PlayOffController@roundUpdate')->name('admin.season_competitions_phases_groups_playoffs.round.update');
+			// generate rounds
 		Route::get('/admin/competiciones/playoffs/generar-rondas/{playoff_id}/{num_rounds}', 'PlayOffController@generate_rounds')->name('admin.season_competitions_phases_groups_playoffs.generate_rounds');
+			// reset rounds
 		Route::get('/admin/competiciones/playoffs/resetear-rondas/{playoff_id}', 'PlayOffController@reset_rounds')->name('admin.season_competitions_phases_groups_playoffs.reset_rounds');
+			// generate clashes
+		Route::get('/admin/competiciones/playoffs/sortear-emparejamientos-vacio/{round_id}', 'PlayOffController@generate_empty_clashes')->name('admin.season_competitions_phases_groups_playoffs.generate_empty_clashes');
+		Route::get('/admin/competiciones/playoffs/sortear-emparejamientos/{round_id}', 'PlayOffController@generate_clashes')->name('admin.season_competitions_phases_groups_playoffs.generate_clashes');
+			// assing participants in clash
+		Route::get('/admin/competiciones/playoffs/asignar-participante-local-al-emparejamiento/{clash_id}', 'PlayOffController@assing_local_participant_in_clash')->name('admin.season_competitions_phases_groups_playoffs.clashes.assing_local_participant');
+		Route::put('/admin/competiciones/playoffs/asignar-participante-local-al-emparejamiento/{clash_id}/actualizar', 'PlayOffController@update_assing_local_participant_in_clash')->name('admin.season_competitions_phases_groups_playoffs.clashes.assing_local_participant.update');
+		Route::get('/admin/competiciones/playoffs/asignar-participante-visitante-al-emparejamiento/{clash_id}', 'PlayOffController@assing_visitor_participant_in_clash')->name('admin.season_competitions_phases_groups_playoffs.clashes.assing_visitor_participant');
+		Route::put('/admin/competiciones/playoffs/asignar-participante-visitante-al-emparejamiento/{clash_id}/actualizar', 'PlayOffController@update_assing_visitor_participant_in_clash')->name('admin.season_competitions_phases_groups_playoffs.clashes.assing_visitor_participant.update');
+		Route::get('/admin/competiciones/playoffs/liberar-participante-local-al-emparejamiento/{clash_id}', 'PlayOffController@liberate_local_participant_in_clash')->name('admin.season_competitions_phases_groups_playoffs.clashes.liberate_local_participant');
+		Route::get('/admin/competiciones/playoffs/liberar-participante-visitante-al-emparejamiento/{clash_id}', 'PlayOffController@liberate_visitor_participant_in_clash')->name('admin.season_competitions_phases_groups_playoffs.clashes.liberate_visitor_participant');
 
-		Route::get('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/sortear-emparejamientos/{round_id}', 'PlayOffController@generate_clashes')->name('admin.season_competitions_phases_groups_playoffs.generate_clashes');
+
 
 		Route::put('/admin/competiciones/{competition_slug}/{phase_slug}/{group_slug}/playoffs/{id}', 'PlayOffController@save')->name('admin.season_competitions_phases_groups_playoffs.save');
 

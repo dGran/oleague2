@@ -18,6 +18,8 @@
 
 @section('modal')
     @include('admin.seasons_competitions_phases_groups_playoffs.rounds.update_modal')
+    @include('admin.seasons_competitions_phases_groups_playoffs.rounds.assing_local_participant_modal')
+    @include('admin.seasons_competitions_phases_groups_playoffs.rounds.assing_visitor_participant_modal')
 @endsection
 
 @section('js')

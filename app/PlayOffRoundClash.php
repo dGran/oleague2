@@ -25,4 +25,22 @@ class PlayOffRoundClash extends Model
     {
         return $this->hasOne('App\SeasonCompetitionPhaseGroupParticipant', 'id', 'visitor_id');
     }
+
+    public function local_participant_name()
+    {
+        if ($this->local_participant) {
+            return $this->local_participant->participant->name();
+        } else {
+            return "No definido";
+        }
+    }
+
+    public function visitor_participant_name()
+    {
+        if ($this->visitor_participant) {
+            return $this->visitor_participant->participant->name();
+        } else {
+            return "No definido";
+        }
+    }
 }

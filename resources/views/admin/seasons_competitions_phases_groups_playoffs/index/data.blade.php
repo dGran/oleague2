@@ -1,16 +1,73 @@
-<div class="row">
+<div class="row m-0">
     <div class="col-12">
-        <div class="pt-3">
+        <div class="py-3 p-md-0 pt-md-3">
             <h5><strong>Configuración</strong></h5>
-                <ul>
-                    <li>Cuadro predefinido S/N</li>
-                    <li>Numero de rondas</li>
-                    <li>Stats, goleadores, asistencias, tarjetas amarillas, tarjetas rojas, MVP</li>
-                </ul>
+
+            <form
+                id="frmAdd"
+                lang="{{ app()->getLocale() }}"
+                role="form"
+                method="POST"
+                action="{{ route('admin.season_competitions_phases_groups_playoffs.update', $playoff->id) }}"
+                enctype="multipart/form-data"
+                data-toggle="validator"
+                autocomplete="off">
+                {{ csrf_field() }}
+                {{ method_field('PUT') }}
+
+                <div class="form-group row">
+                    <div class="col-12 col-md-6">
+                        <label for="predefined_rounds">Cuadro de eliminatorias predefinido</label>
+                        <select class="selectpicker form-control" name="predefined_rounds" id="predefined_rounds">
+                            <option {{ !$playoff->predefined_rounds ? 'selected' : ''}} value="0">No (sorteo en cada ronda)</option>
+                            <option {{ $playoff->predefined_rounds ? 'selected' : ''}} value="1">Sí</option>
+                        </select>
+                    </div>
+                </div>
+
+                @if ($playoff->group->phase->competition->season->use_rosters)
+                    <h5 class="pb-3 m-0"><strong>Estadísticas</strong></h5>
+                    <div class="form-group row">
+                        <div class="col-6 col-lg-3">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="stats_mvp" name="stats_mvp" {{ $playoff && $playoff->stats_mvp ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="stats_mvp">MVP</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="stats_goals" name="stats_goals" {{ $playoff && $playoff->stats_goals ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="stats_goals">Goleadores</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="stats_assists" name="stats_assists" {{ $playoff && $playoff->stats_assists ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="stats_assists">Asistencias</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="stats_yellow_cards" name="stats_yellow_cards" {{ $playoff && $playoff->stats_yellow_cards ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="stats_yellow_cards">Tarjetas Amarillas</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="stats_red_cards" name="stats_red_cards" {{ $playoff && $playoff->stats_red_cards ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="stats_red_cards">Tarjetas Rojas</label>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="form-group row">
+                    <div class="col-12">
+                        <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                    </div>
+                </div>
+
+            </form>
         </div>
 
-        <div class="pt-3 pb-4">
-            <h5><strong>Rondas</strong></h5>
+        <div class="pb-3">
+            <h5 class="py-3 m-0 border-top"><strong>Rondas</strong></h5>
             @if ($playoff->rounds->count() == 0)
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="type_round" id="unique_round" value="1">
@@ -24,7 +81,7 @@
                         Playoff completo
                     </label>
                 </div>
-                <a href="" id="btnGenerateRounds" class="btn btn-primary mt-2" data-id={{ $playoff->id }}>
+                <a href="" id="btnGenerateRounds" class="btn btn-primary mt-3" data-id={{ $playoff->id }}>
                     Generar rondas
                 </a>
             @else
@@ -55,20 +112,69 @@
                 <col width="50%" />
             </colgroup> --}}
             @foreach ($playoff->rounds as $round)
-                <tr class="days border">
+                <tr class="days border-top border-bottom">
                     <td colspan="6" class="p-2">
                         <strong class="text-uppercase float-left">{{ $round->name }}</strong>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="6">
-                        <ul>
-                            <li>editar nombre de la ronda</li>
-                            <li>editar fecha limite</li>
-                            <li>editar configuracion de ganancias por jugar, ganar y perder</li>
-                            <li>tipo de ronda, partido unico o ida y vuelta</li>
-                            <li>valor doble visitante</li>
-                        </ul>
+                    <td colspan="6" class="p-0">
+                        <form
+                            id="frmAdd"
+                            lang="{{ app()->getLocale() }}"
+                            role="form"
+                            method="POST"
+                            action="{{ route('admin.season_competitions_phases_groups_playoffs.round.update', $round->id) }}"
+                            enctype="multipart/form-data"
+                            data-toggle="validator"
+                            autocomplete="off">
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
+
+                            <div class="table-form-content pt-3 px-3 my-2">
+
+                                <div class="form-group row">
+                                    <div class="col-6 col-lg-4">
+                                        <label for="name">Nombre de la ronda</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la ronda" value="{{ old('name', $round->name) }}">
+                                    </div>
+                                    <div class="col-6 col-lg-4">
+                                        <label for="playoff_type">Tipo de eliminatoria</label>
+                                        <select class="selectpicker form-control" name="playoff_type" id="playoff_type">
+                                            <option {{ !$round->round_trip ? 'selected' : ''}} value="0">Partido único</option>
+                                            <option {{ $round->round_trip && !$round->double_value ? 'selected' : ''}} value="1">Ida y vuelta</option>
+                                            <option {{ $round->round_trip && $round->double_value ? 'selected' : ''}} value="2">Ida y vuelta (valor doble goles)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-6 col-lg-4 mt-3 mt-lg-0">
+                                        <label for="date_limit">Fecha límite</label>
+                                        <input type="datetime-local" class="form-control" name="date_limit" id="date_limit" value="{{ $round->date_limit ? $round->getDateLimit_date() . 'T' . $round->getDateLimit_time() : '' }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-6 col-lg-4">
+                                        <label for="play_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
+                                        <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Ganancias por jugar" min="0" step=".5" value="{{ old('play_amount', $round ? $round->play_amount : 1) }}">
+                                    </div>
+                                    <div class="col-6 col-lg-4 mt-3 mt-lg-0">
+                                        <label for="play_ontime_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar en plazo</label>
+                                        <input type="number" class="form-control" id="play_ontime_amount" name="play_ontime_amount" placeholder="Ganancias por derrota" min="0" step=".5" value="{{ old('play_ontime_amount', $round ? $round->play_ontime_amount : 0) }}">
+                                    </div>
+                                    <div class="col-6 col-lg-4">
+                                        <label for="win_amount"><i class="fas fa-euro-sign mr-2"></i>por victoria</label>
+                                        <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Ganancias por victoria" min="1" step=".5" value="{{ old('win_amount', $round ? $round->win_amount : 3) }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-12">
+                                        <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
                     </td>
                 </tr>
             @endforeach

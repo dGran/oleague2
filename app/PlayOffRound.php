@@ -25,4 +25,14 @@ class PlayOffRound extends Model
     {
         return $this->hasMany('App\PlayOffRoundParticipant', 'round_id', 'id');
     }
+
+    public function getDateLimit_date()
+    {
+        return $date = \Carbon\Carbon::parse($this->date_limit)->format('Y-m-d');
+    }
+
+    public function getDateLimit_time()
+    {
+        return $date = \Carbon\Carbon::parse($this->date_limit)->format('H:i');
+    }
 }
