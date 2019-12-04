@@ -1,69 +1,77 @@
 <div class="row m-0">
     <div class="col-12">
         <div class="py-3 p-md-0 pt-md-3">
-            <h5><strong>Configuración</strong></h5>
+            @if ($playoff->rounds->count() == 0)
+                <h5><strong>Configuración</strong></h5>
 
-            <form
-                id="frmAdd"
-                lang="{{ app()->getLocale() }}"
-                role="form"
-                method="POST"
-                action="{{ route('admin.season_competitions_phases_groups_playoffs.update', $playoff->id) }}"
-                enctype="multipart/form-data"
-                data-toggle="validator"
-                autocomplete="off">
-                {{ csrf_field() }}
-                {{ method_field('PUT') }}
+                <form
+                    id="frmAdd"
+                    lang="{{ app()->getLocale() }}"
+                    role="form"
+                    method="POST"
+                    action="{{ route('admin.season_competitions_phases_groups_playoffs.update', $playoff->id) }}"
+                    enctype="multipart/form-data"
+                    data-toggle="validator"
+                    autocomplete="off">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
 
-                <div class="form-group row">
-                    <div class="col-12 col-md-6">
-                        <label for="predefined_rounds">Cuadro de eliminatorias predefinido</label>
-                        <select class="selectpicker form-control" name="predefined_rounds" id="predefined_rounds">
-                            <option {{ !$playoff->predefined_rounds ? 'selected' : ''}} value="0">No (sorteo en cada ronda)</option>
-                            <option {{ $playoff->predefined_rounds ? 'selected' : ''}} value="1">Sí</option>
-                        </select>
-                    </div>
-                </div>
 
-                @if ($playoff->group->phase->competition->season->use_rosters)
-                    <h5 class="pb-3 m-0"><strong>Estadísticas</strong></h5>
                     <div class="form-group row">
-                        <div class="col-6 col-lg-3">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="stats_mvp" name="stats_mvp" {{ $playoff && $playoff->stats_mvp ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="stats_mvp">MVP</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="stats_goals" name="stats_goals" {{ $playoff && $playoff->stats_goals ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="stats_goals">Goleadores</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="stats_assists" name="stats_assists" {{ $playoff && $playoff->stats_assists ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="stats_assists">Asistencias</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="stats_yellow_cards" name="stats_yellow_cards" {{ $playoff && $playoff->stats_yellow_cards ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="stats_yellow_cards">Tarjetas Amarillas</label>
-                            </div>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="stats_red_cards" name="stats_red_cards" {{ $playoff && $playoff->stats_red_cards ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="stats_red_cards">Tarjetas Rojas</label>
-                            </div>
+                        <div class="col-12 col-md-6">
+                            <label for="predefined_rounds">Cuadro de eliminatorias predefinido</label>
+                            <select class="selectpicker form-control" name="predefined_rounds" id="predefined_rounds">
+                                <option {{ !$playoff->predefined_rounds ? 'selected' : ''}} value="0">No (sorteo en cada ronda)</option>
+                                <option {{ $playoff->predefined_rounds ? 'selected' : ''}} value="1">Sí</option>
+                            </select>
                         </div>
                     </div>
-                @endif
 
-                <div class="form-group row">
-                    <div class="col-12">
-                        <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                    @if ($playoff->group->phase->competition->season->use_rosters)
+                        <h5 class="pb-3 m-0"><strong>Estadísticas</strong></h5>
+                        <div class="form-group row">
+                            <div class="col-6 col-lg-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="stats_mvp" name="stats_mvp" {{ $playoff && $playoff->stats_mvp ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="stats_mvp">MVP</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="stats_goals" name="stats_goals" {{ $playoff && $playoff->stats_goals ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="stats_goals">Goleadores</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="stats_assists" name="stats_assists" {{ $playoff && $playoff->stats_assists ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="stats_assists">Asistencias</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="stats_yellow_cards" name="stats_yellow_cards" {{ $playoff && $playoff->stats_yellow_cards ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="stats_yellow_cards">Tarjetas Amarillas</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="stats_red_cards" name="stats_red_cards" {{ $playoff && $playoff->stats_red_cards ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="stats_red_cards">Tarjetas Rojas</label>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                        </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
+            @else
+
+                La configuración del playoff no se puede modificar ya que existen rondas. Para modificar la configuración debes resetear previamente las rondas.
+            @endif
+
+
         </div>
 
         <div class="pb-3">
@@ -140,7 +148,7 @@
                                     </div>
                                     <div class="col-6 col-lg-4">
                                         <label for="playoff_type">Tipo de eliminatoria</label>
-                                        <select class="selectpicker form-control" name="playoff_type" id="playoff_type">
+                                        <select class="selectpicker form-control" name="playoff_type" id="playoff_type" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
                                             <option {{ !$round->round_trip ? 'selected' : ''}} value="0">Partido único</option>
                                             <option {{ $round->round_trip && !$round->double_value ? 'selected' : ''}} value="1">Ida y vuelta</option>
                                             <option {{ $round->round_trip && $round->double_value ? 'selected' : ''}} value="2">Ida y vuelta (valor doble goles)</option>
@@ -155,21 +163,26 @@
                                 <div class="form-group row">
                                     <div class="col-6 col-lg-4">
                                         <label for="play_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
-                                        <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Ganancias por jugar" min="0" step=".5" value="{{ old('play_amount', $round ? $round->play_amount : 1) }}">
+                                        <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Ganancias por jugar" min="0" step=".5" value="{{ old('play_amount', $round ? $round->play_amount : 1) }}" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
                                     </div>
                                     <div class="col-6 col-lg-4 mt-3 mt-lg-0">
                                         <label for="play_ontime_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar en plazo</label>
-                                        <input type="number" class="form-control" id="play_ontime_amount" name="play_ontime_amount" placeholder="Ganancias por derrota" min="0" step=".5" value="{{ old('play_ontime_amount', $round ? $round->play_ontime_amount : 0) }}">
+                                        <input type="number" class="form-control" id="play_ontime_amount" name="play_ontime_amount" placeholder="Ganancias por derrota" min="0" step=".5" value="{{ old('play_ontime_amount', $round ? $round->play_ontime_amount : 0) }}" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
                                     </div>
                                     <div class="col-6 col-lg-4">
                                         <label for="win_amount"><i class="fas fa-euro-sign mr-2"></i>por victoria</label>
-                                        <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Ganancias por victoria" min="1" step=".5" value="{{ old('win_amount', $round ? $round->win_amount : 3) }}">
+                                        <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Ganancias por victoria" min="1" step=".5" value="{{ old('win_amount', $round ? $round->win_amount : 3) }}" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <input type="submit" class="btn btn-primary" value="Guardar cambios">
+                                        @if ($round->clashes->count() > 0)
+                                            <small class="text-info d-block pt-1">
+                                                Hay campos deshabilitados ya que existen partidos en la ronda
+                                            </small>
+                                        @endif
                                     </div>
                                 </div>
 

@@ -20,4 +20,13 @@ class PlayOff extends Model
     {
         return $this->hasMany('App\PlayOffRound', 'playoff_id', 'id');
     }
+
+    public function has_stats()
+    {
+        if ($this->stats_mvp || $this->stats_goals || $this->stats_assists || $this->stats_yellow_cards || $this->stats_red_cards) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

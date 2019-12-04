@@ -16,6 +16,11 @@ class SeasonCompetitionMatch extends Model
         return $this->hasOne('App\SeasonCompetitionPhaseGroupLeagueDay', 'id', 'day_id');
     }
 
+    public function clash()
+    {
+        return $this->hasOne('App\PlayOffRoundClash', 'id', 'clash_id');
+    }
+
     public function stats()
     {
         return $this->hasMany('App\LeagueStat', 'match_id', 'id');
@@ -131,7 +136,31 @@ class SeasonCompetitionMatch extends Model
             return $match_name . ' - Jornada ' . $this->day->order;
 
         } else { //playoffs
+            $competition = $this->clash->round->playoff->group->phase->competition;
+            $phase = $this->clash->round->playoff->group->phase;
+            $group = $this->clash->round->playoff->group;
+            $playoff = $this->clash->round->playoff;
+            $round = $this->clash->round;
 
+            $match_name = $competition->name;
+            if ($competition->phases->count() > 1) {
+                $match_name .= ' - ' . $phase->name;
+            }
+            if ($phase->groups->count() > 1) {
+                $match_name .= ' - ' . $group->name;
+            }
+            if ($playoff->rounds->count() > 1) {
+                $match_name .= ' - ' . $round->name;
+            }
+            if ($round->round_trip) {
+                if ($this->order == 1) {
+                    $match_name .= " - Partido de ida";
+                } else {
+                    $match_name .= " - Partido de vuelta";
+                }
+            }
+
+            return $match_name;
         }
     }
 }

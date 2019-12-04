@@ -157,8 +157,10 @@ class MarketController extends Controller
 			        	$player->transferable = 0;
 			        	$player->sale_price = 0;
 			        	$player->sale_auto_accept = 0;
-			        	$player->price = $player->season->free_players_new_salary * 10;
-			        	$player->salary = $player->season->free_players_new_salary;
+			        	if ($player->salary <= $player->season->free_players_new_salary) {
+				        	$player->price = $player->season->free_players_new_salary * 10;
+				        	$player->salary = $player->season->free_players_new_salary;
+			        	}
 			        	$player->save();
 			        	if ($player->save()) {
 			        		$this->manage_player_showcase($player);
@@ -1217,8 +1219,10 @@ class MarketController extends Controller
 			        	$player->transferable = 0;
 			        	$player->sale_price = null;
 			        	$player->sale_auto_accept = 0;
-			        	$player->price = $player->season->free_players_salary * 10;
-			        	$player->salary = $player->season->free_players_salary;
+			        	if ($player->salary <= $player->season->free_players_salary) {
+				        	$player->price = $player->season->free_players_salary * 10;
+				        	$player->salary = $player->season->free_players_salary;
+			        	}
 			        	$player->save();
 			        	if ($player->save()) {
 			        		$this->manage_player_showcase($player);

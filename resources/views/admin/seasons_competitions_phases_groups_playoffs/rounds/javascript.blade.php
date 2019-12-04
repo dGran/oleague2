@@ -41,6 +41,56 @@
             $('#modal-dialog-assing-visitor-participant').html("");
         });
 
+        $(".btnLiberate").click(function() {
+            window.event.preventDefault();
+            swal({
+                title: "¿Estás seguro?",
+                text: 'Se va a eliminar el participante del emparejamiento.',
+                buttons: {
+                    confirm: {
+                        text: "Sí, estoy seguro",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-danger",
+                        closeModal: true
+                    },
+                    cancel: {
+                        text: "No, cancelar",
+                        value: null,
+                        visible: true,
+                        className: "btn btn-secondary",
+                        closeModal: true,
+                    }
+                },
+                closeOnClickOutside: false,
+            })
+            .then((value) => {
+                if (value) {
+                    var url = $(this).attr('href');
+                    $(location).attr('href', url);
+                }
+            });
+        });
+
+        $('#updateModal').on('show.bs.modal', function(e) {
+            var row = $(e.relatedTarget).parents('div');
+            var id = row.attr("data-id");
+            var url = '{{ route("admin.season_competitions_phases_groups_playoffs.clashes.match.edit", ":match_id") }}';
+            url = url.replace(':match_id', id);
+            $.ajax({
+                url         : url,
+                type        : 'GET',
+                datatype    : 'html',
+            }).done(function(data){
+                $('#modal-dialog-update').html(data);
+                // $('#stats_mvp').selectpicker('refresh');
+            });
+        });
+
+        $("#updateModal").on("hidden.bs.modal", function(){
+            $('#modal-dialog-update').html("");
+        });
+
 
 
 
@@ -57,23 +107,6 @@
 	    		$("#lbinverse_order").addClass('text-muted');
 	    	}
     	});
-
-        $('#updateModal').on('show.bs.modal', function(e) {
-            var row = $(e.relatedTarget).parents('tr');
-            var id = row.attr("data-id");
-            $.ajax({
-                url: 'calendario/partido/' + id,
-                type        : 'GET',
-                datatype    : 'html',
-            }).done(function(data){
-                $('#modal-dialog-update').html(data);
-                $('#stats_mvp').selectpicker('refresh');
-            });
-        });
-
-        $("#updateModal").on("hidden.bs.modal", function(){
-            $('#modal-dialog-update').html("");
-        });
 
         $("#btnGenerate").click(function(){
             swal({

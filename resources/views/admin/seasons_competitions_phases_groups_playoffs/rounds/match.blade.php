@@ -1,6 +1,6 @@
 <div class="modal-content">
     <div class="modal-header bg-light">
-    	Jornada {{ $match->day->order }} <span class="text-muted pt-0 ml-2">Partido #{{ $match->id }}</span>
+    	Ronda {{ $match->clash->round->name }} <span class="text-muted pt-0 ml-2">Partido #{{ $match->id }}</span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -12,7 +12,7 @@
             lang="{{ app()->getLocale() }}"
             role="form"
             method="POST"
-            action="{{ route('admin.season_competitions_phases_groups_leagues.update_match', [$group->phase->competition->slug, $group->phase->slug, $group->slug, $match->id]) }}"
+            action="{{ route('admin.season_competitions_phases_groups_playoffs.clashes.match.update', $match->id) }}"
             enctype="multipart/form-data"
             data-toggle="validator"
             autocomplete="off">
@@ -105,10 +105,10 @@
                         </div>
                     </div>
 
-                    @if ($match->day->league->group->phase->competition->season->use_rosters)
+                    @if ($match->clash->round->playoff->group->phase->competition->season->use_rosters)
                         <div class="card">
                         <div class="card-header p-0 m-0 border-bottom-0">
-                                <a class="card-title accordion-toggle d-block m-0 px-3 py-2 {{ !$match->day->league->has_stats() ? 'disabled' : '' }}" data-toggle="collapse" data-parent="#accordion" href="#stats">Estadísticas</a>
+                                <a class="card-title accordion-toggle d-block m-0 px-3 py-2 {{ !$match->clash->round->playoff->has_stats() ? 'disabled' : '' }}" data-toggle="collapse" data-parent="#accordion" href="#stats">Estadísticas</a>
                             </div>
 
                             <div class="card-collapse collapse border-top" id="stats" >
@@ -120,7 +120,7 @@
                                         <li class="nav-item">
                                             <a class="nav-link" id="visitor-tab" data-toggle="tab" href="#visitor" role="tab" aria-controls="visitor" aria-selected="false">{{ $match->visitor_participant->participant->name() }}</a>
                                         </li>
-                                        @if ($match->day->league->stats_mvp)
+                                        @if ($match->clash->round->playoff->stats_mvp)
                                             <li class="nav-item">
                                                 <a class="nav-link" id="mvp-tab" data-toggle="tab" href="#mvp" role="tab" aria-controls="mvp" aria-selected="false">MVP</a>
                                             </li>
@@ -156,16 +156,16 @@
                                                             <small>{{ $player->player->name }}</small>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_goals ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_goals ? 'disabled' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_assists ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_assists ? 'disabled' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_yellow_cards ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_yellow_cards ? 'disabled' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_red_cards ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_red_cards ? 'disabled' : '' }}>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -200,16 +200,16 @@
                                                             <small>{{ $player->player->name }}</small>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_goals ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_goals_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_goals ? 'disabled' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_assists ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_assists_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_assists ? 'disabled' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_yellow_cards ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_yellow_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_yellow_cards ? 'disabled' : '' }}>
                                                         </td>
                                                         <td>
-                                                            <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->day->league->stats_red_cards ? 'disabled' : '' }}>
+                                                            <input type="number" name="stats_red_cards_{{$player->id}}" class="form-control" style="font-size: 80%; width: 3em; padding: 0.25em 0.5em" {{ !$match->clash->round->playoff->stats_red_cards ? 'disabled' : '' }}>
                                                         </td>
                                                     </tr>
                                                 @endforeach
