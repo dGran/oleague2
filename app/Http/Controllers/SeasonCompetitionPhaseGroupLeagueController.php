@@ -142,7 +142,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
                 'type' => 'default',
                 'transfer_id' => null,
                 'match_id' => null,
-                'category' => $day->day_name(),
+                'category' => $day->competition_name(),
                 'title' => "Jornada " . $day->order . " disponible",
                 'description' => "Los partidos ya están disponibles para jugar. Suerte a todos!",
                 'img' => $day->league->group->phase->competition->img,

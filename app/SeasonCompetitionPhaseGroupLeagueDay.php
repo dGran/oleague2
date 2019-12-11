@@ -37,26 +37,18 @@ class SeasonCompetitionPhaseGroupLeagueDay extends Model
         return $day_name . ' - Jornada ' . $this->order;
     }
 
-    public function day_name_wihout_competition()
+    public function competition_name()
     {
         $competition = $this->league->group->phase->competition;
         $phase = $this->league->group->phase;
         $group = $this->league->group;
 
+        $day_name = $competition->name;
         if ($competition->phases->count() > 1) {
-            $day_name = $phase->name;
-            if ($phase->groups->count() > 1) {
-                $day_name .= ' - ' . $group->name;
-            } else {
-                $day_name .= ' - Jornada ' . $this->order;
-            }
-        } else {
-            if ($phase->groups->count() > 1) {
-                $day_name = ' - ' . $group->name;
-                $day_name .= ' - Jornada ' . $this->order;
-            } else {
-                $day_name = 'Jornada ' . $this->order;
-            }
+            $day_name .= ' - ' . $phase->name;
+        }
+        if ($phase->groups->count() > 1) {
+            $day_name .= ' - ' . $group->name;
         }
         return $day_name;
     }
