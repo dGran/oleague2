@@ -19,3 +19,5 @@
 		@include('competition.partials.menu')
 	</div>
 </div>
+
+@include('competition.partials.phase_group_selector')

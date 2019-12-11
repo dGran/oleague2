@@ -29,12 +29,12 @@ Route::post('contacto/enviar', 'HomeController@contactSent')->name('contact.sent
 Route::middleware('check_active_season')->group(function () {
 	Route::get('competiciones', 'CompetitionController@index')->name('competitions');
 	Route::get('competiciones/partidas-pendientes', 'CompetitionController@pendingMatches')->name('competitions.pending_matches');
-	Route::get('competiciones/{season_slug}/{competition_slug}/clasificacion', 'CompetitionController@table')->name('competitions.competition.table');
-	Route::get('competiciones/{season_slug}/{competition_slug}/partidos', 'CompetitionController@calendar')->name('competitions.competition.calendar');
+	Route::get('competiciones/clasificacion/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@table')->name('competitions.competition.table');
+	Route::get('competiciones/partidos/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@calendar')->name('competitions.competition.calendar');
 	// Route::get('competiciones/{season_slug}/{competition_slug}/partidos/{match_id}', 'CompetitionController@match')->name('competitions.competition.match');
 	Route::get('competiciones/{season_slug}/{competition_slug}/partidos/editar/{match_id}', 'CompetitionController@editMatch')->name('competitions.competition.calendar.match.edit');
 	Route::put('competiciones/{season_slug}/{competition_slug}/partidos/editar/{match_id}', 'CompetitionController@updateMatch')->name('competitions.competition.calendar.match.update');
-	Route::get('competiciones/{season_slug}/{competition_slug}/estadisticas', 'CompetitionController@stats')->name('competitions.competition.stats');
+	Route::get('competiciones/estadisticas/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@stats')->name('competitions.competition.stats');
 });
 
 // Clubs routes

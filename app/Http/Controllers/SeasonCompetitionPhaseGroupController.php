@@ -46,6 +46,10 @@ class SeasonCompetitionPhaseGroupController extends Controller
 
         $group = SeasonCompetitionPhaseGroup::create($data);
 
+        $slug_text = str_slug($group->name) . '_' . $group->id;
+        $group->slug = $slug_text;
+        $group->save();
+
         if ($group->save()) {
             event(new TableWasSaved($group, $group->name));
             if (request()->no_close) {
@@ -84,7 +88,8 @@ class SeasonCompetitionPhaseGroupController extends Controller
             ]);
 
             $data = request()->all();
-            $data['slug'] = str_slug(request()->name);
+            $slug_text = str_slug(request()->name) . '_' . $group->id;
+            $data['slug'] = $slug_text;
 
             $group->fill($data);
             if ($group->isDirty()) {

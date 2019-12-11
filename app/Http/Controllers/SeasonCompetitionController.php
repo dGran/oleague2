@@ -144,6 +144,7 @@ class SeasonCompetitionController extends Controller
         $data['season_id'] = request()->season_id;
         $data['slug'] = str_slug(request()->name);
 
+
         if (request()->url_img) {
             $data['img'] = request()->img_link;
         } else {
@@ -160,6 +161,10 @@ class SeasonCompetitionController extends Controller
         }
 
         $competition = SeasonCompetition::create($data);
+
+        $slug_text = str_slug($competition->name) . '_' . $competition->id;
+        $competition->slug = $slug_text;
+        $competition->save();
 
         if ($competition->save()) {
             event(new TableWasSaved($competition, $competition->name));
@@ -201,7 +206,8 @@ class SeasonCompetitionController extends Controller
             ]);
 
             $data = request()->all();
-            $data['slug'] = str_slug(request()->name);
+            $slug_text = str_slug(request()->name) . '_' . $competition->id;
+            $data['slug'] = $slug_text;
 
             if (request()->url_img) {
                 $data['img'] = request()->img_link;

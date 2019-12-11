@@ -48,6 +48,10 @@ class SeasonCompetitionPhaseController extends Controller
 
         $phase = SeasonCompetitionPhase::create($data);
 
+        $slug_text = str_slug($phase->name) . '_' . $phase->id;
+        $phase->slug = $slug_text;
+        $phase->save();
+
         if ($phase->save()) {
             event(new TableWasSaved($phase, $phase->name));
             if (request()->no_close) {
@@ -87,7 +91,8 @@ class SeasonCompetitionPhaseController extends Controller
 
             $data = request()->all();
             $data['order'] = $this->calculateOrder($competition->id);
-            $data['slug'] = str_slug(request()->name);
+            $slug_text = str_slug(request()->name) . '_' . $phase->id;
+            $data['slug'] = $slug_text;
 
             $phase->fill($data);
             if ($phase->isDirty()) {

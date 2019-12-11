@@ -14,12 +14,13 @@
 			</a>
 		</li>
 
-		<li class="item {{ \Route::current()->getName() == 'competitions.competition.stats' ? 'active' : '' }}">
-			<a href="{{ route('competitions.competition.stats', [active_season()->slug, $group->phase->competition->slug]) }}">
-				<i class="fas fa-chart-bar"></i>
-				<span>Estadísticas</span>
-			</a>
-		</li>
-
+		@if ($league->has_stats())
+			<li class="item {{ \Route::current()->getName() == 'competitions.competition.stats' ? 'active' : '' }}">
+				<a href="{{ route('competitions.competition.stats', [active_season()->slug, $group->phase->competition->slug]) }}">
+					<i class="fas fa-chart-bar"></i>
+					<span>Estadísticas</span>
+				</a>
+			</li>
+		@endif
 	</ul>
 </div>
