@@ -64,7 +64,7 @@
 
                 </table>
 
-            	@if ($match->day->league->group->phase->competition->season->use_rosters)
+            	@if ($match->day->league->has_stats())
                 	<div id="accordion" class="p-3">
                     	<div class="card mb-1">
                         	<div class="card-header p-0 m-0 border-bottom-0">

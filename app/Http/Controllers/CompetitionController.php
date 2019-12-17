@@ -396,8 +396,18 @@ class CompetitionController extends Controller
 			$visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
 	    	$visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
 
-			$table_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/clasificacion';
-			$calendar_link = 'https://lpx.es/competiciones/' . $season_slug . '/' . $competition_slug . '/partidos';
+			$table_link = 'https://lpx.es/competiciones/clasificacion/' . $season_slug . '/' . $competition_slug;
+			$calendar_link = 'https://lpx.es/competiciones/partidos/' . $season_slug . '/' . $competition_slug;
+			// if ($match->day->league->group->phase->groups->count() > 1) {
+			// 	$table_link .= '/' . $match->day->league->group->phase->slug . '/' . $match->day->league->group->phase->group->slug;
+			// 	$calendar_link .= '/' . $match->day->league->group->phase->slug . '/' . $match->day->league->group->phase->group->slug;
+			// } else {
+			// 	if ($competition->phases->count() > 1) {
+			// 		$table_link .= '/' . $match->day->league->group->phase->slug;
+			// 		$calendar_link .= '/' . $match->day->league->group->phase->slug;
+			// 	}
+			// }
+			// dd($table_link);
 			$title = "\xE2\x9A\xBD Partido jugado \xF0\x9F\x8E\xAE" . ' - ' . $match->match_name();
 
 			$text = "$title\n\n";
@@ -409,11 +419,11 @@ class CompetitionController extends Controller
 			$text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
 			$text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-			// Telegram::sendMessage([
-			//     'chat_id' => '-1001241759649',
-			//     'parse_mode' => 'HTML',
-			//     'text' => $text
-			// ]);
+			Telegram::sendMessage([
+			    'chat_id' => '-1001241759649',
+			    'parse_mode' => 'HTML',
+			    'text' => $text
+			]);
 
 	        // generate new (post)
 	        $post = Post::create([
