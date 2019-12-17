@@ -75,7 +75,7 @@
                                         <span class="pr-1">
                                             {{ $stat->player->player->name }}
                                         </span>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pr-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pr-1">
                                         <i class="fas fa-futbol"></i>
                                     </div>
                                 @endfor
@@ -90,7 +90,7 @@
                                         <span class="pr-1">
                                             {{ $stat->player->player->name }}
                                         </span>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pr-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pr-1">
                                         <i class="icon-soccer-assist"></i>
                                     </div>
                                 @endfor
@@ -105,7 +105,7 @@
                                         <span class="pr-1">
                                             {{ $stat->player->player->name }}
                                         </span>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pr-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pr-1">
                                         <i class="icon-soccer-card text-warning"></i>
                                    </div>
                                 @endfor
@@ -120,7 +120,7 @@
                                         <span class="pr-1">
                                             {{ $stat->player->player->name }}
                                         </span>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pr-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pr-1">
                                         <i class="icon-soccer-card text-danger"></i>
                                     </div>
                                 @endfor
@@ -136,7 +136,7 @@
                                 @for ($i = 1; $i <= $stat->goals; $i++)
                                     <div style="font-size: .7em">
                                         <i class="fas fa-futbol"></i>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pl-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pl-1">
                                         <span class="pl-1">
                                             {{ $stat->player->player->name }}
                                         </span>
@@ -151,7 +151,7 @@
                                 @for ($i = 1; $i <= $stat->assists; $i++)
                                     <div style="font-size: .7em">
                                         <i class="icon-soccer-assist"></i>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pl-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pl-1">
                                         <span class="pl-1">
                                             {{ $stat->player->player->name }}
                                         </span>
@@ -166,7 +166,7 @@
                                 @for ($i = 1; $i <= $stat->yellow_cards; $i++)
                                     <div style="font-size: .7em">
                                         <i class="icon-soccer-card text-warning"></i>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pl-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pl-1">
                                         <span class="pl-1">
                                             {{ $stat->player->player->name }}
                                         </span>
@@ -181,7 +181,7 @@
                                 @for ($i = 1; $i <= $stat->red_cards; $i++)
                                     <div style="font-size: .7em">
                                         <i class="icon-soccer-card text-danger"></i>
-                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="16" class="pl-1">
+                                        <img src="{{ $stat->player->player->getImgFormatted() }}" alt="" width="20" class="pl-1">
                                         <span class="pl-1">
                                             {{ $stat->player->player->name }}
                                         </span>
