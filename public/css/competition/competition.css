@@ -213,6 +213,18 @@
   border-bottom: 1px solid #f2f2f2;
 }
 
+.calendar .round-trip td {
+  border-bottom: 1px solid #f2f2f2;
+  font-size: .8em;
+  padding: .5em;
+  text-align: center;
+}
+
+.calendar .round-trip td span {
+  color: #5bc0de;
+  text-transform: uppercase;
+}
+
 .calendar .matches {
   font-size: .9em;
   line-height: 1.2em;
@@ -302,6 +314,15 @@
   text-align: right;
 }
 
+.playoffs .round {
+  background: #ccc;
+}
+
+.playoffs .round .name {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
 .scrolling-wrapper .card {
   display: inline-block;
   background: transparent;
@@ -346,7 +367,7 @@
   white-space: nowrap;
 }
 
-#updateModal {
+.modal {
   margin-top: 55px;
 }
 

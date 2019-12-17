@@ -35,4 +35,14 @@ class PlayOffRound extends Model
     {
         return $date = \Carbon\Carbon::parse($this->date_limit)->format('H:i');
     }
+
+    public function is_last_round()
+    {
+        $last_round = PlayOffRound::where('playoff_id', $this->playoff_id)->orderBy('id', 'desc')->first();
+        if ($last_round->id == $this->id) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

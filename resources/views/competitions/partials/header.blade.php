@@ -16,8 +16,8 @@
 
 <div class="competition-menu">
 	<div class="container">
-		@include('competition.partials.menu')
+		@include('competitions.partials.menu')
 	</div>
 </div>
 
-@include('competition.partials.phase_group_selector')
+@include('competitions.partials.phase_group_selector')

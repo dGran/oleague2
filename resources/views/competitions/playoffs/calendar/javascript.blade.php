@@ -7,7 +7,7 @@
             var row = $(e.relatedTarget).parents('tr');
             var id = row.attr("data-id");
 
-            var url = '{{ route("competitions.competition.calendar.match.edit", [":season_slug", ":competition_slug", ":match_id"]) }}';
+            var url = '{{ route("competitions.calendar.match.edit", [":season_slug", ":competition_slug", ":match_id"]) }}';
             url = url.replace(':season_slug', season_slug);
             url = url.replace(':competition_slug', competition_slug);
             url = url.replace(':match_id', id);

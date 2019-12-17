@@ -27,8 +27,9 @@ class PlayOffController extends Controller
     public function index($competition_slug, $phase_slug, $group_slug)
     {
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
-        // $playoff = $this->check_playoff($group);
-        $playoff = PlayOff::where('group_id', '=', $group->id)->get()->first();
+        $playoff = $this->check_playoff($group);
+        // $playoff = PlayOff::where('group_id', '=', $group->id)->get()->first();
+        // dd($playoff);
 
         return view('admin.seasons_competitions_phases_groups_playoffs.index', compact('group', 'playoff'));
     }
@@ -217,6 +218,7 @@ class PlayOffController extends Controller
 		$round_id = $clash->round->id;
 
         $round_participants = PlayOffRoundParticipant::select('*')
+        		->where('round_id', '=', $round_id)
                 ->whereNotIn('participant_id', function($query) use ($round_id) {
                    $query->select('local_id')->from('playoffs_rounds_clashes')->whereNotNull('local_id')->where('round_id', '=', $round_id);
                 })
@@ -247,6 +249,7 @@ class PlayOffController extends Controller
 		$round_id = $clash->round->id;
 
         $round_participants = PlayOffRoundParticipant::select('*')
+        		->where('round_id', '=', $round_id)
                 ->whereNotIn('participant_id', function($query) use ($round_id) {
                    $query->select('visitor_id')->from('playoffs_rounds_clashes')->whereNotNull('visitor_id')->where('round_id', '=', $round_id);
                 })
@@ -281,7 +284,7 @@ class PlayOffController extends Controller
 			$match->delete();
 		}
 
-		return back()->with('success', 'Participante local liberado correctamente');
+		return back()->with('success', 'Participante local eliminado correctamente');
 	}
 
 	public function liberate_visitor_participant_in_clash($clash_id)
@@ -294,7 +297,7 @@ class PlayOffController extends Controller
 			$match->delete();
 		}
 
-		return back()->with('success', 'Participante visitante liberado correctamente');
+		return back()->with('success', 'Participante visitante eliminado correctamente');
 	}
 
 	public function editMatch($match_id)
@@ -570,14 +573,14 @@ class PlayOffController extends Controller
         	$playoff = PlayOff::where('group_id', '=', $group->id)->get()->first();
         }
 
-        if ($playoff->rounds->count() == 0) {
-        	if ($playoff->num_rounds == 0) {
-        		$this->generate_rounds($playoff, null);
-        	}
-        	if ($playoff->num_rounds == 1) {
-        		$this->generate_rounds($playoff, 1);
-        	}
-        }
+        // if ($playoff->rounds->count() == 0) {
+        // 	if ($playoff->num_rounds == 0) {
+        // 		$this->generate_rounds($playoff, null);
+        // 	}
+        // 	if ($playoff->num_rounds == 1) {
+        // 		$this->generate_rounds($playoff, 1);
+        // 	}
+        // }
 
         return $playoff;
     }

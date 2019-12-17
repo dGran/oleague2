@@ -6,17 +6,17 @@
 
 @section('content')
 
-	@include('competition.partials.header')
+	@include('competitions.partials.header')
 
 	<div class="wrapper" style="background: #f9f9f9">
-		@include('competition.competition.stats.content')
+		@include('competitions.playoffs.table.content')
 	</div> {{-- wrapper --}}
 @endsection
 
 @section('breadcrumb')
-	@include('competition.competition.stats.breadcrumb')
+	@include('competitions.playoffs.table.breadcrumb')
 @endsection
 
 @section('bottom-fixed')
-	@include('competition.partials.bottom_fixed')
+	@include('competitions.partials.bottom_fixed')
 @endsection

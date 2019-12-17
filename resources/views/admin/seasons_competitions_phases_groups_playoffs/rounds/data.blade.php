@@ -102,7 +102,7 @@
                                         @endif
                                     </small>
                                     <a href="{{ route('admin.season_competitions_phases_groups_playoffs.clashes.liberate_local_participant', $clash->id) }}" class="btnLiberate d-block text-danger">
-                                        <small>Liberar participante</small>
+                                        <small>Eliminar participante</small>
                                     </a>
                                 @else
                                     <span class="text-uppercase">No definido</span>
@@ -135,7 +135,7 @@
                                         @endif
                                     </small>
                                     <a href="{{ route('admin.season_competitions_phases_groups_playoffs.clashes.liberate_visitor_participant', $clash->id) }}" class="btnLiberate d-block text-danger">
-                                        <small>Liberar participante</small>
+                                        <small>Eliminar participante</small>
                                     </a>
                                 @else
                                     <span class="text-uppercase">No definido</span>
@@ -196,7 +196,7 @@
                                     @endforeach
                                 </td>
                             </tr>
-                        @else
+                        @elseif ($clash->matches->count()>0)
                             <tr>
                                 <td colspan="9" class="text-center">
                                     <div data-id="{{ $clash->matches->first()->id }}">

@@ -197,6 +197,18 @@
 			border-bottom: 1px solid #f2f2f2;
 		}
 	}
+	.round-trip {
+		td {
+			border-bottom: 1px solid #f2f2f2;
+			font-size: .8em;
+			padding: .5em;
+			text-align: center;
+			span {
+				color: $info;
+				text-transform: uppercase;
+			}
+		}
+	}
 	.matches {
 		font-size: .9em;
 		line-height: 1.2em;
@@ -288,6 +300,20 @@
 	}
 }
 
+.playoffs {
+	.round {
+		background: #ccc;
+		.name {
+			font-size: 1.1em;
+			font-weight: bold;
+		}
+	}
+
+	.match {
+
+	}
+}
+
 .scrolling-wrapper {
 	.card {
 		display: inline-block;
@@ -328,7 +354,7 @@
 	}
 }
 
-#updateModal {
+.modal {
 	margin-top: 55px;
 }
 

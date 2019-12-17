@@ -13,18 +13,18 @@
 			@if ($group->phase->groups->count()>1)
 				<select class="selectpicker" id="group_selector">
 					@foreach ($group->phase->groups as $groupe)
-						@if (\Route::current()->getName() == 'competitions.competition.table')
-							<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.competition.table', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
+						@if (\Route::current()->getName() == 'competitions.table')
+							<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.table', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
 								{{ $groupe->name }}
 							</option>
 						@endif
-						@if (\Route::current()->getName() == 'competitions.competition.calendar')
-							<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.competition.calendar', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
+						@if (\Route::current()->getName() == 'competitions.calendar')
+							<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.calendar', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
 								{{ $groupe->name }}
 							</option>
 						@endif
-						@if (\Route::current()->getName() == 'competitions.competition.stats')
-							<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.competition.stats', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
+						@if (\Route::current()->getName() == 'competitions.stats')
+							<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.stats', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
 								{{ $groupe->name }}
 							</option>
 						@endif

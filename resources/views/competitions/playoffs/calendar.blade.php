@@ -6,25 +6,25 @@
 
 @section('content')
 
-	@include('competition.partials.header')
+	@include('competitions.partials.header')
 
 	<div class="wrapper" style="background: #f9f9f9">
-		@include('competition.competition.calendar.content')
+		@include('competitions.playoffs.calendar.content')
 	</div> {{-- wrapper --}}
 @endsection
 
 @section('breadcrumb')
-	@include('competition.competition.calendar.breadcrumb')
+	@include('competitions.playoffs.calendar.breadcrumb')
 @endsection
 
 @section('bottom-fixed')
-	@include('competition.partials.bottom_fixed')
+	@include('competitions.partials.bottom_fixed')
 @endsection
 
 @section('modal')
-    @include('competition.competition.calendar.update_modal')
+    @include('competitions.playoffs.calendar.update_modal')
 @endsection
 
 @section('js')
-    @include('competition.competition.calendar.javascript')
+    @include('competitions.playoffs.calendar.javascript')
 @endsection
