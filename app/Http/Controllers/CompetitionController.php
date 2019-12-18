@@ -34,7 +34,11 @@ class CompetitionController extends Controller
     	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
 
 		if ($competition->phases->count()>0) {
-			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+			if (!$phase_slug) {
+				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+			} else {
+				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
+			}
 			$game_mode = $this->check_game_mode($phase);
 		} else {
 			return back()->with('error', 'La competición está en fase de configuración');
@@ -120,7 +124,11 @@ class CompetitionController extends Controller
     	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
 
 		if ($competition->phases->count()>0) {
-			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+			if (!$phase_slug) {
+				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+			} else {
+				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
+			}
 			$game_mode = $this->check_game_mode($phase);
 		} else {
 			return back()->with('error', 'La competición está en fase de configuración');
@@ -163,7 +171,11 @@ class CompetitionController extends Controller
     	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
 
 		if ($competition->phases->count()>0) {
-			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+			if (!$phase_slug) {
+				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+			} else {
+				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
+			}
 		} else {
 			return back()->with('error', 'La competición está en fase de configuración');
 		}

@@ -121,4 +121,83 @@
 			</table>
 		</div>
 	</div>
-</div>
+
+
+
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-6 pb-4 px-3 px-md-0" style="font-size: .8em">
+			<h5>Estadísticas</h5>
+
+			<strong>Equipo más goleador</strong>
+			<div class="clearfix py-1 pl-3">
+				<div class="float-left">
+					<span class="text-success">{{ $table_participants->sortByDesc('gf')->first()['participant']->participant->name() }}</span>
+				</div>
+				<div class="float-right">
+					{{ $table_participants->sortByDesc('gf')->first()['gf'] }} goles
+				</div>
+			</div>
+
+			<strong>Equipo menos goleador</strong>
+			<div class="clearfix py-1 pl-3">
+				<div class="float-left">
+					<span class="text-danger">{{ $table_participants->sortBy('gf')->first()['participant']->participant->name() }}</span>
+				</div>
+				<div class="float-right">
+					{{ $table_participants->sortBy('gf')->first()['gf'] }} goles
+				</div>
+			</div>
+
+			<strong>Equipo menos goleado</strong>
+			<div class="clearfix py-1 pl-3">
+				<div class="float-left">
+					<span class="text-success">{{ $table_participants->sortBy('gc')->first()['participant']->participant->name() }}</span>
+				</div>
+				<div class="float-right">
+					{{ $table_participants->sortBy('gc')->first()['gc'] }} goles
+				</div>
+			</div>
+
+			<strong>Equipo más goleado</strong>
+			<div class="clearfix py-1 pl-3">
+				<div class="float-left">
+					<span class="text-danger">{{ $table_participants->sortByDesc('gc')->first()['participant']->participant->name() }}</span>
+				</div>
+				<div class="float-right">
+					{{ $table_participants->sortByDesc('gc')->first()['gc'] }} goles
+				</div>
+			</div>
+
+			<strong>Mejor diferencia de goles</strong>
+			<div class="clearfix py-1 pl-3">
+				<div class="float-left">
+					<span class="text-success">{{ $table_participants->sortByDesc('avg')->first()['participant']->participant->name() }}</span>
+				</div>
+				<div class="float-right">
+					{{ $table_participants->sortByDesc('avg')->first()['avg'] }} goles
+				</div>
+			</div>
+
+			<strong>Peor diferencia de goles</strong>
+			<div class="clearfix py-1 pl-3">
+				<div class="float-left">
+					<span class="text-danger">{{ $table_participants->sortBy('avg')->first()['participant']->participant->name() }}</span>
+				</div>
+				<div class="float-right">
+					{{ $table_participants->sortBy('avg')->first()['avg'] }} goles
+				</div>
+			</div>
+
+			<strong>Rey del empate</strong>
+			<div class="clearfix py-1 pl-3">
+				<div class="float-left">
+					{{ $table_participants->sortByDesc('pe')->first()['participant']->participant->name() }}
+				</div>
+				<div class="float-right">
+					{{ $table_participants->sortByDesc('pe')->first()['pe'] }} empates
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div> {{-- container --}}
