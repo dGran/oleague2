@@ -5,8 +5,8 @@
 			<h2 class="text-center">
 				Resumen del mercado, todos los movimientos
 			</h2>
-		</div> {{-- container --}}
-	</div> {{-- header --}}
+		</div>  <!-- container -->
+	</div>  <!-- header -->
 
 {{-- <div class="scrolling-wrapper"> --}}
 {{-- <ul class="nav nav-pills justify-content-center my-3 mx-0" style="font-size: .8em">

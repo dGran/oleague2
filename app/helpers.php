@@ -160,3 +160,12 @@ function online_registered_users()
 
     return $onlineUsersCount;
 }
+
+function even_number($number){
+    if ($number % 2 == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}

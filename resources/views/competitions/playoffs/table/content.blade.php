@@ -1,4 +1,85 @@
 <div class="playoffs">
+	<div class="container py-3">
+		<div class="playoffs-box">
+			@if ($playoff->rounds->count()>0)
+				<table class="playoffs-table">
+					<thead>
+						<tr>
+							@foreach ($playoff->rounds as $round)
+								<th>
+									{{ $round->name }}
+								</th>
+								{{-- if not is last round --}}
+								<th></th>
+								<th></th>
+							@endforeach
+						</tr>
+					</thead>
+					<tbody>
+						@foreach ($playoff->rounds as $key_round => $round)
+							@foreach ($round->clashes as $key => $clash)
+								<tr>
+									<td class="clash local">
+										{{ $clash->local_participant->participant->name() }}
+									</td>
+									@if (!$round->is_last_round() && even_number($key + 1)) {{-- even --}}
+										<td class="clash line bottom right">par {{$key+1}}</td>
+									@endif
+								</tr>
+								<tr>
+									<td class="clash visitor">
+										{{ $clash->visitor_participant->participant->name() }}
+									</td>
+									@if (!$round->is_last_round() && !even_number($key + 1)) {{-- odd --}}
+										<td class="clash line top right">impar {{$key+1}}</td>
+									@endif
+								</tr>
+
+								@for ($i = 0; $i <= ($key_round)*2; $i++)
+									<tr>
+										<td colspan="2"></td>
+										<td class="clash local">
+											{{ $clash->local_participant->participant->name() }}
+										</td>
+										@if (!$round->is_last_round() && even_number($key + 1)) {{-- even --}}
+											<td class="clash line bottom right">par {{$key+1}}</td>
+										@endif
+									</tr>
+									<tr>
+										<td colspan="2"></td>
+										<td class="clash visitor">
+											{{ $clash->visitor_participant->participant->name() }}
+										</td>
+										@if (!$round->is_last_round() && !even_number($key + 1)) {{-- odd --}}
+											<td class="clash line top right">impar {{$key+1}}</td>
+										@endif
+									</tr>
+									</tr>
+								@endfor
+
+{{-- 								@if (!$round->is_last_round())
+									@for ($i = 0; $i < ($key_round+1)*2; $i++)
+										<tr><td colspan="2" class="clash line right">&nbsp;</td></tr>
+									@endfor
+								@endif --}}
+
+							@endforeach
+						@endforeach
+
+
+
+					</tbody>
+				</table> {{-- playoffs-table --}}
+			@else
+				El cuadro de eliminatorias está en fase de preparación
+			@endif
+		</div> {{-- playofffs-box --}}
+
+	</div> {{-- container --}}
+
+</div> {{-- playoffs --}}
+
+<div class="playoffs">
 	@if ($playoff->rounds->count()>0)
 {{$playoff->winner()}}
 		@if ($playoff->winner())

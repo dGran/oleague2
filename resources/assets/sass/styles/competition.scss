@@ -301,6 +301,76 @@
 }
 
 .playoffs {
+
+	.playoffs-box {
+		overflow-x:scroll;
+		white-space: nowrap;
+	}
+	.playoffs-table {
+	    border-collapse: separate !important;
+	    border-spacing: 0;
+		thead {
+			tr {
+				th {
+					font-size: 12.5px;
+					color: navy;
+					text-transform: uppercase;
+					padding-bottom: 1em;
+				}
+			}
+		}
+		tbody {
+			td {
+				// border: 1px solid red;
+				// .next-round {
+				// 	border-left: solid 20px red;
+				// 	border-bottom: solid 20px transparent;
+				// 	border-top: solid 20px transparent;
+				// }
+			}
+			.clash {
+				background: #fff;
+				font-size: .9em;
+				min-width: 238px;
+				&.local {
+					border-left: 1px solid #ccc;
+					border-top: 1px solid #ccc;
+					border-right: 1px solid #ccc;
+					border-radius: 4px 4px 0px 0px;
+					-moz-border-radius: 4px 4px 0px 0px;
+					-webkit-border-radius: 4px 4px 0px 0px;
+
+				}
+				&.visitor {
+					border-left: 1px solid #ccc;
+					border-top: 1px solid #ccc;
+					border-right: 1px solid #ccc;
+					border-bottom: 1px solid #ccc;
+					border-radius: 0px 0px 4px 4px;
+					-moz-border-radius: 0px 0px 4px 4px;
+					-webkit-border-radius: 0px 0px 4px 4px;
+				}
+				&.line {
+					background-color: transparent;
+					min-width: 15px;
+					&.top {
+						border-top: 1px solid #B3D0A7;
+					}
+					&.bottom {
+						border-bottom: 1px solid #B3D0A7;
+					}
+					&.right {
+						border-right: 1px solid #B3D0A7;
+					}
+					&.left {
+						border-left: 1px solid #B3D0A7;
+					}
+				}
+
+			}
+		}
+	}
+
 	.round {
 		background: #ccc;
 		.name {

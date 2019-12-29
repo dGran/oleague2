@@ -30,8 +30,8 @@
 		<ul>
 			<li class="item {{ \Route::current()->getName() == 'competitions.table' ? 'active' : '' }}">
 				<a href="{{ route('competitions.table', [active_season()->slug, $group->phase->competition->slug]) }}">
-					<i class="fas fa-th-list"></i>
-					<span>Clasificación</span>
+					<i class="icon-playoff"></i>
+					<span>Playoffs</span>
 				</a>
 			</li>
 

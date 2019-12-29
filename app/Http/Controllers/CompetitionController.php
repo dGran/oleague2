@@ -35,7 +35,8 @@ class CompetitionController extends Controller
 
 		if ($competition->phases->count()>0) {
 			if (!$phase_slug) {
-				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)
+				->where('active', '=', 1)->firstOrFail();
 			} else {
 				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
 			}
@@ -114,7 +115,7 @@ class CompetitionController extends Controller
 			}
 
 	        return view('competitions.playoffs.table', compact('group', 'playoff', 'competitions', 'competition'));
-
+	        // return redirect()->route('competitions.calendar', [$season_slug, $competition_slug, $phase_slug, $group_slug]);
 		}
     }
 
@@ -125,7 +126,8 @@ class CompetitionController extends Controller
 
 		if ($competition->phases->count()>0) {
 			if (!$phase_slug) {
-				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)
+				->where('active', '=', 1)->firstOrFail();
 			} else {
 				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
 			}
@@ -172,7 +174,8 @@ class CompetitionController extends Controller
 
 		if ($competition->phases->count()>0) {
 			if (!$phase_slug) {
-				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)->firstOrFail();
+				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)
+				->where('active', '=', 1)->firstOrFail();
 			} else {
 				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
 			}

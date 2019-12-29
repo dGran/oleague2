@@ -122,6 +122,9 @@ src: local('../fonts/DINPro-Bold'), url('../fonts/DINPro-Bold_13934.woff') forma
 .icon-safe-box:before {
   content: "\e91d";
 }
+.icon-playoff:before {
+  content: "\e920";
+}
 .icon-soccer-assist:before {
   content: "\e901";
 }
