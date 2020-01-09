@@ -169,3 +169,12 @@ function even_number($number){
         return false;
     }
 }
+
+function round_spaces($round) {
+	if ($round == 1) { return 2; }
+	if ($round == 2) { return 4; }
+	if ($round == 3) { return 8; }
+	if ($round == 4) { return 16; }
+	if ($round == 5) { return 32; }
+	if ($round == 6) { return 64; }
+}

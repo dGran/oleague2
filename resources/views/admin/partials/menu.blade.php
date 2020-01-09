@@ -10,14 +10,6 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a href="">
-        <span>
-            <i class="fas fa-plug fa-fw mr-2"></i>
-            Usuarios conectados
-        </span>
-    </a>
-</li>
 
 <li class="section">
     TORNEO
@@ -54,8 +46,8 @@
         </span>
     </a>
 </li>
-<li class="item pending">
-    <a href="">
+<li class="item {{ Request::is('admin/historial-de-economia*') ? 'current' : '' }}">
+    <a href="{{ route('admin.season_cash_history') }}">
         <span>
             <i class="fas fa-piggy-bank fa-fw mr-2"></i>
             Economía
@@ -67,14 +59,6 @@
         <span>
             <i class="fas fa-trophy fa-fw mr-2"></i>
             Competiciones
-        </span>
-    </a>
-</li>
-<li class="item pending">
-    <a href="">
-        <span>
-            <i class="fas fa-gavel fa-fw mr-2"></i>
-            Reglas
         </span>
     </a>
 </li>

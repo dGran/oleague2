@@ -273,6 +273,18 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 		Route::get('/admin/temporada-jugadores/jugadores/generar-packs/{season_id}', 'SeasonPlayerController@generatePacks')->name('admin.season_players.generate.packs');
 
+		// Cash History
+		Route::get('/admin/historial-de-economia', 'SeasonParticipantCashHistoryController@index')->name('admin.season_cash_history');
+		Route::get('/admin/historial-de-economia/{season_id}/nuevo', 'SeasonParticipantCashHistoryController@add')->name('admin.season_cash_history.add');
+		Route::post('/admin/historial-de-economia/nuevo', 'SeasonParticipantCashHistoryController@save')->name('admin.season_cash_history.save');
+		Route::get('/admin/historial-de-economia/{id}', 'SeasonParticipantCashHistoryController@edit')->name('admin.season_cash_history.edit');
+		Route::put('/admin/historial-de-economia/{id}', 'SeasonParticipantCashHistoryController@update')->name('admin.season_cash_history.update');
+		Route::get('/admin/historial-de-economia/expulsar/{id}', 'SeasonParticipantCashHistoryController@kickout')->name('admin.season_cash_history.kickout');
+		Route::delete('/admin/historial-de-economia/eliminar/{id}', 'SeasonParticipantCashHistoryController@destroy')->name('admin.season_cash_history.destroy');
+		Route::get('/admin/historial-de-economia/eliminar-seleccionados/{ids}', 'SeasonParticipantCashHistoryController@destroyMany')->name('admin.season_cash_history.destroy.many');
+		Route::get('/admin/historial-de-economia/exportar/{filename}/{type}/{filterSeason}/{filterParticipant}/{order}/{ids?}', 'SeasonParticipantCashHistoryController@exportFile')->name('admin.season_cash_history.export.file');
+		Route::post('/admin/historial-de-economia/importar', 'SeasonParticipantCashHistoryController@importFile')->name('admin.season_cash_history.import.file');
+
 		// Season Competitions
 		Route::get('/admin/competiciones', 'SeasonCompetitionController@index')->name('admin.season_competitions');
 		Route::get('/admin/competiciones/{season_id}/nuevo', 'SeasonCompetitionController@add')->name('admin.season_competitions.add');

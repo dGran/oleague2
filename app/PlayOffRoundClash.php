@@ -82,4 +82,24 @@ class PlayOffRoundClash extends Model
         return $participant->participant;
 
     }
+
+    public function result()
+    {
+        if ($this->matches->count()>0) {
+            $result = [];
+            if ($this->round->round_trip) { // round_trip
+                foreach ($this->matches as $key => $match) {
+                    $result[$key]['local'] = $match->local_score;
+                    $result[$key]['visitor'] = $match->visitor_score;
+                }
+            } else { // unique match
+                $match = $this->matches->first();
+                $result['local'] = $match->local_score;
+                $result['visitor'] = $match->visitor_score;
+            }
+            return $result;
+        } else {
+            return null;
+        }
+    }
 }

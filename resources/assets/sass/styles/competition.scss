@@ -301,72 +301,123 @@
 }
 
 .playoffs {
-
 	.playoffs-box {
+		font-size: 0px;
 		overflow-x:scroll;
 		white-space: nowrap;
 	}
 	.playoffs-table {
-	    border-collapse: separate !important;
-	    border-spacing: 0;
+	    // border-collapse: separate !important;
+	    // border-spacing: 0;
+
+	    display: inline-block;
+	    font-size: .9rem;
+	    vertical-align: middle;
 		thead {
 			tr {
 				th {
-					font-size: 12.5px;
 					color: navy;
-					text-transform: uppercase;
+					font-size: 12.5px;
 					padding-bottom: 1em;
+					text-transform: uppercase;
+				}
+				.round {
+					min-width: 238px;
+				}
+				.line {
+					min-width: 15px;
 				}
 			}
 		}
 		tbody {
 			td {
-				// border: 1px solid red;
-				// .next-round {
-				// 	border-left: solid 20px red;
-				// 	border-bottom: solid 20px transparent;
-				// 	border-top: solid 20px transparent;
-				// }
+				height: 32px;
+				padding: 0;
 			}
 			.clash {
 				background: #fff;
-				font-size: .9em;
-				min-width: 238px;
-				&.local {
-					border-left: 1px solid #ccc;
-					border-top: 1px solid #ccc;
-					border-right: 1px solid #ccc;
-					border-radius: 4px 4px 0px 0px;
-					-moz-border-radius: 4px 4px 0px 0px;
-					-webkit-border-radius: 4px 4px 0px 0px;
-
+				min-width: 214px;
+				&.winner {
+					background: #FCFEEE;
+					.participant {
+						.name, .result {
+							background: #FCFEEE;
+							font-weight: bold;
+						}
+					}
 				}
-				&.visitor {
-					border-left: 1px solid #ccc;
-					border-top: 1px solid #ccc;
-					border-right: 1px solid #ccc;
-					border-bottom: 1px solid #ccc;
-					border-radius: 0px 0px 4px 4px;
-					-moz-border-radius: 0px 0px 4px 4px;
-					-webkit-border-radius: 0px 0px 4px 4px;
-				}
-				&.line {
-					background-color: transparent;
-					min-width: 15px;
-					&.top {
-						border-top: 1px solid #B3D0A7;
-					}
-					&.bottom {
-						border-bottom: 1px solid #B3D0A7;
-					}
-					&.right {
-						border-right: 1px solid #B3D0A7;
-					}
-					&.left {
+				.participant {
+					display: block;
+					font-size: .8em;
+					height: 100%;
+					&.local {
 						border-left: 1px solid #B3D0A7;
+						border-right: 1px solid #B3D0A7;
+						border-top: 1px solid #B3D0A7;
+						border-radius: 4px 4px 0px 0px;
+						-moz-border-radius: 4px 4px 0px 0px;
+						-webkit-border-radius: 4px 4px 0px 0px;
+					}
+					&.visitor {
+						border-left: 1px solid #B3D0A7;
+						border-right: 1px solid #B3D0A7;
+						border-bottom: 1px solid #B3D0A7;
+						border-top: 1px solid #E4E4E4;
+						border-radius: 0px 0px 4px 4px;
+						-moz-border-radius: 0px 0px 4px 4px;
+						-webkit-border-radius: 0px 0px 4px 4px;
+					}
+					.logo {
+						border-right: 1px solid #E4E4E4;
+						float: left;
+						width: 32px;
+						height: 100%;
+						padding: .25em;
+						vertical-align: middle;
+						img {
+							display: block;
+							margin-left: auto;
+							margin-right: auto;
+							width: 24px;
+						}
+					}
+					.name {
+						background: #FBFBFB;
+						float: left;
+						height: 100%;
+						max-width: 150px;
+						padding: .5em;
+						vertical-align: middle;
+						width: 150px;
+					}
+					.result {
+						border-left: 1px solid #E4E4E4;
+						display: block;
+						float: right;
+						height: 100%;
+						padding: .5em;
+						text-align: center;
+						vertical-align: middle;
+						min-width: 32px;
 					}
 				}
 
+			}
+			.line {
+				background-color: transparent;
+				min-width: 12px;
+				&.top {
+					border-top: 1px solid #B3D0A7;
+				}
+				&.bottom {
+					border-bottom: 1px solid #B3D0A7;
+				}
+				&.right {
+					border-right: 1px solid #B3D0A7;
+				}
+				&.left {
+					border-left: 1px solid #B3D0A7;
+				}
 			}
 		}
 	}
