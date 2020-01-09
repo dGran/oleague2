@@ -2,6 +2,9 @@
     <a href="{{ route('admin.season_cash_history.add', $active_season->id) }}" class="btn btn-primary" id="btnAdd">
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
+    <a href="{{ route('admin.season_cash_history.pay_salaries', $active_season->id) }}" class="btn btn-danger" id="btnPaySalaries">
+        <span>Pagar Salarios</span>
+    </a>
     <ul class="list-group border-top mt-3">
         <li class="list-group-item border-0 px-0">
             <a href="" onclick="import_file()">

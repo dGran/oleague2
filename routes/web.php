@@ -284,6 +284,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::get('/admin/historial-de-economia/eliminar-seleccionados/{ids}', 'SeasonParticipantCashHistoryController@destroyMany')->name('admin.season_cash_history.destroy.many');
 		Route::get('/admin/historial-de-economia/exportar/{filename}/{type}/{filterSeason}/{filterParticipant}/{order}/{ids?}', 'SeasonParticipantCashHistoryController@exportFile')->name('admin.season_cash_history.export.file');
 		Route::post('/admin/historial-de-economia/importar', 'SeasonParticipantCashHistoryController@importFile')->name('admin.season_cash_history.import.file');
+		Route::get('/admin/historial-de-economia/{season_id}/pagar-salarios', 'SeasonParticipantCashHistoryController@pay_salaries')->name('admin.season_cash_history.pay_salaries');
 
 		// Season Competitions
 		Route::get('/admin/competiciones', 'SeasonCompetitionController@index')->name('admin.season_competitions');

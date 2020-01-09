@@ -248,6 +248,30 @@ class SeasonParticipantCashHistoryController extends Controller
         }
     }
 
+    public function pay_salaries($season_id)
+    {
+        $season = Season::find($season_id);
+        $participants = SeasonParticipant::seasonId($season_id)->get();
+        foreach ($participants as $participant) {
+            $cash = new SeasonParticipantCashHistory;
+            $cash->participant_id = $participant->id;
+            $cash->description = "Pago de salarios temporada '" . $season->name . "'";
+            $cash->amount = $participant->salaries();
+            $cash->movement = "S";
+            $cash->save();
+
+            event(new TableWasSaved($cash, $cash->description));
+
+            $text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>desembolsa</b> " . number_format($cash->amount, 2, ",", ".") . " mill. por " . "'<i>" . $data->description . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
+            Telegram::sendMessage([
+                'chat_id' => '-1001241759649',
+                'parse_mode' => 'HTML',
+                'text' => $text
+            ]);
+
+        }
+        return redirect()->route('admin.season_cash_history')->with('success', 'Pago de salarios realizado correctamente');
+    }
 
 
 
