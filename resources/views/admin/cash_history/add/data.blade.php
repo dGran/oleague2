@@ -49,8 +49,8 @@
     <div class="table-form-footer col-12 col-lg-8 col-xl-6 pt-3 px-3 px-md-0">
         <input type="submit" class="btn btn-primary border border-primary" value="Guardar" id="btnSave">
         <div class="no-close custom-control custom-checkbox mt-2">
-            <input type="checkbox" class="custom-control-input" id="slack" name="slack" checked>
-            <label class="custom-control-label is-valid" for="slack">Notificar por Slack</label>
+            <input type="checkbox" class="custom-control-input" id="telegram" name="telegram" checked>
+            <label class="custom-control-label is-valid" for="telegram">Notificar por Telegram</label>
         </div>
         <div class="no-close custom-control custom-checkbox mt-2">
             <input type="checkbox" class="custom-control-input" id="no_close" name="no_close">

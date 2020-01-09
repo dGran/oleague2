@@ -81,6 +81,38 @@
 
     });
 
+
+    $("#btnPaySalaries").click(function(e) {
+        window.event.preventDefault();
+        swal({
+            title: "¿Estás seguro?",
+            text: 'Se van a pagar los salarios de todos los equipos. Esta acción se debe realizar una vez terminado el periodo de fichajes, NUNCA ANTES!',
+            buttons: {
+                confirm: {
+                    text: "Sí, estoy seguro",
+                    value: true,
+                    visible: true,
+                    className: "btn btn-danger",
+                    closeModal: true
+                },
+                cancel: {
+                    text: "No, cancelar",
+                    value: null,
+                    visible: true,
+                    className: "btn btn-secondary",
+                    closeModal: true,
+                }
+            },
+            closeOnClickOutside: false,
+        })
+        .then((value) => {
+            if (value) {
+                var url = $("#btnPaySalaries").attr('href');
+                $(location).attr('href', url);
+            }
+        });
+    });
+
     function destroyMany() {
         window.event.preventDefault();
         disabledActionsButtons();
@@ -213,7 +245,7 @@
                     var time = Math.floor(new Date().getTime() / 1000);
                     var filename = 'historial_economia_export' + time;
                 }
-                $(location).attr('href', 'historial-de-economia/exportar/' + filename + '/' + type + '/' + filterSeason + '/' + filterParticipant + '/' + order);
+                $(location).attr('href', 'historial-de-economia/exportar/' + filename + '/' + type + '/' + filterParticipant + '/' + order);
             }
         });
     }
@@ -254,7 +286,7 @@
                     var time = Math.floor(new Date().getTime() / 1000);
                     var filename = 'historial_economia_export' + time;
                 }
-                $(location).attr('href', 'historial-de-economia/exportar/' + filename + '/' + type + '/' + filterSeason + '/' + filterParticipant + '/' + order + '/' + ids);
+                $(location).attr('href', 'historial-de-economia/exportar/' + filename + '/' + type + '/' + filterParticipant + '/' + order + '/' + ids);
             }
         });
     }

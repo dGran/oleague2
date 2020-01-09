@@ -3,7 +3,7 @@
     lang="{{ app()->getLocale() }}"
     role="form"
     method="POST"
-    action="{{ route('admin.season_participants.update', $participant->id) }}"
+    action="{{ route('admin.season_cash_history.update', $cash->id) }}"
     enctype="multipart/form-data"
     data-toggle="validator"
     autocomplete="off">
@@ -11,41 +11,38 @@
     {{ csrf_field() }}
 
     <div class="table-form-content col-12 col-lg-8 col-xl-6 p-md-3 animated fadeIn">
+
         <div class="form-group row pt-2">
-            <label for="user_id" class="col-sm-3 col-form-label">Usuario</label>
+            <label for="movement" class="col-sm-3 col-form-label">Movimiento</label>
             <div class="col-sm-9">
-                <select class="selectpicker form-control" name="user_id" id="user_id" data-size="3" data-live-search="true">
-                    @if ($participant->user_id)
-                        <option value="0">Ninguno</option>
-                        <option selected value="{{ $participant->user_id }}">{{ $participant->user->name }}</option>
-                    @else
-                        <option selected value="0">Ninguno</option>
-                    @endif
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                <select class="selectpicker form-control" name="movement" id="movement" data-size="3" data-live-search="true">
+                    <option {{ $cash->movement == 'E' ? 'selected' : '' }} value="E">Entrada</option>
+                    <option {{ $cash->movement == 'S' ? 'selected' : '' }} value="S">Salida</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <label for="amount" class="col-sm-3 col-form-label">Cantidad</label>
+            <div class="col-sm-9">
+                <input type="number" class="form-control" id="amount" name="amount" placeholder="Cantidad" value="{{ old('name', $cash->amount) }}" min="0" step="any">
+            </div>
+        </div>
+        <div class="form-group row pt-2">
+            <label for="description" class="col-sm-3 col-form-label">Descripción</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="description" name="description" placeholder="Descripción" value="{{ old('description', $cash->description) }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="participant_id" class="col-sm-3 col-form-label">Participante</label>
+            <div class="col-sm-9">
+                <select class="selectpicker form-control" name="participant_id" id="participant_id" data-live-search="true">
+                    @foreach ($participants as $participant)
+                        <option {{ $cash->participant_id == $participant->id ? 'selected' : '' }}  value="{{ $participant->id }}">{{ $participant->name() }} ({{$participant->budget()}} M.)</option>
                     @endforeach
                 </select>
             </div>
         </div>
-
-        @if ($participant->season->participant_has_team)
-            <div class="form-group row">
-                <label for="team_id" class="col-sm-3 col-form-label">Equipo</label>
-                <div class="col-sm-9">
-                    <select class="selectpicker form-control" name="team_id" id="team_id" data-size="3" data-live-search="true">
-                        @if ($participant->team_id)
-                            <option value="0">Ninguno</option>
-                            <option selected value="{{ $participant->team_id }}">{{ $participant->team->name }}</option>
-                        @else
-                            <option selected value="0">Ninguno</option>
-                        @endif
-                        @foreach ($teams as $team)
-                            <option value="{{ $team->id }}">{{ $team->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-        @endif
 
     </div>
 

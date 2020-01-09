@@ -2,7 +2,7 @@
     <a href="{{ route('admin.season_cash_history.add', $active_season->id) }}" class="btn btn-primary" id="btnAdd">
         <i class="fas fa-plus mr-2"></i><span>Nuevo</span>
     </a>
-    <a href="{{ route('admin.season_cash_history.pay_salaries', $active_season->id) }}" class="btn btn-danger disabled" id="btnPaySalaries">
+    <a href="{{ route('admin.season_cash_history.pay_salaries', $active_season->id) }}" class="btn btn-danger {{ $active_season->salaries_paid ? 'disabled' : '' }}" id="btnPaySalaries">
         <span>Pagar Salarios</span>
     </a>
     <ul class="list-group border-top mt-3">

@@ -279,10 +279,9 @@ Route::middleware('auth', 'role:admin')->group(function () {
 		Route::post('/admin/historial-de-economia/nuevo', 'SeasonParticipantCashHistoryController@save')->name('admin.season_cash_history.save');
 		Route::get('/admin/historial-de-economia/{id}', 'SeasonParticipantCashHistoryController@edit')->name('admin.season_cash_history.edit');
 		Route::put('/admin/historial-de-economia/{id}', 'SeasonParticipantCashHistoryController@update')->name('admin.season_cash_history.update');
-		Route::get('/admin/historial-de-economia/expulsar/{id}', 'SeasonParticipantCashHistoryController@kickout')->name('admin.season_cash_history.kickout');
 		Route::delete('/admin/historial-de-economia/eliminar/{id}', 'SeasonParticipantCashHistoryController@destroy')->name('admin.season_cash_history.destroy');
 		Route::get('/admin/historial-de-economia/eliminar-seleccionados/{ids}', 'SeasonParticipantCashHistoryController@destroyMany')->name('admin.season_cash_history.destroy.many');
-		Route::get('/admin/historial-de-economia/exportar/{filename}/{type}/{filterSeason}/{filterParticipant}/{order}/{ids?}', 'SeasonParticipantCashHistoryController@exportFile')->name('admin.season_cash_history.export.file');
+		Route::get('/admin/historial-de-economia/exportar/{filename}/{type}/{filterParticipant}/{order}/{ids?}', 'SeasonParticipantCashHistoryController@exportFile')->name('admin.season_cash_history.export.file');
 		Route::post('/admin/historial-de-economia/importar', 'SeasonParticipantCashHistoryController@importFile')->name('admin.season_cash_history.import.file');
 		Route::get('/admin/historial-de-economia/{season_id}/pagar-salarios', 'SeasonParticipantCashHistoryController@pay_salaries')->name('admin.season_cash_history.pay_salaries');
 
