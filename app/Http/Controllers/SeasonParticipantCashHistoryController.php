@@ -262,7 +262,7 @@ class SeasonParticipantCashHistoryController extends Controller
 
             event(new TableWasSaved($cash, $cash->description));
 
-            $text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>desembolsa</b> " . number_format($cash->amount, 2, ",", ".") . " mill. por " . "'<i>" . $data->description . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
+            $text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>desembolsa</b> " . number_format($cash->amount, 2, ",", ".") . " mill. por " . "'<i>" . $cash->description . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
             Telegram::sendMessage([
                 'chat_id' => '-1001241759649',
                 'parse_mode' => 'HTML',
