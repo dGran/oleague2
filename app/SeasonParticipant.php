@@ -29,7 +29,7 @@ class SeasonParticipant extends Model
 
     public function favorites()
     {
-        return $this->hasmany('App\favoritePlayer', 'participant_id', 'id');
+        return $this->hasmany('App\FavoritePlayer', 'participant_id', 'id');
     }
 
     public function trades_received()
