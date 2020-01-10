@@ -339,7 +339,12 @@ class SeasonController extends Controller
                         event(new TableWasDeleted($cash_history, $cash_history->description));
                         $cash_history->delete();
                     }
+                    foreach ($participant->favorites as $favorite) {
+                        event(new TableWasDeleted($favorite, $favorite->season_player->player->name . ' eliminado de favoritos'));
+                        $favorite->delete();
+                    }
                     event(new TableWasDeleted($participant, $participant->name()));
+
                     $participant->delete();
                 }
             }
@@ -381,6 +386,13 @@ class SeasonController extends Controller
                             $cash_history->delete();
                         }
                         event(new TableWasDeleted($participant, $participant->name()));
+
+                        foreach ($participant->favorites as $favorite) {
+                            event(new TableWasDeleted($favorite, $favorite->season_player->player->name . ' eliminado de favoritos'));
+                            $favorite->delete();
+                        }
+                        event(new TableWasDeleted($participant, $participant->name()));
+
                         $participant->delete();
                     }
                 }
