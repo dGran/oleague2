@@ -506,7 +506,12 @@ class SeasonController extends Controller
                     $season_player->save();
 
                     if ($season_player->save()) {
-                        event(new TableWasSaved($season_player, $season_player->player->name . " en " . $newseason->name));
+                        if ($season_player->player) {
+                            $text = $season_player->player->name;
+                        } else {
+                            $text = '';
+                        }
+                        event(new TableWasSaved($season_player, $text . " en " . $newseason->name));
                     }
 
                 }
