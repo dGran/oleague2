@@ -133,16 +133,16 @@
         });
     }
 
-    function duplicateMany() {
-        window.event.preventDefault();
-        disabledActionsButtons();
-        var ids = [];
+    function duplicate(element) {
         $(".mark:checked").each(function() {
-            ids.push($(this).val());
+            id = $(this).val();
         });
-        var url = '{{ route("admin.seasons.duplicate.many", ":ids") }}';
-        url = url.replace(':ids', ids);
-        window.location.href=url;
+        url = $('#btnDuplicate'+id).attr("href");
+        if ($(element).is('button')) {
+            window.location.href=url;
+        } else {
+            $(element).attr("href", url);
+        }
     }
 
     function edit(element) {
@@ -175,9 +175,11 @@
             }
             if ($(".mark:checked").length == 1) {
                 $(".rowOptions-Edit").removeClass('d-none');
+                $(".rowOptions-Duplicate").removeClass('d-none');
                 $(".rowOptions-View").removeClass('d-none');
             } else {
                 $(".rowOptions-Edit").addClass('d-none');
+                $(".rowOptions-Duplicate").removeClass('d-none');
                 $(".rowOptions-View").addClass('d-none');
             }
         } else {

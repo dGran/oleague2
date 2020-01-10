@@ -55,8 +55,8 @@
                 <span>Editar</span>
             </a>
         </li>
-        <li class="list-group-item border-0 px-0">
-            <a href="" onclick="duplicateMany()">
+        <li class="rowOptions-Duplicate list-group-item border-0 px-0 d-none">
+            <a href="" onclick="duplicate(this)">
                 <span class="fas fa-clone fa-fw mr-1"></span>
                 <span>Duplicar</span>
             </a>

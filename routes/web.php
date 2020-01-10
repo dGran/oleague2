@@ -215,7 +215,8 @@ Route::middleware('auth', 'role:admin')->group(function () {
 	Route::delete('/admin/temporadas/eliminar/{id}', 'SeasonController@destroy')->name('admin.seasons.destroy');
 	Route::get('/admin/temporadas/eliminar-seleccionados/{ids}', 'SeasonController@destroyMany')->name('admin.seasons.destroy.many');
 	Route::get('/admin/temporadas/duplicar/{id}', 'SeasonController@duplicate')->name('admin.seasons.duplicate');
-	Route::get('/admin/temporadas/duplicar-seleccionados/{ids}', 'SeasonController@duplicateMany')->name('admin.seasons.duplicate.many');
+	Route::post('/admin/temporadas/duplicar/{id}/guardar', 'SeasonController@duplicateSave')->name('admin.seasons.duplicate.save');
+	// Route::get('/admin/temporadas/duplicar-seleccionados/{ids}', 'SeasonController@duplicateMany')->name('admin.seasons.duplicate.many');
 	Route::get('/admin/temporadas/activar-periodo-edicion-salarios/{id}', 'SeasonController@salariesPeriodActivate')->name('admin.seasons.salaries.activate');
 	Route::get('/admin/temporadas/desactivar-periodo-edicion-salarios/{id}', 'SeasonController@salariesPeriodDesactivate')->name('admin.seasons.salaries.desactivate');
 	Route::get('/admin/temporadas/activar-periodo-negociaciones/{id}', 'SeasonController@transfersPeriodActivate')->name('admin.seasons.transfers.activate');

@@ -13,6 +13,7 @@ use App\Player;
 use App\SeasonParticipant;
 use App\SeasonParticipantCashHistory;
 use App\SeasonPlayer;
+use App\FavoritePlayer;
 
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
@@ -269,7 +270,7 @@ class SeasonController extends Controller
                             event(new TableWasSaved($cash_history, $cash_history->description));
                         }
                     } else {
-                        if ($season->initial_budget != request()->initial_budget) {
+                        if ($season->initial_budget > 0 && $season->initial_budget != request()->initial_budget) {
                             foreach ($participants as $participant) {
                                 $participant->cash_history->first()->amount = request()->initial_budget;
                                 $participant->cash_history->first()->movement = "E";
@@ -420,16 +421,97 @@ class SeasonController extends Controller
     public function duplicate($id)
     {
         $season = Season::find($id);
+        if ($season) {
+            return view('admin.seasons.duplicate', compact('season'));
+        } else {
+            return back()->with('warning', 'Acción cancelada. La temporada que querías duplicar ya no existe. Se ha actualizado la lista');
+        }
+    }
+
+    public function duplicateSave($id)
+    {
+        $season = Season::find($id);
 
         if ($season) {
             $newseason = $season->replicate();
             $newseason->name .= " (copia)";
             $newseason->slug = str_slug($newseason->name);
-
+            $newseason->salaries_paid = 0;
+            $newseason->initial_budget = 0;
+            $newseason->change_salaries_period = 0;
+            $newseason->transfers_period = 0;
+            $newseason->free_players_period = 0;
+            $newseason->clausules_period = 0;
             $newseason->save();
-
             if ($newseason->save()) {
                 event(new TableWasSaved($newseason, $newseason->name));
+
+                foreach ($season->participants as $participant) {
+                    $season_participant = $participant->replicate();
+                    $season_participant->season_id = $newseason->id;
+                    $season_participant->paid_clauses = 0;
+                    $season_participant->clauses_received = 0;
+                    $season_participant->save();
+                    if ($season_participant->save()) {
+                        event(new TableWasSaved($season_participant, 'Nuevo participante duplicado - ' . $season_participant->user->name));
+
+                        $cash_history = new SeasonParticipantCashHistory;
+                        $cash_history->participant_id = $season_participant->id;
+                        $cash_history->description = "Presupuesto inicial";
+                        $cash_history->amount = $participant->budget();
+                        $cash_history->movement = "E";
+                        $cash_history->save();
+                        if ($cash_history->save()) {
+                            event(new TableWasSaved($cash_history, $cash_history->description));
+                        }
+                    }
+
+                }
+
+                foreach ($season->players as $player) {
+                    $season_player = $player->replicate();
+                    $season_player->season_id = $newseason->id;
+                    if ($player->participant_id > 0) {
+                        if ($player->owner_id) {
+                            $participant_in_new_season = SeasonParticipant::where('season_id', '=', $newseason->id)->where('team_id', '=', $player->participantOwner->team_id)->where('user_id', '=', $player->participantOwner->user_id)->first();
+                            $season_player->participant_id = $participant_in_new_season->id;
+                        } else {
+                            $participant_in_new_season = SeasonParticipant::where('season_id', '=', $newseason->id)->where('team_id', '=', $player->participant->team->id)->where('user_id', '=', $player->participant->user->id)->first();
+                            $season_player->participant_id = $participant_in_new_season->id;
+                        }
+                    }
+                    $season_player->pack_id = null;
+                    $season_player->salary = $newseason->free_players_salary;
+                    $season_player->price = $newseason->free_players_cost;
+                    $season_player->allow_clause_pay = 1;
+                    $season_player->untransferable = 0;
+                    $season_player->transferable = 0;
+                    $season_player->sale_price = 0;
+                    $season_player->sale_auto_accept = 0;
+                    $season_player->player_on_loan = 0;
+                    $season_player->market_phrase = null;
+                    $season_player->owner_id = null;
+                    $season_player->save();
+
+                    if ($season_player->save()) {
+                        event(new TableWasSaved($season_player, $season_player->player->name . " en " . $newseason->name));
+                    }
+
+                }
+
+                foreach ($season->participants as $participant) {
+                    $favorites = FavoritePlayer::where('participant_id', '=', $participant->id)->get();
+                    foreach ($favorites as $favorite) {
+                        $new_participant = SeasonParticipant::where('season_id', '=', $newseason->id)->where('team_id', '=', $favorite->participant->team_id)->where('user_id', '=', $favorite->participant->user_id)->first();
+                        $new_player = SeasonPlayer::where('season_id', '=', $newseason->id)->where('player_id', '=', $favorite->season_player->player_id)->first();
+
+                        $new_favorite = new FavoritePlayer;
+                        $new_favorite->player_id = $new_player->id;
+                        $new_favorite->participant_id = $new_participant->id;
+                        $new_favorite->save();
+                    }
+                }
+
             }
 
             return redirect()->route('admin.seasons')->with('success', 'Se ha duplicado la temporada "' . $newseason->name . '" correctamente.');
@@ -438,32 +520,32 @@ class SeasonController extends Controller
         }
     }
 
-    public function duplicateMany($ids)
-    {
-        $ids=explode(",",$ids);
-        $counter = 0;
-        for ($i=0; $i < count($ids); $i++)
-        {
-            $original = Season::find($ids[$i]);
-            if ($original) {
-                $counter = $counter +1;
-                $season = $original->replicate();
-                $season->name .= " (copia)";
-                $season->slug = str_slug($season->name);
+    // public function duplicateMany($ids)
+    // {
+    //     $ids=explode(",",$ids);
+    //     $counter = 0;
+    //     for ($i=0; $i < count($ids); $i++)
+    //     {
+    //         $original = Season::find($ids[$i]);
+    //         if ($original) {
+    //             $counter = $counter +1;
+    //             $season = $original->replicate();
+    //             $season->name .= " (copia)";
+    //             $season->slug = str_slug($season->name);
 
-                $season->save();
+    //             $season->save();
 
-                if ($season->save()) {
-                    event(new TableWasSaved($season, $season->name));
-                }
-            }
-        }
-        if ($counter > 0) {
-            return redirect()->route('admin.seasons')->with('success', 'Se han duplicado las temporadas seleccionadas correctamente.');
-        } else {
-            return back()->with('warning', 'Acción cancelada. Las temporadas que querías duplicar ya no existen. Se ha actualizado la lista.');
-        }
-    }
+    //             if ($season->save()) {
+    //                 event(new TableWasSaved($season, $season->name));
+    //             }
+    //         }
+    //     }
+    //     if ($counter > 0) {
+    //         return redirect()->route('admin.seasons')->with('success', 'Se han duplicado las temporadas seleccionadas correctamente.');
+    //     } else {
+    //         return back()->with('warning', 'Acción cancelada. Las temporadas que querías duplicar ya no existen. Se ha actualizado la lista.');
+    //     }
+    // }
 
     public function salariesPeriodActivate($id)
     {

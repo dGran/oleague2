@@ -122,7 +122,7 @@
                                 <i class="fas fa-edit fa-fw mr-1"></i>
                                 Editar
                             </a>
-                            <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.duplicate', $season->id) }}">
+                            <a class="dropdown-item text-secondary" href="{{ route('admin.seasons.duplicate', $season->id) }}" id="btnDuplicate{{ $season->id }}">
                                 <i class="fas fa-clone fa-fw mr-1"></i>
                                 Duplicar
                             </a>
