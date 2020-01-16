@@ -281,6 +281,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 			$table_participants = $table_participants2;
 		// }
 
+
         return view('admin.seasons_competitions_phases_groups_leagues.table', compact('group', 'league', 'table_participants'));
     }
 

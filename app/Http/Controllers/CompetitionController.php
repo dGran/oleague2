@@ -60,6 +60,10 @@ class CompetitionController extends Controller
 
 	    	$table_participants = collect();
 			$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $league->group->id)->get();
+	        if ($group_participants->count() == 0) {
+	            return back()->with('info', 'La competición está en fase de preparación');
+	        }
+
 			foreach ($group_participants as $key => $participant) {
 				$data = $this->get_table_data_participant($league->id, $participant->id);
 				$table_participants->push([
