@@ -22,6 +22,11 @@ class SeasonCompetition extends Model
         return $this->hasmany('App\SeasonCompetitionPhase', 'competition_id', 'id');
     }
 
+    public function initialPhase()
+    {
+        return $phase = $this->phases->first();
+    }
+
     public function scopeSeasonId($query, $seasonID)
     {
         if (trim($seasonID) !="") {

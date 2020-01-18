@@ -5,7 +5,7 @@
 				<div class="card competitions {{ $comp->slug == $competition->slug ? 'active' : ''}}">
 					{{-- \Route::current()->getName() --}}
 					<a href="{{route(\Route::current()->getName(), [active_season()->slug, $comp->slug]) }}">
-						<img src="{{ asset($comp->img) }}" alt="{{ $comp->name }}" class="rounded">
+						<img src="{{ $comp->getImgFormatted() }}" alt="{{ $comp->name }}" class="rounded">
 						<span>{{ $comp->name }}</span>
 					</a>
 				</div>

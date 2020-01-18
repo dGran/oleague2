@@ -21,6 +21,16 @@ class SeasonCompetitionPhaseGroup extends Model
         return $this->hasMany('App\SeasonCompetitionPhaseGroupParticipant', 'group_id', 'id');
     }
 
+    public function league()
+    {
+        return $this->hasOne('App\SeasonCompetitionPhaseGroupLeague', 'group_id', 'id');
+    }
+
+    public function playoff()
+    {
+        return $this->hasOne('App\Playoff', 'group_id', 'id');
+    }
+
     public function name() {
         $phase = SeasonCompetitionPhase::find($this->phase->id);
         if ($phase->groups->count() > 1) {
