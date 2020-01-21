@@ -28,7 +28,7 @@ class SeasonCompetitionPhaseGroup extends Model
 
     public function playoff()
     {
-        return $this->hasOne('App\Playoff', 'group_id', 'id');
+        return $this->hasOne('App\PlayOff', 'group_id', 'id');
     }
 
     public function name() {
