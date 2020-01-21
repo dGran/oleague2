@@ -31,6 +31,24 @@ class SeasonCompetitionPhaseGroup extends Model
         return $this->hasOne('App\PlayOff', 'group_id', 'id');
     }
 
+    public function phase_slug_if_necesary()
+    {
+        if ($this->phase->competition->phases->count() > 1) {
+            return $this->phase->slug;
+        } else {
+            return null;
+        }
+    }
+
+    public function group_slug_if_necesary()
+    {
+        if ($this->phase->groups->count() > 1) {
+            return $this->slug;
+        } else {
+            return null;
+        }
+    }
+
     public function name() {
         $phase = SeasonCompetitionPhase::find($this->phase->id);
         if ($phase->groups->count() > 1) {
