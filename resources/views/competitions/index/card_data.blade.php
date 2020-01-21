@@ -28,11 +28,11 @@
 								Estadísticas
 							@endif
 						@else
-						{{$competition->initialPhase()->initialGroup()}}
-{{-- 							@if ($competition->initialPhase()->initialGroup()->playoff->has_stats())
+						{{-- {{$competition->initialPhase()->initialGroup()}} --}}
+							@if ($competition->initialPhase()->initialGroup()->playoff)
 								<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 								Estadísticas
-							@endif --}}
+							@endif
 						@endif
 					</a>
 				</li>
