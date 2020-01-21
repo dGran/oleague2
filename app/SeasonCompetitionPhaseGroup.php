@@ -33,10 +33,14 @@ class SeasonCompetitionPhaseGroup extends Model
 
     public function phase_slug_if_necesary()
     {
-        if ($this->phase->competition->phases->count() > 1) {
+        if ($this->phase->groups->count() > 1) {
             return $this->phase->slug;
         } else {
-            return null;
+            if ($this->phase->competition->phases->count() > 1) {
+                return $this->phase->slug;
+            } else {
+                return null;
+            }
         }
     }
 
