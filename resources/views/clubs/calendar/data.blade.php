@@ -6,6 +6,7 @@
 
 <div class="container p-3">
 	@foreach ($matches as $match)
+	@include('clubs.calendar.javascript')
 		<div class="match-item">
 			<a href="{{ route('competitions.calendar', [active_season()->id, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}">
 				<div class="description">

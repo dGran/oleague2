@@ -27,5 +27,5 @@
 @endsection
 
 @section('js')
-    @include('clubs.calendar.javascript')
+
 @endsection
