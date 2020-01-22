@@ -19,4 +19,9 @@ class Post extends Model
     {
         return $this->hasOne('App\Press', 'id', 'press_id');
     }
+
+    public function match()
+    {
+        return $this->hasOne('App\SeasonCompetitionMatch', 'id', 'match_id');
+    }
 }

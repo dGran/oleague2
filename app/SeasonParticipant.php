@@ -143,6 +143,22 @@ class SeasonParticipant extends Model
         }
     }
 
+    public function slug() {
+        if ($this->season->participant_has_team) {
+            if ($this->team_id) {
+                return $this->team->slug;
+            } else {
+                return "undefined";
+            }
+        } else {
+            if ($this->user_id) {
+                return $this->user->name;
+            } else {
+                return "undefined";
+            }
+        }
+    }
+
     public function team_avg_overall() {
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')

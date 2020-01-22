@@ -159,6 +159,15 @@
                     @else
                         <ul style="list-style: none; margin:0; padding: 0;">
                             @foreach ($posts as $post)
+                                @if ($post->transfer_id || $post->match_id || $post->press_id)
+                                    @if ($post->transfer_id)
+                                        <a href="{{ route('market') }}">
+                                    @elseif ($post->match_id)
+                                        <a href="{{ route('competitions.calendar', [active_season()->id, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
+                                    @else
+                                        <a href="{{ route('club.press', $post->press->participant->slug()) }}">
+                                    @endif
+                                @endif
                                 <li class="py-2 d-block" style="display: table; border-bottom: 1px solid #292C5E">
                                     <figure style="width: 96px; height: 96px; display: table-cell; position: relative; line-height: 1.1em;" class="m-0 text-center align-top px-2">
                                         @if ($post->type == "transfer")
@@ -192,6 +201,9 @@
                                         </ul>
                                     </div>
                                 </li>
+                                @if ($post->transfer_id || $post->match_id || $post->press_id)
+                                    </a>
+                                @endif
                             @endforeach
                         </ul>
                     @endif
