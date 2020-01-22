@@ -9,23 +9,15 @@
 	@include('clubs.partials.header')
 
 	<div class="wrapper" style="background: #f9f9f9">
-		@include('clubs.calendar.data')
+		@include('clubs.pending_matches.data')
 	</div>
 
 @endsection
 
 @section('breadcrumb')
-	@include('clubs.calendar.breadcrumb')
-@endsection
-
-@section('modal')
-    @include('competitions.league.calendar.match_details_modal')
+	@include('clubs.pending_matches.breadcrumb')
 @endsection
 
 @section('bottom-fixed')
 	@include('clubs.partials.bottom_fixed')
-@endsection
-
-@section('js')
-    @include('clubs.calendar.javascript')
 @endsection

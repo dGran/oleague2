@@ -15,7 +15,7 @@
 @endsection
 
 @section('breadcrumb')
-	@include('clubs.club.breadcrumb')
+	@include('clubs.economy.breadcrumb')
 @endsection
 
 @section('bottom-fixed')

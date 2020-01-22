@@ -468,11 +468,6 @@ class CompetitionController extends Controller
         return view('competitions.league.calendar.match_details', compact('match'))->render();
     }
 
-    public function pendingMatches()
-    {
-    	return back()->with('info', 'Partidas pendientes - Próximamente...');
-    }
-
 
 
 

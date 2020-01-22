@@ -23,6 +23,12 @@
 			<span>Calendario</span>
 		</a>
 	</li>
+	<li class="{{ \Route::current()->getName() == 'club.pending_matches' ? 'active' : '' }}">
+		<a href="{{ route('club.pending_matches', $participant->team->slug) }}">
+			<i class="icon-xbox-controller"></i>
+			<span>Pendientes</span>
+		</a>
+	</li>
 	<li class="{{ \Route::current()->getName() == 'club.press' ? 'active' : '' }}">
 		<a href="{{ route('club.press', $participant->team->slug) }}">
 			<i class="icon-microphone"></i>

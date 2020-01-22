@@ -30,7 +30,7 @@
                     Mi Club
                 </span>
             </a>
-        </li>        
+        </li>
         <li class="nav-item {{ \Request::is('mercado/mi-equipo') ? 'current' : '' }}">
             <a class="nav-link offers {{ \Request::is('mercado/mi-equipo') ? 'disabled' : '' }}" href="{{ route('market.my_team') }}">
                 <i class="icon-my-team"></i>
@@ -51,7 +51,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('competitions.pending_matches') }}">
+            <a class="nav-link" href="{{ route('club.pending_matches', participant_of_user()->team->slug) }}">
                 <i class="icon-xbox-controller"></i>
                 <span>Partidas pendientes</span>
             </a>

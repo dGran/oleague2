@@ -22,7 +22,7 @@
 @endsection
 
 @section('breadcrumb')
-	@include('clubs.club.breadcrumb')
+	@include('clubs.roster.breadcrumb')
 @endsection
 
 @section('bottom-fixed')

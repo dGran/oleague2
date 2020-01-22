@@ -28,7 +28,6 @@ Route::post('contacto/enviar', 'HomeController@contactSent')->name('contact.sent
 // Competitions routes
 Route::middleware('check_active_season')->group(function () {
 	Route::get('competiciones', 'CompetitionController@index')->name('competitions');
-	Route::get('competiciones/partidas-pendientes', 'CompetitionController@pendingMatches')->name('competitions.pending_matches');
 	Route::get('competiciones/clasificacion/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@table')->name('competitions.table');
 	Route::get('competiciones/partidos/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@calendar')->name('competitions.calendar');
 	// Route::get('competiciones/{season_slug}/{competition_slug}/partidos/{match_id}', 'CompetitionController@match')->name('competitions.competition.match');
@@ -45,6 +44,7 @@ Route::middleware('check_active_season')->group(function () {
 	Route::get('clubs/{slug}/plantilla', 'ClubController@clubRoster')->name('club.roster');
 	Route::get('clubs/{slug}/economia', 'ClubController@clubEconomy')->name('club.economy');
 	Route::get('clubs/{slug}/calendario', 'ClubController@clubCalendar')->name('club.calendar');
+	Route::get('clubs/{slug}/partidas-pendientes', 'ClubController@pendingMatches')->name('club.pending_matches');
 	Route::get('clubs/{slug}/sala-de-prensa', 'ClubController@clubPress')->name('club.press');
 	Route::post('clubs/{slug}/sala-de-prensa/nueva', 'ClubController@clubPressAdd')->name('club.press.add');
 });
