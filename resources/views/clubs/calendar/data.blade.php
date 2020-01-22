@@ -8,7 +8,7 @@
 	@foreach ($matches as $match)
 		<div class="match-item">
 			<div class="description">
-				<img src="{{ $match->competition()->getImgFormatted() }}" alt="" width="32">
+				<img src="{{ $match->competition()->getImgFormatted() }}" alt="" width="32" class="rounded">
 				<small class="text-muted pl-1">{{ $match->match_name() }}</small>
 			</div>
 			<div class="match">
