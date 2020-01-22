@@ -324,6 +324,15 @@
   margin-bottom: 1em;
 }
 
+.wrapper .match-item:hover .match {
+  background: #FBFBF4;
+}
+
+.wrapper .match-item:hover .description,
+.wrapper .match-item:hover .bottom-data {
+  background: #FCFFE9;
+}
+
 .wrapper .match-item .description {
   background: #FCFCFC;
   border-bottom: 1px solid #f1eff3;

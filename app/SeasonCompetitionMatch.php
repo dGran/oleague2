@@ -29,6 +29,15 @@ class SeasonCompetitionMatch extends Model
         }
     }
 
+    public function group() {
+        if ($this->day_id) {
+            return $this->day->league->group;
+        } else {
+            return $this->day->playoff->group;
+        }
+    }
+
+
     public function stats()
     {
         return $this->hasMany('App\LeagueStat', 'match_id', 'id');
