@@ -2,24 +2,25 @@
     var season_slug = {!! json_encode(active_season()->slug) !!};
 
     $(function() {
-        $('#matchDetailsModal').on('show.bs.modal', function(e) {
-			var match_id = $('.result').attr("data-id");
-			var competition_slug = $('.result').attr("competition-slug");
-            var url = '{{ route("competitions.calendar.match.details", [":season_slug", ":competition_slug", ":match_id"]) }}';
-            url = url.replace(':season_slug', season_slug);
-            url = url.replace(':competition_slug', competition_slug);
-            url = url.replace(':match_id', match_id);
-            $.ajax({
-                url         : url,
-                type        : 'GET',
-                datatype    : 'html',
-            }).done(function(data){
-                $('#modal-dialog-match-details').html(data);
-            });
-        });
+        // $('#matchDetailsModal').on('show.bs.modal', function(e) {
+
+        // });
 
         $("#matchDetailsModal").on("hidden.bs.modal", function(){
             $('#modal-dialog-match-details').html("");
         });
     });
+
+	function view_match_detail(element) {
+		window.event.preventDefault();
+		var url = $(element).attr('href');
+		$('#matchDetailsModal').modal('show');
+        $.ajax({
+            url         : url,
+            type        : 'GET',
+            datatype    : 'html',
+        }).done(function(data){
+            $('#modal-dialog-match-details').html(data);
+        });
+	}
 </script>
