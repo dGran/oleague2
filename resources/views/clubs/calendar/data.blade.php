@@ -1,6 +1,6 @@
 <h4 class="title-position border-bottom">
 	<div class="container clearfix">
-		<span>Caledario</span>
+		<span>Calendario {{ $participant->name() }} - {{ active_season()->name }}</span>
 	</div>
 </h4>
 
@@ -19,7 +19,11 @@
 						@if ($match->winner() == -1)
 							vs
 						@else
-							{{ $match->local_score }} - {{ $match->visitor_score }}
+			                <a href="" data-toggle="modal" data-target="#matchDetailsModal">
+			    				<span class="result rounded px-2 py-1 {{ $match->sanctioned_id ? 'text-white bg-danger' : '' }}">
+			    					{{ $match->local_score }} - {{ $match->visitor_score }}
+			    				</span>
+			                </a>
 						@endif
 					</strong>
 					<img src="{{ $match->visitor_participant->participant->logo() }}" alt="" width="16">
@@ -53,7 +57,7 @@
 					</div>
 					<div class="float-right">
 						<div class="limit text-muted" style="min-width: 80px">
-							<small class="text-muted d-block">
+							<small class="text-muted">
 								<strong class="mr-1">Fecha Límite</strong>
 								{{ \Carbon\Carbon::parse($match->date_limit)->format('d/m/Y - h:m')}}
 							</small>
