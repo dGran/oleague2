@@ -70,7 +70,7 @@ class SeasonCompetitionMatch extends Model
 
     public function winner()
     {
-        if ($this->local_score && $this->visitor_score) {
+        if (!is_null($this->local_score) && !is_null($this->visitor_score)) {
             if ($this->local_score > $this->visitor_score) {
                 return $this->local_participant->participant->id;
             } elseif ($this->visitor_score > $this->local_score) {

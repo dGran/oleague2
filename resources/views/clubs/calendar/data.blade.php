@@ -12,7 +12,7 @@
 					<img src="{{ $match->competition()->getImgFormatted() }}" alt="" width="24" class="rounded">
 					<small class="text-muted pl-1">{{ $match->match_name() }}</small>
 				</div>
-				<div class="match text-dark" data-id="{{ $match->id }}">
+				<div class="match text-dark">
 					{{ $match->local_participant->participant->name() }}
 					<img src="{{ $match->local_participant->participant->logo() }}" alt="" width="16">
 					<strong class="px-1">
@@ -20,7 +20,7 @@
 							vs
 						@else
 			                <a href="" data-toggle="modal" data-target="#matchDetailsModal">
-			    				<span class="result rounded px-2 py-1 {{ $match->sanctioned_id ? 'text-white bg-danger' : '' }}">
+			    				<span class="result rounded px-2 py-1 {{ $match->sanctioned_id ? 'text-white bg-danger' : '' }}" data-id="{{ $match->id }}" competition-slug ="{{ $match->competition()->slug }}">
 			    					{{ $match->local_score }} - {{ $match->visitor_score }}
 			    				</span>
 			                </a>

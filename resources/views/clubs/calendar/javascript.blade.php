@@ -3,8 +3,8 @@
 
     $(function() {
         $('#matchDetailsModal').on('show.bs.modal', function(e) {
-			var match_id = $(this).attr("data-id");
-			var competition_slug = $(this).attr("competition_slug");
+			var match_id = $('.result').attr("data-id");
+			var competition_slug = $('.result').attr("competition-slug");
             var url = '{{ route("competitions.calendar.match.details", [":season_slug", ":competition_slug", ":match_id"]) }}';
             url = url.replace(':season_slug', season_slug);
             url = url.replace(':competition_slug', competition_slug);
