@@ -25,3 +25,7 @@
 @section('bottom-fixed')
 	@include('clubs.partials.bottom_fixed')
 @endsection
+
+@section('js')
+    @include('clubs.calendar.javascript')
+@endsection
