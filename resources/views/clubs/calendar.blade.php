@@ -8,15 +8,8 @@
 
 	@include('clubs.partials.header')
 
-	<div class="wrapper">
-		<h4 class="title-position border-bottom">
-			<div class="container clearfix">
-				<span>Resultados</span>
-			</div>
-		</h4>
-		<div class="container p-3">
-			Próximamente...
-		</div>
+	<div class="wrapper" style="background: #f9f9f9">
+		@include('clubs.calendar.data')
 	</div>
 
 @endsection

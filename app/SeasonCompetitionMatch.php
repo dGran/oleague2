@@ -21,6 +21,14 @@ class SeasonCompetitionMatch extends Model
         return $this->hasOne('App\PlayOffRoundClash', 'id', 'clash_id');
     }
 
+    public function competition() {
+        if ($this->day_id) {
+            return $this->day->league->group->phase->competition;
+        } else {
+            return $this->day->playoff->group->phase->competition;
+        }
+    }
+
     public function stats()
     {
         return $this->hasMany('App\LeagueStat', 'match_id', 'id');
@@ -49,6 +57,21 @@ class SeasonCompetitionMatch extends Model
     public function getDateLimit_time()
     {
         return $date = \Carbon\Carbon::parse($this->date_limit)->format('H:i');
+    }
+
+    public function winner()
+    {
+        if ($this->local_score && $this->visitor_score) {
+            if ($this->local_score > $this->visitor_score) {
+                return $this->local_id;
+            } elseif ($this->visitor_score > $this->local_score) {
+                return $this->visitor_id;
+            } else {
+                return null;
+            }
+        } else {
+            return -1;
+        }
     }
 
     public function player_match_stats($player_id) {

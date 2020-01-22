@@ -277,6 +277,37 @@
 			}
 		}
 	}
+
+	.match-item {
+		border: 1px solid #f1eff3;
+		font-size: .9em;
+		margin-bottom: 1em;
+		.description {
+			background: #FCFCFC;
+			border-bottom: 1px solid #f1eff3;
+			padding: .5em;
+		}
+		.match {
+			padding: 1em;
+			background: #fff;
+			text-align: center;
+		}
+		.bottom-data {
+			background: #FCFCFC;
+			border-top: 1px solid #f1eff3;
+			.type {
+				display: inline-block;
+				padding: .5em;
+				padding-left: 1em;
+			}
+			.limit {
+				display: inline-block;
+				padding: .5em;
+				padding-right: 1em;
+				text-align: right;
+			}
+		}
+	}
 }
 
 .scrolling-wrapper {

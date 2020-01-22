@@ -318,6 +318,42 @@
   text-align: right;
 }
 
+.wrapper .match-item {
+  border: 1px solid #f1eff3;
+  font-size: .9em;
+  margin-bottom: 1em;
+}
+
+.wrapper .match-item .description {
+  background: #FCFCFC;
+  border-bottom: 1px solid #f1eff3;
+  padding: .5em;
+}
+
+.wrapper .match-item .match {
+  padding: 1em;
+  background: #fff;
+  text-align: center;
+}
+
+.wrapper .match-item .bottom-data {
+  background: #FCFCFC;
+  border-top: 1px solid #f1eff3;
+}
+
+.wrapper .match-item .bottom-data .type {
+  display: inline-block;
+  padding: .5em;
+  padding-left: 1em;
+}
+
+.wrapper .match-item .bottom-data .limit {
+  display: inline-block;
+  padding: .5em;
+  padding-right: 1em;
+  text-align: right;
+}
+
 .scrolling-wrapper .card {
   display: inline-block;
   background: transparent;

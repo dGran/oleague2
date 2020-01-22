@@ -7,6 +7,7 @@ use App\SeasonParticipant;
 use App\SeasonCompetitionPhaseGroupParticipant;
 use App\Post;
 use App\Press;
+use App\SeasonCompetitionMatch;
 
 use Telegram\Bot\Laravel\Facades\Telegram;
 
@@ -62,7 +63,21 @@ class ClubController extends Controller
         $participants = $this->get_participants();
         $participant = $this->get_participant($slug);
 
-        return view('clubs.calendar', compact('participants', 'participant'));
+        $matches = SeasonCompetitionMatch::
+            leftJoin('playoffs_rounds_clashes', 'playoffs_rounds_clashes.id', '=', 'season_competitions_matches.clash_id')
+            ->leftJoin('season_competitions_phases_groups_leagues_days', 'season_competitions_phases_groups_leagues_days.id', '=', 'season_competitions_matches.day_id')
+            ->leftJoin('season_competitions_phases_groups_participants as local_group_participant', 'local_group_participant.id', '=', 'season_competitions_matches.local_id')
+            ->leftJoin('season_competitions_phases_groups_participants as visitor_group_participant', 'visitor_group_participant.id', '=', 'season_competitions_matches.visitor_id')
+            ->leftJoin('season_participants as local_participant', 'local_participant.id', '=', 'local_group_participant.participant_id')
+            ->leftJoin('season_participants as visitor_participant', 'visitor_participant.id', '=', 'visitor_group_participant.participant_id')
+            ->select('season_competitions_matches.*')
+            ->where('local_participant.id', '=', $participant->id)
+            ->orWhere('visitor_participant.id', '=', $participant->id)
+            ->orderBy('season_competitions_matches.date_limit', 'asc')
+            ->orderBy('season_competitions_matches.id', 'asc')
+            ->get();
+
+        return view('clubs.calendar', compact('participants', 'participant', 'matches'));
     }
 
     public function clubPress($slug)
