@@ -63,9 +63,9 @@ class SeasonCompetitionMatch extends Model
     {
         if ($this->local_score && $this->visitor_score) {
             if ($this->local_score > $this->visitor_score) {
-                return $this->local_id;
+                return $this->local_participant->participant->id;
             } elseif ($this->visitor_score > $this->local_score) {
-                return $this->visitor_id;
+                return $this->visitor_participant->participant->id;
             } else {
                 return null;
             }
