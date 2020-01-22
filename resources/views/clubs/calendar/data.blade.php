@@ -6,14 +6,13 @@
 
 <div class="container p-3">
 	@foreach ($matches as $match)
-	@include('clubs.calendar.javascript')
 		<div class="match-item">
 			<a href="{{ route('competitions.calendar', [active_season()->id, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}">
 				<div class="description">
 					<img src="{{ $match->competition()->getImgFormatted() }}" alt="" width="24" class="rounded">
 					<small class="text-muted pl-1">{{ $match->match_name() }}</small>
 				</div>
-				<div class="match text-dark">
+				<div class="match text-dark" data-id="{{ $match->id }}">
 					{{ $match->local_participant->participant->name() }}
 					<img src="{{ $match->local_participant->participant->logo() }}" alt="" width="16">
 					<strong class="px-1">
