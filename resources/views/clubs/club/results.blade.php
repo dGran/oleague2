@@ -8,7 +8,7 @@
 		<div class="container pb-3">
 			<div class="p-2 text-center">
 				<span class="text-muted d-block my-2">
-					Resultados de los últimos 5 partidos
+					Racha de los últimos 5 partidos
 				</span>
 				@foreach ($participant->last_results() as $match)
 					@if ($match->winner() == $participant->id)
