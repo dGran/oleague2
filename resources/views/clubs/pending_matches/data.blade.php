@@ -1,7 +1,6 @@
 <h4 class="title-position border-bottom">
 	<div class="container clearfix">
-		<span class="d-block">PARTIDAS PENDIENTES {{ $participant->name() }}</span>
-		<span>{{ active_season()->name }}</span>
+		<span>PARTIDAS PENDIENTES {{ $participant->name() }} - {{ active_season()->name }}</span>
 	</div>
 </h4>
 
