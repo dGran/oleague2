@@ -48,7 +48,7 @@
 									<span class="text-danger">Fuera de plazo!</span>
 								@endif
 							@else
-								<span class="text-info">Plazo no establecido</span>
+								<span class="text-muted">Plazo no establecido</span>
 							@endif
 						</h5>
 					</div>
