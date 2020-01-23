@@ -1,29 +1,42 @@
 <div class="club-info">
 	<h4 class="title-position">
 		<div class="container clearfix">
+			<span>Racha</span>
+		</div>
+	</h4>
+	@if ($participant->last_results())
+		<div class="container pb-3">
+			<div class="p-2 text-center">
+				<span class="text-muted d-block">
+					Resultados de los últimos 5 partidos
+				</span>
+				@foreach ($participant->last_results() as $match)
+					@if ($match->winner() == $participant->id)
+						<div class="p-2 m-2 text-white bg-success rounded-circle d-inline-block text-center" style="width: 39px">
+							G
+						</div>
+					@elseif (is_null($match->winner()))
+						<div class="p-2 m-2 text-white bg-warning rounded-circle d-inline-block text-center" style="width: 39px">
+							E
+						</div>
+					@else
+						<div class="p-2 m-2 text-white bg-danger rounded-circle d-inline-block text-center" style="width: 39px">
+							P
+						</div>
+					@endif
+				@endforeach
+			</div>
+		</div>
+	@endif
+
+	<h4 class="title-position">
+		<div class="container clearfix">
 			<span>Ultimos resultados</span>
 		</div>
 	</h4>
 
 	@if ($participant->last_results())
 		<div class="container pb-3">
-			<div class="p-2">
-				@foreach ($participant->last_results() as $match)
-					@if ($match->winner() == $participant->id)
-						<div class="p-2 text-white bg-success rounded-circle d-inline-block text-center" style="width: 39px">
-							G
-						</div>
-					@elseif (is_null($match->winner()))
-						<div class="p-2 text-white bg-warning rounded-circle d-inline-block text-center" style="width: 39px">
-							E
-						</div>
-					@else
-						<div class="p-2 text-white bg-danger rounded-circle d-inline-block text-center" style="width: 39px">
-							P
-						</div>
-					@endif
-				@endforeach
-			</div>
 
 			<table>
 			@foreach ($participant->last_results() as $match)
