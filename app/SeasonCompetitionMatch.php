@@ -25,7 +25,7 @@ class SeasonCompetitionMatch extends Model
         if ($this->day_id) {
             return $this->day->league->group->phase->competition;
         } else {
-            return $this->day->playoff->group->phase->competition;
+            return $this->clash->playoff->group->phase->competition;
         }
     }
 
@@ -33,10 +33,37 @@ class SeasonCompetitionMatch extends Model
         if ($this->day_id) {
             return $this->day->league->group;
         } else {
-            return $this->day->playoff->group;
+            return $this->clash->playoff->group;
         }
     }
 
+    public function date_limit_match()
+    {
+        if (!$this->date_limit) {
+            if ($this->day_id) {
+                return $this->day->date_limit;
+            } else {
+                return $this->clash->date_limit;
+            }
+
+        } else {
+            return $this->date_limit;
+        }
+    }
+
+    // public function date_limit_formatted()
+    // {
+    //     if (!$this->date_limit) {
+    //         if ($this->day_id) {
+    //             return date('m/d/Y h:m A', strtotime($this->day->date_limit));
+    //         } else {
+    //             return date('m/d/Y h:m A', strtotime($this->clash->date_limit));
+    //         }
+
+    //     } else {
+    //         return date('m/d/Y h:m A', strtotime($this->date_limit));
+    //     }
+    // }
 
     public function stats()
     {

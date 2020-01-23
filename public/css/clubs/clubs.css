@@ -328,7 +328,8 @@
   margin-bottom: 1em;
 }
 
-.wrapper .match-item:hover .match {
+.wrapper .match-item:hover .match,
+.wrapper .match-item:hover .rival {
   background: #FBFBF4;
 }
 
@@ -347,6 +348,11 @@
   padding: 1em;
   background: #fff;
   text-align: center;
+}
+
+.wrapper .match-item .rival {
+  padding: 1em;
+  background: #fff;
 }
 
 .wrapper .match-item .bottom-data {
