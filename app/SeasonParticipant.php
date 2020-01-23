@@ -275,7 +275,7 @@ class SeasonParticipant extends Model
                   ->OrWhere('visitor_participant.id', '=', $this->id);
             })
             ->orderBy('season_competitions_matches.date_update_result', 'desc')
-            ->take(3)->get();
+            ->take(5)->get();
 
         return $matches;
     }
