@@ -17,7 +17,7 @@
 					<div class="rival text-dark">
 						@if ($match->local_participant->participant->id == $participant->id)
 							<img src="{{ $participant->logo() }}" alt="" width="40" class="align-middle">
-							<h4 class="d-inline-block m-0">vs</h4>
+							<h4 class="d-inline-block m-0 px-1">vs</h4>
 							<img src="{{ $match->visitor_participant->participant->logo() }}" alt="" width="40" class="align-middle">
 							<div class="d-inline-block align-middle pl-2">
 								<span class="text-dark d-block">{{ $match->visitor_participant->participant->name() }}</span>
@@ -25,7 +25,7 @@
 							</div>
 						@else
 							<img src="{{ $match->local_participant->participant->logo() }}" alt="" width="40" class="align-middle">
-							<h4 class="d-inline-block m-0">vs</h4>
+							<h4 class="d-inline-block m-0 px-1">vs</h4>
 							<img src="{{ $participant->logo() }}" alt="" width="40" class="align-middle">
 							<div class="d-inline-block align-middle pl-2">
 								<span class="text-dark d-block">{{ $match->local_participant->participant->name() }}</span>
