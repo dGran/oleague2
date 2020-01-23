@@ -10,16 +10,12 @@
 			<table>
 			@foreach ($participant->last_results() as $match)
 					<tr>
-						<td colspan=9>
-							{{ active_season()->name }}
-							{{ $match->day->league->group->phase->competition->name }}
-							{{ $match->day->league->group->phase->name() }}
-							{{ $match->day->league->group->name() }}
-							Jornada {{ $match->day->order }}
+						<td colspan=9 class="px-3 pt-3">
+							<small class="text-muted">{{ $match->match_name() }}</small>
 						</td>
 					</tr>
 			    	<tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
-				        <td class="text-right">
+				        <td class="text-right px-3">
                             <span class="text-uppercase {{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}</span>
                             @if (($match->sanctioned_id) && ($match->local_id == $match->sanctioned_id))
                             	<i class="fas fa-exclamation ml-1 text-danger"></i>

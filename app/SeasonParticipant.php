@@ -258,19 +258,26 @@ class SeasonParticipant extends Model
 
     public function last_results() {
 
-        return SeasonCompetitionPhaseGroupLeagueDayMatch::
-            where(function($q) {
-                $q->whereNotNull('local_score')
-                  ->whereNotNull('visitor_score');
+        $matches = SeasonCompetitionMatch::
+            leftJoin('playoffs_rounds_clashes', 'playoffs_rounds_clashes.id', '=', 'season_competitions_matches.clash_id')
+            ->leftJoin('season_competitions_phases_groups_leagues_days', 'season_competitions_phases_groups_leagues_days.id', '=', 'season_competitions_matches.day_id')
+            ->leftJoin('season_competitions_phases_groups_participants as local_group_participant', 'local_group_participant.id', '=', 'season_competitions_matches.local_id')
+            ->leftJoin('season_competitions_phases_groups_participants as visitor_group_participant', 'visitor_group_participant.id', '=', 'season_competitions_matches.visitor_id')
+            ->leftJoin('season_participants as local_participant', 'local_participant.id', '=', 'local_group_participant.participant_id')
+            ->leftJoin('season_participants as visitor_participant', 'visitor_participant.id', '=', 'visitor_group_participant.participant_id')
+            ->select('season_competitions_matches.*')
+            ->where(function($q) {
+                $q->whereNotNull('season_competitions_matches.local_score')
+                  ->whereNotNull('season_competitions_matches.visitor_score');
             })
-            // ->where(function($q) {
-            //     $q->where('local_user_id', '=', $this->user->id)
-            //       ->OrWhere('visitor_user_id', '=', $this->user->id);
-            // })
+            ->where(function($q) {
+                $q->where('local_participant.id', '=', $this->id)
+                  ->OrWhere('visitor_participant.id', '=', $this->id);
+            })
+            ->orderBy('season_competitions_matches.date_update_result', 'desc')
             ->take(3)->get();
 
-            //falta el orden por partido registrado, es decir updated_at
-            //y faltaria obtener los resultados por participante, no por usuario
+        return $matches;
     }
 
     public function clauses_received_limit() {

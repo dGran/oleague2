@@ -24,8 +24,6 @@ class ClubController extends Controller
         $participants = $this->get_participants();
         $participant = $this->get_participant($slug);
 
-        // dd($participant->last_results());
-
         $par = SeasonCompetitionPhaseGroupParticipant::where('participant_id', '=', $participant->id)->first();
 
         return view('clubs.club', compact('participants', 'participant', 'par'));

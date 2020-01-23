@@ -11,7 +11,7 @@
 		@include('clubs.club.manager')
 		@include('clubs.club.economy')
 		@include('clubs.club.roster')
-		{{-- @include('clubs.club.results') --}}
+		@include('clubs.club.results')
 	</div> {{-- wrapper --}}
 @endsection
 
