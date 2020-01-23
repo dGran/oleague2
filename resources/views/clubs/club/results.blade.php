@@ -7,21 +7,21 @@
 	@if ($participant->last_results())
 		<div class="container pb-3">
 			<div class="p-2 text-center">
-				<span class="text-muted d-block">
+				<span class="text-muted d-block my-2">
 					Resultados de los últimos 5 partidos
 				</span>
 				@foreach ($participant->last_results() as $match)
 					@if ($match->winner() == $participant->id)
-						<div class="p-2 m-2 text-white bg-success rounded-circle d-inline-block text-center" style="width: 39px">
-							G
+						<div class="p-2 m-1 text-white bg-success rounded-circle d-inline-block text-center" style="width: 39px">
+							V
 						</div>
 					@elseif (is_null($match->winner()))
-						<div class="p-2 m-2 text-white bg-warning rounded-circle d-inline-block text-center" style="width: 39px">
+						<div class="p-2 m-1 text-white bg-warning rounded-circle d-inline-block text-center" style="width: 39px">
 							E
 						</div>
 					@else
-						<div class="p-2 m-2 text-white bg-danger rounded-circle d-inline-block text-center" style="width: 39px">
-							P
+						<div class="p-2 m-1 text-white bg-danger rounded-circle d-inline-block text-center" style="width: 39px">
+							D
 						</div>
 					@endif
 				@endforeach
