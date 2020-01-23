@@ -25,7 +25,8 @@ class SeasonCompetitionMatch extends Model
         if ($this->day_id) {
             return $this->day->league->group->phase->competition;
         } else {
-            return $this->clash->playoff->group->phase->competition;
+            // dd($this->clash);
+            return $this->clash->round->playoff->group->phase->competition;
         }
     }
 
@@ -33,7 +34,7 @@ class SeasonCompetitionMatch extends Model
         if ($this->day_id) {
             return $this->day->league->group;
         } else {
-            return $this->clash->playoff->group;
+            return $this->clash->round->playoff->group;
         }
     }
 

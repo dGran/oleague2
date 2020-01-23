@@ -100,6 +100,17 @@ class PlayOffController extends Controller
 					$round_participant->save();
 				}
 			}
+
+            // generate empty_clashes
+            // $round_participants = PlayOffRoundParticipant::where('round_id', '=', $round->id)->inRandomOrder()->get();
+            // for ($i=0; $i < ($round_participants->count() / 2); $i++) {
+            //     $clash = new PlayOffRoundClash;
+            //     $clash->round_id = $round->id;
+            //     $clash->order = $i + 1;
+            //     $clash->local_id = null;
+            //     $clash->visitor_id = null;
+            //     $clash->save();
+            // }
 		}
 
 		return back()->with('success', 'Se han generado las rondas correctamente');
