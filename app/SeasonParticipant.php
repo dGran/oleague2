@@ -292,8 +292,8 @@ class SeasonParticipant extends Model
             ->select('season_competitions_matches.*')
             ->where('season_competitions_matches.active', '=', 1)
             ->where(function($q) {
-                $q->whereNotNull('season_competitions_matches.local_score')
-                  ->whereNotNull('season_competitions_matches.visitor_score');
+                $q->whereNull('season_competitions_matches.local_score')
+                  ->whereNull('season_competitions_matches.visitor_score');
             })
             ->where(function($q) {
                 $q->where('local_participant.id', '=', $this->id)
