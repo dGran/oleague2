@@ -51,9 +51,14 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('club.pending_matches', participant_of_user()->team->slug) }}">
+            <a class="nav-link offers" href="{{ route('club.pending_matches', participant_of_user()->team->slug) }}">
                 <i class="icon-xbox-controller"></i>
-                <span>Partidas pendientes</span>
+                <span>
+                    <span class="counter badge badge-warning rounded-circle {{ (participant_of_user()->pending_matches() == 0) ? 'd-none' : '' }}">
+                        {{ participant_of_user()->pending_matches() > 9 ? '9+' : participant_of_user()->pending_matches() }}
+                    </span>
+                    Partidas pendientes
+                </span>
             </a>
         </li>
     @endif
