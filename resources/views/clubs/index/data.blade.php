@@ -38,6 +38,12 @@
 									</a>
 								</li>
 								<li>
+									<a class="text-dark" href="{{route('club.pending_matches', $participant->team->slug) }}">
+										<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
+										Pendientes
+									</a>
+								</li>
+								<li>
 									<a class="text-dark" href="{{route('club.press', $participant->team->slug) }}">
 										<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 										Prensa
