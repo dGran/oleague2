@@ -24,4 +24,13 @@ class Post extends Model
     {
         return $this->hasOne('App\SeasonCompetitionMatch', 'id', 'match_id');
     }
+
+    public function match_exists()
+    {
+        if ($this->match) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

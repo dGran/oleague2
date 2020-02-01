@@ -148,7 +148,7 @@
                                     </div>
                                     <div class="col-6 col-lg-4">
                                         <label for="playoff_type">Tipo de eliminatoria</label>
-                                        <select class="selectpicker form-control" name="playoff_type" id="playoff_type" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
+                                        <select class="selectpicker form-control" name="playoff_type" id="playoff_type" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                             <option {{ !$round->round_trip ? 'selected' : ''}} value="0">Partido único</option>
                                             <option {{ $round->round_trip && !$round->double_value ? 'selected' : ''}} value="1">Ida y vuelta</option>
                                             <option {{ $round->round_trip && $round->double_value ? 'selected' : ''}} value="2">Ida y vuelta (valor doble goles)</option>
@@ -163,22 +163,22 @@
                                 <div class="form-group row">
                                     <div class="col-6 col-lg-4">
                                         <label for="play_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
-                                        <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Ganancias por jugar" min="0" step=".5" value="{{ old('play_amount', $round ? $round->play_amount : 1) }}" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
+                                        <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Ganancias por jugar" min="0" step=".5" value="{{ old('play_amount', $round ? $round->play_amount : 1) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                     </div>
                                     <div class="col-6 col-lg-4 mt-3 mt-lg-0">
                                         <label for="play_ontime_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar en plazo</label>
-                                        <input type="number" class="form-control" id="play_ontime_amount" name="play_ontime_amount" placeholder="Ganancias por derrota" min="0" step=".5" value="{{ old('play_ontime_amount', $round ? $round->play_ontime_amount : 0) }}" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
+                                        <input type="number" class="form-control" id="play_ontime_amount" name="play_ontime_amount" placeholder="Ganancias por derrota" min="0" step=".5" value="{{ old('play_ontime_amount', $round ? $round->play_ontime_amount : 0) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                     </div>
                                     <div class="col-6 col-lg-4">
                                         <label for="win_amount"><i class="fas fa-euro-sign mr-2"></i>por victoria</label>
-                                        <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Ganancias por victoria" min="1" step=".5" value="{{ old('win_amount', $round ? $round->win_amount : 3) }}" {{ $round->clashes->count() > 0 ? 'disabled' : '' }}>
+                                        <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Ganancias por victoria" min="0" step=".5" value="{{ old('win_amount', $round ? $round->win_amount : 3) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-12">
                                         <input type="submit" class="btn btn-primary" value="Guardar cambios">
-                                        @if ($round->clashes->count() > 0)
+                                        @if ($round->exists_matches())
                                             <small class="text-info d-block pt-1">
                                                 Hay campos deshabilitados ya que existen partidos en la ronda
                                             </small>

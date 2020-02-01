@@ -66,16 +66,16 @@
                     <tr class="days border">
                         <td colspan="6" class="p-2">
                             <strong class="text-uppercase float-left">{{ $round->name }}</strong>
-                            @if ($round->participants->count() > 0)
+                            @if ($playoff->predefined_rounds && $round->order == 1 && $round->participants->count() == $round->num_participants)
                                 <a class="float-right" href="{{ route('admin.season_competitions_phases_groups_playoffs.generate_clashes', $round->id) }}" class="btn btn-primary">
                                     <i class="fas fa-dice"></i>
                                 </a>
-                                <a class="float-right mr-3" href="{{ route('admin.season_competitions_phases_groups_playoffs.generate_empty_clashes', $round->id) }}" class="btn btn-primary">
+{{--                                 <a class="float-right mr-3" href="{{ route('admin.season_competitions_phases_groups_playoffs.generate_empty_clashes', $round->id) }}" class="btn btn-primary">
                                     <i class="fas fa-magic"></i>
                                 </a>
                                 <a class="float-right mr-3" href="{{ route('admin.season_competitions_phases_groups_playoffs.restore_clashes', $round->id) }}" class="btn btn-primary">
                                     <i class="fas fa-eraser"></i>
-                                </a>
+                                </a> --}}
                             @endif
                         </td>
                     </tr>
@@ -179,13 +179,13 @@
                                                 <small>
                                                     {{ $match->local_participant->participant->name() }}
                                                     @if (is_null($match->local_score) && is_null($match->visitor_score))
-                                                        <a href="" data-toggle="modal" data-target="#updateModal" class="mx-2">
+                                                        <a href="" data-toggle="modal" data-target="#updateModal" class="mx-2 {{ is_null($clash->first_match()->local_score) && is_null($clash->first_match()->visitor_score) ? 'disabled' : '' }}">
                                                             <small class="bg-primary rounded px-3 py-1 text-white">
                                                                 EDITAR
                                                             </small>
                                                         </a>
                                                     @else
-                                                        <span class="bg-light rounded px-3 py-1 {{ $match->sanctioned_id ? 'border text-danger' : '' }}">
+                                                        <span class="px-1 {{ $match->sanctioned_id ? 'border text-danger' : '' }}">
                                                             {{ $match->local_score }} - {{ $match->visitor_score }}
                                                         </span>
                                                     @endif
@@ -221,7 +221,7 @@
                         <tr>
                             <td colspan="9" class="text-center">
                                 @if (!$clash->winner() == 0)
-                                    <span class="text-success">Clasificado: {{ $clash->winner()->name() }}</span>
+                                    <span class="text-success">Clasificado: {{ $clash->winner()->participant->name() }}</span>
                                 @else
                                     <span class="text-warning">Eliminatoria no finalizada</span>
                                 @endif
@@ -232,8 +232,6 @@
                 @endif
             @endforeach
         </table>
-
-        no permitir actualizar el resultado de vuelta sin haber actualizado el de ida
 
     @endif
 </div>

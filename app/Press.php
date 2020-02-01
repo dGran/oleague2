@@ -14,4 +14,13 @@ class Press extends Model
     {
         return $this->hasOne('App\SeasonParticipant', 'id', 'participant_id');
     }
+
+    public function participant_exists()
+    {
+        if ($this->participant) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

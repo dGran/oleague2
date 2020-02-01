@@ -162,9 +162,9 @@
                                 @if ($post->transfer_id || $post->match_id || $post->press_id)
                                     @if ($post->transfer_id)
                                         <a href="{{ route('market') }}">
-                                    @elseif ($post->match_id)
+                                    @elseif ($post->match_id && $post->match_exists())
                                         <a href="{{ route('competitions.calendar', [active_season()->id, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
-                                    @else
+                                    @elseif ($post->press_id && $post->participant_exists())
                                         <a href="{{ route('club.press', $post->press->participant->slug()) }}">
                                     @endif
                                 @endif
@@ -172,7 +172,7 @@
                                     <figure style="width: 96px; height: 96px; display: table-cell; position: relative; line-height: 1.1em;" class="m-0 text-center align-top px-2">
                                         @if ($post->type == "transfer")
                                             <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
-                                        @elseif ($post->type == "press")
+                                    @elseif ($post->type == "press")
                                             <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px;" class="rounded">
                                             <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
                                         @elseif ($post->type == "default")
@@ -180,6 +180,8 @@
                                         @elseif ($post->type == "result")
                                             <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="rounded-circle">
                                             <img src="{{ asset('img/competitions/whistle.png') }}" style="position: absolute; width: 35px; left: 58px; top: 48px" class="">
+                                        @elseif ($post->type == "champion")
+                                            <img src="{{ asset('img/winner.png') }}" style="width: auto; height: 80px">
                                         @endif
                                     </figure>
                                     <div style="display: table-cell; padding-left: 8px;" class="align-top">

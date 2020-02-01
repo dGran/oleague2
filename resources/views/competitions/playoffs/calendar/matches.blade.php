@@ -1,6 +1,7 @@
 <tr class="matches" data-id="{{ $match->id }}" data-name="{{ $match->local_participant->participant->name() . ' ' . $match->local_score . '-' . $match->visitor_score . ' ' . $match->visitor_participant->participant->name() }}">
     <td class="local text-right text-truncate" style="max-width: 95px;">
-        <span class="text-uppercase {{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}
+        <span class="text-uppercase {{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : '' }}">
+            {{ $match->local_participant->participant->name() == 'undefined' ? '' : $match->local_participant->participant->name() }}
         </span>
     	<small class="{{ $match->sanctioned_id && $match->local_id == $match->sanctioned_id ? 'text-danger' : 'text-black-50' }} d-block">
             @if ($match->local_participant->participant->sub_name() == 'undefined')
@@ -40,7 +41,8 @@
         <img src="{{ $match->visitor_participant->participant->logo() }}" alt="">
     </td>
     <td class="visitor text-left text-truncate" style="max-width: 95px;">
-        <span class="text-uppercase {{ $match->sanctioned_id && $match->visitor_id == $match->sanctioned_id ? 'text-danger' : '' }}">{{ $match->visitor_participant->participant->name() == 'undefined' ? '' : $match->visitor_participant->participant->name() }}
+        <span class="text-uppercase {{ $match->sanctioned_id && $match->visitor_id == $match->sanctioned_id ? 'text-danger' : '' }}">
+            {{ $match->visitor_participant->participant->name() == 'undefined' ? '' : $match->visitor_participant->participant->name() }}
         </span>
         <small class="{{ $match->sanctioned_id && $match->visitor_id == $match->sanctioned_id ? 'text-danger' : 'text-black-50' }} d-block">
             @if ($match->visitor_participant->participant->sub_name() == 'undefined')
@@ -51,3 +53,30 @@
         </small>
     </td>
 </tr>
+@if ( (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order > 1)) && ($match->local_score == $match->visitor_score) && (!is_null($match->local_score) && !is_null($match->visitor_score)) )
+    <tr class="matches">
+        <td colspan="5" class="text-center" style="background: none">
+            <small class="d-block text-info">
+                *{{ $match->clash->winner()->participant->name() }} clasificado por penaltis ({{ $match->penalties_local_score }}-{{ $match->penalties_visitor_score }})
+            </small>
+        </td>
+    </tr>
+@endif
+
+@if (!$round->road_trip)
+    @if ($round->clashes->count() > $round->num_matches_count())
+        <tr class="matches">
+            <td colspan="5" class="text-center" style="background-color: #fff3cd; border: 1px solid #ffeeba; color: #856402;">
+                <small class="text-warning animated flash slower">Pendiente clasificación en rondas anteriores para mostrar el resto de eliminatorias</small>
+            </td>
+        </tr>
+    @endif
+@else
+    @if ($round->clashes->count() * 2 > $round->num_matches_count())
+        <tr class="matches">
+            <td colspan="5" class="text-center" style="background-color: #fff3cd; border: 1px solid #ffeeba; color: #856402;">
+                <small class="text-warning animated flash slower">Pendiente clasificación en rondas anteriores para mostrar el resto de eliminatorias</small>
+            </td>
+        </tr>
+    @endif
+@endif

@@ -1,6 +1,6 @@
 <div class="modal-content">
     <div class="modal-header bg-light">
-    	Ronda {{ $match->clash->round->name }} <span class="text-muted pt-0 ml-2">Partido #{{ $match->id }}</span>
+    	{{ $match->clash->round->name }} <span class="text-muted pt-0 ml-2">Partido #{{ $match->id }}</span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -57,13 +57,32 @@
                     </tr>
 
                     <tr class="matches">
-                        <td colspan="2" >
-                            <input type="number" class="form-control float-right" name="local_score" id="local_score" value="0" min="0" step="1" style="width: 4em">
+                        <td colspan="2">
+                            <input type="number" class="form-control float-right" name="local_score" id="local_score" value="0" min="0" step="1" style="width: 4em" onchange="validate_penalties()">
                         </td>
                         <td colspan="2" class="text-left">
-                            <input type="number" class="form-control" name="visitor_score" id="visitor_score" value="0" min="0" step="1" style="width: 4em">
+                            <input type="number" class="form-control" name="visitor_score" id="visitor_score" value="0" min="0" step="1" style="width: 4em" onchange="validate_penalties()">
                         </td>
                     </tr>
+
+
+                    @if (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order > 1))
+                        <tr class="penalties">
+                            <td></td>
+                            <td colspan="2" class="text-center pb-0">
+                                <small class="text-info">PENALTIS</small>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr class="matches">
+                            <td colspan="2" class="pt-1">
+                                <input type="number" class="form-control float-right" name="penalties_local_score" id="penalties_local_score" value="0" min="0" step="1" style="width: 4em">
+                            </td>
+                            <td colspan="2" class="text-left pt-1">
+                                <input type="number" class="form-control" name="penalties_visitor_score" id="penalties_visitor_score" value="0" min="0" step="1" style="width: 4em">
+                            </td>
+                        </tr>
+                    @endif
 
                 </table>
 

@@ -93,9 +93,6 @@
 
 
 
-
-
-
     	$("#second_round").click(function(){
     		// $("#inverse_order").attr('disabled', !$("#inverse_order").attr('disabled'));
 	    	if ($("#second_round").prop('checked')) {
@@ -153,6 +150,18 @@
         });
 
     });
+
+    function validate_penalties() {
+        if ($("#local_score").val() == $("#visitor_score").val()) {
+            $("#penalties_local_score").prop('disabled', false);
+            $("#penalties_visitor_score").prop('disabled', false);
+        } else {
+            $("#penalties_local_score").prop('disabled', true);
+            $("#penalties_local_score").val('0');
+            $("#penalties_visitor_score").prop('disabled', true);
+            $("#penalties_visitor_score").val('0');
+        }
+    }
 
     function sanction_local(id) {
     	if ($('#chk_local_sanctioned').prop('checked')) {

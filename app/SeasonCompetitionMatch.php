@@ -22,11 +22,13 @@ class SeasonCompetitionMatch extends Model
     }
 
     public function competition() {
-        if ($this->day_id) {
-            return $this->day->league->group->phase->competition;
-        } else {
-            // dd($this->clash);
-            return $this->clash->round->playoff->group->phase->competition;
+        $match = SeasonCompetitionMatch::find($this->id);
+        if ($match) {
+            if ($this->day_id) {
+                return $this->day->league->group->phase->competition;
+            } else {
+                return $this->clash->round->playoff->group->phase->competition;
+            }
         }
     }
 

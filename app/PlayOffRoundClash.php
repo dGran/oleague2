@@ -31,6 +31,11 @@ class PlayOffRoundClash extends Model
         return $this->hasMany('App\SeasonCompetitionMatch', 'clash_id', 'id');
     }
 
+    public function first_match()
+    {
+        return SeasonCompetitionMatch::where('clash_id', '=', $this->id)->where('order', '=', 1)->first();
+    }
+
     public function local_participant_name()
     {
         if ($this->local_participant) {
@@ -53,6 +58,55 @@ class PlayOffRoundClash extends Model
     {
         $local_score = 0;
         $visitor_score = 0;
+        $penalties_local_score = 0;
+        $penalties_visitor_score = 0;
+        if ($this->matches->count() > 0) {
+            foreach ($this->matches as $match) {
+                if (!is_null($match->local_score) && !is_null($match->visitor_score)) {
+                    if ($match->order == 1) {
+                        $local_score += $match->local_score;
+                        $visitor_score += $match->visitor_score;
+                        if (!$this->round->round_trip) {
+                            $penalties_local_score += $match->penalties_local_score;
+                            $penalties_visitor_score += $match->penalties_visitor_score;
+                        }
+                    } else {
+                        $local_score += $match->visitor_score;
+                        $visitor_score += $match->local_score;
+                        $penalties_local_score += $match->penalties_local_score;
+                        $penalties_visitor_score += $match->penalties_visitor_score;
+                    }
+                } else {
+                    return 0;
+                }
+            }
+
+            if ($local_score == $visitor_score) {
+                // FALTA aplicar valor doble
+                if ($penalties_local_score > $penalties_visitor_score) {
+                    $winner = $this->local_id;
+                } else {
+                    $winner = $this->visitor_id;
+                }
+            } else {
+                if ($local_score > $visitor_score) {
+                    $winner = $this->local_id;
+                } else {
+                    $winner = $this->visitor_id;
+                }
+            }
+
+            $participant = SeasonCompetitionPhaseGroupParticipant::find($winner);
+            return $participant;
+        } else {
+            return 0;
+        }
+    }
+
+    public function loser()
+    {
+        $local_score = 0;
+        $visitor_score = 0;
         foreach ($this->matches as $match) {
             if (!is_null($match->local_score) && !is_null($match->visitor_score)) {
                 if ($match->order == 1) {
@@ -72,15 +126,14 @@ class PlayOffRoundClash extends Model
             return 0;
         } else {
             if ($local_score > $visitor_score) {
-                $winner = $this->local_id;
+                $loser = $this->visitor_id;
             } else {
-                $winner = $this->visitor_id;
+                $loser = $this->local_id;
             }
         }
 
-        $participant = SeasonCompetitionPhaseGroupParticipant::find($winner);
-        return $participant->participant;
-
+        $participant = SeasonCompetitionPhaseGroupParticipant::find($loser);
+        return $participant;
     }
 
     public function result()
@@ -91,11 +144,15 @@ class PlayOffRoundClash extends Model
                 foreach ($this->matches as $key => $match) {
                     $result[$key]['local'] = $match->local_score;
                     $result[$key]['visitor'] = $match->visitor_score;
+                    $result['pen_local'] = null;
+                    $result['pen_visitor'] = null;
                 }
             } else { // unique match
                 $match = $this->matches->first();
                 $result['local'] = $match->local_score;
                 $result['visitor'] = $match->visitor_score;
+                $result['pen_local'] = $match->penalties_local_score;
+                $result['pen_visitor'] = $match->penalties_visitor_score;
             }
             return $result;
         } else {
