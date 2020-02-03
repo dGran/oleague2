@@ -53,7 +53,7 @@
         </small>
     </td>
 </tr>
-@if ( (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order > 1)) && ($match->local_score == $match->visitor_score) && (!is_null($match->local_score) && !is_null($match->visitor_score)) )
+@if ( (!$match->clash->round->round_trip == 1 || ($match->clash->round->round_trip == 1 && $match->order == 2)) && ($match->clash->total_result_local() == $match->clash->total_result_local()) && (!is_null($match->local_score) && !is_null($match->visitor_score)) && (!is_null($match->penalties_local_score) && !is_null($match->penalties_visitor_score)) )
     <tr class="matches">
         <td colspan="5" class="text-center" style="background: none">
             <small class="d-block text-info">

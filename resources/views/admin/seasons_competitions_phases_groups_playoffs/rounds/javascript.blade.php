@@ -91,8 +91,6 @@
             $('#modal-dialog-update').html("");
         });
 
-
-
     	$("#second_round").click(function(){
     		// $("#inverse_order").attr('disabled', !$("#inverse_order").attr('disabled'));
 	    	if ($("#second_round").prop('checked')) {
@@ -148,18 +146,78 @@
 	            }
 	        });
         });
-
     });
 
-    function validate_penalties() {
-        if ($("#local_score").val() == $("#visitor_score").val()) {
-            $("#penalties_local_score").prop('disabled', false);
-            $("#penalties_visitor_score").prop('disabled', false);
+
+    function enable_disable_penalties(e) {
+        var row = $(e).parents('tr');
+        var round_trip = row.attr("data-round-round_trip");
+        var double_value = row.attr("data-round-double_value");
+        var prev_local_score = row.attr("data-prev-match-local_score");
+        var prev_visitor_score = row.attr("data-prev-match-visitor_score");
+        var match_order = row.attr("data-match_order");
+        var local_score = parseInt($("#local_score").val());
+        var visitor_score = parseInt($("#visitor_score").val());
+
+        if (round_trip == 1) {
+            if (match_order == 2) {
+                var local_score_total = parseInt($("#local_score").val()) + parseInt(prev_visitor_score);
+                var visitor_score_total = parseInt($("#visitor_score").val()) + parseInt(prev_local_score);
+
+                if (double_value == 1) {
+                    if ( (local_score == prev_local_score) && (visitor_score == prev_visitor_score) ) {
+                        $("#penalties_local_score").prop('disabled', false);
+                        $("#penalties_visitor_score").prop('disabled', false);
+
+                        $("#send_result").prop('disabled', true);
+                    } else {
+                        $("#penalties_local_score").prop('disabled', true);
+                        $("#penalties_local_score").val('0');
+                        $("#penalties_visitor_score").prop('disabled', true);
+                        $("#penalties_visitor_score").val('0');
+
+                        $("#send_result").prop('disabled', false);
+                    }
+                } else {
+                    if (local_score_total == visitor_score_total) {
+                        $("#penalties_local_score").prop('disabled', false);
+                        $("#penalties_visitor_score").prop('disabled', false);
+
+                        $("#send_result").prop('disabled', true);
+                    } else {
+                        $("#penalties_local_score").prop('disabled', true);
+                        $("#penalties_local_score").val('0');
+                        $("#penalties_visitor_score").prop('disabled', true);
+                        $("#penalties_visitor_score").val('0');
+
+                        $("#send_result").prop('disabled', false);
+                    }
+                }
+            } else {
+                $("#send_result").prop('disabled', false);
+            }
         } else {
-            $("#penalties_local_score").prop('disabled', true);
-            $("#penalties_local_score").val('0');
-            $("#penalties_visitor_score").prop('disabled', true);
-            $("#penalties_visitor_score").val('0');
+            if (local_score == visitor_score) {
+                $("#penalties_local_score").prop('disabled', false);
+                $("#penalties_visitor_score").prop('disabled', false);
+
+                $("#send_result").prop('disabled', true);
+            } else {
+                $("#penalties_local_score").prop('disabled', true);
+                $("#penalties_local_score").val('0');
+                $("#penalties_visitor_score").prop('disabled', true);
+                $("#penalties_visitor_score").val('0');
+
+                $("#send_result").prop('disabled', false);
+            }
+        }
+    }
+
+    function validate_penalties(e) {
+        if ($("#penalties_local_score").val() == $("#penalties_visitor_score").val()) {
+            $("#send_result").prop('disabled', true);
+        } else {
+            $("#send_result").prop('disabled', false);
         }
     }
 

@@ -66,6 +66,7 @@ class PlayOffRoundClash extends Model
                     if ($match->order == 1) {
                         $local_score += $match->local_score;
                         $visitor_score += $match->visitor_score;
+                        $visitor_score1 = $match->visitor_score;
                         if (!$this->round->round_trip) {
                             $penalties_local_score += $match->penalties_local_score;
                             $penalties_visitor_score += $match->penalties_visitor_score;
@@ -73,20 +74,33 @@ class PlayOffRoundClash extends Model
                     } else {
                         $local_score += $match->visitor_score;
                         $visitor_score += $match->local_score;
-                        $penalties_local_score += $match->penalties_local_score;
-                        $penalties_visitor_score += $match->penalties_visitor_score;
+                        $visitor_score2 = $match->visitor_score;
+                        $penalties_local_score += $match->penalties_visitor_score;
+                        $penalties_visitor_score += $match->penalties_local_score;
                     }
                 } else {
                     return 0;
                 }
             }
-
             if ($local_score == $visitor_score) {
-                // FALTA aplicar valor doble
-                if ($penalties_local_score > $penalties_visitor_score) {
-                    $winner = $this->local_id;
+                if ($this->round->double_value == 1) {
+                    if ($visitor_score1 > $visitor_score2) {
+                        $winner = $this->visitor_id;
+                    } elseif ($visitor_score2 > $visitor_score1) {
+                        $winner = $this->local_id;
+                    } else {
+                        if ($penalties_local_score > $penalties_visitor_score) {
+                            $winner = $this->local_id;
+                        } else {
+                            $winner = $this->visitor_id;
+                        }
+                    }
                 } else {
-                    $winner = $this->visitor_id;
+                    if ($penalties_local_score > $penalties_visitor_score) {
+                        $winner = $this->local_id;
+                    } else {
+                        $winner = $this->visitor_id;
+                    }
                 }
             } else {
                 if ($local_score > $visitor_score) {
@@ -107,33 +121,63 @@ class PlayOffRoundClash extends Model
     {
         $local_score = 0;
         $visitor_score = 0;
-        foreach ($this->matches as $match) {
-            if (!is_null($match->local_score) && !is_null($match->visitor_score)) {
-                if ($match->order == 1) {
-                    $local_score += $match->local_score;
-                    $visitor_score += $match->visitor_score;
+        $penalties_local_score = 0;
+        $penalties_visitor_score = 0;
+        if ($this->matches->count() > 0) {
+            foreach ($this->matches as $match) {
+                if (!is_null($match->local_score) && !is_null($match->visitor_score)) {
+                    if ($match->order == 1) {
+                        $local_score += $match->local_score;
+                        $visitor_score += $match->visitor_score;
+                        $visitor_score1 = $match->visitor_score;
+                        if (!$this->round->round_trip) {
+                            $penalties_local_score += $match->penalties_local_score;
+                            $penalties_visitor_score += $match->penalties_visitor_score;
+                        }
+                    } else {
+                        $local_score += $match->visitor_score;
+                        $visitor_score += $match->local_score;
+                        $visitor_score2 = $match->visitor_score;
+                        $penalties_local_score += $match->penalties_visitor_score;
+                        $penalties_visitor_score += $match->penalties_local_score;
+                    }
                 } else {
-                    $local_score += $match->visitor_score;
-                    $visitor_score += $match->local_score;
+                    return 0;
+                }
+            }
+            if ($local_score == $visitor_score) {
+                if ($this->round->double_value == 1) {
+                    if ($visitor_score1 > $visitor_score2) {
+                        $loser = $this->local_id;
+                    } elseif ($visitor_score2 > $visitor_score1) {
+                        $loser = $this->visitor_id;
+                    } else {
+                        if ($penalties_local_score > $penalties_visitor_score) {
+                            $loser = $this->visitor_id;
+                        } else {
+                            $loser = $this->local_id;
+                        }
+                    }
+                } else {
+                    if ($penalties_local_score > $penalties_visitor_score) {
+                        $loser = $this->visitor_id;
+                    } else {
+                        $loser = $this->local_id;
+                    }
                 }
             } else {
-                return 0;
+                if ($local_score > $visitor_score) {
+                    $loser = $this->visitor_id;
+                } else {
+                    $loser = $this->local_id;
+                }
             }
-        }
 
-        if ($local_score == $visitor_score) {
-            // aplicar penalties y valor doble
-            return 0;
+            $participant = SeasonCompetitionPhaseGroupParticipant::find($loser);
+            return $participant;
         } else {
-            if ($local_score > $visitor_score) {
-                $loser = $this->visitor_id;
-            } else {
-                $loser = $this->local_id;
-            }
+            return 0;
         }
-
-        $participant = SeasonCompetitionPhaseGroupParticipant::find($loser);
-        return $participant;
     }
 
     public function result()
@@ -144,8 +188,8 @@ class PlayOffRoundClash extends Model
                 foreach ($this->matches as $key => $match) {
                     $result[$key]['local'] = $match->local_score;
                     $result[$key]['visitor'] = $match->visitor_score;
-                    $result['pen_local'] = null;
-                    $result['pen_visitor'] = null;
+                    $result[$key]['pen_local'] = $match->penalties_local_score;
+                    $result[$key]['pen_visitor'] = $match->penalties_visitor_score;
                 }
             } else { // unique match
                 $match = $this->matches->first();
@@ -159,4 +203,39 @@ class PlayOffRoundClash extends Model
             return null;
         }
     }
+
+    public function total_result_local()
+    {
+        if ($this->matches->count() > 0) {
+            $result = 0;
+            foreach ($this->matches as $match) {
+                if (!is_null($match->local_score) && !is_null($match->visitor_score)) {
+                    if ($match->order == 1) {
+                        $result += $match->local_score;
+                    } else {
+                        $result += $match->visitor_score;
+                    }
+                }
+            }
+            return $result;
+        }
+    }
+
+    public function total_result_visitor()
+    {
+        if ($this->matches->count() > 0) {
+            $result = 0;
+            foreach ($this->matches as $match) {
+                if (!is_null($match->local_score) && !is_null($match->visitor_score)) {
+                    if ($match->order == 1) {
+                        $result += $match->visitor_score;
+                    } else {
+                        $result += $match->local_score;
+                    }
+                }
+            }
+            return $result;
+        }
+    }
+
 }

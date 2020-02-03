@@ -46,9 +46,12 @@ class SeasonCompetitionMatch extends Model
             if ($this->day_id) {
                 return $this->day->date_limit;
             } else {
-                return $this->clash->date_limit;
+                if ($this->clash->date_limit) {
+                    return $this->clash->date_limit;
+                } else {
+                    return $this->clash->round->date_limit;
+                }
             }
-
         } else {
             return $this->date_limit;
         }
@@ -67,6 +70,11 @@ class SeasonCompetitionMatch extends Model
     //         return date('m/d/Y h:m A', strtotime($this->date_limit));
     //     }
     // }
+
+    public function clash_prev_match()
+    {
+        return $prev_match = SeasonCompetitionMatch::where('clash_id', '=', $this->clash_id)->where('order', '=', 1)->first();
+    }
 
     public function stats()
     {

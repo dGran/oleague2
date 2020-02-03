@@ -174,7 +174,7 @@
                                                 </small>
                                             </div>
                                         @elseif ($match->order == 2)
-                                            <div class="pt-2" data-id="{{ $match->id }}">
+                                            <div class="pt-2" data-id="{{ $match->id }}" data-prev-match-local-score="{{ $match->clash_prev_match()->local_score }}" data-prev-match-visitor-score="{{ $match->clash_prev_match()->visitor_score }}">
                                                 <strong class="d-block">Partido de vuelta</strong>
                                                 <small>
                                                     {{ $match->local_participant->participant->name() }}

@@ -56,12 +56,12 @@
                         </td>
                     </tr>
 
-                    <tr class="matches">
+                    <tr class="matches" id="test" name="test" data-round-round_trip = "{{ $match->clash->round->round_trip }}" data-round-double_value = "{{ $match->clash->round->double_value }}" data-match_order = "{{ $match->order }}" data-prev-match-local_score = "{{ $match->clash_prev_match()->local_score }}" data-prev-match-visitor_score = "{{ $match->clash_prev_match()->visitor_score }}">
                         <td colspan="2">
-                            <input type="number" class="form-control float-right" name="local_score" id="local_score" value="0" min="0" step="1" style="width: 4em" onchange="validate_penalties()">
+                            <input type="number" class="form-control float-right" name="local_score" id="local_score" value="0" min="0" step="1" style="width: 4em" onchange="enable_disable_penalties(this)">
                         </td>
                         <td colspan="2" class="text-left">
-                            <input type="number" class="form-control" name="visitor_score" id="visitor_score" value="0" min="0" step="1" style="width: 4em" onchange="validate_penalties()">
+                            <input type="number" class="form-control" name="visitor_score" id="visitor_score" value="0" min="0" step="1" style="width: 4em" onchange="enable_disable_penalties(this)">
                         </td>
                     </tr>
 
@@ -76,10 +76,10 @@
                         </tr>
                         <tr class="matches">
                             <td colspan="2" class="pt-1">
-                                <input type="number" class="form-control float-right" name="penalties_local_score" id="penalties_local_score" value="0" min="0" step="1" style="width: 4em">
+                                <input type="number" class="form-control float-right" name="penalties_local_score" id="penalties_local_score" value="0" min="0" step="1" style="width: 4em" disabled onchange="validate_penalties(this)">
                             </td>
                             <td colspan="2" class="text-left pt-1">
-                                <input type="number" class="form-control" name="penalties_visitor_score" id="penalties_visitor_score" value="0" min="0" step="1" style="width: 4em">
+                                <input type="number" class="form-control" name="penalties_visitor_score" id="penalties_visitor_score" value="0" min="0" step="1" style="width: 4em" disabled onchange="validate_penalties(this)">
                             </td>
                         </tr>
                     @endif
@@ -263,7 +263,7 @@
             </div> {{-- main-content --}}
 
             <div class="border-top mt-2 py-3">
-                <input type="submit" class="btn btn-primary" value="Enviar resultado">
+                <input type="submit" class="btn btn-primary" id="send_result" value="Enviar resultado" disabled>
             </div>
 
         </form>

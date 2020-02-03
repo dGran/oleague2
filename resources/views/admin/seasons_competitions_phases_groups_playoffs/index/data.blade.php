@@ -5,7 +5,6 @@
                 <h5><strong>Configuración</strong></h5>
 
                 <form
-                    id="frmAdd"
                     lang="{{ app()->getLocale() }}"
                     role="form"
                     method="POST"
@@ -128,7 +127,7 @@
                 <tr>
                     <td colspan="6" class="p-0">
                         <form
-                            id="frmAdd"
+                            id="frmUpdate{{ $round->id }}"
                             lang="{{ app()->getLocale() }}"
                             role="form"
                             method="POST"
@@ -143,12 +142,12 @@
 
                                 <div class="form-group row">
                                     <div class="col-6 col-lg-4">
-                                        <label for="name">Nombre de la ronda</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la ronda" value="{{ old('name', $round->name) }}">
+                                        <label for="name{{ $round->id }}">Nombre de la ronda</label>
+                                        <input type="text" class="form-control" id="name{{ $round->id }}" name="name" placeholder="Nombre de la ronda" value="{{ old('name', $round->name) }}">
                                     </div>
                                     <div class="col-6 col-lg-4">
-                                        <label for="playoff_type">Tipo de eliminatoria</label>
-                                        <select class="selectpicker form-control" name="playoff_type" id="playoff_type" {{ $round->exists_matches() ? 'disabled' : '' }}>
+                                        <label for="playoff_type{{ $round->id }}">Tipo de eliminatoria</label>
+                                        <select class="selectpicker form-control" name="playoff_type" id="playoff_type{{ $round->id }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                             <option {{ !$round->round_trip ? 'selected' : ''}} value="0">Partido único</option>
                                             <option {{ $round->round_trip && !$round->double_value ? 'selected' : ''}} value="1">Ida y vuelta</option>
                                             <option {{ $round->round_trip && $round->double_value ? 'selected' : ''}} value="2">Ida y vuelta (valor doble goles)</option>
@@ -156,22 +155,22 @@
                                     </div>
 
                                     <div class="col-6 col-lg-4 mt-3 mt-lg-0">
-                                        <label for="date_limit">Fecha límite</label>
-                                        <input type="datetime-local" class="form-control" name="date_limit" id="date_limit" value="{{ $round->date_limit ? $round->getDateLimit_date() . 'T' . $round->getDateLimit_time() : '' }}">
+                                        <label for="date_limit{{ $round->id }}">Fecha límite</label>
+                                        <input type="datetime-local" class="form-control" name="date_limit" id="date_limit{{ $round->id }}" value="{{ $round->date_limit ? $round->getDateLimit_date() . 'T' . $round->getDateLimit_time() : '' }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-6 col-lg-4">
-                                        <label for="play_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
-                                        <input type="number" class="form-control" id="play_amount" name="play_amount" placeholder="Ganancias por jugar" min="0" step=".5" value="{{ old('play_amount', $round ? $round->play_amount : 1) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
+                                        <label for="play_amount{{ $round->id }}"><i class="fas fa-euro-sign mr-2"></i>por jugar</label>
+                                        <input type="number" class="form-control" id="play_amount{{ $round->id }}" name="play_amount" placeholder="Ganancias por jugar" min="0" step=".5" value="{{ old('play_amount', $round ? $round->play_amount : 1) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                     </div>
                                     <div class="col-6 col-lg-4 mt-3 mt-lg-0">
-                                        <label for="play_ontime_amount"><i class="fas fa-euro-sign mr-2"></i>por jugar en plazo</label>
-                                        <input type="number" class="form-control" id="play_ontime_amount" name="play_ontime_amount" placeholder="Ganancias por derrota" min="0" step=".5" value="{{ old('play_ontime_amount', $round ? $round->play_ontime_amount : 0) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
+                                        <label for="play_ontime_amount{{ $round->id }}"><i class="fas fa-euro-sign mr-2"></i>por jugar en plazo</label>
+                                        <input type="number" class="form-control" id="play_ontime_amount{{ $round->id }}" name="play_ontime_amount" placeholder="Ganancias por jugar en plazo" min="0" step=".5" value="{{ old('play_ontime_amount', $round ? $round->play_ontime_amount : 0) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                     </div>
                                     <div class="col-6 col-lg-4">
-                                        <label for="win_amount"><i class="fas fa-euro-sign mr-2"></i>por victoria</label>
-                                        <input type="number" class="form-control" id="win_amount" name="win_amount" placeholder="Ganancias por victoria" min="0" step=".5" value="{{ old('win_amount', $round ? $round->win_amount : 3) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
+                                        <label for="win_amount{{ $round->id }}"><i class="fas fa-euro-sign mr-2"></i>por victoria</label>
+                                        <input type="number" class="form-control" id="win_amount{{ $round->id }}" name="win_amount" placeholder="Ganancias por victoria" min="0" step=".5" value="{{ old('win_amount', $round ? $round->win_amount : 3) }}" {{ $round->exists_matches() ? 'disabled' : '' }}>
                                     </div>
                                 </div>
 
