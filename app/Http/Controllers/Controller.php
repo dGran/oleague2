@@ -11,18 +11,25 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 
 use App\SeasonParticipant;
 use App\SeasonParticipantCashHistory as Cash;
+use App\GeneralSetting;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected function telegram_notifications() {
+    	return $notifications = GeneralSetting::first()->telegram_notifications;
+    }
+
     // Telegram
     protected function telegram_notification_channel($text) {
-		Telegram::sendMessage([
-		    'chat_id' => env('TELEGRAM_CHANNEL_ID', 'YOUR-TELEGRAM-CHANNEL-ID'),
-		    'parse_mode' => 'HTML',
-		    'text' => $text
-		]);
+    	if ($this->telegram_notifications()) {
+			Telegram::sendMessage([
+			    'chat_id' => env('TELEGRAM_CHANNEL_ID', 'YOUR-TELEGRAM-CHANNEL-ID'),
+			    'parse_mode' => 'HTML',
+			    'text' => $text
+			]);
+    	}
     }
 
     protected function telegram_notification_admin($text) {
@@ -49,9 +56,9 @@ class Controller extends BaseController
         $cash->amount = $amount;
         $cash->movement = $movement;
         $cash->save();
+    }
     // END: Competitions
 
     // meter todas las funciones que pueden ser utiles en mas controladores
-
 
 }
