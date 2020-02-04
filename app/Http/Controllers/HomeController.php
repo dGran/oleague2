@@ -93,17 +93,23 @@ class HomeController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'mensaje'=>'required|string|min:20'
+            'mensaje'=>'required|string|min:20',
         ]);
 
-        $forminput = [
-            'nombre' => $request->input('nombre'),
-            'email' => $request->input('email'),
-            'mensaje' => $request->input('mensaje')
-        ];
+        if (request()->honey_pot == null) {
+            $forminput = [
+                'nombre' => $request->input('nombre'),
+                'email' => $request->input('email'),
+                'mensaje' => $request->input('mensaje')
+            ];
+            Mail::to('lpx.torneos@gmail.com')->send(new Contact($forminput));
+            $text = 'Nuevo mensaje recibido desde el formulario de contacto.';
+            $this->telegram_notification_admin($text);
 
-        Mail::to('lpx.torneos@gmail.com')->send(new Contact($forminput));
-         return redirect('contacto')->with('success', '¡Mensaje enviado! Gracias por contactarnos.');
+            return redirect('contacto')->with('success', '¡Mensaje enviado! Gracias por contactarnos.');
+        } else {
+            return redirect('/');
+        }
     }
 
     public function participants()

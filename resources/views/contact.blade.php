@@ -35,6 +35,8 @@
 			            <section class="seccion-contacto">
 		                    <form method="POST" action="{{ route('contact.sent') }}" class="contact-form {{ (Session::get('errors')) ? 'was-validated' : '' }}"  role="form" id="contact-form" class="">
 		                        @csrf
+		                        <input type="hidden" name="honey_pot" value="" style="display: none">
+
 		                        <div class="messages"></div> <!-- mensajes de error -->
 
 	                            <div class="row">

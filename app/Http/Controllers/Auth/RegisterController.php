@@ -109,6 +109,9 @@ class RegisterController extends Controller
             return redirect('/login')->with('warning', "Lo siento, tu correo electrónico no puede ser identificado.");
         }
 
+        $text = 'Nuevo usuario registrado con cuenta verificada - ' . $user->name . ' ('  . $user->email . ')';
+        $this->telegram_notification_admin($text);
+
         return redirect('/login')->with('status', $status);
     }
 

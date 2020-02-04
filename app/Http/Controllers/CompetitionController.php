@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Telegram\Bot\Laravel\Facades\Telegram;
-
 use Illuminate\Http\Request;
 use App\SeasonCompetition;
 use App\SeasonCompetitionPhase;
@@ -439,11 +437,7 @@ class CompetitionController extends Controller
 			$text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
 			$text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-			Telegram::sendMessage([
-			    'chat_id' => '-1001241759649',
-			    'parse_mode' => 'HTML',
-			    'text' => $text
-			]);
+			$this->telegram_notification($text);
 
 	        // generate new (post)
 	        $post = Post::create([
@@ -566,36 +560,24 @@ class CompetitionController extends Controller
 	    return $data;
     }
 
-	protected function add_cash_history($participant_id, $description, $amount, $movement)
-	{
-	    $cash = new Cash;
-	    $cash->participant_id = $participant_id;
-	    $cash->description = $description;
-	    $cash->amount = $amount;
-	    $cash->movement = $movement;
-	    $cash->save();
+	// protected function add_cash_history($participant_id, $description, $amount, $movement)
+	// {
+	//     $cash = new Cash;
+	//     $cash->participant_id = $participant_id;
+	//     $cash->description = $description;
+	//     $cash->amount = $amount;
+	//     $cash->movement = $movement;
+	//     $cash->save();
 
-	    if ($cash->save()) {
-	    	$participant = SeasonParticipant::find($participant_id);
-	    	if ($movement == 'E') {
-	    		$action = 'ingresa';
-	    	} else {
-	    		$action = 'desembolsa';
-	    	}
-
-	        // telegram notification
-			// $club_link = 'https://lpx.es/clubs/' . $participant->team->slug . '/economia';
-	  //   	$text = "\xF0\x9F\x92\xB0" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($amount, 2, ",", ".") . " mill.\n";
-	  //   	$text .= "    Concepto: " . $description . "\n\n";
-	  //   	$text .= "    Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.\n\n";
-	  //   	$text .= "\xF0\x9F\x92\xB8 <a href='$club_link'>Historial de economia de " . $participant->team->name . "</a>";
-			// Telegram::sendMessage([
-			//     'chat_id' => '-1001241759649',
-			//     'parse_mode' => 'HTML',
-			//     'text' => $text
-			// ]);
-	    }
-	}
+	//     if ($cash->save()) {
+	//     	$participant = SeasonParticipant::find($participant_id);
+	//     	if ($movement == 'E') {
+	//     		$action = 'ingresa';
+	//     	} else {
+	//     		$action = 'desembolsa';
+	//     	}
+	//     }
+	// }
 
 	protected function check_game_mode($phase)
 	{
