@@ -23,7 +23,6 @@ class CompetitionController extends Controller
     public function index()
     {
     	$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
-    	$this->telegram_notifications();
         return view('competitions.index', compact('competitions'));
     }
 

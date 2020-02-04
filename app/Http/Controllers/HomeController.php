@@ -64,7 +64,8 @@ class HomeController extends Controller
             'mensaje'=>'required|string|min:20',
         ]);
 
-        if (request()->honey_pot == null) {
+        $linky = strpos(request()->mensaje, 'http://linky.tech/');
+        if (request()->honey_pot == null && $linky === false) {
             $forminput = [
                 'nombre' => $request->input('nombre'),
                 'email' => $request->input('email'),
