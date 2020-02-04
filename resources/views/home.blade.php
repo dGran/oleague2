@@ -172,7 +172,7 @@
                                     <figure style="width: 96px; height: 96px; display: table-cell; position: relative; line-height: 1.1em;" class="m-0 text-center align-top px-2">
                                         @if ($post->type == "transfer")
                                             <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
-                                    @elseif ($post->type == "press")
+                                        @elseif ($post->type == "press")
                                             <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px;" class="rounded">
                                             <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
                                         @elseif ($post->type == "default")
@@ -204,7 +204,13 @@
                                     </div>
                                 </li>
                                 @if ($post->transfer_id || $post->match_id || $post->press_id)
-                                    </a>
+                                 @if ($post->transfer_id)
+                                        </a>
+                                    @elseif ($post->match_id && $post->match_exists())
+                                        </a>
+                                    @elseif ($post->press_id && $post->participant_exists())
+                                        </a>
+                                    @endif
                                 @endif
                             @endforeach
                         </ul>
