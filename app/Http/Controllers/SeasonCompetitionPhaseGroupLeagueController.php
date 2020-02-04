@@ -16,7 +16,6 @@ use App\SeasonCompetitionMatch;
 use App\SeasonCompetitionPhaseGroupLeagueTableZone;
 use App\Post;
 
-use Telegram\Bot\Laravel\Facades\Telegram;
 use Illuminate\Database\Eloquent\Collection;
 
 use App\Events\TableWasSaved;
@@ -161,11 +160,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
             }
             $text .= "\n\n";
             $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
-            Telegram::sendMessage([
-                'chat_id' => '-1001241759649',
-                'parse_mode' => 'HTML',
-                'text' => $text
-            ]);
+            $this->telegram_notification_channel($text);
 
             return back()->with('success', 'Jornada activada correctamente');
         } else {
@@ -559,11 +554,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
             $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
             $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-            Telegram::sendMessage([
-                'chat_id' => '-1001241759649',
-                'parse_mode' => 'HTML',
-                'text' => $text
-            ]);
+            $this->telegram_notification_channel($text);
 
             // generate new (post)
             $post = Post::create([
@@ -803,11 +794,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
             $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
             $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-            Telegram::sendMessage([
-                'chat_id' => '-1001241759649',
-                'parse_mode' => 'HTML',
-                'text' => $text
-            ]);
+            $this->telegram_notification_channel($text);
 
             // generate new (post)
             $post = Post::create([

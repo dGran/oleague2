@@ -51,6 +51,7 @@ class Controller extends BaseController
         $cash->save();
     // END: Competitions
 
+    // meter todas las funciones que pueden ser utiles en mas controladores
 
 
 }

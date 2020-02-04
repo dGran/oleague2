@@ -437,7 +437,7 @@ class CompetitionController extends Controller
 			$text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
 			$text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
-			$this->telegram_notification($text);
+			$this->telegram_notification_channel($text);
 
 	        // generate new (post)
 	        $post = Post::create([

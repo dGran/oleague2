@@ -14,8 +14,6 @@ use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
 
-use Telegram\Bot\Laravel\Facades\Telegram;
-
 class SeasonParticipantCashHistoryController extends Controller
 {
     public function index()
@@ -185,11 +183,7 @@ class SeasonParticipantCashHistoryController extends Controller
 			    		$action = 'desembolsa';
 			    	}
 			    	$text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill. por " . "'<i>" . $data['description'] . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
+                    $this->telegram_notification_channel($text);
 				}
             }
             if (request()->no_close) {
@@ -209,11 +203,7 @@ class SeasonParticipantCashHistoryController extends Controller
 			    		$action = 'desembolsa';
 			    	}
 			    	$text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill. por " . "'<i>" . $data['description'] . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
-					Telegram::sendMessage([
-					    'chat_id' => '-1001241759649',
-					    'parse_mode' => 'HTML',
-					    'text' => $text
-					]);
+                    $this->telegram_notification_channel($text);
 				}
 	            if (request()->no_close) {
 	                return back()->with('success', 'Nuevo registro registrado correctamente');
@@ -394,12 +384,7 @@ class SeasonParticipantCashHistoryController extends Controller
                 event(new TableWasSaved($cash, $cash->description));
 
                 $text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>desembolsa</b> " . number_format($cash->amount, 2, ",", ".") . " mill. por " . "'<i>" . $cash->description . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
-                Telegram::sendMessage([
-                    'chat_id' => '-1001241759649',
-                    'parse_mode' => 'HTML',
-                    'text' => $text
-                ]);
-
+                $this->telegram_notification_channel($text);
             }
             $season->salaries_paid = 1;
             $season->save();

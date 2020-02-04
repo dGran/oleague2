@@ -9,8 +9,6 @@ use App\Post;
 use App\Press;
 use App\SeasonCompetitionMatch;
 
-use Telegram\Bot\Laravel\Facades\Telegram;
-
 class ClubController extends Controller
 {
     public function clubs()
@@ -147,11 +145,7 @@ class ClubController extends Controller
                         $text .= "    <b>$press->title</b>\n";
                         $text .= "    " . $press->description . "\n\n";
                         $text .= "\xF0\x9F\x8F\xA0 <a href='$club_link'>Sala de prensa de $club_name</a>\n";
-                        Telegram::sendMessage([
-                            'chat_id' => '-1001241759649',
-                            'parse_mode' => 'HTML',
-                            'text' => $text
-                        ]);
+                        $this->telegram_notification_channel($text);
                         return back()->with('success', 'Nota de prensa enviada correctamente.');
                     }
                 }

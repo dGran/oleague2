@@ -16,8 +16,6 @@ use App\SeasonCompetitionPhaseGroupParticipant;
 use App\SeasonParticipant;
 use App\SeasonParticipantCashHistory as Cash;
 
-use Telegram\Bot\Laravel\Facades\Telegram;
-
 use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
@@ -769,11 +767,8 @@ class PlayOffController extends Controller
         $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
         $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Playoff $competition</a>\n";
 
-        Telegram::sendMessage([
-            'chat_id' => '-1001241759649',
-            'parse_mode' => 'HTML',
-            'text' => $text
-        ]);
+
+        $this->telegram_notification_channel($text);
     }
 
 }

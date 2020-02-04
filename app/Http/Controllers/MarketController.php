@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Player;
 use App\Showcase;
 use App\FavoritePlayer;
@@ -1849,11 +1848,7 @@ class MarketController extends Controller
 					$text .= "\xF0\x9F\x92\xBC <a href='$bottom_link'>Sigue la evolución del mercado</a>\n\n";
 					break;
 			}
-			Telegram::sendMessage([
-			    'chat_id' => '-1001241759649',
-			    'parse_mode' => 'HTML',
-			    'text' => $text
-			]);
+			$this->telegram_notification_channel($text);
 	    }
 	}
 
