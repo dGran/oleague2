@@ -146,7 +146,7 @@
                         </div>
                     @endif
                 </div>
-                <ul class="list-inline pt-2">
+{{--                 <ul class="list-inline pt-2">
                    <li class="list-inline-item">
                         <a class="social-icon text-xs-center {{ $type == '' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home') }}">Todas</a>
                     </li>
@@ -165,7 +165,7 @@
                    <li class="list-inline-item">
                         <a class="social-icon text-xs-center {{ $type == 'champion' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home', 'champion') }}">Campeones</a>
                     </li>
-                </ul>
+                </ul> --}}
             </div>
         </div>
 

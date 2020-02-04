@@ -20,7 +20,8 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 // Route::get('/user/resend_verify/{token}', 'Auth\LoginController@resendActivationMail')->name('resendActivationMail');
 
 // Home Routes
-Route::get('/{type?}', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/{type?}', 'HomeController@index')->name('home');
 Route::get('politica-privacidad', 'HomeController@privacity')->name('privacity');
 Route::get('contacto', 'HomeController@contact')->name('contact');
 Route::post('contacto/enviar', 'HomeController@contactSent')->name('contact.sent');
