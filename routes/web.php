@@ -20,10 +20,11 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 // Route::get('/user/resend_verify/{token}', 'Auth\LoginController@resendActivationMail')->name('resendActivationMail');
 
 // Home Routes
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/{type?}', 'HomeController@index')->name('home');
 Route::get('politica-privacidad', 'HomeController@privacity')->name('privacity');
 Route::get('contacto', 'HomeController@contact')->name('contact');
 Route::post('contacto/enviar', 'HomeController@contactSent')->name('contact.sent');
+Route::get('reglamento', 'HomeController@rules')->name('rules');
 
 // Competitions routes
 Route::middleware('check_active_season')->group(function () {
@@ -97,15 +98,6 @@ Route::get('notificaciones/marcar-como-leida/{id}', 'MailboxController@read')->n
 Route::get('notificaciones/marcar-todas-como-leidas', 'MailboxController@readAll')->name('notifications.read_all');
 Route::get('notificaciones/eliminar/{id}', 'MailboxController@destroy')->name('notifications.destroy');
 Route::get('notificaciones/eliminar-todas', 'MailboxController@destroyAll')->name('notifications.destroy_all');
-
-Route::get('reglamento', 'HomeController@rules')->name('rules');
-Route::get('participantes', 'HomeController@participants')->name('participants');
-// Route::get('competiciones', 'HomeController@competitions')->name('competitions');
-// Route::get('competiciones/competicion', 'HomeController@competition')->name('competition');
-// Route::get('competiciones/competicion/clasificacion', 'HomeController@competition_standing')->name('competition.league.standing');
-// Route::get('competiciones/competicion/calendario', 'HomeController@competition_schedule')->name('competition.league.schedule');
-// Route::get('competiciones/competicion/estadisticas', 'HomeController@competition_statistics')->name('competition.league.statistics');
-// Route::get('competiciones/competicion/partido', 'HomeController@competition_match')->name('competition.match');
 
 
 // Admin Routes

@@ -146,6 +146,28 @@
                         </div>
                     @endif
                 </div>
+                <div>
+                    <ul class="list-inline">
+                       <li class="list-inline-item">
+                            <a class="social-icon text-xs-center {{ $type == '' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home') }}">Todas</a>
+                        </li>
+                       <li class="list-inline-item">
+                            <a class="social-icon text-xs-center {{ $type == 'default' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home', 'default') }}">Informativas</a>
+                        </li>
+                       <li class="list-inline-item">
+                            <a class="social-icon text-xs-center {{ $type == 'result' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home', 'result') }}">Resultados</a>
+                        </li>
+                       <li class="list-inline-item">
+                            <a class="social-icon text-xs-center {{ $type == 'transfer' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home', 'transfer') }}">Mercado</a>
+                        </li>
+                       <li class="list-inline-item">
+                            <a class="social-icon text-xs-center {{ $type == 'press' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home', 'press') }}">Sala de prensa</a>
+                        </li>
+                       <li class="list-inline-item">
+                            <a class="social-icon text-xs-center {{ $type == 'champion' ? 'text-white disabled' : 'text-muted'  }}" href="{{ route('home', 'champion') }}">Campeones</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -154,7 +176,7 @@
                 <div class="col-12">
                     @if ($posts->count() == 0)
                         <div class="px-2 py-4 text-white">
-                            Todavía no tenemos actividad
+                            No existen noticias
                         </div>
                     @else
                         <ul style="list-style: none; margin:0; padding: 0;">
