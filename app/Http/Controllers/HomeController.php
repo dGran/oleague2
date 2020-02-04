@@ -71,7 +71,7 @@ class HomeController extends Controller
         // $text = "Mensaje de prueba con channel almacenado";
         // send_telegram_notification($text);
 
-        $posts = Post::where('type', '=', 'result')->orderBy('created_at', 'desc')->paginate();
+        $posts = Post::orderBy('created_at', 'desc')->paginate();
         $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
 
         return view('home', compact('posts', 'last_users'));
