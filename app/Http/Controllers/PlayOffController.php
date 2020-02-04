@@ -657,7 +657,11 @@ class PlayOffController extends Controller
                     ->where('local_id', '<>', $match->clash->winner()->id)
                     ->where('visitor_id', '<>', $match->clash->winner()->id)
                     ->first();
-                $description = "Espera rival de la eliminatoria " . $clash_rival->local_participant->participant->name() . ' vs ' . $clash_rival->visitor_participant->participant->name();
+                if ($clash_rival && $clash_rival->local_participant && $clash_rival->visitor_participant) {
+                    $description = "Espera rival de la eliminatoria " . $clash_rival->local_participant->participant->name() . ' vs ' . $clash_rival->visitor_participant->participant->name();
+                } else {
+                    $description = "Sus posibles rivales pendiente de disputar rondas anteriores";
+                }
             }
             $post = Post::create([
                 'type' => 'default',
