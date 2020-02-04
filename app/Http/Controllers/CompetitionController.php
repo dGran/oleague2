@@ -239,8 +239,8 @@ class CompetitionController extends Controller
         $match = SeasonCompetitionMatch::find($match_id);
 
         if ($match->local_score == null && $match->visitor_score == null) {
-	        $match->local_score = request()->local_score;
-	        $match->visitor_score = request()->visitor_score;
+	        $match->local_score = intval(request()->local_score);
+	        $match->visitor_score = intval(request()->visitor_score);
 	        $match->user_update_result = auth()->user()->id;
 	        $match->date_update_result = now();
 	        $match->save();
