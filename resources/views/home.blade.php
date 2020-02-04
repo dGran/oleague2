@@ -19,10 +19,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-6 align-middle">
-                                <img class="logo_game" src="img/logo_pes2020.png" alt="">
+                                <img class="logo_game" src="{{ asset('img/logo_pes2020.png') }}" alt="">
                             </div>
                             <div class="col-6 align-middle">
-                                <img class="logo_platform" src="img/logo_xboxone.png" alt="">
+                                <img class="logo_platform" src="{{ asset('img/logo_xboxone.png') }}" alt="">
                             </div>
                         </div>
                     </div>
