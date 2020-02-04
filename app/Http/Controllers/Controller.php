@@ -49,16 +49,6 @@ class Controller extends BaseController
         $cash->amount = $amount;
         $cash->movement = $movement;
         $cash->save();
-
-        if ($cash->save()) {
-            $participant = SeasonParticipant::find($participant_id);
-            if ($movement == 'E') {
-                $action = 'ingresa';
-            } else {
-                $action = 'desembolsa';
-            }
-        }
-    }
     // END: Competitions
 
 

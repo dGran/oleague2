@@ -560,25 +560,6 @@ class CompetitionController extends Controller
 	    return $data;
     }
 
-	// protected function add_cash_history($participant_id, $description, $amount, $movement)
-	// {
-	//     $cash = new Cash;
-	//     $cash->participant_id = $participant_id;
-	//     $cash->description = $description;
-	//     $cash->amount = $amount;
-	//     $cash->movement = $movement;
-	//     $cash->save();
-
-	//     if ($cash->save()) {
-	//     	$participant = SeasonParticipant::find($participant_id);
-	//     	if ($movement == 'E') {
-	//     		$action = 'ingresa';
-	//     	} else {
-	//     		$action = 'desembolsa';
-	//     	}
-	//     }
-	// }
-
 	protected function check_game_mode($phase)
 	{
 		return $phase->mode;

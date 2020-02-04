@@ -1670,30 +1670,6 @@ class MarketController extends Controller
      * HELPERS FUNCTIONS
      *
      */
-	protected function add_cash_history($participant_id, $description, $amount, $movement) {
-	    $cash = new Cash;
-	    $cash->participant_id = $participant_id;
-	    $cash->description = $description;
-	    $cash->amount = $amount;
-	    $cash->movement = $movement;
-	    $cash->save();
-
-	    if ($cash->save()) {
-	    	$participant = SeasonParticipant::find($participant_id);
-	    	if ($movement == 'E') {
-	    		$action = 'ingresa';
-	    	} else {
-	    		$action = 'desembolsa';
-	    	}
-	    	$text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($amount, 2, ",", ".") . " mill. por " . "'<i>" . $description . "'</i>\n" . "Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.";
-			// Telegram::sendMessage([
-			//     'chat_id' => '-1001241759649',
-			//     'parse_mode' => 'HTML',
-			//     'text' => $text
-			// ]);
-	    }
-
-	}
 
 	protected function add_transfer($type, $player_id, $participant_from, $participant_to, $price) {
 	    $transfer = new Transfer;

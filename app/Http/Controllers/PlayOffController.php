@@ -480,24 +480,6 @@ class PlayOffController extends Controller
 		}
     }
 
-    // protected function add_cash_history($participant_id, $description, $amount, $movement) {
-    //     $cash = new Cash;
-    //     $cash->participant_id = $participant_id;
-    //     $cash->description = $description;
-    //     $cash->amount = $amount;
-    //     $cash->movement = $movement;
-    //     $cash->save();
-
-    //     if ($cash->save()) {
-    //         $participant = SeasonParticipant::find($participant_id);
-    //         if ($movement == 'E') {
-    //             $action = 'ingresa';
-    //         } else {
-    //             $action = 'desembolsa';
-    //         }
-    //     }
-    // }
-
     protected function assing_stats($match) {
         $local_players = SeasonPlayer::where('participant_id', '=', $match->local_participant->participant->id)->get();
         foreach ($local_players as $player) {
