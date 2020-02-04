@@ -464,6 +464,7 @@ class PlayOffController extends Controller
 		$match->local_user_id = $clash->local_participant->participant->id;
 		$match->visitor_id = $clash->visitor_id;
 		$match->visitor_user_id = $clash->visitor_participant->participant->id;
+        $match->active = 1;
 		$match->save();
 
 		if ($clash->round->round_trip) {
@@ -474,6 +475,7 @@ class PlayOffController extends Controller
 			$match->local_user_id = $clash->visitor_participant->participant->id;
 			$match->visitor_id = $clash->local_id;
 			$match->visitor_user_id = $clash->local_participant->participant->id;
+            $match->active = 1;
 			$match->save();
 		}
     }
