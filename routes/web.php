@@ -21,6 +21,7 @@ Route::post('/user/resend_verify', 'Auth\LoginController@resendActivationMail')-
 
 // Home Routes
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/noticias/{type?}', 'HomeController@posts')->name('home.posts');
 // Route::get('/{type?}', 'HomeController@index')->name('home');
 Route::get('politica-privacidad', 'HomeController@privacity')->name('privacity');
 Route::get('contacto', 'HomeController@contact')->name('contact');

@@ -31,16 +31,19 @@ class HomeController extends Controller
         $posts = Post::orderBy('created_at', 'desc')->paginate();
         $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
 
-        return view('home', compact('posts', 'last_users'));
+        return view('home', compact('posts', 'last_users', 'type'));
+    }
 
-        // if ($type == null) {
-        //     $posts = Post::orderBy('created_at', 'desc')->paginate();
-        // } else {
-        //     $posts = Post::where('type', '=', $type)->orderBy('created_at', 'desc')->paginate();
-        // }
-        // $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
+    public function posts($type = null)
+    {
+        if ($type == null) {
+            $posts = Post::orderBy('created_at', 'desc')->paginate();
+        } else {
+            $posts = Post::where('type', '=', $type)->orderBy('created_at', 'desc')->paginate();
+        }
+        $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
 
-        // return view('home', compact('posts', 'last_users' ,'type'));
+        return view('home', compact('posts', 'last_users' ,'type'));
     }
 
     public function privacity()
