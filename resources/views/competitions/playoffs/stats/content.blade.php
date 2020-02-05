@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-12 col-md-10 col-lg-8 px-0 py-3">
-			@if ($league->stats_goals)
+			@if ($playoff->stats_goals)
 				<h4 class="mt-4 mx-2">
 					<small><i class="icon-soccer-ball mr-1"></i></small>
 					Goleadores
@@ -46,7 +46,7 @@
 				@endif
 			@endif
 
-			@if ($league->stats_assists)
+			@if ($playoff->stats_assists)
 				<h4 class="mt-4 mx-2">
 					<i class="icon-soccer_assist mr-1"></i>
 					Asistencias
@@ -89,7 +89,7 @@
 				@endif
 			@endif
 
-			@if ($league->stats_yellow_cards)
+			@if ($playoff->stats_yellow_cards)
 				<h4 class="mt-4 mx-2">
 					<i class="icon-soccer_card text-warning mr-1"></i>
 					Tarjetas Amarillas
@@ -132,7 +132,7 @@
 				@endif
 			@endif
 
-			@if ($league->stats_red_cards)
+			@if ($playoff->stats_red_cards)
 				<h4 class="mt-4 mx-2">
 					<i class="icon-soccer_card text-danger mr-1"></i>
 					Tarjetas Rojas

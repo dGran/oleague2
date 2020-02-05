@@ -186,47 +186,103 @@ class CompetitionController extends Controller
 			} else {
 				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
 			}
+			$game_mode = $this->check_game_mode($phase);
 		} else {
 			return back()->with('error', 'La competición está en fase de configuración');
 		}
-		if ($phase->groups->count()>0) {
-			if (!$group_slug) {
-				$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
+
+		if ($game_mode == 'league') { // league
+
+			if ($phase->groups->count()>0) {
+				if (!$group_slug) {
+					$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
+				} else {
+					$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->first();
+				}
+				$league = $this->check_league($group);
 			} else {
-				$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->first();
+				return back()->with('error', 'La competición está en fase de configuración');
 			}
-			$league = $this->check_league($group);
-		} else {
-			return back()->with('error', 'La competición está en fase de configuración');
+
+			$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $league->group->id)->get();
+
+			if ($group_participants->count() == 0) {
+				return back()->with('error', 'la liga no esta configurada');
+			}
+
+			$stats_goals = LeagueStat::select('player_id', \DB::raw('SUM(goals) as goals'))
+				->where('league_id', '=', $league->id)
+				->whereNotNull('goals')
+	            ->groupBy('player_id')
+	            ->orderBy('goals', 'desc')
+	            ->get();
+			$stats_assists = LeagueStat::select('player_id', \DB::raw('SUM(assists) as assists'))
+				->where('league_id', '=', $league->id)
+				->whereNotNull('assists')
+	            ->groupBy('player_id')
+	            ->orderBy('assists', 'desc')
+	            ->get();
+			$stats_yellow_cards = LeagueStat::select('player_id', \DB::raw('SUM(yellow_cards) as yellow_cards'))
+				->where('league_id', '=', $league->id)
+				->whereNotNull('yellow_cards')
+	            ->groupBy('player_id')
+	            ->orderBy('yellow_cards', 'desc')
+	            ->get();
+			$stats_red_cards = LeagueStat::select('player_id', \DB::raw('SUM(red_cards) as red_cards'))
+				->where('league_id', '=', $league->id)
+				->whereNotNull('red_cards')
+	            ->groupBy('player_id')
+	            ->orderBy('red_cards', 'desc')
+	            ->get();
+
+	        return view('competitions.league.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
+
+		} else { // playoffs
+
+			if ($phase->groups->count()>0) {
+				if (!$group_slug) {
+					$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
+				} else {
+					$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->first();
+				}
+				$playoff = $this->check_playoff($group);
+			} else {
+				return back()->with('error', 'La competición está en fase de configuración');
+			}
+
+			$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $playoff->group->id)->get();
+
+			if ($group_participants->count() == 0) {
+				return back()->with('error', 'El playoff no esta configurado');
+			}
+
+			$stats_goals = PlayOffStat::select('player_id', \DB::raw('SUM(goals) as goals'))
+				->where('playoff_id', '=', $playoff->id)
+				->whereNotNull('goals')
+	            ->groupBy('player_id')
+	            ->orderBy('goals', 'desc')
+	            ->get();
+			$stats_assists = PlayOffStat::select('player_id', \DB::raw('SUM(assists) as assists'))
+				->where('playoff_id', '=', $playoff->id)
+				->whereNotNull('assists')
+	            ->groupBy('player_id')
+	            ->orderBy('assists', 'desc')
+	            ->get();
+			$stats_yellow_cards = PlayOffStat::select('player_id', \DB::raw('SUM(yellow_cards) as yellow_cards'))
+				->where('playoff_id', '=', $playoff->id)
+				->whereNotNull('yellow_cards')
+	            ->groupBy('player_id')
+	            ->orderBy('yellow_cards', 'desc')
+	            ->get();
+			$stats_red_cards = PlayOffStat::select('player_id', \DB::raw('SUM(red_cards) as red_cards'))
+				->where('playoff_id', '=', $playoff->id)
+				->whereNotNull('red_cards')
+	            ->groupBy('player_id')
+	            ->orderBy('red_cards', 'desc')
+	            ->get();
+
+	        return view('competitions.playoffs.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'playoff', 'competitions', 'competition'));
 		}
-        $league = $this->check_league($group);
-
-		$stats_goals = LeagueStat::select('player_id', \DB::raw('SUM(goals) as goals'))
-			->where('league_id', '=', $league->id)
-			->whereNotNull('goals')
-            ->groupBy('player_id')
-            ->orderBy('goals', 'desc')
-            ->get();
-		$stats_assists = LeagueStat::select('player_id', \DB::raw('SUM(assists) as assists'))
-			->where('league_id', '=', $league->id)
-			->whereNotNull('assists')
-            ->groupBy('player_id')
-            ->orderBy('assists', 'desc')
-            ->get();
-		$stats_yellow_cards = LeagueStat::select('player_id', \DB::raw('SUM(yellow_cards) as yellow_cards'))
-			->where('league_id', '=', $league->id)
-			->whereNotNull('yellow_cards')
-            ->groupBy('player_id')
-            ->orderBy('yellow_cards', 'desc')
-            ->get();
-		$stats_red_cards = LeagueStat::select('player_id', \DB::raw('SUM(red_cards) as red_cards'))
-			->where('league_id', '=', $league->id)
-			->whereNotNull('red_cards')
-            ->groupBy('player_id')
-            ->orderBy('red_cards', 'desc')
-            ->get();
-
-        return view('competitions.league.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
     }
 
     public function editMatch($season_slug, $competition_slug, $match_id)
