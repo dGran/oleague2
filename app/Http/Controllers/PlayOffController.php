@@ -366,8 +366,8 @@ class PlayOffController extends Controller
             $match->local_score = intval(request()->local_score);
             $match->visitor_score = intval(request()->visitor_score);
             if (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order == 2)) {
-                $match->penalties_local_score = intval(request()->penalties_local_score);
-                $match->penalties_visitor_score = intval(request()->penalties_visitor_score);
+                $match->penalties_local_score = request()->penalties_local_score;
+                $match->penalties_visitor_score = request()->penalties_visitor_score;
             }
             $match->user_update_result = auth()->user()->id;
             $match->date_update_result = now();
