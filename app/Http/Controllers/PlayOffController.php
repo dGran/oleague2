@@ -358,69 +358,69 @@ class PlayOffController extends Controller
     public function updateMatch($match_id)
     {
         $match = SeasonCompetitionMatch::find($match_id);
-        // $playoff = $match->clash->round->playoff;
-        // $round = $match->clash->round;
-        // $clash = $match->clash;
+        $playoff = $match->clash->round->playoff;
+        $round = $match->clash->round;
+        $clash = $match->clash;
 
-        // if (is_null($match->local_score) && is_null($match->visitor_score)) {
-        //     $match->local_score = intval(request()->local_score);
-        //     $match->visitor_score = intval(request()->visitor_score);
-        //     if (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order == 2)) {
-        //         $match->penalties_local_score = request()->penalties_local_score;
-        //         $match->penalties_visitor_score = request()->penalties_visitor_score;
-        //     }
-        //     $match->user_update_result = auth()->user()->id;
-        //     $match->date_update_result = now();
-        //     if (request()->sanctioned_id > 0) {
-        //         $match->sanctioned_id = request()->sanctioned_id;
-        //     }
-        //     $match->save();
+        if (is_null($match->local_score) && is_null($match->visitor_score)) {
+            $match->local_score = intval(request()->local_score);
+            $match->visitor_score = intval(request()->visitor_score);
+            if (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order == 2)) {
+                $match->penalties_local_score = request()->penalties_local_score;
+                $match->penalties_visitor_score = request()->penalties_visitor_score;
+            }
+            $match->user_update_result = auth()->user()->id;
+            $match->date_update_result = now();
+            if (request()->sanctioned_id > 0) {
+                $match->sanctioned_id = request()->sanctioned_id;
+            }
+            $match->save();
 
-        //     if ($playoff->has_stats()) {
-        //         $this->assing_stats($match);
-        //     }
+            if ($playoff->has_stats()) {
+                $this->assing_stats($match);
+            }
 
-        //     if ($playoff->group->phase->competition->season->use_economy) {
-        //         $this->assing_economy($match);
-        //     }
+            if ($playoff->group->phase->competition->season->use_economy) {
+                $this->assing_economy($match);
+            }
 
-        //     if ($clash->winner()) {
-        //         // we verify that it is not the last round
-        //         $destiny_clash = null;
-        //         if (!$round->is_last_round()) {
-        //             // we include in playoffs_rounds_participants the classified participant
-        //             $playoff_round_participant = new PlayOffRoundParticipant;
-        //             $playoff_round_participant->round_id = $round->next_round()->id;
-        //             $playoff_round_participant->participant_id = $clash->winner()->participant->id;
-        //             $playoff_round_participant->save();
-        //             // END
+            if ($clash->winner()) {
+                // we verify that it is not the last round
+                $destiny_clash = null;
+                if (!$round->is_last_round()) {
+                    // we include in playoffs_rounds_participants the classified participant
+                    $playoff_round_participant = new PlayOffRoundParticipant;
+                    $playoff_round_participant->round_id = $round->next_round()->id;
+                    $playoff_round_participant->participant_id = $clash->winner()->participant->id;
+                    $playoff_round_participant->save();
+                    // END
 
-        //             if ($playoff->predefined_rounds) {
-        //                 $destiny_clash = PlayOffRoundClash::find($match->clash->clash_destiny_id);
-        //                 if ($destiny_clash) {
-        //                     if ($match->clash->order % 2 == 0) {
-        //                         $destiny_clash->visitor_id = $match->clash->winner()->id;
-        //                     } else {
-        //                         $destiny_clash->local_id = $match->clash->winner()->id;
-        //                     }
-        //                     $destiny_clash->save();
-        //                     if (!is_null($destiny_clash->local_id) && !is_null($destiny_clash->visitor_id)) {
-        //                         $this->generate_matches($destiny_clash);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         $this->generate_round_post($match, $destiny_clash);
-        //     }
+                    if ($playoff->predefined_rounds) {
+                        $destiny_clash = PlayOffRoundClash::find($match->clash->clash_destiny_id);
+                        if ($destiny_clash) {
+                            if ($match->clash->order % 2 == 0) {
+                                $destiny_clash->visitor_id = $match->clash->winner()->id;
+                            } else {
+                                $destiny_clash->local_id = $match->clash->winner()->id;
+                            }
+                            $destiny_clash->save();
+                            if (!is_null($destiny_clash->local_id) && !is_null($destiny_clash->visitor_id)) {
+                                $this->generate_matches($destiny_clash);
+                            }
+                        }
+                    }
+                }
+                $this->generate_round_post($match, $destiny_clash);
+            }
 
-        //     $this->generate_result_post($match);
+            $this->generate_result_post($match);
 
             $this->generate_telegram_notification($match);
 
-        //     return back()->with('success', 'Resultado registrado correctamente.');
-        // } else {
-        //     return back()->with('error', 'El resultado ya está registrado.');
-        // }
+            return back()->with('success', 'Resultado registrado correctamente.');
+        } else {
+            return back()->with('error', 'El resultado ya está registrado.');
+        }
     }
 
 
@@ -698,81 +698,81 @@ class PlayOffController extends Controller
     }
 
     protected function generate_telegram_notification($match) {
-        // $competition = $match->clash->round->playoff->group->phase->competition->name;
-        // $competition_slug = $match->clash->round->playoff->group->phase->competition->slug;
-        // $season_slug = $match->clash->round->playoff->group->phase->competition->season->slug;
-        // $team_local = $match->local_participant->participant->name();
-        // $team_local_slug = $match->local_participant->participant->team->slug;
-        // $user_local = $match->local_participant->participant->sub_name();
-        // $team_visitor = $match->visitor_participant->participant->name();
-        // $team_visitor_slug = $match->visitor_participant->participant->team->slug;
-        // $user_visitor = $match->visitor_participant->participant->sub_name();
-        // $score = $match->local_score . '-' . $match->visitor_score;
-        // $match_limit = new \Carbon\Carbon($match->date_limit_match());
-        // $date_update_result = new \Carbon\Carbon($match->date_update_result);
-        // if ($match_limit > $date_update_result) {
-        //     $play_in_limit = true;
-        // } else {
-        //     $play_in_limit = false;
-        // }
-        // if (($match->clash->round->round_trip == 1 && $match->order == 2) || $match->clash->round->round_trip == 0) {
-        //     if ($match->sanctioned_id == 0) {
-        //         if ($match->clash->winner()->id == $match->local_id) {
-        //             $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
-        //             $visitor_amount = $match->clash->round->play_amount;
-        //         } else {
-        //             $local_amount = $match->clash->round->play_amount;
-        //             $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
-        //         }
-        //         if ($play_in_limit) {
-        //             $local_amount += $match->clash->round->play_ontime_amount;
-        //             $visitor_amount += $match->clash->round->play_ontime_amount;
-        //         }
-        //     } else {
-        //         if ($match->local_id == $match->sanctioned_id) {
-        //             $local_amount = 0;
-        //             $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
-        //         } else {
-        //             $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
-        //             $visitor_amount = 0;
-        //         }
-        //     }
-        //     $local_economy = "    \xF0\x9F\x92\xB0" . $team_local . " (" . $user_local . ") <b>ingresa</b> " . number_format($local_amount, 2, ",", ".") . " mill.\n";
-        //     $local_club_link = 'https://lpx.es/clubs/' . $team_local_slug . '/economia';
-        //     $local_economy_link = "    <a href='$local_club_link'>Historial de economia</a>\n\n";
+        $competition = $match->clash->round->playoff->group->phase->competition->name;
+        $competition_slug = $match->clash->round->playoff->group->phase->competition->slug;
+        $season_slug = $match->clash->round->playoff->group->phase->competition->season->slug;
+        $team_local = $match->local_participant->participant->name();
+        $team_local_slug = $match->local_participant->participant->team->slug;
+        $user_local = $match->local_participant->participant->sub_name();
+        $team_visitor = $match->visitor_participant->participant->name();
+        $team_visitor_slug = $match->visitor_participant->participant->team->slug;
+        $user_visitor = $match->visitor_participant->participant->sub_name();
+        $score = $match->local_score . '-' . $match->visitor_score;
+        $match_limit = new \Carbon\Carbon($match->date_limit_match());
+        $date_update_result = new \Carbon\Carbon($match->date_update_result);
+        if ($match_limit > $date_update_result) {
+            $play_in_limit = true;
+        } else {
+            $play_in_limit = false;
+        }
+        if (($match->clash->round->round_trip == 1 && $match->order == 2) || $match->clash->round->round_trip == 0) {
+            if ($match->sanctioned_id == 0) {
+                if ($match->clash->winner()->id == $match->local_id) {
+                    $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
+                    $visitor_amount = $match->clash->round->play_amount;
+                } else {
+                    $local_amount = $match->clash->round->play_amount;
+                    $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
+                }
+                if ($play_in_limit) {
+                    $local_amount += $match->clash->round->play_ontime_amount;
+                    $visitor_amount += $match->clash->round->play_ontime_amount;
+                }
+            } else {
+                if ($match->local_id == $match->sanctioned_id) {
+                    $local_amount = 0;
+                    $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
+                } else {
+                    $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
+                    $visitor_amount = 0;
+                }
+            }
+            $local_economy = "    \xF0\x9F\x92\xB0" . $team_local . " (" . $user_local . ") <b>ingresa</b> " . number_format($local_amount, 2, ",", ".") . " mill.\n";
+            $local_club_link = 'https://lpx.es/clubs/' . $team_local_slug . '/economia';
+            $local_economy_link = "    <a href='$local_club_link'>Historial de economia</a>\n\n";
 
-        //     $visitor_economy = "    \xF0\x9F\x92\xB0" . $team_visitor . " (" . $user_visitor . ") <b>ingresa</b> " . number_format($visitor_amount, 2, ",", ".") . " mill.\n";
-        //     $visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
-        //     $visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
-        // }
+            $visitor_economy = "    \xF0\x9F\x92\xB0" . $team_visitor . " (" . $user_visitor . ") <b>ingresa</b> " . number_format($visitor_amount, 2, ",", ".") . " mill.\n";
+            $visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
+            $visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
+        }
 
-        // $table_link = 'https://lpx.es/competiciones/clasificacion/' . $season_slug . '/' . $competition_slug;
-        // $calendar_link = 'https://lpx.es/competiciones/partidos/' . $season_slug . '/' . $competition_slug;
-        // $title = "\xE2\x9A\xBD Partido jugado \xF0\x9F\x8E\xAE" . ' - ' . $match->match_name();
+        $table_link = 'https://lpx.es/competiciones/clasificacion/' . $season_slug . '/' . $competition_slug;
+        $calendar_link = 'https://lpx.es/competiciones/partidos/' . $season_slug . '/' . $competition_slug;
+        $title = "\xE2\x9A\xBD Partido jugado \xF0\x9F\x8E\xAE" . ' - ' . $match->match_name();
 
-        // $text = "$title\n\n";
-        // if ($match->sanctioned_id == 0) {
-        //     $text .= "    <b>$team_local $score $team_visitor</b>\n\n\n";
-        // } else {
-        //     if ($match->local_id == $match->sanctioned_id) {
-        //         $text .= "    <b>$team_local $score $team_visitor</b>\n";
-        //         $text .= "    $team_local sancionado\n\n\n";
-        //     } else {
-        //         $text .= "    <b>$team_local $score $team_visitor</b>\n";
-        //         $text .= "    $team_visitor sancionado\n\n\n";
-        //     }
-        // }
-        // if (($match->clash->round->round_trip == 1 && $match->order == 2) || $match->clash->round->round_trip == 0) {
-        //     $text .= $local_economy;
-        //     $text .= $local_economy_link;
-        //     $text .= $visitor_economy;
-        //     $text .= $visitor_economy_link;
-        // }
-        // $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
-        // $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Playoff $competition</a>\n";
+        $text = "$title\n\n";
+        if ($match->sanctioned_id == 0) {
+            $text .= "    <b>$team_local $score $team_visitor</b>\n\n\n";
+        } else {
+            if ($match->local_id == $match->sanctioned_id) {
+                $text .= "    <b>$team_local $score $team_visitor</b>\n";
+                $text .= "    $team_local sancionado\n\n\n";
+            } else {
+                $text .= "    <b>$team_local $score $team_visitor</b>\n";
+                $text .= "    $team_visitor sancionado\n\n\n";
+            }
+        }
+        if (($match->clash->round->round_trip == 1 && $match->order == 2) || $match->clash->round->round_trip == 0) {
+            $text .= $local_economy;
+            $text .= $local_economy_link;
+            $text .= $visitor_economy;
+            $text .= $visitor_economy_link;
+        }
+        $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
+        $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Playoff $competition</a>\n";
 
 
-        $this->telegram_notification_channel('test');
+        $this->telegram_notification_channel($text);
     }
 
 }

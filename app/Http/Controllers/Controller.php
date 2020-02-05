@@ -17,14 +17,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function telegram_notifications() {
+    public function telegram_notifications() {
     	return $notifications = GeneralSetting::first()->telegram_notifications;
     }
 
     // Telegram
-    protected function telegram_notification_channel($text) {
+    public function telegram_notification_channel($text) {
     	if ($this->telegram_notifications()) {
-    		dd(env('TELEGRAM_CHANNEL_ID', ''));
 			Telegram::sendMessage([
 				// official channel
 			    'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001241759649'),
