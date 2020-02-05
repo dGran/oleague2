@@ -16,7 +16,7 @@
     </td>
     <td class="score text-center" width="70">
     	@if (is_null($match->local_score) && is_null($match->visitor_score))
-			{{-- @if (!auth()->guest() && (user_is_participant(auth()->user()->id) && (participant_of_user()->id == $match->local_participant->participant->id || participant_of_user()->id == $match->visitor_participant->participant->id))) --}}
+			@if (!auth()->guest() && (user_is_participant(auth()->user()->id) && (participant_of_user()->id == $match->local_participant->participant->id || participant_of_user()->id == $match->visitor_participant->participant->id)))
                 @if ($match->order == 2 && is_null($match->clash->first_match()->local_score) && is_null($match->clash->first_match()->visitor_score))
                 Vs
                 @else
@@ -26,9 +26,9 @@
     	        		</small>
             		</a>
                 @endif
-    {{-- 		@else
+    		@else
     		Vs
-    		@endif --}}
+    		@endif
     	@else
     		@if ($match->sanctioned_id)
 				<span class="result rounded px-2 py-1 text-white bg-danger" data-toggle="tooltip" data-placement="top" title="{{ $match->sanctioned_participant->participant->name() }} sancionado">
