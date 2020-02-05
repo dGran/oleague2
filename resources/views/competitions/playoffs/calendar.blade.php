@@ -23,6 +23,7 @@
 
 @section('modal')
     @include('competitions.playoffs.calendar.update_modal')
+    {{-- @include('competitions.playoffs.calendar.match_details_modal') --}}
 @endsection
 
 @section('js')
