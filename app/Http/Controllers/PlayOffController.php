@@ -358,62 +358,62 @@ class PlayOffController extends Controller
     public function updateMatch($match_id)
     {
         $match = SeasonCompetitionMatch::find($match_id);
-        $playoff = $match->clash->round->playoff;
-        $round = $match->clash->round;
-        $clash = $match->clash;
+        // $playoff = $match->clash->round->playoff;
+        // $round = $match->clash->round;
+        // $clash = $match->clash;
 
-        if (is_null($match->local_score) && is_null($match->visitor_score)) {
-            $match->local_score = intval(request()->local_score);
-            $match->visitor_score = intval(request()->visitor_score);
-            if (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order == 2)) {
-                $match->penalties_local_score = request()->penalties_local_score;
-                $match->penalties_visitor_score = request()->penalties_visitor_score;
-            }
-            $match->user_update_result = auth()->user()->id;
-            $match->date_update_result = now();
-            if (request()->sanctioned_id > 0) {
-                $match->sanctioned_id = request()->sanctioned_id;
-            }
-            $match->save();
+        // if (is_null($match->local_score) && is_null($match->visitor_score)) {
+        //     $match->local_score = intval(request()->local_score);
+        //     $match->visitor_score = intval(request()->visitor_score);
+        //     if (!$match->clash->round->round_trip || ($match->clash->round->round_trip && $match->order == 2)) {
+        //         $match->penalties_local_score = request()->penalties_local_score;
+        //         $match->penalties_visitor_score = request()->penalties_visitor_score;
+        //     }
+        //     $match->user_update_result = auth()->user()->id;
+        //     $match->date_update_result = now();
+        //     if (request()->sanctioned_id > 0) {
+        //         $match->sanctioned_id = request()->sanctioned_id;
+        //     }
+        //     $match->save();
 
-            if ($playoff->has_stats()) {
-                $this->assing_stats($match);
-            }
+        //     if ($playoff->has_stats()) {
+        //         $this->assing_stats($match);
+        //     }
 
-            if ($playoff->group->phase->competition->season->use_economy) {
-                $this->assing_economy($match);
-            }
+        //     if ($playoff->group->phase->competition->season->use_economy) {
+        //         $this->assing_economy($match);
+        //     }
 
-            if ($clash->winner()) {
-                // we verify that it is not the last round
-                $destiny_clash = null;
-                if (!$round->is_last_round()) {
-                    // we include in playoffs_rounds_participants the classified participant
-                    $playoff_round_participant = new PlayOffRoundParticipant;
-                    $playoff_round_participant->round_id = $round->next_round()->id;
-                    $playoff_round_participant->participant_id = $clash->winner()->participant->id;
-                    $playoff_round_participant->save();
-                    // END
+        //     if ($clash->winner()) {
+        //         // we verify that it is not the last round
+        //         $destiny_clash = null;
+        //         if (!$round->is_last_round()) {
+        //             // we include in playoffs_rounds_participants the classified participant
+        //             $playoff_round_participant = new PlayOffRoundParticipant;
+        //             $playoff_round_participant->round_id = $round->next_round()->id;
+        //             $playoff_round_participant->participant_id = $clash->winner()->participant->id;
+        //             $playoff_round_participant->save();
+        //             // END
 
-                    if ($playoff->predefined_rounds) {
-                        $destiny_clash = PlayOffRoundClash::find($match->clash->clash_destiny_id);
-                        if ($destiny_clash) {
-                            if ($match->clash->order % 2 == 0) {
-                                $destiny_clash->visitor_id = $match->clash->winner()->id;
-                            } else {
-                                $destiny_clash->local_id = $match->clash->winner()->id;
-                            }
-                            $destiny_clash->save();
-                            if (!is_null($destiny_clash->local_id) && !is_null($destiny_clash->visitor_id)) {
-                                $this->generate_matches($destiny_clash);
-                            }
-                        }
-                    }
-                }
-                $this->generate_round_post($match, $destiny_clash);
-            }
+        //             if ($playoff->predefined_rounds) {
+        //                 $destiny_clash = PlayOffRoundClash::find($match->clash->clash_destiny_id);
+        //                 if ($destiny_clash) {
+        //                     if ($match->clash->order % 2 == 0) {
+        //                         $destiny_clash->visitor_id = $match->clash->winner()->id;
+        //                     } else {
+        //                         $destiny_clash->local_id = $match->clash->winner()->id;
+        //                     }
+        //                     $destiny_clash->save();
+        //                     if (!is_null($destiny_clash->local_id) && !is_null($destiny_clash->visitor_id)) {
+        //                         $this->generate_matches($destiny_clash);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         $this->generate_round_post($match, $destiny_clash);
+        //     }
 
-            $this->generate_result_post($match);
+        //     $this->generate_result_post($match);
 
             $this->generate_telegram_notification($match);
 
