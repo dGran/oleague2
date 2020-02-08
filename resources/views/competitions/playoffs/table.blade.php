@@ -20,3 +20,7 @@
 @section('bottom-fixed')
 	@include('competitions.partials.bottom_fixed')
 @endsection
+
+@section('js')
+    @include('competitions.playoffs.table.javascript')
+@endsection

@@ -104,8 +104,56 @@
 
 .competition-phase-group-selector {
   background: #fff;
-  border-bottom: 1px solid #ccc;
+  background: #eee;
+  border-bottom: 1px solid #E1E1E1;
   padding: 1em 0;
+  text-align: right;
+  min-height: 62px;
+}
+
+.competition-phase-group-selector .btn,
+.competition-phase-group-selector a {
+  font-size: 11px !important;
+}
+
+.logo_winner {
+  top: 5px;
+  left: 5px;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+}
+
+.logo_winner img {
+  width: 32px;
+}
+
+.final-results {
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  margin-bottom: 1em;
+  padding: 1em;
+  width: 100%;
+  position: relative;
+  overflow-y: hidden;
+}
+
+.final-results.compressed {
+  max-height: 135px;
+}
+
+.final-results #show_button {
+  border: 1px solid #eee;
+  bottom: 5px;
+  font-size: .7em;
+  left: 5px;
+  padding: .25em .5em;
+  position: absolute;
+}
+
+.final-results .round-name {
+  color: #6c757d;
   text-align: right;
 }
 

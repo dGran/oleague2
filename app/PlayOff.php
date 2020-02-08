@@ -44,4 +44,19 @@ class PlayOff extends Model
             return false;
         }
     }
+
+    public function subchampion()
+    {
+        $last_round = PlayOffRound::where('playoff_id', $this->id)->orderBy('id', 'desc')->first();
+        if ($last_round->clashes->count() > 0) {
+            $clash = $last_round->clashes->first();
+            if ($clash->winner()) {
+                return $clash->loser();
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

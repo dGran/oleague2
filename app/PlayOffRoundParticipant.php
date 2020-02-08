@@ -18,4 +18,14 @@ class PlayOffRoundParticipant extends Model
     {
         return $this->hasOne('App\SeasonCompetitionPhaseGroupParticipant', 'id', 'participant_id');
     }
+
+    public function exist_in_next_round()
+    {
+        $exist_participant = PlayOffRoundParticipant::where('round_id', '=', $this->round->next_round()->id)->where('participant_id', '=', $this->participant_id)->first();
+        if ($exist_participant == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

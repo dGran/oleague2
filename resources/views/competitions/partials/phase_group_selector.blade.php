@@ -2,7 +2,7 @@
 	<div class="competition-phase-group-selector">
 		<div class="container">
 			@if ($competition->phases->count()>1)
-				<select name="" id="phase_selector" class="selectpicker">
+				<select class="selectpicker btn-light" id="phase_selector">
 					@foreach ($competition->phases as $phase)
 						@if (\Route::current()->getName() == 'competitions.table')
 							<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.table', [active_season()->slug, $group->phase->competition->slug, $phase->slug]) }}">
@@ -23,7 +23,7 @@
 				</select>
 			@endif
 			@if ($group->phase->groups->count()>1)
-				<select class="selectpicker" id="group_selector">
+				<select class="selectpicker btn-light" id="group_selector">
 					@foreach ($group->phase->groups as $groupe)
 						@if (\Route::current()->getName() == 'competitions.table')
 							<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.table', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">

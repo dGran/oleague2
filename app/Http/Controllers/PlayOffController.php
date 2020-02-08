@@ -391,7 +391,7 @@ class PlayOffController extends Controller
                     // we include in playoffs_rounds_participants the classified participant
                     $playoff_round_participant = new PlayOffRoundParticipant;
                     $playoff_round_participant->round_id = $round->next_round()->id;
-                    $playoff_round_participant->participant_id = $clash->winner()->participant->id;
+                    $playoff_round_participant->participant_id = $clash->winner()->id;
                     $playoff_round_participant->save();
                     // END
 

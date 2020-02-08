@@ -1,5 +1,8 @@
 <div class="playoffs pb-4">
 	<div class="container p-3 py-md-3 px-md-0">
+		@if ($playoff->winner())
+			@include('competitions.playoffs.table.final_results')
+		@endif
 		<div class="playoffs-box">
 			@if ($playoff->rounds->count()>0)
 				@foreach ($playoff->rounds as $key_round => $round)
