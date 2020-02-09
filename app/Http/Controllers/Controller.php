@@ -26,12 +26,12 @@ class Controller extends BaseController
     	if ($this->telegram_notifications()) {
 			Telegram::sendMessage([
 				// official channel
-			    'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001241759649'),
+			    // 'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001241759649'),
 			    // padrone
 			    // 'chat_id' => '599119701',
 
 			    // development
-			    // 'chat_id' => '-1001159210380',
+			    'chat_id' => '-1001159210380',
 			    'parse_mode' => 'HTML',
 			    'text' => $text
 			]);
