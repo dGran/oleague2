@@ -329,35 +329,20 @@
 
 .stats {
   background: #fff;
+  border-top: 1px solid #f2f2f2;
   font-size: .9em;
   width: 100%;
 }
 
-.stats thead tr th {
-  background: #EB436F;
-  border-bottom: 1px solid #f2f2f2;
-  border-top: 1px solid #f2f2f2;
-  color: #fff;
-  padding: .75em .5em;
-}
-
-.stats thead tr .pos {
-  border-right: 1px solid #f2f2f2;
-}
-
-.stats thead tr .total {
-  text-align: center;
-}
-
 .stats tbody tr td {
   border-bottom: 1px solid #f2f2f2;
-  padding: .75em .5em;
+  padding: .25em .5em;
   vertical-align: middle;
 }
 
 .stats tbody tr .pos {
   border-right: 1px solid #f2f2f2;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: bold;
   text-align: right;
 }
@@ -368,7 +353,7 @@
 }
 
 .stats tbody tr .player-img img {
-  width: 55px;
+  width: 42px;
 }
 
 .stats tbody tr .player-name {
@@ -376,8 +361,9 @@
 }
 
 .stats tbody tr .total {
-  font-size: 1.35em;
+  font-size: 1em;
   font-weight: bold;
+  padding-right: 1em;
   text-align: right;
 }
 
@@ -609,6 +595,11 @@
 
   .calendar .matches .visitor {
     border-right: 1px solid #f2f2f2;
+  }
+
+  .stats tbody {
+    -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   }
 }
 
