@@ -162,7 +162,7 @@
   line-height: 1.2em;
   padding: 0;
   margin: 0;
-  margin-bottom: 3em;
+  margin-bottom: 2em;
 }
 
 .table-results thead th {
@@ -247,6 +247,26 @@
   padding: 0 .5em;
   background: #f9f9f9;
   border-left: 1px solid #f2f2f2;
+}
+
+.table-stats-title {
+  font-size: .9em;
+  font-weight: bold;
+  padding: 0 1.25em .75em 1.25em;
+  display: block;
+}
+
+.table-stats {
+  background: #fff;
+  border-top: 1px solid #f2f2f2;
+  color: #6c757d;
+  font-size: .8em;
+  line-height: 1.2em;
+}
+
+.table-stats .item {
+  padding: .5em .75em;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .calendar {
@@ -559,12 +579,29 @@
 }
 
 @media (min-width: 576px) {
+  .table-results tbody {
+    -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  }
+
   .table-results tbody .zones {
     border-left: 1px solid #f2f2f2;
   }
 
   .table-results tbody .pt {
     border-right: 1px solid #f2f2f2;
+  }
+
+  .table-stats-title {
+    padding: 0 0 .75em 0;
+  }
+
+  .table-stats {
+    border-left: 1px solid #f2f2f2;
+    border-right: 1px solid #f2f2f2;
+    -webkit-box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 2em;
   }
 
   .calendar .matches .local {

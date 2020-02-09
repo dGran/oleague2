@@ -17,7 +17,6 @@
 				</div>
 				<div class="float-right text-center animated bounceInDown delay-2s">
 					<img src="https://media.giphy.com/media/eMmj4M254X9sFu06jQ/giphy.gif" alt="" width="40">
-					{{-- <img src="https://thumbs.gfycat.com/SpryGrotesqueIvorybilledwoodpecker-max-1mb.gif" width="60"> --}}
 					{{-- <img src="https://media.tenor.com/images/9f208823ef7db08e4b3c2aeef043266e/tenor.gif" width="48"> --}}
 					<div style="font-size: .7em; font-weight: bold; text-transform: uppercase; padding-top: 4px">Líder</div>
 				</div>
@@ -51,6 +50,7 @@
 						<th colspan="4" class="pl-3 pl-md-0">
 							Clasificación
 						</th>
+						<th class="text-center px-2">PT</th>
 						<th class="text-center">PJ</th>
 						<th class="text-center">PG</th>
 						<th class="text-center">PE</th>
@@ -59,7 +59,6 @@
 						<th class="text-center d-none d-sm-table-cell">GF</th>
 						<th class="text-center d-none d-sm-table-cell">GC</th>
 						<th class="text-center d-none d-sm-table-cell">+/-</th>
-						<th class="text-center px-2">PT</th>
 					</tr>
 				</thead>
 				@foreach ($table_participants as $tp)
@@ -89,6 +88,9 @@
 			                    </small>
 							</a>
 						</td>
+						<td class="data pt text-center">
+							<strong>{{ $tp['pts'] }}</strong>
+						</td>
 						<td class="data text-center {{ $tp['pj'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['pj'] }}
 						</td>
@@ -113,9 +115,6 @@
 						<td class="data text-center d-none d-sm-table-cell {{ $tp['avg'] == 0 ? 'text-zero' : '' }}">
 							{{ $tp['avg'] }}
 						</td>
-						<td class="data pt text-center">
-							<strong>{{ $tp['pts'] }}</strong>
-						</td>
 					</tr>
 				@endforeach
 			</table>
@@ -125,83 +124,114 @@
 
 
 	<div class="row justify-content-center">
-		<div class="col-12 col-md-6 pb-4 px-3 px-md-0" style="font-size: .8em">
-			<h5 class="pb-2">Estadísticas</h5>
+		<div class="col-12 col-md-10 col-lg-8 p-0">
+			<span class="table-stats-title">ESTADISTICAS</span>
+			<div class="table-stats">
+				<div class="item">
+					<i class="fas fa-caret-right pr-1 pb-2 text-warning"></i><strong class="text-success">Equipo más goleador</strong>
+					<div class="clearfix py-1 pl-3">
+						<div class="float-left">
+							<img src="{{ asset($table_participants->sortByDesc('gf')->first()['participant']->participant->logo()) }}" alt="" width="20" class="mr-1">
+							<span>{{ $table_participants->sortByDesc('gf')->first()['participant']->participant->name() }}</span>
+						</div>
+						<div class="float-right text-right">
+							<span class="text-dark">{{ $table_participants->sortByDesc('gf')->first()['gf'] }} goles</span>
+							@if ($table_participants->sortByDesc('gf')->first()['pj'] > 0)
+								<small class="d-block pt-1">
+									{{ number_format($table_participants->sortByDesc('gf')->first()['gf'] / $table_participants->sortByDesc('gf')->first()['pj'], 2, ',', '.') }} / partido
+								</small>
+							@endif
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="fas fa-caret-right pr-1 pb-2 text-warning"></i><strong class="text-success">Equipo menos goleado</strong>
+					<div class="clearfix py-1 pl-3">
+						<div class="float-left">
+							<img src="{{ asset($table_participants->sortBy('gc')->first()['participant']->participant->logo()) }}" alt="" width="20" class="mr-1">
+							<span>{{ $table_participants->sortBy('gc')->first()['participant']->participant->name() }}</span>
+						</div>
+						<div class="float-right text-right">
+							<span class="text-dark">{{ $table_participants->sortBy('gc')->first()['gc'] }} goles</span>
+							@if ($table_participants->sortBy('gc')->first()['pj'] > 0)
+								<small class="d-block pt-1">
+									{{ number_format($table_participants->sortBy('gc')->first()['gc'] / $table_participants->sortBy('gc')->first()['pj'], 2, ',', '.') }} / partido
+								</small>
+							@endif
+						</div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="fas fa-caret-right pr-1 pb-2 text-warning"></i><strong class="text-success">Mejor diferencia de goles</strong>
+					<div class="clearfix py-1 pl-3">
+						<div class="float-left">
+							<img src="{{ asset($table_participants->sortByDesc('avg')->first()['participant']->participant->logo()) }}" alt="" width="20" class="mr-1">
+							<span>{{ $table_participants->sortByDesc('avg')->first()['participant']->participant->name() }}</span>
+						</div>
+						<div class="float-right text-right">
+							<span class="text-dark">{{ $table_participants->sortByDesc('avg')->first()['avg'] }} goles</span>
+						</div>
+					</div>
+				</div>
 
-			<i class="fas fa-caret-right pr-1"></i><strong>Equipo más goleador</strong>
-			<div class="clearfix py-1 pl-3">
-				<div class="float-left">
-					<img src="{{ asset($table_participants->sortByDesc('gf')->first()['participant']->participant->team->logo) }}" alt="" width="20" class="mr-1">
-					<span class="text-success">{{ $table_participants->sortByDesc('gf')->first()['participant']->participant->name() }}</span>
+				<div class="item">
+					<i class="fas fa-caret-right pr-1 pb-2 text-warning"></i><strong>Rey del empate</strong>
+					<div class="clearfix py-1 pl-3">
+						<div class="float-left">
+							<img src="{{ asset($table_participants->sortByDesc('pe')->first()['participant']->participant->logo()) }}" alt="" width="20" class="mr-1">
+							{{ $table_participants->sortByDesc('pe')->first()['participant']->participant->name() }}
+						</div>
+						<div class="float-right">
+							<span class="text-dark">{{ $table_participants->sortByDesc('pe')->first()['pe'] }} empates</span>
+						</div>
+					</div>
 				</div>
-				<div class="float-right">
-					{{ $table_participants->sortByDesc('gf')->first()['gf'] }} goles
-				</div>
-			</div>
 
-			<i class="fas fa-caret-right pr-1"></i><strong>Equipo menos goleador</strong>
-			<div class="clearfix py-1 pl-3">
-				<div class="float-left">
-					<img src="{{ asset($table_participants->sortBy('gf')->first()['participant']->participant->team->logo) }}" alt="" width="20" class="mr-1">
-					<span class="text-danger">{{ $table_participants->sortBy('gf')->first()['participant']->participant->name() }}</span>
+				<div class="item">
+					<i class="fas fa-caret-right pr-1 pb-2 text-warning"></i><strong class="text-danger">Equipo menos goleador</strong>
+					<div class="clearfix py-1 pl-3">
+						<div class="float-left">
+							<img src="{{ asset($table_participants->sortBy('gf')->first()['participant']->participant->logo()) }}" alt="" width="20" class="mr-1">
+							<span>{{ $table_participants->sortBy('gf')->first()['participant']->participant->name() }}</span>
+						</div>
+						<div class="float-right text-right">
+							<span class="text-dark">{{ $table_participants->sortBy('gf')->first()['gf'] }} goles</span>
+							@if ($table_participants->sortBy('gf')->first()['pj'] > 0)
+								<small class="d-block pt-1">
+									{{ number_format($table_participants->sortBy('gf')->first()['gf'] / $table_participants->sortBy('gf')->first()['pj'], 2, ',', '.') }} / partido
+								</small>
+							@endif
+						</div>
+					</div>
 				</div>
-				<div class="float-right">
-					{{ $table_participants->sortBy('gf')->first()['gf'] }} goles
+				<div class="item">
+					<i class="fas fa-caret-right pr-1 pb-2 text-warning"></i><strong class="text-danger">Equipo más goleado</strong>
+					<div class="clearfix py-1 pl-3">
+						<div class="float-left">
+							<img src="{{ asset($table_participants->sortByDesc('gc')->first()['participant']->participant->logo()) }}" alt="" width="20" class="mr-1">
+							<span>{{ $table_participants->sortByDesc('gc')->first()['participant']->participant->name() }}</span>
+						</div>
+						<div class="float-right text-right">
+							<span class="text-dark">{{ $table_participants->sortByDesc('gc')->first()['gc'] }} goles</span>
+							@if ($table_participants->sortByDesc('gc')->first()['pj'] > 0)
+								<small class="d-block pt-1">
+									{{ number_format($table_participants->sortByDesc('gc')->first()['gc'] / $table_participants->sortByDesc('gc')->first()['pj'], 2, ',', '.') }} / partido
+								</small>
+							@endif
+						</div>
+					</div>
 				</div>
-			</div>
-
-			<i class="fas fa-caret-right pr-1"></i><strong>Equipo menos goleado</strong>
-			<div class="clearfix py-1 pl-3">
-				<div class="float-left">
-					<img src="{{ asset($table_participants->sortBy('gc')->first()['participant']->participant->team->logo) }}" alt="" width="20" class="mr-1">
-					<span class="text-success">{{ $table_participants->sortBy('gc')->first()['participant']->participant->name() }}</span>
-				</div>
-				<div class="float-right">
-					{{ $table_participants->sortBy('gc')->first()['gc'] }} goles
-				</div>
-			</div>
-
-			<i class="fas fa-caret-right pr-1"></i><strong>Equipo más goleado</strong>
-			<div class="clearfix py-1 pl-3">
-				<div class="float-left">
-					<img src="{{ asset($table_participants->sortByDesc('gc')->first()['participant']->participant->team->logo) }}" alt="" width="20" class="mr-1">
-					<span class="text-danger">{{ $table_participants->sortByDesc('gc')->first()['participant']->participant->name() }}</span>
-				</div>
-				<div class="float-right">
-					{{ $table_participants->sortByDesc('gc')->first()['gc'] }} goles
-				</div>
-			</div>
-
-			<i class="fas fa-caret-right pr-1"></i><strong>Mejor diferencia de goles</strong>
-			<div class="clearfix py-1 pl-3">
-				<div class="float-left">
-					<img src="{{ asset($table_participants->sortByDesc('avg')->first()['participant']->participant->team->logo) }}" alt="" width="20" class="mr-1">
-					<span class="text-success">{{ $table_participants->sortByDesc('avg')->first()['participant']->participant->name() }}</span>
-				</div>
-				<div class="float-right">
-					{{ $table_participants->sortByDesc('avg')->first()['avg'] }} goles
-				</div>
-			</div>
-
-			<i class="fas fa-caret-right pr-1"></i><strong>Peor diferencia de goles</strong>
-			<div class="clearfix py-1 pl-3">
-				<div class="float-left">
-					<img src="{{ asset($table_participants->sortBy('avg')->first()['participant']->participant->team->logo) }}" alt="" width="20" class="mr-1">
-					<span class="text-danger">{{ $table_participants->sortBy('avg')->first()['participant']->participant->name() }}</span>
-				</div>
-				<div class="float-right">
-					{{ $table_participants->sortBy('avg')->first()['avg'] }} goles
-				</div>
-			</div>
-
-			<i class="fas fa-caret-right pr-1"></i><strong>Rey del empate</strong>
-			<div class="clearfix py-1 pl-3">
-				<div class="float-left">
-					<img src="{{ asset($table_participants->sortByDesc('pe')->first()['participant']->participant->team->logo) }}" alt="" width="20" class="mr-1">
-					{{ $table_participants->sortByDesc('pe')->first()['participant']->participant->name() }}
-				</div>
-				<div class="float-right">
-					{{ $table_participants->sortByDesc('pe')->first()['pe'] }} empates
+				<div class="item">
+					<i class="fas fa-caret-right pr-1 pb-2 text-warning"></i><strong class="text-danger">Peor diferencia de goles</strong>
+					<div class="clearfix py-1 pl-3">
+						<div class="float-left">
+							<img src="{{ asset($table_participants->sortBy('avg')->first()['participant']->participant->logo()) }}" alt="" width="20" class="mr-1">
+							<span>{{ $table_participants->sortBy('avg')->first()['participant']->participant->name() }}</span>
+						</div>
+						<div class="float-right">
+							<span class="text-dark">{{ $table_participants->sortBy('avg')->first()['avg'] }} goles</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
