@@ -93,6 +93,54 @@
 	}
 }
 
+.competitions-list {
+	margin: 0;
+	padding-bottom: 1em;
+	.competition-item {
+		background: #fff;
+		border-radius: 4px;
+		border: 1px solid #d8d8d8;
+		margin-top: 1em;
+		&:hover {
+			background: #ecebeb;
+		}
+		.logo {
+			display: inline-block;
+			padding: 1em;
+			text-align: center;
+			img {
+				width: 64px;
+				border-radius: 4px;
+			}
+		}
+		.links {
+			display: inline-block;
+			border-left: 1px solid #d8d8d8;
+			font-size: .9em;
+			padding: 1.5em;
+			vertical-align: top;
+			h5 {
+				font-size: .9em;
+				font-weight: bold;
+				margin: 0;
+				padding-bottom: .5em;
+				text-transform: uppercase;
+			}
+			ul {
+				font-size: .9em;
+				line-height: 1.25rem;
+				list-style: none;
+				padding: 0 1em;
+				li {;
+					a {
+						font-size: .9em;
+					}
+				}
+			}
+		}
+	}
+}
+
 .competition-phase-group-selector {
 	background: #fff;
 	background: #eee;
@@ -115,6 +163,7 @@
 		width: 32px;
 	}
 }
+
 .final-results {
 	background-color: #fff;
 	border-radius: 4px;

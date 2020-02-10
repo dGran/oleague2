@@ -102,6 +102,60 @@
   top: 16px;
 }
 
+.competitions-list {
+  margin: 0;
+  padding-bottom: 1em;
+}
+
+.competitions-list .competition-item {
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #d8d8d8;
+  margin-top: 1em;
+}
+
+.competitions-list .competition-item:hover {
+  background: #ecebeb;
+}
+
+.competitions-list .competition-item .logo {
+  display: inline-block;
+  padding: 1em;
+  text-align: center;
+}
+
+.competitions-list .competition-item .logo img {
+  width: 64px;
+  border-radius: 4px;
+}
+
+.competitions-list .competition-item .links {
+  display: inline-block;
+  border-left: 1px solid #d8d8d8;
+  font-size: .9em;
+  padding: 1.5em;
+  vertical-align: top;
+}
+
+.competitions-list .competition-item .links h5 {
+  font-size: .9em;
+  font-weight: bold;
+  margin: 0;
+  padding-bottom: .5em;
+  text-transform: uppercase;
+}
+
+.competitions-list .competition-item .links ul {
+  font-size: .9em;
+  line-height: 1.25rem;
+  list-style: none;
+  padding: 0 1em;
+}
+
+.competitions-list .competition-item .links ul li a {
+  font-size: .9em;
+}
+
 .competition-phase-group-selector {
   background: #fff;
   background: #eee;
