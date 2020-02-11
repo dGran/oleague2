@@ -26,7 +26,7 @@ return [
         'bgImage' => false,
         'bgColor' => '#161a2f',
         'fontColors' => ['#41F437', '#C15109', '#16a085', '#c0392b', '#8e44ad', '#DED476', '#f57c00', '#F5A78C'],
-        'contrast' => -5,
+        'contrast' => 0,
     ],
     'mini' => [
         'length' => 3,
