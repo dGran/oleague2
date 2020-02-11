@@ -142,7 +142,7 @@
             })
             .then((value) => {
                 if (value) {
-                    $("#btn_updateMatch").prop('disabled', true);
+                    $("#btn_updateMatch").addClass('disabled');
                     $("#frmUpdateMatch").submit();
                 }
             });
