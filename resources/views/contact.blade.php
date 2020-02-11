@@ -74,7 +74,7 @@
 		                                				{{ captcha_img('flat') }}
 		                                			</div>
 		                                			<div class="col-12 col-md-8 pt-3">
-					                                	<input id="captcha" type="text" class="form-control w-100 w-md-50 d-inline-block ml-0 ml-md-2" name="captcha" placeholder="Escribe el código" data-error="Por favor escribe el código captcha correcto." required="required">
+					                                	<input id="captcha" type="text" class="form-control d-inline-block" name="captcha" placeholder="Escribe el código" data-error="Por favor escribe el código captcha correcto." required="required">
 				                                        @if ($errors->has('captcha'))
 				                                            <div class="invalid-feedback">{{ $errors->first('captcha') }}</div>
 				                                        @endif
