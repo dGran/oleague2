@@ -37,25 +37,21 @@
 		                        @csrf
 		                        <input type="hidden" name="honey_pot" value="" style="display: none">
 
-		                        <div class="messages"></div> <!-- mensajes de error -->
-
 	                            <div class="row">
 	                                <div class="col-md-6">
 	                                    <div class="form-group">
 	                                        <label for="nombre">Nombre *</label>
-	                                        <input id="nombre" type="text" name="nombre" class="form-control" placeholder="Por favor ingresa tu nombre" required="required" data-error="El nombre es requerido." value="{{ old('nombre') }}">
-
-	                                            @if($errors->has('nombre'))
+	                                        <input id="nombre" type="text" name="nombre" class="form-control" placeholder="Por favor ingresa tu nombre" required="required" data-error="El nombre es requerido." value="{{ old('nombre', auth()->user() ? auth()->user()->name : '') }}">
+	                                            @if ($errors->has('nombre'))
 	                                                <div class="invalid-feedback">{{ $errors->first('nombre') }}</div>
 	                                            @endif
-
 	                                    </div>
 	                                </div>
 	                                <div class="col-md-6">
 	                                    <div class="form-group">
 	                                        <label for="email">E-Mail *</label>
-	                                        <input id="email" type="text" name="email" class="form-control" placeholder="Por favor ingresa tu email" required="required" data-error="Email es requerido." value="{{ old('email') }}">
-	                                        @if($errors->has('email'))
+	                                        <input id="email" type="text" name="email" class="form-control" placeholder="Por favor ingresa tu email" required="required" data-error="Email es requerido." value="{{ old('email', auth()->user() ? auth()->user()->email : '') }}">
+	                                        @if ($errors->has('email'))
 	                                            <div class="invalid-feedback">{{ $errors->first('email') }}</div>
 	                                        @endif
 	                                    </div>
@@ -67,18 +63,33 @@
 	                                    <div class="form-group">
 	                                        <label for="mensaje">Mensaje *</label>
 	                                        <textarea id="mensaje" name="mensaje" class="form-control" placeholder="Tu mensaje" rows="6" required="required" data-error="Por favor incluye un mensaje."></textarea>
-	                                        @if($errors->has('mensaje'))
+	                                        @if ($errors->has('mensaje'))
 	                                            <div class="invalid-feedback">{{ $errors->first('mensaje') }}</div>
 	                                        @endif
 	                                    </div>
+		                                <div class="form-group">
+		                                	<div>
+		                                		<div class="row justify-content-center">
+		                                			<div class="col-12 col-md-8 text-center">
+		                                				{{ captcha_img('flat') }}
+		                                			</div>
+		                                			<div class="col-12 col-md-8 pt-3">
+					                                	<input id="captcha" type="text" class="form-control w-100 w-md-50 d-inline-block ml-0 ml-md-2" name="captcha" placeholder="Escribe el código" data-error="Por favor escribe el código captcha correcto." required="required">
+				                                        @if ($errors->has('captcha'))
+				                                            <div class="invalid-feedback">{{ $errors->first('captcha') }}</div>
+				                                        @endif
+		                                			</div>
+		                                		</div>
+		                                	</div>
+		                                </div>
 	                                </div>
-	                                <div class="col-md-12">
+	                                <div class="col-md-12 pt-4 text-center">
 	                                    <input type="submit" class="btn btn-success btn-send" value="Enviar mensaje">
 	                                </div>
 	                            </div>
 
 	                            <div class="row">
-	                                <div class="col-md-12 mt-2">
+	                                <div class="col-md-12 mt-2 text-center">
 	                                    <p class="text-muted">
 	                                    	<small>
 	                                        	<strong>*</strong> Campos requeridos.</p>

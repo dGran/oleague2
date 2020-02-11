@@ -61,24 +61,20 @@ class HomeController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'mensaje'=>'required|string|min:20',
+            'mensaje' => 'required|string|min:20',
+            'captcha' => 'required|captcha'
         ]);
 
-        $linky = strpos(request()->mensaje, 'http://linky.tech/');
-        if (request()->honey_pot == null && $linky === false) {
-            $forminput = [
-                'nombre' => $request->input('nombre'),
-                'email' => $request->input('email'),
-                'mensaje' => $request->input('mensaje')
-            ];
-            Mail::to('lpx.torneos@gmail.com')->send(new Contact($forminput));
-            $text = 'Nuevo mensaje recibido desde el formulario de contacto.';
-            $this->telegram_notification_admin($text);
+        $forminput = [
+            'nombre' => $request->input('nombre'),
+            'email' => $request->input('email'),
+            'mensaje' => $request->input('mensaje')
+        ];
+        Mail::to('lpx.torneos@gmail.com')->send(new Contact($forminput));
+        $text = 'Nuevo mensaje recibido desde el formulario de contacto.';
+        $this->telegram_notification_admin($text);
 
-            return redirect('contacto')->with('success', '¡Mensaje enviado! Gracias por contactarnos.');
-        } else {
-            return redirect('/');
-        }
+        return redirect('contacto')->with('success', '¡Mensaje enviado! Gracias por contactarnos.');
     }
 
     public function rules()
