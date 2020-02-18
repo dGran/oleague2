@@ -960,7 +960,6 @@ class SeasonPlayerController extends Controller
 
         $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
         foreach ($players as $key => $player) {
-            dd($season_participants[$order[$key]-1]->id);
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
             $season_player->save();
