@@ -569,7 +569,7 @@ class SeasonPlayerController extends Controller
         $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
             ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
             ->where('season_players.season_id', "=", $season_id)
-            ->where('season_players.participant_id', "=", 0)
+            ->where('season_players.participant_id', "=", null)
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['DC', 'SD', 'EI', 'ED'])
             ->orderBy('players.overall_rating', 'desc')
