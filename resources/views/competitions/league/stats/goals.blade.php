@@ -32,7 +32,7 @@
 			<strong class="text-uppercase" style="font-size: .9em">Clasificación Goleadores</strong>
 		</div>
 		@if ($stats_goals->count() > 0)
-			<table class="stats animated bounceInLeft delay-3s">
+			<table class="stats">
 				<tbody>
 				@foreach ($stats_goals as $stat)
 					<tr>

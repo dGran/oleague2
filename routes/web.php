@@ -33,7 +33,7 @@ Route::middleware('check_active_season')->group(function () {
 	Route::get('competiciones', 'CompetitionController@index')->name('competitions');
 	Route::get('competiciones/clasificacion/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@table')->name('competitions.table');
 	Route::get('competiciones/partidos/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@calendar')->name('competitions.calendar');
-	// Route::get('competiciones/{season_slug}/{competition_slug}/partidos/{match_id}', 'CompetitionController@match')->name('competitions.competition.match');
+	Route::get('competiciones/partido/{match_id}', 'CompetitionController@match')->name('competitions.match');
 	Route::get('competiciones/{season_slug}/{competition_slug}/partidos/editar/{match_id}', 'CompetitionController@editMatch')->name('competitions.calendar.match.edit');
 	Route::put('competiciones/{season_slug}/{competition_slug}/partidos/editar/{match_id}', 'CompetitionController@updateMatch')->name('competitions.calendar.match.update');
 	Route::get('competiciones/{season_slug}/{competition_slug}/partidos/detalle/{match_id}', 'CompetitionController@matchDetails')->name('competitions.calendar.match.details');

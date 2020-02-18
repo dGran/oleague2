@@ -4,7 +4,7 @@
 			<strong class="text-uppercase" style="font-size: .9em">Asistencias</strong>
 		</div>
 		@if ($stats_assists->count() > 0)
-			<table class="stats animated bounceInLeft delay-3s">
+			<table class="stats">
 				<tbody>
 				@foreach ($stats_assists as $stat)
 					<tr>

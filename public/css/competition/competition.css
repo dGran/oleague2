@@ -388,9 +388,22 @@
   width: 100%;
 }
 
+.stats tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+.stats tbody tr:hover td {
+  color: #eb9114;
+}
+
+.stats tbody tr:hover .total {
+  background: #eb9114;
+  color: #fff;
+}
+
 .stats tbody tr td {
   border-bottom: 1px solid #f2f2f2;
-  padding: .25em .5em;
+  padding: .5em;
   vertical-align: middle;
 }
 
@@ -398,6 +411,7 @@
   border-right: 1px solid #f2f2f2;
   font-size: 1em;
   font-weight: bold;
+  min-width: 30px;
   text-align: right;
 }
 
@@ -407,10 +421,11 @@
 }
 
 .stats tbody tr .player-img img {
-  width: 42px;
+  width: 38px;
 }
 
 .stats tbody tr .player-name {
+  font-size: .9em;
   width: 100%;
 }
 

@@ -174,6 +174,25 @@ class CompetitionController extends Controller
 		}
     }
 
+    public function match($match_id)
+    {
+    	$match = SeasonCompetitionMatch::find($match_id);
+    	if ($match) {
+    		$competitions = SeasonCompetition::where('season_id', '=', active_season()->id)->orderBy('name', 'asc')->get();
+    		$competition = $match->competition();
+    		$group = $match->group();
+			if ($match->group()->phase->mode == 'league') { // league
+				$league = $match->day->league;
+				return view('competitions.match', compact('match', 'competitions', 'group', 'league', 'competition'));
+			} else { // playoffs
+				$playoff = $match->clash->round->playoff;
+				return view('competitions.match', compact('match', 'competitions', 'group', 'playoff', 'competition'));
+			}
+    	} else {
+    		return back()->with('error', 'El partido no existe');
+    	}
+    }
+
     public function stats($season_slug, $competition_slug, $phase_slug = null, $group_slug = null)
     {
     	$competition = SeasonCompetition::where('slug', '=', $competition_slug)->firstOrFail();
