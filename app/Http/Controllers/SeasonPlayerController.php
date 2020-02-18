@@ -569,7 +569,7 @@ class SeasonPlayerController extends Controller
         $players = SeasonPlayer::select('season_players.*', 'players.name', 'players.position', 'players.overall_rating')
             ->leftjoin('players', 'players.id', '=', 'season_players.player_id')
             ->where('season_players.season_id', "=", $season_id)
-            ->where('season_players.participant_id', "=", null)
+            ->where('season_players.participant_id', "=", 0)
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['DC', 'SD', 'EI', 'ED'])
             ->orderBy('players.overall_rating', 'desc')
@@ -578,7 +578,6 @@ class SeasonPlayerController extends Controller
 
         $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
         foreach ($players as $key => $player) {
-            dd($season_participants[$order[$key]-1]->id);
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
             $season_player->save();
@@ -961,6 +960,7 @@ class SeasonPlayerController extends Controller
 
         $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
         foreach ($players as $key => $player) {
+            dd($season_participants[$order[$key]-1]->id);
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
             $season_player->save();
