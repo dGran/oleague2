@@ -183,9 +183,9 @@
                                     @if ($post->transfer_id)
                                         <a href="{{ route('market') }}">
                                     @elseif ($post->match_id && $post->match_exists())
-                                        <a href="{{ route('competitions.calendar', [active_season()->id, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
+                                        <a href="{{ route('competitions.calendar', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
                                     @elseif ($post->press_id && $post->press->participant_exists())
-                                        <a href="{{ route('club.press', $post->press->participant->slug()) }}">
+                                        <a href="{{ route('club.press', [$post->press->participant->season->slug, $post->press->participant->slug()]) }}">
                                     @endif
                                 @endif
                                 <li class="py-2 d-block" style="display: table; border-bottom: 1px solid #292C5E">
