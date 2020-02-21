@@ -16,10 +16,12 @@
 						</td>
 						<td class="player-name">
 							{{ $stat->player->player->name }}
-							<small class="d-block">
-								<img src="{{ $stat->player->participant->logo() }}" width="16">
-								<span class="text-muted">{{ $stat->player->participant->name() }}</span>
-							</small>
+							@if ($stats_goals->first()->player->participant)
+								<small class="d-block">
+									<img src="{{ $stat->player->participant->logo() }}" width="16">
+									<span class="text-muted">{{ $stat->player->participant->name() }}</span>
+								</small>
+							@endif
 						</td>
 						<td class="total">
 							{{ $stat->red_cards }}

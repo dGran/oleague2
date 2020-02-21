@@ -11,7 +11,7 @@
 					<div class="d-inline-block align-middle pl-2">
 						<strong>{{ $stats_goals->first()->player->player->name }}</strong>
 						<small class="text-muted d-block">
-							{{ $stats_goals->first()->player->participant->name() }}
+							{{ $stats_goals->first()->player->participant ? $stats_goals->first()->player->participant->name() : '' }}
 						</small>
 					</div>
 				</div>
@@ -44,10 +44,12 @@
 						</td>
 						<td class="player-name">
 							{{ $stat->player->player->name }}
-							<small class="d-block">
-								<img src="{{ $stat->player->participant->logo() }}" width="16">
-								<span class="text-muted">{{ $stat->player->participant->name() }}</span>
-							</small>
+							@if ($stats_goals->first()->player->participant)
+								<small class="d-block">
+									<img src="{{ $stat->player->participant->logo() }}" width="16">
+									<span class="text-muted">{{ $stat->player->participant->name() }}</span>
+								</small>
+							@endif
 						</td>
 						<td class="total">
 							{{ $stat->goals }}
