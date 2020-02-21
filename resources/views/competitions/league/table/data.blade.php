@@ -47,7 +47,7 @@
 	                    <img src="{{ $tp['participant']->participant->logo() }}" alt="" width="24">
 	                </td>
 			        <td class="names">
-	                    <a href="{{ route('club', $tp['participant']->participant->team->slug) }}" class="name text-uppercase">
+	                    <a href="{{ route('club', [$competition->season->slug, $tp['participant']->participant->team->slug]) }}" class="name text-uppercase">
 	                    	{{ $tp['participant']->participant->name() == 'undefined' ? '' : $tp['participant']->participant->name() }}
 	                    	<br>
 		                    <small class="description">
