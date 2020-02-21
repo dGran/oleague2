@@ -24,7 +24,7 @@
             ACCESOS RAPIDOS
         </li>
         <li class="nav-item {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'current' : '' }}">
-            <a class="nav-link offers {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'disabled' : '' }}" href="{{ route('club', participant_of_user()->team->slug) }}">
+            <a class="nav-link offers {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'disabled' : '' }}" href="{{ route('club', [active_season()->slug, participant_of_user()->team->slug]) }}">
                 <i class="icon-stadium"></i>
                 <span>
                     Mi Club
@@ -51,7 +51,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link offers" href="{{ route('club.pending_matches', participant_of_user()->team->slug) }}">
+            <a class="nav-link offers" href="{{ route('club.pending_matches', [active_season()->slug, participant_of_user()->team->slug]) }}">
                 <i class="icon-xbox-controller"></i>
                 <span>
                     <span class="counter badge badge-warning rounded-circle {{ (participant_of_user()->pending_matches() == 0) ? 'd-none' : '' }}">
