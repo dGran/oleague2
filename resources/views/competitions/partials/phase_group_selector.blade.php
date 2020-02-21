@@ -12,17 +12,17 @@
 						<select class="selectpicker btn-light form-control" id="phase_selector">
 							@foreach ($competition->phases as $phase)
 								@if (\Route::current()->getName() == 'competitions.table')
-									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.table', [active_season()->slug, $group->phase->competition->slug, $phase->slug]) }}">
+									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.table', [$group->phase->competition->season->slug, $group->phase->competition->slug, $phase->slug]) }}">
 										{{ $phase->name }}
 									</option>
 								@endif
 								@if (\Route::current()->getName() == 'competitions.calendar')
-									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.calendar', [active_season()->slug, $group->phase->competition->slug, $phase->slug]) }}">
+									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.calendar', [$group->phase->competition->season->slug, $group->phase->competition->slug, $phase->slug]) }}">
 										{{ $phase->name }}
 									</option>
 								@endif
 								@if (\Route::current()->getName() == 'competitions.stats')
-									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.stats', [active_season()->slug, $group->phase->competition->slug, $phase->slug]) }}">
+									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.stats', [$group->phase->competition->season->slug, $group->phase->competition->slug, $phase->slug]) }}">
 										{{ $phase->name }}
 									</option>
 								@endif
@@ -36,17 +36,17 @@
 						<select class="selectpicker btn-light form-control" id="group_selector">
 							@foreach ($group->phase->groups as $groupe)
 								@if (\Route::current()->getName() == 'competitions.table')
-									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.table', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
+									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.table', [$group->phase->competition->season->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
 										{{ $groupe->name }}
 									</option>
 								@endif
 								@if (\Route::current()->getName() == 'competitions.calendar')
-									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.calendar', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
+									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.calendar', [$group->phase->competition->season->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
 										{{ $groupe->name }}
 									</option>
 								@endif
 								@if (\Route::current()->getName() == 'competitions.stats')
-									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.stats', [active_season()->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
+									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.stats', [$group->phase->competition->season->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
 										{{ $groupe->name }}
 									</option>
 								@endif
