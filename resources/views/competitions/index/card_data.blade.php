@@ -1,5 +1,5 @@
 <div class="col-12 col-md-6 col-lg-4">
-	<a class="text-dark {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.table', [active_season()->slug, $competition->slug]) }}">
+	<a class="text-dark {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.table', [$season_slug, $competition->slug]) }}">
 		<div class="competition-item">
 			<div class="logo">
 				<img src="{{ $competition->getImgFormatted() }}">
@@ -8,19 +8,19 @@
 				<h5>{{ $competition->name }}</h5>
 				<ul>
 					<li>
-						<a class="text-secondary {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.table', [active_season()->slug, $competition->slug]) }}">
+						<a class="text-secondary {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.table', [$season_slug, $competition->slug]) }}">
 							<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 							{{ $competition->initialPhase()->mode == 'league' ? 'Clasificación' : 'PlayOffs' }}
 						</a>
 					</li>
 					<li>
-						<a class="text-secondary {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.calendar', [active_season()->slug, $competition->slug]) }}">
+						<a class="text-secondary {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.calendar', [$season_slug, $competition->slug]) }}">
 							<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 							Partidos
 						</a>
 					</li>
 					<li>
-						<a class="text-secondary {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.stats', [active_season()->slug, $competition->slug]) }}">
+						<a class="text-secondary {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.stats', [$season_slug, $competition->slug]) }}">
 							@if ($competition->initialPhase()->mode == 'league')
 								@if ($competition->initialPhase()->initialGroup()->league->has_stats())
 									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>

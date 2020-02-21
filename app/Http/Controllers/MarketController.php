@@ -540,8 +540,16 @@ class MarketController extends Controller
         }
     }
 
-    public function search()
+    public function search($season_slug = null)
     {
+    	if ($season_slug == null) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
     	//data of user->participant
     	if (!auth()->guest() && user_is_participant(auth()->user()->id)) {
     		$participant_of_user = participant_of_user();
@@ -563,7 +571,7 @@ class MarketController extends Controller
 
         $order_ext = $this->searchGetOrder($order);
 
-        $filterSeason = active_season()->id;
+        $filterSeason = $season->id;
 
         $filterName = null;
         if (!is_null(request()->filterName)) {
@@ -668,7 +676,7 @@ class MarketController extends Controller
 	            	  ->where('season_players.participant_id', '!=', $participant_of_user->id);
 	      		});
 	        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
-	        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+	        	$players = $players->where('season_participants.clauses_received', '<', $season->max_clauses_received);
 	        	$players = $players->where(\DB::raw('season_players.price * 1.10'), '<', $participant_of_user->budget());
         	} else {
         		$players = $players->where('season_players.id', '=', -1);
@@ -681,7 +689,7 @@ class MarketController extends Controller
 	        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
 	        }
 	        if ($filterHideParticipantClauseLimit) {
-	        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+	        	$players = $players->where('season_participants.clauses_received', '<', $season->max_clauses_received);
 	        }
         }
         if ($filterPosition != NULL) {
@@ -737,29 +745,39 @@ class MarketController extends Controller
 		$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
 
 		//return view
-        return view('market.search', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+        return view('market.search', compact('players', 'participants', 'season_slug', 'seasons', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
     }
 
-    public function teams()
+    public function teams($season_slug = null)
     {
-        $participants = $this->get_participants();
-        return view('market.teams', compact('participants'));
+    	if ($season_slug == null) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
+    	$participants = $this->get_participants($season);
+
+        return view('market.teams', compact('participants', 'season_slug', 'seasons'));
     }
 
-    public function team($slug)
+    public function team($season_slug, $slug)
     {
-        $participants = $this->get_participants();
-        $participant = $this->get_participant($slug);
+    	$season = Season::where('slug', '=', $season_slug)->first();
+        $participants = $this->get_participants($season);
+        $participant = $this->get_participant($season, $slug);
 
 		$players = SeasonPlayer::select('season_players.*')
 	        ->join('players', 'players.id', '=', 'season_players.player_id')
-	        ->seasonId(active_season()->id);
+	        ->seasonId($season->id);
         $players = $players->participantId($participant->id);
         $players = $players->orderBy('players.overall_rating', 'desc')
 	        ->orderBy('players.name', 'asc')
 	        ->get();
 
-        return view('market.team', compact('participants', 'participant', 'players'));
+        return view('market.team', compact('participants', 'participant', 'players', 'season_slug'));
     }
 
     public function favorites()
@@ -2031,22 +2049,22 @@ class MarketController extends Controller
         return $order_ext[$order];
     }
 
-    protected function get_participants()
+    protected function get_participants($season)
     {
         return SeasonParticipant::
             leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
             ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
             ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
-            ->seasonId(active_season()->id)->orderBy('teams.name', 'asc')->get();
+            ->seasonId($season->id)->orderBy('teams.name', 'asc')->get();
     }
 
-    protected function get_participant($slug)
+    protected function get_participant($season, $slug)
     {
         return SeasonParticipant::
             leftJoin('teams', 'teams.id', '=', 'season_participants.team_id')
             ->leftJoin('users', 'users.id', '=', 'season_participants.user_id')
             ->select('season_participants.*', 'teams.name as team_name', 'users.name as user_name')
-            ->seasonId(active_season()->id)
+            ->seasonId($season->id)
             ->where('teams.slug', '=', $slug)
             ->first();
     }

@@ -15,7 +15,7 @@
 	    			Competiciones
 	    		</h3>
 	    		<span class="subtitle">
-	    			{{ active_season()->name }}
+	    			{{ $season->name }}
 	    		</span>
 			</div>
 		</div>
@@ -28,4 +28,8 @@
 
 @section('breadcrumb')
 	@include('competitions.index.breadcrumb')
+@endsection
+
+@section('js')
+    @include('competitions.index.javascript')
 @endsection

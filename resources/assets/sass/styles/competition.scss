@@ -141,13 +141,38 @@
 	}
 }
 
-.competition-phase-group-selector {
+.season-selector {
 	background: #fff;
-	background: #eee;
 	border-bottom: 1px solid #E1E1E1;
 	padding: 1em 0;
-	text-align: right;
-	min-height: 62px;
+	min-height: 80.53px;
+	label {
+		display: block;
+		font-size: 11px !important;
+		font-weight: bold;
+		margin-bottom: .25em;
+		padding-left: .25em;
+	}
+	.btn, a{
+	  font-size: 11px !important;
+	}
+}
+
+.competition-phase-group-selector {
+	background: #fff;
+	border-bottom: 1px solid #E1E1E1;
+	padding: 1em 0;
+	min-height: 80.53px;
+	label {
+		display: block;
+		font-size: 11px !important;
+		font-weight: bold;
+		margin-bottom: .25em;
+		padding-left: .25em;
+	}
+	select {
+		width: 120px;
+	}
 	.btn, a{
 	  font-size: 11px !important;
 	}
@@ -302,6 +327,10 @@
 		}
 		td {
 			border-bottom: 1px solid #f2f2f2;
+			font-size: .9em;
+			i {
+				font-size: .8em;
+			}
 		}
 	}
 	.round-trip {
@@ -317,7 +346,7 @@
 		}
 	}
 	.matches {
-		font-size: .9em;
+		font-size: .8em;
 		line-height: 1.2em;
 		&.inactive {
 			td {
@@ -334,7 +363,7 @@
 		td {
 			background: #fff;
 			border-bottom: 1px solid #f2f2f2;
-			padding: .6em .3em;
+			padding: .75em .3em;
 			vertical-align: middle;
 		}
 		.img {

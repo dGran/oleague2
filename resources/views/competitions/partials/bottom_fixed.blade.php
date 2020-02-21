@@ -4,7 +4,7 @@
 			@foreach ($competitions as $comp)
 				<div class="card competitions {{ $comp->slug == $competition->slug ? 'active' : ''}}">
 					{{-- \Route::current()->getName() --}}
-					<a href="{{route(\Route::current()->getName(), [active_season()->slug, $comp->slug]) }}">
+					<a href="{{route(\Route::current()->getName(), [$comp->season->slug, $comp->slug]) }}">
 						<img src="{{ $comp->getImgFormatted() }}" alt="{{ $comp->name }}" class="rounded">
 						<span>{{ $comp->name }}</span>
 					</a>

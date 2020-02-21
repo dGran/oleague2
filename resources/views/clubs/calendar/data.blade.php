@@ -1,6 +1,6 @@
 <h4 class="title-position border-bottom">
 	<div class="container clearfix">
-		<span>Calendario {{ $participant->name() }} - {{ active_season()->name }}</span>
+		<span>Calendario {{ $participant->name() }} - {{ $season->name }}</span>
 	</div>
 </h4>
 
@@ -8,9 +8,9 @@
 	@foreach ($matches as $match)
 		<div class="match-item">
 			@if ($match->winner() == -1)
-				<a href="{{ route('competitions.calendar', [active_season()->id, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}">
+				<a href="{{ route('competitions.calendar', [$season->id, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}">
 			@else
-				<a href="{{ route("competitions.calendar.match.details", [active_season()->slug, $match->competition()->slug, $match->id]) }}" onclick="view_match_detail(this)">
+				<a href="{{ route("competitions.calendar.match.details", [$season->slug, $match->competition()->slug, $match->id]) }}" onclick="view_match_detail(this)">
 			@endif
 				<div class="description">
 					<img src="{{ $match->competition()->getImgFormatted() }}" alt="" width="24" class="rounded">

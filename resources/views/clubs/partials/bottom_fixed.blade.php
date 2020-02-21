@@ -4,7 +4,7 @@
 			@foreach ($participants as $part)
 				<div class="card participants {{ $part->id == $participant->id ? 'active' : ''}}">
 					{{-- \Route::current()->getName() --}}
-					<a href="{{route(\Route::current()->getName(), $part->team->slug) }}">
+					<a href="{{route(\Route::current()->getName(), [$season_slug, $part->team->slug]) }}">
 						<img src="{{ $part->logo() }}" alt="{{ $part->name() }}">
 						<span>{{ $part->name() }}</span>
 					</a>

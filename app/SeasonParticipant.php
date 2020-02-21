@@ -163,7 +163,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('players.overall_rating')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->avg('players.overall_rating');
     }
@@ -172,7 +172,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('players.age')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->avg('players.age');
     }
@@ -181,7 +181,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('season_players.*')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->orderBy('players.overall_rating', 'desc')
             ->take(3)->get();
@@ -191,7 +191,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('season_players.*')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->where(function($q) {
                 $q->where('players.position', '=', 'CT')
@@ -207,7 +207,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('season_players.*')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->where(function($q) {
                 $q->where('players.position', '=', 'MCD')
@@ -224,7 +224,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('season_players.*')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->where(function($q) {
                 $q->where('players.position', '=', 'DC')
@@ -240,7 +240,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('season_players.*')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->orderBy('players.age', 'asc')
             ->take(3)->get();
@@ -250,7 +250,7 @@ class SeasonParticipant extends Model
         return SeasonPlayer::
             leftJoin('players', 'players.id', '=', 'season_players.player_id')
             ->select('season_players.*')
-            ->seasonId(active_season()->id)
+            ->seasonId($this->season->id)
             ->where('participant_id', '=', $this->id)
             ->orderBy('players.age', 'desc')
             ->take(3)->get();

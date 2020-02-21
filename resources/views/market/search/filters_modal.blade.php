@@ -10,7 +10,7 @@
 		    </div>
 
 		    <div class="modal-body">
-				<form class="frmFilter" role="search" method="get" action="{{ route('market.search') }}">
+				<form class="frmFilter" role="search" method="get" action="{{ route('market.search', $season_slug) }}">
 
 					<input class="search-input form-control mousetrap filterName d-none" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off">
 

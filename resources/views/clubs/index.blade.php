@@ -15,7 +15,7 @@
 	    			Clubs
 	    		</h3>
 	    		<span class="subname">
-	    			{{ active_season()->name }}
+	    			{{ $season->name }}
 	    		</span>
 			</div>
 		</div>
@@ -28,4 +28,8 @@
 
 @section('breadcrumb')
 	@include('clubs.index.breadcrumb')
+@endsection
+
+@section('js')
+	@include('clubs.index.javascript')
 @endsection

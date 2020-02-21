@@ -5,13 +5,13 @@
     </a>
 </li>
 <li class="nav-item {{ \Request::is('clubs*') ? 'current' : '' }}">
-    <a class="nav-link {{ \Request::is('clubs*') ? 'disabled' : '' }}" href="{{ route('clubs') }}">
+    <a class="nav-link {{ \Request::is('clubs*') ? 'disabled' : '' }}" href="{{ route('clubs', '') }}">
         <i class="icon-clubs"></i>
         <span>Clubs</span>
     </a>
 </li>
 <li class="nav-item {{ \Request::is('competiciones*') ? 'current' : '' }}">
-    <a class="nav-link {{ \Request::is('competiciones*') ? 'disabled' : '' }}" href="{{ route('competitions') }}">
+    <a class="nav-link {{ \Request::is('competiciones*') ? 'disabled' : '' }}" href="{{ route('competitions', '') }}">
         <i class="icon-trophy"></i>
         <span>Competiciones</span>
     </a>

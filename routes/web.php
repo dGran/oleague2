@@ -30,7 +30,7 @@ Route::get('reglamento', 'HomeController@rules')->name('rules');
 
 // Competitions routes
 Route::middleware('check_active_season')->group(function () {
-	Route::get('competiciones', 'CompetitionController@index')->name('competitions');
+	Route::get('competiciones/{season_slug?}', 'CompetitionController@index')->name('competitions');
 	Route::get('competiciones/clasificacion/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@table')->name('competitions.table');
 	Route::get('competiciones/partidos/{season_slug}/{competition_slug}/{phase_slug?}/{group_slug?}', 'CompetitionController@calendar')->name('competitions.calendar');
 	Route::get('competiciones/partido/{match_id}', 'CompetitionController@match')->name('competitions.match');
@@ -42,24 +42,24 @@ Route::middleware('check_active_season')->group(function () {
 
 // Clubs routes
 Route::middleware('check_active_season')->group(function () {
-	Route::get('clubs', 'ClubController@clubs')->name('clubs');
-	Route::get('clubs/{slug}', 'ClubController@club')->name('club');
-	Route::get('clubs/{slug}/plantilla', 'ClubController@clubRoster')->name('club.roster');
-	Route::get('clubs/{slug}/economia', 'ClubController@clubEconomy')->name('club.economy');
-	Route::get('clubs/{slug}/calendario', 'ClubController@clubCalendar')->name('club.calendar');
-	Route::get('clubs/{slug}/partidas-pendientes', 'ClubController@pendingMatches')->name('club.pending_matches');
-	Route::get('clubs/{slug}/sala-de-prensa', 'ClubController@clubPress')->name('club.press');
-	Route::post('clubs/{slug}/sala-de-prensa/nueva', 'ClubController@clubPressAdd')->name('club.press.add');
+	Route::get('clubs/{season_slug?}', 'ClubController@clubs')->name('clubs');
+	Route::get('clubs/{season_slug}/{slug}', 'ClubController@club')->name('club');
+	Route::get('clubs/{season_slug}/{slug}/plantilla', 'ClubController@clubRoster')->name('club.roster');
+	Route::get('clubs/{season_slug}/{slug}/economia', 'ClubController@clubEconomy')->name('club.economy');
+	Route::get('clubs/{season_slug}/{slug}/calendario', 'ClubController@clubCalendar')->name('club.calendar');
+	Route::get('clubs/{season_slug}/{slug}/partidas-pendientes', 'ClubController@pendingMatches')->name('club.pending_matches');
+	Route::get('clubs/{season_slug}/{slug}/sala-de-prensa', 'ClubController@clubPress')->name('club.press');
+	Route::post('clubs/{season_slug}/{slug}/sala-de-prensa/nueva', 'ClubController@clubPressAdd')->name('club.press.add');
 });
 
 // Market Routes
 Route::middleware('check_active_season')->group(function () {
 	Route::get('mercado', 'MarketController@index')->name('market');
 	Route::get('mercado/acuerdos', 'MarketController@agreements')->name('market.agreements');
-	Route::get('mercado/buscador', 'MarketController@search')->name('market.search');
+	Route::get('mercado/buscador/{season_slug?}', 'MarketController@search')->name('market.search');
 	Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
-	Route::get('mercado/equipos', 'MarketController@teams')->name('market.teams');
-	Route::get('mercado/equipos/{slug}', 'MarketController@team')->name('market.team');
+	Route::get('mercado/equipos/{season_slug?}', 'MarketController@teams')->name('market.teams');
+	Route::get('mercado/equipos/{season_slug}/{slug}', 'MarketController@team')->name('market.team');
 	Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
 	Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
 	Route::get('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerEdit')->name('market.my_team.player.edit');

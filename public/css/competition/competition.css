@@ -156,13 +156,43 @@
   font-size: 1em;
 }
 
-.competition-phase-group-selector {
+.season-selector {
   background: #fff;
-  background: #eee;
   border-bottom: 1px solid #E1E1E1;
   padding: 1em 0;
-  text-align: right;
-  min-height: 62px;
+  min-height: 80.53px;
+}
+
+.season-selector label {
+  display: block;
+  font-size: 11px !important;
+  font-weight: bold;
+  margin-bottom: .25em;
+  padding-left: .25em;
+}
+
+.season-selector .btn,
+.season-selector a {
+  font-size: 11px !important;
+}
+
+.competition-phase-group-selector {
+  background: #fff;
+  border-bottom: 1px solid #E1E1E1;
+  padding: 1em 0;
+  min-height: 80.53px;
+}
+
+.competition-phase-group-selector label {
+  display: block;
+  font-size: 11px !important;
+  font-weight: bold;
+  margin-bottom: .25em;
+  padding-left: .25em;
+}
+
+.competition-phase-group-selector select {
+  width: 120px;
 }
 
 .competition-phase-group-selector .btn,
@@ -332,6 +362,11 @@
 
 .calendar .days td {
   border-bottom: 1px solid #f2f2f2;
+  font-size: .9em;
+}
+
+.calendar .days td i {
+  font-size: .8em;
 }
 
 .calendar .round-trip td {
@@ -347,7 +382,7 @@
 }
 
 .calendar .matches {
-  font-size: .9em;
+  font-size: .8em;
   line-height: 1.2em;
 }
 
@@ -364,7 +399,7 @@
 .calendar .matches td {
   background: #fff;
   border-bottom: 1px solid #f2f2f2;
-  padding: .6em .3em;
+  padding: .75em .3em;
   vertical-align: middle;
 }
 

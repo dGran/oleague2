@@ -12,10 +12,10 @@
 			    <table class="calendar">
 					@foreach ($league->days as $day)
 						<tr class="days {{ $day->active ? '' : 'inactive' }}">
-							<td colspan="2" class="px-3 px-md-0 py-2">
-								<i class="fas fa-circle mr-2 {{ $day->active ? 'text-success' : 'text-secondary' }}"></i><strong class="text-uppercase">Jornada {{ $day->order }}</strong>
+							<td colspan="2" class="px-3 px-md-0 py-2 pt-md-3 pb-md-1">
+								<i class="fas fa-circle mr-1 {{ $day->active ? 'text-success' : 'text-secondary' }}"></i><strong class="text-uppercase">Jornada {{ $day->order }}</strong>
 							</td>
-							<td colspan="3" class="px-3 px-md-0 py-2 text-right">
+							<td colspan="3" class="px-3 px-md-0 py-2 pt-md-3 pb-md-1 text-right">
 								@if ($day->date_limit)
 									<small class="text-muted">
 										<strong>Límite: </strong>{{ \Carbon\Carbon::parse($day->date_limit)->format('j M, H:i') }}

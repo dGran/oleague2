@@ -1,5 +1,5 @@
 @if ($participant->team)
-<a href="{{ route('market.team', $participant->team->slug) }}">
+<a href="{{ route('market.team', [$season_slug, $participant->team->slug]) }}">
 	<div class="item">
 		<img class="team-img" src="{{ $participant->logo() }}">
 		<div class="title">
