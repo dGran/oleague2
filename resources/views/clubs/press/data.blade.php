@@ -44,7 +44,7 @@
 				    lang="{{ app()->getLocale() }}"
 				    role="form"
 				    method="POST"
-				    action="{{ route('club.press.add', $participant->team->slug) }}"
+				    action="{{ route('club.press.add', [$season_slug, $participant->team->slug]) }}"
 				    enctype="multipart/form-data"
 				    data-toggle="validator"
 				    autocomplete="off"

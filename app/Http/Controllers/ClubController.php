@@ -116,7 +116,7 @@ class ClubController extends Controller
         return view('clubs.press', compact('participants', 'participant', 'presses', 'season_slug'));
     }
 
-    public function clubPressAdd($slug)
+    public function clubPressAdd($season_slug, $slug)
     {
         if (auth()->guest()) {
             return back()->with('info', 'La página ha expirado debido a la inactividad.');
@@ -124,11 +124,11 @@ class ClubController extends Controller
             if (!user_is_participant(auth()->user()->id)) {
                 return back()->with('error', 'No eres participante del torneo.');
             } else {
-                $participant = $this->get_participant($slug);
+                $participant = $this->get_participant($season_slug, $slug);
                 if (auth()->user()->id != $participant->user_id) {
                     return back()->with('error', 'No puedes crear notas de prensa de otros equipos.');
                 } else {
-                    $participant = $this->get_participant($slug);
+                    $participant = $this->get_participant($season_slug, $slug);
                     $press = new Press;
                     $press->participant_id = $participant->id;
                     $press->title = request()->title;
@@ -146,7 +146,7 @@ class ClubController extends Controller
                             'img' => 'img/microphone.png',
                         ]);
 
-                        $club_link = 'https://lpx.es/clubs/'.$participant->team->slug.'/sala-de-prensa';
+                        $club_link = 'https://lpx.es/clubs/'.$season_slug.'/'.$participant->team->slug.'/sala-de-prensa';
                         $club_name = $participant->team->name;
                         $user_name = $participant->user->name;
                         $title = "\xF0\x9F\x92\xAC Declaraciones de $user_name ($club_name) \xF0\x9F\x92\xAC";
