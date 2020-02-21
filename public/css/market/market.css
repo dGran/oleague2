@@ -109,6 +109,27 @@
   top: 16px;
 }
 
+.season-selector {
+  background: #fff;
+  border-bottom: 1px solid #E1E1E1;
+  border-top: 1px solid #E1E1E1;
+  padding: 1em 0;
+  min-height: 80.53px;
+}
+
+.season-selector label {
+  display: block;
+  font-size: 11px !important;
+  font-weight: bold;
+  margin-bottom: .25em;
+  padding-left: .25em;
+}
+
+.season-selector .btn,
+.season-selector a {
+  font-size: 11px !important;
+}
+
 .transfer {
   background: #f9f9f9;
 }
