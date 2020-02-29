@@ -34,13 +34,13 @@
 
 			@if (auth()->user() && user_is_participant(auth()->user()->id))
 				<li class="item new-section {{ \Route::current()->getName() == 'market.my_team' ? 'active' : '' }}">
-					<a href="{{ route('market.my_team', $season_slug) }}">
+					<a href="{{ route('market.my_team') }}">
 						<i class="icon-my-team"></i>
 						<span>Mi equipo</span>
 					</a>
 				</li>
 				<li class="item {{ \Request::is('mercado/negociaciones*') ? 'active' : '' }} {{ !active_season()->transfers_period ? 'd-none' : '' }}">
-					<a href="{{ route('market.trades', $season_slug) }}">
+					<a href="{{ route('market.trades') }}">
 						<i class="icon-negotiation"></i>
 						<span>Negocios</span>
 						@if (participant_of_user()->trades_received_pending() > 0)
@@ -63,8 +63,7 @@
 </div>
 
 @if ($seasons->count()>1)
-	@if (\Route::current()->getName() == 'market.team' || \Route::current()->getName() == 'market.trades' || \Route::current()->getName() == 'market.trades.received' || \Route::current()->getName() == 'market.trades.sent')
-	@else
+	@if (\Route::current()->getName() == 'market' || \Route::current()->getName() == 'market.agreements' || \Route::current()->getName() == 'market.search' || \Route::current()->getName() == 'market.sale' || \Route::current()->getName() == 'market.teams' || \Route::current()->getName() == 'market.favorites')
 		<div class="season-selector">
 			<div class="container px-3">
 				<label for="season_selector">Temporada</label>

@@ -25,7 +25,7 @@
 							<a class="nav-link active" id="pills-received-tab" href="#">Ofertas recibidas</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="pills-received-tab" href="{{ route('market.trades.sent', $season_slug) }}">Ofertas enviadas</a>
+							<a class="nav-link" id="pills-received-tab" href="{{ route('market.trades.sent') }}">Ofertas enviadas</a>
 						</li>
 					</ul>
 				</div>

@@ -20,13 +20,13 @@
 
 			<div class="p-3">
 				<p>Ofertas recibidas pendientes de tu respuesta: {{ $offers_received }}</p>
-				<a href="{{ route('market.trades.received', $season_slug) }}" class="btn btn-primary">Ofertas recibidas</a>
+				<a href="{{ route('market.trades.received') }}" class="btn btn-primary">Ofertas recibidas</a>
 				<p class="pt-3">
 					Ofertas enviadas esperando respuesta: {{ $offers_sent_pending }}
 					<br>
 					Ofertas enviadas esperando rechazadas: {{ $offers_sent_refushed }}
 				</p>
-				<a href="{{ route('market.trades.sent', $season_slug) }}" class="btn btn-primary">Ofertas enviadas</a>
+				<a href="{{ route('market.trades.sent') }}" class="btn btn-primary">Ofertas enviadas</a>
 			</div>
 
 			<div class="p-3">

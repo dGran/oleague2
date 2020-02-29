@@ -1027,13 +1027,9 @@ class MarketController extends Controller
     	return back()->with('success', 'Jugador eliminado de la lista de favoritos correctamente.');
     }
 
-    public function myTeam($season_slug = null)
+    public function myTeam()
     {
-    	if (is_null($season_slug)) {
-    		$season = active_season();
-    	} else {
-    		$season = Season::where('slug', '=', $season_slug)->first();
-    	}
+    	$season = active_season();
     	$season_slug = $season->slug;
     	$seasons = Season::orderBy('name', 'asc')->get();
 
@@ -1041,12 +1037,12 @@ class MarketController extends Controller
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
 			if (user_is_participant(auth()->user()->id)) {
-				$participant = SeasonParticipant::where('season_id', '=', $season->id)
+				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
 					->where('user_id', '=', auth()->user()->id)->first();
 
 				$players = SeasonPlayer::select('season_players.*')
 			        ->join('players', 'players.id', '=', 'season_players.player_id')
-			        ->seasonId($season->id);
+			        ->seasonId(active_season()->id);
 	            $players = $players->participantId($participant->id);
 		        $players = $players->orderBy('players.overall_rating', 'desc')
 			        ->orderBy('players.name', 'asc')
@@ -1298,13 +1294,9 @@ class MarketController extends Controller
     	}
     }
 
-    public function trades($season_slug = null)
+    public function trades()
     {
-    	if (is_null($season_slug)) {
-    		$season = active_season();
-    	} else {
-    		$season = Season::where('slug', '=', $season_slug)->first();
-    	}
+    	$season = active_season();
     	$season_slug = $season->slug;
     	$seasons = Season::orderBy('name', 'asc')->get();
 
@@ -1346,13 +1338,9 @@ class MarketController extends Controller
 		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
-    public function tradesReceived($season_slug = null)
+    public function tradesReceived()
     {
-    	if (is_null($season_slug)) {
-    		$season = active_season();
-    	} else {
-    		$season = Season::where('slug', '=', $season_slug)->first();
-    	}
+    	$season = active_season();
     	$season_slug = $season->slug;
     	$seasons = Season::orderBy('name', 'asc')->get();
 
@@ -1376,13 +1364,9 @@ class MarketController extends Controller
 		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
-    public function tradesSent($season_slug = null)
+    public function tradesSent()
     {
-    	if (is_null($season_slug)) {
-    		$season = active_season();
-    	} else {
-    		$season = Season::where('slug', '=', $season_slug)->first();
-    	}
+    	$season = active_season();
     	$season_slug = $season->slug;
     	$seasons = Season::orderBy('name', 'asc')->get();
 
@@ -1411,6 +1395,10 @@ class MarketController extends Controller
 
     public function tradesAdd($participant_id, $player_id = null)
     {
+    	$season = active_season();
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
@@ -1420,7 +1408,7 @@ class MarketController extends Controller
     		if (user_is_participant(auth()->user()->id)) {
 		    	$participant = SeasonParticipant::find($participant_id);
 		    	$player_selected = $player_id;
-		    	return view('market.trades.add', compact('participant', 'player_selected'));
+		    	return view('market.trades.add', compact('participant', 'player_selected', 'season_slug', 'season', 'seasons'));
 		    }
 	    }
 
