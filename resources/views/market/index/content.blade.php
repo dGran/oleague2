@@ -36,7 +36,7 @@
 			{{-- search --}}
 			<div class="row">
 			    <div class="col-12 col-lg-6 offset-lg-3">
-			    	<form class="frmFilter" role="search" method="get" action="{{ route('market') }}">
+			    	<form class="frmFilter" role="search" method="get" action="{{ route('market', $season_slug) }}">
 				    	<div class="searchbox">
 					        <label class="search-icon" for="search-by"><i class="fas fa-search"></i></label>
 					        <input class="search-input form-control mousetrap filterName" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off" onkeypress="submitFilterForm()">
