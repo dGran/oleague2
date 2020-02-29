@@ -22,7 +22,7 @@
 				<div class="selector">
 					<ul class="nav nav-pills justify-content-center">
 						<li class="nav-item">
-							<a class="nav-link" id="pills-received-tab" href="{{ route('market.trades.received') }}">Ofertas recibidas</a>
+							<a class="nav-link" id="pills-received-tab" href="{{ route('market.trades.received', $season_slug) }}">Ofertas recibidas</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" id="pills-received-tab" href="#">Ofertas enviadas</a>

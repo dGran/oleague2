@@ -1298,8 +1298,16 @@ class MarketController extends Controller
     	}
     }
 
-    public function trades()
+    public function trades($season_slug = null)
     {
+    	if (is_null($season_slug)) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
@@ -1331,15 +1339,23 @@ class MarketController extends Controller
 					->orderBy('team_name', 'asc')
 					->get();
 
-				return view('market.trades.index', compact('participant', 'offers_received', 'offers_sent_pending', 'offers_sent_refushed', 'participants'));
+				return view('market.trades.index', compact('participant', 'offers_received', 'offers_sent_pending', 'offers_sent_refushed', 'participants', 'season_slug', 'season', 'seasons'));
 			}
     	}
 
 		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
-    public function tradesReceived()
+    public function tradesReceived($season_slug = null)
     {
+    	if (is_null($season_slug)) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
@@ -1353,15 +1369,23 @@ class MarketController extends Controller
 					->orderBy('created_at', 'desc')
 					->get();
 
-				return view('market.trades.received', compact('offers_received'));
+				return view('market.trades.received', compact('offers_received', 'season_slug', 'season', 'seasons'));
 			}
     	}
 
 		return redirect()->route('market')->with('info', 'Debes ser participante para tener acceso.');
     }
 
-    public function tradesSent()
+    public function tradesSent($season_slug = null)
     {
+    	if (is_null($season_slug)) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
@@ -1378,7 +1402,7 @@ class MarketController extends Controller
 					->orderBy('created_at', 'desc')
 					->get();
 
-				return view('market.trades.sent', compact('offers_sent'));
+				return view('market.trades.sent', compact('offers_sent', 'season_slug', 'season', 'seasons'));
 			}
     	}
 

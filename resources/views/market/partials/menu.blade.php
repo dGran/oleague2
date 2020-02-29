@@ -62,22 +62,25 @@
 	</div>
 </div>
 
-@if ($seasons->count()>1 && (\Route::current()->getName() != 'market.team'))
-	<div class="season-selector">
-		<div class="container px-3">
-			<label for="season_selector">Temporada</label>
-			<select class="selectpicker btn-light" id="season_selector">
-				@foreach ($seasons as $season)
-					<option {{ $season->slug == $season_slug ? 'selected' : '' }} value="{{ route(\Route::current()->getName(), $season->slug) }}">
-						<span>{{ $season->name }}</span>
-						@if ($season->id == active_season()->id)
-							<small>(activa)</small>
-						@endif
-					</option>
-				@endforeach
-			</select>
+@if ($seasons->count()>1)
+	@if (\Route::current()->getName() == 'market.team' || \Route::current()->getName() == 'market.trades' || \Route::current()->getName() == 'market.trades.received' || \Route::current()->getName() == 'market.trades.sent')
+	@else
+		<div class="season-selector">
+			<div class="container px-3">
+				<label for="season_selector">Temporada</label>
+				<select class="selectpicker btn-light" id="season_selector">
+					@foreach ($seasons as $season)
+						<option {{ $season->slug == $season_slug ? 'selected' : '' }} value="{{ route(\Route::current()->getName(), $season->slug) }}">
+							<span>{{ $season->name }}</span>
+							@if ($season->id == active_season()->id)
+								<small>(activa)</small>
+							@endif
+						</option>
+					@endforeach
+				</select>
+			</div>
 		</div>
-	</div>
+	@endif
 @endif
 
 <script>
