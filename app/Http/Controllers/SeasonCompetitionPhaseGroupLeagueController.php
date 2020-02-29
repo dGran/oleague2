@@ -924,6 +924,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 
 							   	$match = new SeasonCompetitionMatch;
 							   	$match->day_id = $day->id;
+                                $match->clash_id = 0;
 							   	$match->local_id = $participants[$player]->id;
 							   	$match->local_user_id = $participants[$player]->participant->user->id;
 							   	$match->visitor_id = $participants[$opponent]->id;
@@ -934,6 +935,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	                        if ($participants[$opponent]->id > 0 && $participants[$player]->id > 0) {
 							   	$match = new SeasonCompetitionMatch;
 							   	$match->day_id = $day->id;
+                                $match->clash_id = 0;
 							   	$match->local_id = $participants[$opponent]->id;
 							   	$match->local_user_id = $participants[$opponent]->participant->user->id;
 							   	$match->visitor_id = $participants[$player]->id;
@@ -955,6 +957,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 
 				   	$match = new SeasonCompetitionMatch;
 				   	$match->day_id = $day->id;
+                    $match->clash_id = 0;
 				   	$match->local_id = $participants[$num_players]->id;
 				   	$match->local_user_id = $participants[$num_players]->participant->user->id;
 				   	$match->visitor_id = $participants[$opponent]->id;
@@ -966,6 +969,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 				if ($participants[$opponent]->id > 0 && $participants[$num_players]->id > 0) {
 				   	$match = new SeasonCompetitionMatch;
 				   	$match->day_id = $day->id;
+                    $match->clash_id = 0;
 				   	$match->local_id = $participants[$opponent]->id;
 				   	$match->local_user_id = $participants[$opponent]->participant->user->id;
 				   	$match->visitor_id = $participants[$num_players]->id;
@@ -992,6 +996,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 		    		foreach ($copy_day->matches as $copy_match) {
 		    			$match = new SeasonCompetitionMatch;
 		    			$match->day_id = $day->id;
+                        $match->clash_id = 0;
 		    			$match->local_id = $copy_match->visitor_id;
 		    			$match->local_user_id = $copy_match->visitor_user_id;
 		    			$match->visitor_id = $copy_match->local_id;
@@ -1014,6 +1019,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 		    		foreach ($copy_day->matches as $copy_match) {
 		    			$match = new SeasonCompetitionMatch;
 		    			$match->day_id = $day->id;
+                        $match->clash_id = 0;
 		    			$match->local_id = $copy_match->visitor_id;
 		    			$match->local_user_id = $copy_match->visitor_user_id;
 		    			$match->visitor_id = $copy_match->local_id;
