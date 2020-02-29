@@ -871,8 +871,14 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     protected function generate_days($league_id, $second_round, $inverse_order)
     {
     	$league = SeasonCompetitionPhaseGroupLeague::find($league_id);
-
     	$days = SeasonCompetitionPhaseGroupLeagueDay::where('league_id', '=', $league_id)->orderBy('order', 'desc')->get();
+        foreach ($days as $day) {
+            foreach ($day->matches as $match) {
+                $match->delete();
+            }
+            $day->delete();
+        }
+        $days = SeasonCompetitionPhaseGroupLeagueDay::where('league_id', '=', $league_id)->orderBy('order', 'desc')->get();
     	if ($days->count() > 0) {
     		$next_day = $days->first()->order + 1;
     	} else {
