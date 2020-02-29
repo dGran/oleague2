@@ -24,11 +24,12 @@ class MarketController extends Controller
 {
     public function index($season_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
     	}
+
     	$season_slug = $season->slug;
     	$seasons = Season::orderBy('name', 'asc')->get();
 
@@ -447,7 +448,7 @@ class MarketController extends Controller
 
     public function agreements($season_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
@@ -465,7 +466,7 @@ class MarketController extends Controller
 
     public function onSale($season_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
@@ -567,7 +568,7 @@ class MarketController extends Controller
 
     public function search($season_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
@@ -775,7 +776,7 @@ class MarketController extends Controller
 
     public function teams($season_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
@@ -791,6 +792,7 @@ class MarketController extends Controller
     public function team($season_slug, $slug)
     {
     	$season = Season::where('slug', '=', $season_slug)->first();
+    	$seasons = Season::orderBy('name', 'asc')->get();
         $participants = $this->get_participants($season);
         $participant = $this->get_participant($season, $slug);
 
@@ -802,11 +804,18 @@ class MarketController extends Controller
 	        ->orderBy('players.name', 'asc')
 	        ->get();
 
-        return view('market.team', compact('participants', 'participant', 'players', 'season_slug'));
+        return view('market.team', compact('participants', 'participant', 'players', 'season_slug', 'season', 'seasons'));
     }
 
-    public function favorites()
+    public function favorites($season_slug = null)
     {
+    	if (is_null($season_slug)) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
     	//data of user->participant
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
@@ -831,7 +840,7 @@ class MarketController extends Controller
 
 		        $order_ext = $this->searchGetOrder($order);
 
-		        $filterSeason = active_season()->id;
+		        $filterSeason = $season->id;
 
 		        $filterName = null;
 		        if (!is_null(request()->filterName)) {
@@ -937,7 +946,7 @@ class MarketController extends Controller
 		            	  ->where('season_players.participant_id', '!=', $participant_of_user->id);
 		      		});
 		        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
-		        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+		        	$players = $players->where('season_participants.clauses_received', '<', $season->max_clauses_received);
 		        	$players = $players->where(\DB::raw('season_players.price * 1.10'), '<', $participant_of_user->budget());
 		        } else {
 			        if ($filterHideFree) {
@@ -947,7 +956,7 @@ class MarketController extends Controller
 			        	$players = $players->where('season_players.allow_clause_pay', '=', 1);
 			        }
 			        if ($filterHideParticipantClauseLimit) {
-			        	$players = $players->where('season_participants.clauses_received', '<', active_season()->max_clauses_received);
+			        	$players = $players->where('season_participants.clauses_received', '<', $season->max_clauses_received);
 			        }
 		        }
 		        if ($filterPosition != NULL) {
@@ -1003,7 +1012,7 @@ class MarketController extends Controller
 				$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
 
 				//return view
-		        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+		        return view('market.favorites', compact('players', 'participants', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page', 'season_slug', 'season', 'seasons'));
 			}
 		}
 
@@ -1018,24 +1027,32 @@ class MarketController extends Controller
     	return back()->with('success', 'Jugador eliminado de la lista de favoritos correctamente.');
     }
 
-    public function myTeam()
+    public function myTeam($season_slug = null)
     {
+    	if (is_null($season_slug)) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
     	if (auth()->guest()) {
     		return redirect()->route('market')->with('info', 'La página ha expirado debido a la inactividad.');
     	} else {
 			if (user_is_participant(auth()->user()->id)) {
-				$participant = SeasonParticipant::where('season_id', '=', active_season()->id)
+				$participant = SeasonParticipant::where('season_id', '=', $season->id)
 					->where('user_id', '=', auth()->user()->id)->first();
 
 				$players = SeasonPlayer::select('season_players.*')
 			        ->join('players', 'players.id', '=', 'season_players.player_id')
-			        ->seasonId(active_season()->id);
+			        ->seasonId($season->id);
 	            $players = $players->participantId($participant->id);
 		        $players = $players->orderBy('players.overall_rating', 'desc')
 			        ->orderBy('players.name', 'asc')
 			        ->get();
 
-				return view('market.my_team', compact('participant', 'players'));
+				return view('market.my_team', compact('participant', 'players', 'season_slug', 'season', 'seasons'));
 			}
     	}
 
@@ -1082,7 +1099,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return redirect()->route('market.my_team')->with('success', 'Jugador editado correctamente.');
+		            	return back()->with('success', 'Jugador editado correctamente.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -1090,7 +1107,7 @@ class MarketController extends Controller
     				return back()->with('error', 'Acción cancelada. Ya no eres propietario del jugador');
     			}
 	        } else {
-				return redirect()->route('market.my_team')->with('error', 'El jugador ya no existe en la base de datos.');
+				return back()->with('error', 'El jugador ya no existe en la base de datos.');
 	        }
     	}
     }
@@ -1111,7 +1128,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido declarado transferible.');
+		            	return back()->with('success', $player->player->name . ' ha sido declarado transferible.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -1143,7 +1160,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido declarado intransferible.');
+		            	return back()->with('success', $player->player->name . ' ha sido declarado intransferible.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -1171,7 +1188,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return redirect()->route('market.my_team')->with('success', $player->player->name . ' ha sido declarado cedible.');
+		            	return back()->with('success', $player->player->name . ' ha sido declarado cedible.');
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -1200,7 +1217,7 @@ class MarketController extends Controller
 		        	$player->save();
 		        	if ($player->save()) {
 		        		$this->manage_player_showcase($player);
-		            	return redirect()->route('market.my_team')->with('success', 'Se han eliminado las etiquetas de ' . $player->player->name);
+		            	return back()->with('success', 'Se han eliminado las etiquetas de ' . $player->player->name);
 		        	} else {
 		        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 		        	}
@@ -1268,7 +1285,7 @@ class MarketController extends Controller
 			        	$player->save();
 			        	if ($player->save()) {
 			        		$this->manage_player_showcase($player);
-			            	return redirect()->route('market.my_team')->with('success', $player->player->name . " ha sido despedido.");
+			            	return back()->with('success', $player->player->name . " ha sido despedido.");
 			        	} else {
 			        		return back()->with('error', 'No se han guardado los datos, se ha producido un error en el servidor.');
 			        	}

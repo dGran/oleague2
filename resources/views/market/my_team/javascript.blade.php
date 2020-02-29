@@ -18,8 +18,10 @@
 
     $('#editModal').on('show.bs.modal', function(e) {
         var id = $(e.relatedTarget).attr("data-id");
+        var url = '{{ route("market.my_team.player.edit", ":id") }}';
+        url = url.replace(':id', id);
         $.ajax({
-            url: 'mi-equipo/jugador/editar/' + id,
+            url: url,
             type        : 'GET',
             datatype    : 'html',
         }).done(function(data){

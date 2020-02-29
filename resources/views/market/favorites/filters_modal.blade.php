@@ -10,7 +10,7 @@
 		    </div>
 
 		    <div class="modal-body">
-				<form class="frmFilter" role="search" method="get" action="{{ route('market.favorites') }}">
+				<form class="frmFilter" role="search" method="get" action="{{ route('market.favorites', $season_slug) }}">
 
 					<input class="search-input form-control mousetrap filterName d-none" name="filterName" type="text" placeholder="Buscar..." value="{{ $filterName ? $filterName : '' }}" autocomplete="off">
 
@@ -249,7 +249,7 @@
 
 		    <div class="modal-bottom">
 		    	<div class="clearfix">
-		    		<a href="{{ route('market.favorites') }}" class="btn float-left" onclick="disabledActionsButtons()">Limpiar filtros</a>
+		    		<a href="{{ route('market.favorites', $season_slug) }}" class="btn float-left" onclick="disabledActionsButtons()">Limpiar filtros</a>
 		    		<a href="" class="btn btn-primary float-right" onclick="ApplyFilters()">Ver resultados</a>
 		    	</div>
 		    </div>

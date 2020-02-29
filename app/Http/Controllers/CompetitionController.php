@@ -27,7 +27,7 @@ class CompetitionController extends Controller
 {
     public function index($season_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
@@ -41,7 +41,7 @@ class CompetitionController extends Controller
 
     public function table($season_slug, $competition_slug, $phase_slug = null, $group_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
@@ -143,7 +143,7 @@ class CompetitionController extends Controller
 
     public function calendar($season_slug, $competition_slug, $phase_slug = null, $group_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();
@@ -178,7 +178,7 @@ class CompetitionController extends Controller
 
 	        // $league = $this->check_league($group);
 
-	        return view('competitions.league.calendar', compact('group', 'league', 'competitions', 'competition'));
+	        return view('competitions.league.calendar', compact('group', 'league', 'competitions', 'competition', 'season'));
 		} else { // playoffs
 			if ($phase->groups->count()>0) {
 				if (!$group_slug) {
@@ -191,7 +191,7 @@ class CompetitionController extends Controller
 				return back()->with('error', 'La competición está en fase de configuración');
 			}
 
-	        return view('competitions.playoffs.calendar', compact('group', 'playoff', 'competitions', 'competition'));
+	        return view('competitions.playoffs.calendar', compact('group', 'playoff', 'competitions', 'competition', 'season'));
 		}
     }
 
@@ -217,7 +217,7 @@ class CompetitionController extends Controller
 
     public function stats($season_slug, $competition_slug, $phase_slug = null, $group_slug = null)
     {
-    	if ($season_slug == null) {
+    	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
     		$season = Season::where('slug', '=', $season_slug)->first();

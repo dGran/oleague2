@@ -168,7 +168,7 @@ class ClubController extends Controller
 
     protected function get_season($season_slug)
     {
-        if ($season_slug == null) {
+        if (is_null($season_slug)) {
             return active_season();
         } else {
             return Season::where('slug', '=', $season_slug)->first();

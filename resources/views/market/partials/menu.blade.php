@@ -62,7 +62,7 @@
 	</div>
 </div>
 
-@if ($seasons->count()>1)
+@if ($seasons->count()>1 && (\Route::current()->getName() != 'market.team'))
 	<div class="season-selector">
 		<div class="container px-3">
 			<label for="season_selector">Temporada</label>
