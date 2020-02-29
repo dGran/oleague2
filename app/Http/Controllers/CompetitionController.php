@@ -78,6 +78,8 @@ class CompetitionController extends Controller
 	    	$table_participants = collect();
 			$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $league->group->id)->get();
 
+			dd($group_participants);
+
 			if ($group_participants->count() == 0) {
 				return back()->with('error', 'la liga no esta configurada');
 			}
