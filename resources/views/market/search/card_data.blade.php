@@ -56,7 +56,7 @@
 			<small class="clause-pay">Límite claúsulas</small>
 		@endif
 	@endif
-	@if (!auth()->guest() && user_is_participant(auth()->user()->id))
+	@if (!auth()->guest() && user_is_participant(auth()->user()->id) && active_season()->id == $season->id)
 		<div class="actions {{ participant_of_user()->id == $player->participant_id ? 'd-none' : '' }}">
 			<div class="dropdown dropleft">
 				<button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
