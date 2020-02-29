@@ -22,13 +22,21 @@ use App\Notifications\SendNotificationEmail;
 
 class MarketController extends Controller
 {
-    public function index()
+    public function index($season_slug = null)
     {
+    	if ($season_slug == null) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
         $page = request()->page;
 
         $perPage = 10;
 
-        $filterSeason = active_season()->id;
+        $filterSeason = $season->id;
 
         $filterName = null;
         if (!is_null(request()->filterName)) {
@@ -69,7 +77,7 @@ class MarketController extends Controller
             ->seasonId($filterSeason)->orderBy('user_name', 'asc')->get();
         }
 		//return view
-        return view('market.index', compact('players', 'participants', 'filterName', 'filterParticipant', 'page'));
+        return view('market.index', compact('players', 'participants', 'filterName', 'filterParticipant', 'page', 'season_slug', 'season', 'seasons'));
     }
 
     public function playerView($id)
@@ -437,24 +445,41 @@ class MarketController extends Controller
     	}
     }
 
-    public function agreements()
+    public function agreements($season_slug = null)
     {
-		$agreements = Trade::where('season_id', '=', active_season()->id)
+    	if ($season_slug == null) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
+		$agreements = Trade::where('season_id', '=', $season->id)
 			->where('state', '=', 'confirmed')
 			->orderBy('updated_at', 'desc')
 			->get();
 
-		return view('market.agreements', compact('agreements'));
+		return view('market.agreements', compact('agreements', 'season_slug', 'season', 'seasons'));
     }
 
-    public function onSale()
+    public function onSale($season_slug = null)
     {
+    	if ($season_slug == null) {
+    		$season = active_season();
+    	} else {
+    		$season = Season::where('slug', '=', $season_slug)->first();
+    	}
+    	$season_slug = $season->slug;
+    	$seasons = Season::orderBy('name', 'asc')->get();
+
+
     	$order = request()->order;
         if (!$order) {
             $order = 'date_desc';
         }
         $order_ext = $this->saleGetOrder($order);
-        $filterSeason = active_season()->id;
+        $filterSeason = $season->id;
         if (request()->filterParticipant == NULL) { request()->filterParticipant = 0; }
         $filterParticipant = request()->filterParticipant;
         $filterPosition = request()->filterPosition;
@@ -527,7 +552,7 @@ class MarketController extends Controller
         }
         $positions = Player::select('position')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('position', 'asc')->get();
 
-        return view('market.sale', compact('players', 'participants', 'positions', 'filterParticipant', 'filterPosition', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterState', 'filterSalePriceRangeFrom', 'filterSalePriceRangeTo', 'order'));
+        return view('market.sale', compact('players', 'participants', 'season_slug', 'season', 'seasons', 'positions', 'filterParticipant', 'filterPosition', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterState', 'filterSalePriceRangeFrom', 'filterSalePriceRangeTo', 'order'));
     }
 
     public function onSalePlayer($id)
@@ -745,7 +770,7 @@ class MarketController extends Controller
 		$original_leagues = Player::select('league_name')->distinct()->where('players_db_id', '=', Season::find($filterSeason)->players_db_id)->orderBy('league_name', 'asc')->get();
 
 		//return view
-        return view('market.search', compact('players', 'participants', 'season_slug', 'seasons', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
+        return view('market.search', compact('players', 'participants', 'season_slug', 'season', 'seasons', 'positions', 'nations', 'original_teams', 'original_leagues', 'filterName', 'filterParticipant', 'filterPosition', 'filterNation', 'filterOriginalTeam', 'filterOriginalLeague', 'filterOverallRangeFrom', 'filterOverallRangeTo', 'filterClauseRangeFrom', 'filterClauseRangeTo', 'filterAgeRangeFrom', 'filterAgeRangeTo', 'filterHeightRangeFrom', 'filterHeightRangeTo', 'filterFoot', 'filterHideFree', 'filterHideClausePaid', 'filterHideParticipantClauseLimit', 'filterShowClausesCanPay', 'order', 'pagination', 'page'));
     }
 
     public function teams($season_slug = null)
@@ -760,7 +785,7 @@ class MarketController extends Controller
 
     	$participants = $this->get_participants($season);
 
-        return view('market.teams', compact('participants', 'season_slug', 'seasons'));
+        return view('market.teams', compact('participants', 'season_slug', 'season', 'seasons'));
     }
 
     public function team($season_slug, $slug)

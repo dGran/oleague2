@@ -54,13 +54,13 @@ Route::middleware('check_active_season')->group(function () {
 
 // Market Routes
 Route::middleware('check_active_season')->group(function () {
-	Route::get('mercado', 'MarketController@index')->name('market');
-	Route::get('mercado/acuerdos', 'MarketController@agreements')->name('market.agreements');
+	Route::get('mercado/{season_slug?}', 'MarketController@index')->name('market');
+	Route::get('mercado/acuerdos/{season_slug?}', 'MarketController@agreements')->name('market.agreements');
 	Route::get('mercado/buscador/{season_slug?}', 'MarketController@search')->name('market.search');
-	Route::get('mercado/escaparate', 'MarketController@onSale')->name('market.sale');
+	Route::get('mercado/escaparate/{season_slug?}', 'MarketController@onSale')->name('market.sale');
 	Route::get('mercado/equipos/{season_slug?}', 'MarketController@teams')->name('market.teams');
 	Route::get('mercado/equipos/{season_slug}/{slug}', 'MarketController@team')->name('market.team');
-	Route::get('mercado/mi-equipo', 'MarketController@myTeam')->name('market.my_team');
+	Route::get('mercado/mi-equipo/{season_slug?}', 'MarketController@myTeam')->name('market.my_team');
 	Route::get('mercado/mi-equipo/jugador/{id}', 'MarketController@myTeamPlayer')->name('market.my_team.player');
 	Route::get('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerEdit')->name('market.my_team.player.edit');
 	Route::put('mercado/mi-equipo/jugador/editar/{id}', 'MarketController@myTeamPlayerUpdate')->name('market.my_team.player.update');
@@ -70,9 +70,9 @@ Route::middleware('check_active_season')->group(function () {
 	Route::get('mercado/mi-equipo/jugador/eliminar-etiquetas/{id}', 'MarketController@tagsDelete')->name('market.my_team.player.tags.delete');
 	Route::get('mercado/mi-equipo/jugador/despedir/{id}', 'MarketController@dismiss')->name('market.my_team.player.dismiss');
 
-	Route::get('mercado/negociaciones', 'MarketController@trades')->name('market.trades');
-	Route::get('mercado/negociaciones/ofertas-recibidas', 'MarketController@tradesReceived')->name('market.trades.received');
-	Route::get('mercado/negociaciones/ofertas-enviadas', 'MarketController@tradesSent')->name('market.trades.sent');
+	Route::get('mercado/negociaciones/{season_slug?}', 'MarketController@trades')->name('market.trades');
+	Route::get('mercado/negociaciones/ofertas-recibidas/{season_slug?}', 'MarketController@tradesReceived')->name('market.trades.received');
+	Route::get('mercado/negociaciones/ofertas-enviadas/{season_slug?}', 'MarketController@tradesSent')->name('market.trades.sent');
 
 	Route::get('mercado/negociaciones/nueva/{participant_id}/{player_id?}', 'MarketController@tradesAdd')->name('market.trades.add');
 	Route::post('mercado/negociaciones/nueva/{id}', 'MarketController@tradesSave')->name('market.trades.save');
@@ -81,7 +81,7 @@ Route::middleware('check_active_season')->group(function () {
 	Route::get('mercado/negociaciones/{id}/retirar', 'MarketController@tradesRetire')->name('market.trades.retire');
 	Route::get('mercado/negociaciones/{id}/eliminar', 'MarketController@tradesDelete')->name('market.trades.delete');
 
-	Route::get('mercado/favoritos', 'MarketController@favorites')->name('market.favorites');
+	Route::get('mercado/favoritos/{season_slug?}', 'MarketController@favorites')->name('market.favorites');
 	Route::get('mercado/favoritos/eliminar/{id}', 'MarketController@favoritesDestroy')->name('market.favorites.destroy');
 	// market utils routes
 	Route::get('mercado/agregar-favorito/{player_id}/{participant_id}', 'MarketController@addFavoritePlayer')->name('market.favorite_player.add');

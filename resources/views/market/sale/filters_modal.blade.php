@@ -10,7 +10,7 @@
 		    </div>
 
 		    <div class="modal-body">
-				<form class="frmFilter" role="search" method="get" action="{{ route('market.sale') }}">
+				<form class="frmFilter" role="search" method="get" action="{{ route('market.sale', $season_slug) }}">
 
 			        <div class="form-group row">
 			            <div class="col-12">

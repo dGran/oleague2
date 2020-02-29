@@ -22,12 +22,12 @@
 					<li>
 						<a class="text-secondary {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.stats', [$season_slug, $competition->slug]) }}">
 							@if ($competition->initialPhase()->mode == 'league')
-								@if ($competition->initialPhase()->initialGroup()->league->has_stats())
+								@if ($competition->initialPhase()->initialGroup()->league && $competition->initialPhase()->initialGroup()->league->has_stats())
 									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 									Estadísticas
 								@endif
 							@else
-								@if ($competition->initialPhase()->initialGroup()->playoff->has_stats())
+								@if ($competition->initialPhase()->initialGroup()->league && $competition->initialPhase()->initialGroup()->playoff->has_stats())
 									<i class="fas fa-caret-right mr-1" style="color: #89be38"></i>
 									Estadísticas
 								@endif

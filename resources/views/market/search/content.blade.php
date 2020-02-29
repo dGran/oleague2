@@ -13,24 +13,6 @@
 		</div> {{-- container --}}
 	</div> {{-- header --}}
 
-	@if ($seasons->count()>1)
-		<div class="season-selector">
-			<div class="container px-3">
-				<label for="season_selector">Temporada</label>
-				<select class="selectpicker btn-light" id="season_selector">
-					@foreach ($seasons as $season)
-						<option {{ $season->slug == $season_slug ? 'selected' : '' }} value="{{ route('market.search', $season->slug) }}">
-							<span>{{ $season->name }}</span>
-							@if ($season->id == active_season()->id)
-								<small>(activa)</small>
-							@endif
-						</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-	@endif
-
 	<div class="container">
 		<section class="content">
 			{{-- search --}}
@@ -68,16 +50,3 @@
 		</section> {{-- content --}}
 	</div> {{-- container --}}
 </div> {{-- sale --}}
-
-
-<script>
-	jQuery(function($) {
-		$('#season_selector').on('change', function() {
-			var url = $(this).val();
-			if (url) {
-				window.location = url;
-			}
-			return false;
-		});
-	});
-</script>
