@@ -8,7 +8,7 @@
 	@foreach ($matches as $match)
 		<div class="match-item">
 			@if ($match->winner() == -1)
-				<a href="{{ route('competitions.calendar', [$season->id, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}">
+				<a href="{{ route('competitions.calendar', [$season->slug, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}">
 			@else
 				<a href="{{ route("competitions.calendar.match.details", [$season->slug, $match->competition()->slug, $match->id]) }}" onclick="view_match_detail(this)">
 			@endif
