@@ -179,20 +179,20 @@
                     @else
                         <ul style="list-style: none; margin:0; padding: 0;">
                             @foreach ($posts as $post)
-                                @if ($post->transfer_id || $post->match_id || $post->press_id)
-                                    @if ($post->transfer_id)
-                                        <a href="{{ route('market') }}">
-                                    @elseif ($post->match_id && $post->match_exists())
-                                        @if ($post->type == "champion")
-                                            <a href="{{ route('competitions.table', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
-                                        @else
-                                            <a href="{{ route('competitions.calendar', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
-                                        @endif
-                                    @elseif ($post->press_id && $post->press->participant_exists())
-                                        <a href="{{ route('club.press', [$post->press->participant->season->slug, $post->press->participant->slug()]) }}">
-                                    @endif
-                                @endif
                                 <li class="py-2 d-block" style="display: table; border-bottom: 1px solid #292C5E">
+                                    @if ($post->transfer_id || $post->match_id || $post->press_id)
+                                        @if ($post->transfer_id)
+                                            <a href="{{ route('market') }}" class="d-block">
+                                        @elseif ($post->match_id && $post->match_exists())
+                                            @if ($post->type == "champion")
+                                                <a href="{{ route('competitions.table', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}" class="d-block">
+                                            @else
+                                                <a href="{{ route('competitions.calendar', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}" class="d-block">
+                                            @endif
+                                        @elseif ($post->press_id && $post->press->participant_exists())
+                                            <a href="{{ route('club.press', [$post->press->participant->season->slug, $post->press->participant->slug()]) }}" class="d-block">
+                                        @endif
+                                    @endif
                                     <figure style="width: 96px; height: 96px; display: table-cell; position: relative; line-height: 1.1em;" class="m-0 text-center align-top px-2">
                                         @if ($post->type == "transfer")
                                             <img src="{{ asset($post->img) }}" style="width: 100%; height: auto; background: #c3cfea; border: 1px solid #940a53" class="rounded-circle">
@@ -200,7 +200,7 @@
                                             <img src="{{ asset($post->img) }}" style="margin: .5em; width: auto; height: 60px;" class="rounded">
                                             <small class="text-white d-inline-block text-truncate" style="max-width: 80px;">{{ $post->press->participant->user->name }}</small>
                                         @elseif ($post->type == "default")
-                                            <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="">
+                                            <img src="{{ asset($post->img) }}" style="width: auto; height: 80px">
                                         @elseif ($post->type == "result")
                                             <img src="{{ asset($post->img) }}" style="width: auto; height: 80px" class="rounded-circle">
                                             <img src="{{ asset('img/competitions/whistle.png') }}" style="position: absolute; width: 35px; left: 58px; top: 48px" class="">
@@ -235,16 +235,16 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </li>
-                                @if ($post->transfer_id || $post->match_id || $post->press_id)
-                                 @if ($post->transfer_id)
-                                        </a>
-                                    @elseif ($post->match_id && $post->match_exists())
-                                        </a>
-                                    @elseif ($post->press_id && $post->press->participant_exists())
-                                        </a>
+                                    @if ($post->transfer_id || $post->match_id || $post->press_id)
+                                        @if ($post->transfer_id)
+                                            </a>
+                                        @elseif ($post->match_id && $post->match_exists())
+                                            </a>
+                                        @elseif ($post->press_id && $post->press->participant_exists())
+                                            </a>
+                                        @endif
                                     @endif
-                                @endif
+                                </li>
                             @endforeach
                         </ul>
                     @endif
