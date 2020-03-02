@@ -48,4 +48,18 @@ class SeasonCompetitionPhase extends Model
             return null;
         }
     }
+
+    public function is_last() {
+        $competition = SeasonCompetition::find($this->competition->id);
+        if ($competition->phases->count() > 1) {
+            $last_phase = SeasonCompetitionPhase::where('competition_id' , '=', $this->competition->id)->orderBy('order', 'desc')->first();
+            if ($last_phase->id == $this->id) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 }

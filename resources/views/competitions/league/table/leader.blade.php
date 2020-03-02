@@ -15,9 +15,12 @@
 				</div>
 			</div>
 			<div class="float-right text-center animated bounceInDown delay-2s">
-				<img src="https://media.giphy.com/media/eMmj4M254X9sFu06jQ/giphy.gif" alt="" width="40">
-				{{-- <img src="https://media.tenor.com/images/9f208823ef7db08e4b3c2aeef043266e/tenor.gif" width="48"> --}}
-				<div style="font-size: .7em; font-weight: bold; text-transform: uppercase; padding-top: 4px">Líder</div>
+				@if ($league->has_winner())
+					<img src="https://media.giphy.com/media/llUeFDNRaLWvokhbat/source.gif" width="70" class="rounded-circle border shadow">
+				@else
+					<img src="https://media.giphy.com/media/eMmj4M254X9sFu06jQ/giphy.gif" alt="" width="40">
+					<div style="font-size: .7em; font-weight: bold; text-transform: uppercase; padding-top: 4px">Líder</div>
+				@endif
 			</div>
 		</div>
 	</div>

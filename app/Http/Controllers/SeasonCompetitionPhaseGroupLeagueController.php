@@ -233,49 +233,8 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     	$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->firstOrFail();
         $league = $this->check_league($group);
 
-    	$table_participants = collect();
 		$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $league->group->id)->get();
-		foreach ($group_participants as $key => $participant) {
-			$data = $this->get_table_data_participant($league->id, $participant->id);
-			$table_participants->push([
-				'participant' => $participant,
-		        'pj' => $data['pj'],
-		        'pg' => $data['pg'],
-		        'pe' => $data['pe'],
-		        'pp' => $data['pp'],
-		        'ps' => $data['ps'],
-		        'gf' => $data['gf'],
-		        'gc' => $data['gc'],
-		        'avg' => $data['avg'],
-				'pts' => $data['pts'],
-			]);
-		}
-
-		$table_participants = $table_participants->sortByDesc('gf')->sortByDesc('avg')->sortBy('ps')->sortByDesc('pts')->values();
-		$table_participants2 = collect();
-			$zones = [];
-			foreach ($league->table_zones as $key => $table_zone) {
-				$zones[$key] = SeasonCompetitionPhaseGroupLeagueTableZone::where('league_id', '=', $league->id)->where('position', '=', $key+1)->first()->table_zone;
-			}
-
-			foreach ($table_participants as $key => $tp) {
-				$table_participants2->push([
-					'participant' => $table_participants[$key]['participant'],
-			        'pj' => $table_participants[$key]['pj'],
-			        'pg' => $table_participants[$key]['pg'],
-			        'pe' => $table_participants[$key]['pe'],
-			        'pp' => $table_participants[$key]['pp'],
-			        'ps' => $table_participants[$key]['ps'],
-			        'gf' => $table_participants[$key]['gf'],
-			        'gc' => $table_participants[$key]['gc'],
-			        'avg' => $table_participants[$key]['avg'],
-			        'pts' => $table_participants[$key]['pts'],
-			        'table_zone' => $zones[$key],
-				]);
-			}
-			$table_participants = $table_participants2;
-		// }
-
+        $table_participants = $league->generate_table();
 
         return view('admin.seasons_competitions_phases_groups_leagues.table', compact('group', 'league', 'table_participants'));
     }
@@ -555,6 +514,22 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
             $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
             $this->telegram_notification_channel($text);
+
+            if ($match->day->league->pending_matches() == 0) {
+                if ($match->day->league->group->phase->is_last()) {
+                    $table_participants = $match->day->league->generate_table();
+                    // generate wiiner post
+                    $post = Post::create([
+                        'type' => 'champion',
+                        'transfer_id' => null,
+                        'match_id' => $match->id,
+                        'category' => $match->competition()->name,
+                        'title' => $table_participants[0]['participant']->participant->name() . ' (' . $table_participants[0]['participant']->participant->sub_name() . ') se proclama campeón!',
+                        'description' => 'Enhorabuena por el título!, y a ' . $table_participants[1]['participant']->participant->name() . ' (' . $table_participants[1]['participant']->participant->sub_name() . ') por el subcampeonato',
+                        'img' => null,
+                    ]);
+                }
+            }
 
             // generate new (post)
             $post = Post::create([

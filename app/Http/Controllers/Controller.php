@@ -17,21 +17,30 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    // Telegram
     public function telegram_notifications() {
     	return $notifications = GeneralSetting::first()->telegram_notifications;
     }
 
-    // Telegram
+    public function telegram_source() {
+        return $source = GeneralSetting::first()->telegram_source;
+    }
+
+    public function get_telegram_chat() {
+        $source = $this->telegram_source();
+        if ($source == 'production') {
+            $chat_id = env('TELEGRAM_CHANNEL_ID');
+        } else {
+            $chat_id = env('TELEGRAM_TEST_CHANNEL_ID');
+        }
+        return $chat_id;
+    }
+
     public function telegram_notification_channel($text) {
     	if ($this->telegram_notifications()) {
+            $chat_id = $this->get_telegram_chat();
 			Telegram::sendMessage([
-				// official channel
-			    'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001241759649'),
-			    // padrone
-			    // 'chat_id' => '599119701',
-
-			    // development
-			    // 'chat_id' => '-1001159210380',
+			    'chat_id' => $chat_id,
 			    'parse_mode' => 'HTML',
 			    'text' => $text
 			]);
@@ -40,7 +49,7 @@ class Controller extends BaseController
 
     protected function telegram_notification_admin($text) {
 		Telegram::sendMessage([
-		    'chat_id' => '-266877087',
+		    'chat_id' => env('TELEGRAM_ADMIN_CHANNEL_ID'),
 		    'parse_mode' => 'HTML',
 		    'text' => $text
 		]);

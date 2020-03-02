@@ -183,7 +183,11 @@
                                     @if ($post->transfer_id)
                                         <a href="{{ route('market') }}">
                                     @elseif ($post->match_id && $post->match_exists())
-                                        <a href="{{ route('competitions.calendar', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
+                                        @if ($post->type == "champion")
+                                            <a href="{{ route('competitions.table', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
+                                        @else
+                                            <a href="{{ route('competitions.calendar', [$post->match->competition()->season->slug, $post->match->competition()->slug, $post->match->group()->phase_slug_if_necesary(), $post->match->group()->group_slug_if_necesary()]) }}">
+                                        @endif
                                     @elseif ($post->press_id && $post->press->participant_exists())
                                         <a href="{{ route('club.press', [$post->press->participant->season->slug, $post->press->participant->slug()]) }}">
                                     @endif
@@ -202,7 +206,11 @@
                                             <img src="{{ asset('img/competitions/whistle.png') }}" style="position: absolute; width: 35px; left: 58px; top: 48px" class="">
                                         @elseif ($post->type == "champion")
                                             <img src="{{ asset('img/winner.png') }}" style="width: auto; height: 80px">
-                                            <img src="{{ asset($post->match->clash->winner()->participant->logo()) }}" style="position: absolute; width: 35px; left: 58px; top: 48px" class="">
+                                            @if ($post->match->clash)
+                                                <img src="{{ asset($post->match->clash->winner()->participant->logo()) }}" style="position: absolute; width: 35px; left: 58px; top: 48px" class="">
+                                            @else
+                                                <img src="{{ asset($post->match->day->league->table_participant_position(1)->participant->logo()) }}" style="position: absolute; width: 35px; left: 58px; top: 48px" class="">
+                                            @endif
                                             <img src="{{ asset($post->match->competition()->getImgFormatted()) }}" style="position: absolute; width: 35px; left: 5px; top: 48px" class="rounded-circle">
                                         @endif
                                     </figure>
