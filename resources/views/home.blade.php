@@ -222,6 +222,9 @@
                                                 </span>
                                                 <span style="display: block; margin-bottom: 6px; font-size: 11px; color: #00d4e4">
                                                     {{ $post->category }}
+                                                    @if ($post->type == "champion")
+                                                        <span> - {{ $post->match->competition()->season->name }}</span>
+                                                    @endif
                                                 </span>
                                                 <span style="display: block; font-size: 16px; font-weight: 500; line-height: 20px; color: #fff;">
                                                     {{ $post->title }}
