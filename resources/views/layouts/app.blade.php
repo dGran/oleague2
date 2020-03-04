@@ -72,7 +72,7 @@
     </head>
 
     <body class="d-flex flex-column">
-
+<div class="preloader"></div>
         <header>
             @include('layouts.partials.top_menu')
             @yield('section')
@@ -117,6 +117,10 @@
                 "href": "politica-privacidad"
               }
             });
+      function load() {
+       $('.preloader').fadeOut('slow');
+      }
+      window.onload = load;
         </script>
     </body>
 
