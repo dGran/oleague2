@@ -29,9 +29,10 @@ class HomeController extends Controller
     public function index($type = null)
     {
         $posts = Post::orderBy('created_at', 'desc')->paginate();
+        $results = Post::where('type', '=', 'result')->orderBy('created_at', 'desc')->take(10)->get();
         $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
 
-        return view('home', compact('posts', 'last_users', 'type'));
+        return view('home', compact('posts', 'results', 'last_users', 'type'));
     }
 
     public function posts($type = null)
@@ -42,8 +43,9 @@ class HomeController extends Controller
             $posts = Post::where('type', '=', $type)->orderBy('created_at', 'desc')->paginate();
         }
         $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
+        $results = Post::where('type', '=', 'result')->orderBy('created_at', 'desc')->take(10)->get();
 
-        return view('home', compact('posts', 'last_users' ,'type'));
+        return view('home', compact('posts', 'results', 'last_users' ,'type'));
     }
 
     public function privacity()

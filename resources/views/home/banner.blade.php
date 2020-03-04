@@ -11,15 +11,15 @@
                     </div>
                 </div>
 
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: 150px">
                     <ol class="carousel-indicators">
-                        @foreach ($posts as $post)
+                        @foreach ($results as $post)
                             <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : ''}}"></li>
                         @endforeach
                     </ol>
                     <div class="carousel-inner">
-                        @foreach ($posts as $post)
-                            <div class="carousel-item {{ $loop->first ? 'active' : ''}}" style="min-height: 300px">
+                        @foreach ($results as $post)
+                            <div class="carousel-item {{ $loop->first ? 'active' : ''}}" style="min-height: 150px">
                                 <div class="carousel-caption align-top text-left">
                                     @if ($post->transfer_id || $post->match_id || $post->press_id)
                                         @if ($post->transfer_id)
