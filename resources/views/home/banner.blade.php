@@ -11,7 +11,7 @@
                     </div>
                 </div>
 
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-top: 150px">
+                <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" style="margin-top: 150px">
                     <ol class="carousel-indicators">
                         @foreach ($results as $post)
                             <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : ''}}"></li>
