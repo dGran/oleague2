@@ -73,6 +73,20 @@
 
     <body class="d-flex flex-column">
 
+
+    <div class="wrapper">
+      <div id="loader-wrapper">
+
+        <div id="loader">
+            <p>LOADING</p>
+            <div class="circ-one"></div><div class="circ-two"></div>
+        </div>
+
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+
+      </div>
+
         <header>
             @include('layouts.partials.top_menu')
             @yield('section')
@@ -92,12 +106,33 @@
             @yield('bottom-fixed')
         </footer>
 
+    </div>
+
         @yield('js')
         <!-- Scripts -->
         <script src="{{ asset('js/main.js') }}"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
         <script>
+
+$(document).ready(function() {
+  setTimeout(function() {
+    $('.wrapper').addClass('loaded');
+
+  });
+});
+
+
+
+jQuery(function(){
+
+  $(window).load(function(){
+
+  $('.wrapper').removeClass('preload');
+
+  });
+
+});
             window.cookieconsent.initialise({
               "palette": {
                 "popup": {
