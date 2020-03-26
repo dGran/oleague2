@@ -86,6 +86,22 @@
     }
 }
 
+.carousel-testimonies .width-auto {
+    width: auto;
+}
+
+.carousel-testimonies .text-lg {
+    font-size: 2rem;
+}
+
+.carousel-testimonies .carousel-indicators li {
+    border: none;
+    background: #ccc;
+}
+
+.carousel-testimonies .carousel-indicators li.active {
+    background: #28a745;
+}
 
 @media screen and (min-width: 767px) {
 	.cover-page-wrap {

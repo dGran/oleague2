@@ -12,6 +12,7 @@
         {{-- @include('home.top_section') --}}
         @include('home.last_news')
         @include('home.last_users')
+        @include('home.testimonies')
         @include('home.bottom_section')
 
     </div> {{-- wrapper --}}

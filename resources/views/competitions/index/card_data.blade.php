@@ -1,6 +1,6 @@
-<div class="col-12 col-md-6 col-lg-4">
+<div class="col-12 col-lg-6">
 	<a class="text-dark {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.table', [$season_slug, $competition->slug]) }}">
-		<div class="competition-item">
+		<div class="competition-item shadow-sm">
 			<div class="logo">
 				<img src="{{ $competition->getImgFormatted() }}">
 			</div>

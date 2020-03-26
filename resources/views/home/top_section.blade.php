@@ -9,6 +9,7 @@
 </div>
 <div class="container">
     <div class="text-white p-2">
+        <div id="clock"></div>
         Puedes probar las funciones de mercado mientras ultimamos los preparativos. <a class="text-info" href="{{ route('register') }}">Regístrate</a> y pide equipo a los administradores.
         <p class="m-0 pt-2">Todos los datos de jugadores y equipos son de prueba.</p>
         <p class="m-0 pt-2">Únete al canal de Telegram (el enlace al final de esta página) para recibir las notificaciones del mercaod de fichajes. No es funcional al 100%, pronto...</p>

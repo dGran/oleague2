@@ -11,7 +11,7 @@
                     </div>
                 </div>
 
-                <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" style="margin-top: 150px">
+{{--                 <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel" style="margin-top: 150px">
                     <ol class="carousel-indicators">
                         @foreach ($results as $post)
                             <li data-target="#carouselExampleIndicators" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : ''}}"></li>
@@ -19,7 +19,7 @@
                     </ol>
                     <div class="carousel-inner">
                         @foreach ($results as $post)
-                            <div class="carousel-item {{ $loop->first ? 'active' : ''}}" style="min-height: 150px">
+                            <div class="carousel-item {{ $loop->first ? 'active' : ''}}" style="min-height: 150px;">
                                 <div class="carousel-caption align-top text-left">
                                     @if ($post->transfer_id || $post->match_id || $post->press_id)
                                         @if ($post->transfer_id)
@@ -97,7 +97,7 @@
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </a>
-                </div>
+                </div> --}}
 
 
             </div>

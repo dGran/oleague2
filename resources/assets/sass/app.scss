@@ -15,16 +15,3 @@
 @import "styles/bootstrap_adapter.scss";
 
 @import "styles/main.scss";
-
-.preloader {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   z-index: 9999;
-   background-image: url('https://media.giphy.com/media/8JThqX344oQ5mgA6yt/source.gif');
-   background-repeat: no-repeat;
-   background-color: #222B47;
-   background-position: center;
-}
