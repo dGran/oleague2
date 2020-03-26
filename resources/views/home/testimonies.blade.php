@@ -17,9 +17,7 @@
                             <!-- Bootstrap carousel indicators [nav] -->
                             <ol class="carousel-indicators mb-0">
                                 @foreach ($testimonies as $key => $testimony)
-                                    @if ($testimony->user && $testimony->user->profile)
-                                        <li class="{{ $key == 0 ? 'active' : '' }}" data-target="#testimoniesIndicators" data-slide-to="{{ $key }}"></li>
-                                    @endif
+                                    <li class="{{ $key == 0 ? 'active' : '' }}" data-target="#testimoniesIndicators" data-slide-to="{{ $key }}"></li>
                                 @endforeach
                             </ol>
 
@@ -27,24 +25,22 @@
                             <div class="carousel-inner px-3 px-md-5 pb-4">
                                 <!-- Carousel slide-->
                                 @foreach ($testimonies as $key => $testimony)
-                                    @if ($testimony->user && $testimony->user->profile)
-                                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                            <div class="media">
-                                            	<img class="d-none d-md-block rounded-circle img-thumbnail" src="{{ asset($testimony->user->profile->avatar) }}" alt="" width="75">
-                                                <div class="media-body ml-3">
-                                                    <blockquote class="blockquote border-0 p-0">
-                                                        <p class="font-italic lead"> <i class="fa fa-quote-left mr-3 text-success"></i>
-                                                            {{ $testimony->message }}
-                                                        </p>
-                                                        <footer class="blockquote-footer">
-                                                            {{ $testimony->user->name }}
-                                                            <cite title="Source Title">- {{ $testimony->created_at->diffForHumans() }}</cite>
-                                                        </footer>
-                                                    </blockquote>
-                                                </div>
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <div class="media">
+                                        	<img class="d-none d-md-block rounded-circle img-thumbnail" src="{{ asset($testimony->user->profile->avatar) }}" alt="" width="75">
+                                            <div class="media-body ml-3">
+                                                <blockquote class="blockquote border-0 p-0">
+                                                    <p class="font-italic lead"> <i class="fa fa-quote-left mr-3 text-success"></i>
+                                                        {{ $testimony->message }}
+                                                    </p>
+                                                    <footer class="blockquote-footer">
+                                                        {{ $testimony->user->name }}
+                                                        <cite title="Source Title">- {{ $testimony->created_at->diffForHumans() }}</cite>
+                                                    </footer>
+                                                </blockquote>
                                             </div>
                                         </div>
-                                    @endif
+                                    </div>
                                 @endforeach
 
                                 <!-- Bootstrap controls [dots]-->

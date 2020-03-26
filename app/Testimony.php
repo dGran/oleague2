@@ -14,4 +14,9 @@ class Testimony extends Model
     {
         return $this->hasOne('App\User', 'id', 'user_id');
     }
+
+	public function user_profile()
+    {
+        return $this->hasOne('App\Profile', 'user_id', 'user_id');
+    }
 }
