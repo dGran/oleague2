@@ -18,7 +18,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-12 col-md-6 col-lg-8">
+		<div class="col-12">
 		    <div class="row competitions-list">
 				@foreach ($competitions as $competition)
 					@include('competitions.index.card_data')
@@ -26,9 +26,9 @@
 		    </div>
 		</div>
 
-		<div class="col-12 col-md-6 col-lg-4">
+{{-- 		<div class="col-12 col-md-6 col-lg-4">
 			@include('competitions.index.timeline')
-		</div>
+		</div> --}}
 
 	</div>
 </div>

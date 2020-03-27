@@ -1,4 +1,4 @@
-<div class="col-12 col-lg-6">
+<div class="col-12 col-lg-4">
 	<a class="text-dark {{ !$competition->initialPhase()->active ? 'disabled' : '' }}" href="{{ route('competitions.table', [$season_slug, $competition->slug]) }}">
 		<div class="competition-item shadow-sm">
 			<div class="logo">
