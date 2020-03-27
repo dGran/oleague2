@@ -46,8 +46,9 @@ class HomeController extends Controller
         }
         $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
         $results = Post::where('type', '=', 'result')->orderBy('created_at', 'desc')->take(10)->get();
+        $testimonies = Testimony::has('user_profile')->orderBy('created_at', 'desc')->take(5)->get();
 
-        return view('home', compact('posts', 'results', 'last_users' ,'type'));
+        return view('home', compact('posts', 'results', 'last_users', 'testimonies' ,'type'));
     }
 
     public function privacity()
