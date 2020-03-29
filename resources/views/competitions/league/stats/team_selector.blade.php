@@ -8,7 +8,6 @@
 					</option>
 					@foreach ($league->group->participants as $participant)
 						<option {{ $participant->participant->id == $participant_id ? 'selected' : '' }} title="<img class='mr-2' src='{{ $participant->participant->logo() }}' width='20'><span>{{ $participant->participant->name() }}<span><small class='pl-1 text-muted'>{{ $participant->participant->sub_name() }}<small>" data-content="<img class='mr-2' src='{{ $participant->participant->logo() }}' width='20'><span>{{ $participant->participant->name() }}<small class='pl-1 text-muted'>{{ $participant->participant->sub_name() }}<small></span>" value="{{ route('competitions.stats', [$group->phase->competition->season->slug, $group->phase->competition->slug, $participant->participant->id]) }}">
-							{{-- {{ $participant->participant->name() }} - {{ $participant->participant->sub_name() }} --}}
 						</option>
 					@endforeach
 				</select>

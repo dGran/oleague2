@@ -41,4 +41,13 @@ class LeagueStat extends Model
             return false;
         }
     }
+
+    public function stat_detail($stat, $league_id, $player_id)
+    {
+        return LeagueStat::where('league_id', '=', $league_id)
+            ->where('player_id', '=', $player_id)
+            ->where($stat, '>' , 0)
+            ->orderBy('day_id', 'asc')
+            ->get();
+    }
 }

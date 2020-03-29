@@ -233,4 +233,9 @@ class SeasonCompetitionMatch extends Model
             return $match_name;
         }
     }
+
+    public function match_result()
+    {
+        return $this->local_participant->participant->name() . ' ' . $this->local_score . '-' . $this->visitor_score . ' ' . $this->visitor_participant->participant->name();
+    }
 }

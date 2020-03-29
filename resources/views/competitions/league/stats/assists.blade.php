@@ -7,7 +7,7 @@
 			<table class="stats">
 				<tbody>
 				@foreach ($stats_assists as $stat)
-					<tr>
+					<tr class="item" data-id="{{ $stat->player_id }}">
 						<td class="pos">
 							{{ $loop->iteration }}
 						</td>
@@ -30,6 +30,25 @@
 						</td>
 						<td class="total">
 							{{ $stat->assists }}
+						</td>
+					</tr>
+					<tr class="detail d-none animated" id="{{ $stat->player_id }}">
+						<td colspan="4">
+							@foreach ($stat->stat_detail('assists', $league->id, $stat->player->id) as $detail)
+								<div class="list clearfix text-muted">
+									<div class="d-inline-block float-left" style="width: 70px">
+										Jornada {{ $detail->match->day->order }}
+									</div>
+									<div class="d-inline-block float-left">
+										{{ $detail->match->match_result() }}
+									</div>
+									<div class="d-inline-block float-right text-right">
+										@for ($i = 0; $i < $detail->assists; $i++)
+										    <i class="fas fa-futbol"></i>
+										@endfor
+									</div>
+								</div>
+							@endforeach
 						</td>
 					</tr>
 				@endforeach
