@@ -6,9 +6,9 @@
 			if (element.hasClass('d-none')) {
 				$(element).removeClass('d-none');
 				$(element).removeClass('bounceOut');
-				$(element).addClass('zoomIn');
+				$(element).addClass('fadeIn');
 			} else {
-				$(element).removeClass('zoomIn');
+				$(element).removeClass('fadeIn');
 				$(element).addClass('bounceOut');
 				setTimeout(function() {
 					$(element).addClass('d-none');
