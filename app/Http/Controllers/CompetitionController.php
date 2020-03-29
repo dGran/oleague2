@@ -180,6 +180,9 @@ class CompetitionController extends Controller
     {
     	if (is_null($participant_id)) {
     		$participant_id = 0;
+    		$participant = null;
+    	} else {
+    		$participant = SeasonParticipant::find($participant_id);
     	}
 
     	if (is_null($season_slug)) {
@@ -267,7 +270,7 @@ class CompetitionController extends Controller
 					->orderBy('red_cards', 'desc')
 					->get();
 
-		        return view('competitions.league.stats', compact('participant_id', 'stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
+		        return view('competitions.league.stats', compact('participant_id', 'participant', 'stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
 			} else {
 				return redirect()->route('competitions.table', [$season->slug, $competition_slug, $participant_id]);
 			}
