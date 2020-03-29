@@ -215,7 +215,7 @@ class CompetitionController extends Controller
 					return back()->with('error', 'la liga no esta configurada');
 				}
 
-				$stats_goals = LeagueStat::select('leagues_stats.player_id', \DB::raw('SUM(leagues_stats.goals) as goals'), )
+				$stats_goals = LeagueStat::select('leagues_stats.player_id', \DB::raw('SUM(leagues_stats.goals) as goals'))
 					->leftjoin('season_players', 'leagues_stats.player_id', '=', 'season_players.id')
 					->leftjoin('season_participants', 'season_players.participant_id', '=', 'season_participants.id')
 					->where('leagues_stats.league_id', '=', $league->id);
