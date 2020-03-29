@@ -218,7 +218,8 @@ class CompetitionController extends Controller
 				$stats_goals = LeagueStat::select('leagues_stats.player_id', \DB::raw('SUM(leagues_stats.goals) as goals'))
 					->leftjoin('season_players', 'leagues_stats.player_id', '=', 'season_players.id')
 					->leftjoin('season_participants', 'season_players.participant_id', '=', 'season_participants.id')
-					->where('leagues_stats.league_id', '=', $league->id);
+					->where('leagues_stats.league_id', '=', $league->id)
+					->whereNotNull('leagues_stats.goals');
 		    	if ($participant_id > 0) {
 					$stats_goals = $stats_goals->where('season_participants.id', '=', $participant_id);
 		    	}
@@ -227,33 +228,44 @@ class CompetitionController extends Controller
 					->orderBy('goals', 'desc')
 					->get();
 
-				// $stats_goals = [];
-				// foreach ($goals as $goal) {
-				// 	array_push($stats_goals, [
-				// 	    'player_id' => $goal->player_id,
-				// 	    'goals' => $goal->goals,
-				// 	    'participant_id' => $goal->player->participant->id,
-				// 	]);
-				// }
+				$stats_assists = LeagueStat::select('leagues_stats.player_id', \DB::raw('SUM(assists) as assists'))
+					->leftjoin('season_players', 'leagues_stats.player_id', '=', 'season_players.id')
+					->leftjoin('season_participants', 'season_players.participant_id', '=', 'season_participants.id')
+					->where('leagues_stats.league_id', '=', $league->id)
+					->whereNotNull('leagues_stats.assists');
+		    	if ($participant_id > 0) {
+					$stats_assists = $stats_assists->where('season_participants.id', '=', $participant_id);
+		    	}
+				$stats_assists = $stats_assists->whereNotNull('goals')
+					->groupBy('leagues_stats.player_id')
+					->orderBy('assists', 'desc')
+					->get();
 
-				$stats_assists = LeagueStat::select('player_id', \DB::raw('SUM(assists) as assists'))
-					->where('league_id', '=', $league->id)
-					->whereNotNull('assists')
-		            ->groupBy('player_id')
-		            ->orderBy('assists', 'desc')
-		            ->get();
-				$stats_yellow_cards = LeagueStat::select('player_id', \DB::raw('SUM(yellow_cards) as yellow_cards'))
-					->where('league_id', '=', $league->id)
-					->whereNotNull('yellow_cards')
-		            ->groupBy('player_id')
-		            ->orderBy('yellow_cards', 'desc')
-		            ->get();
-				$stats_red_cards = LeagueStat::select('player_id', \DB::raw('SUM(red_cards) as red_cards'))
-					->where('league_id', '=', $league->id)
-					->whereNotNull('red_cards')
-		            ->groupBy('player_id')
-		            ->orderBy('red_cards', 'desc')
-		            ->get();
+				$stats_yellow_cards = LeagueStat::select('leagues_stats.player_id', \DB::raw('SUM(yellow_cards) as yellow_cards'))
+					->leftjoin('season_players', 'leagues_stats.player_id', '=', 'season_players.id')
+					->leftjoin('season_participants', 'season_players.participant_id', '=', 'season_participants.id')
+					->where('leagues_stats.league_id', '=', $league->id)
+					->whereNotNull('leagues_stats.yellow_cards');
+		    	if ($participant_id > 0) {
+					$stats_yellow_cards = $stats_yellow_cards->where('season_participants.id', '=', $participant_id);
+		    	}
+				$stats_yellow_cards = $stats_yellow_cards->whereNotNull('yellow_cards')
+					->groupBy('leagues_stats.player_id')
+					->orderBy('yellow_cards', 'desc')
+					->get();
+
+				$stats_red_cards = LeagueStat::select('leagues_stats.player_id', \DB::raw('SUM(red_cards) as red_cards'))
+					->leftjoin('season_players', 'leagues_stats.player_id', '=', 'season_players.id')
+					->leftjoin('season_participants', 'season_players.participant_id', '=', 'season_participants.id')
+					->where('leagues_stats.league_id', '=', $league->id)
+					->whereNotNull('leagues_stats.red_cards');
+		    	if ($participant_id > 0) {
+					$stats_red_cards = $stats_red_cards->where('season_participants.id', '=', $participant_id);
+		    	}
+				$stats_red_cards = $stats_red_cards->whereNotNull('red_cards')
+					->groupBy('leagues_stats.player_id')
+					->orderBy('red_cards', 'desc')
+					->get();
 
 		        return view('competitions.league.stats', compact('participant_id', 'stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
 			} else {
