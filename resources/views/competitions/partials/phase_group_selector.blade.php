@@ -22,7 +22,7 @@
 									</option>
 								@endif
 								@if (\Route::current()->getName() == 'competitions.stats')
-									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.stats', [$group->phase->competition->season->slug, $group->phase->competition->slug, $phase->slug]) }}">
+									<option {{ $phase->id == $group->phase->id ? 'selected' : '' }} value="{{ route('competitions.stats', [$group->phase->competition->season->slug, $group->phase->competition->slug]) }}">
 										{{ $phase->name }}
 									</option>
 								@endif
@@ -46,7 +46,7 @@
 									</option>
 								@endif
 								@if (\Route::current()->getName() == 'competitions.stats')
-									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.stats', [$group->phase->competition->season->slug, $group->phase->competition->slug, $group->phase->slug, $groupe->slug]) }}">
+									<option {{ $groupe->id == $group->id ? 'selected' : '' }} value="{{ route('competitions.stats', [$group->phase->competition->season->slug, $group->phase->competition->slug]) }}">
 										{{ $groupe->name }}
 									</option>
 								@endif

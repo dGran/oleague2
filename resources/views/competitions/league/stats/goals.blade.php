@@ -1,4 +1,4 @@
-@if ($stats_goals->count() > 0)
+@if ($stats_goals->count() > 0 && $participant_id == 0)
 	<div class="row justify-content-center">
 		<div class="col-12 col-md-10 col-lg-8 px-3 px-md-0 py-3">
 			<div class="clearfix">
@@ -27,7 +27,7 @@
 @endif
 
 <div class="row justify-content-center">
-	<div class="col-12 col-md-10 col-lg-8 px-0 pt-2 pb-3">
+	<div class="col-12 col-md-10 col-lg-8 px-0 py-3">
 		<div class="px-3 px-md-0 pb-2">
 			<strong class="text-uppercase" style="font-size: .9em">Clasificación Goleadores</strong>
 		</div>

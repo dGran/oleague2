@@ -1,3 +1,5 @@
+@include('competitions.league.stats.team_selector')
+
 <div class="container">
 
 	@if ($league->stats_goals)

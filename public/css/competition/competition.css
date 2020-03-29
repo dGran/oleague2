@@ -200,6 +200,30 @@
   font-size: 11px !important;
 }
 
+.team-selector {
+  background: #fff;
+  border-bottom: 1px solid #E1E1E1;
+  padding: .25em 0;
+  min-height: 71.19px;
+}
+
+.team-selector label {
+  display: block;
+  font-size: 11px !important;
+  font-weight: bold;
+  margin-bottom: .25em;
+  padding-left: .25em;
+}
+
+.team-selector select {
+  width: 120px;
+}
+
+.team-selector .btn,
+.team-selector a {
+  font-size: 11px !important;
+}
+
 .logo_winner {
   top: 5px;
   left: 5px;

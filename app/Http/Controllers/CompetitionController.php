@@ -176,8 +176,12 @@ class CompetitionController extends Controller
     	}
     }
 
-    public function stats($season_slug, $competition_slug, $phase_slug = null, $group_slug = null)
+    public function stats($season_slug, $competition_slug, $participant_id = null)
     {
+    	if (is_null($participant_id)) {
+    		$participant_id = 0;
+    	}
+
     	if (is_null($season_slug)) {
     		$season = active_season();
     	} else {
@@ -188,12 +192,8 @@ class CompetitionController extends Controller
     	$competitions = SeasonCompetition::where('season_id', '=', $season->id)->orderBy('name', 'asc')->get();
 
 		if ($competition->phases->count()>0) {
-			if (!$phase_slug) {
-				$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)
-				->where('active', '=', 1)->orderBy('id', 'desc')->firstOrFail();
-			} else {
-				$phase = SeasonCompetitionPhase::where('slug', '=', $phase_slug)->first();
-			}
+			$phase = SeasonCompetitionPhase::where('competition_id', '=', $competition->id)
+					 ->where('active', '=', 1)->orderBy('id', 'desc')->firstOrFail();
 			$game_mode = $this->check_game_mode($phase);
 		} else {
 			return back()->with('error', 'La competición está en fase de configuración');
@@ -202,11 +202,7 @@ class CompetitionController extends Controller
 		if ($game_mode == 'league') { // league
 
 			if ($phase->groups->count()>0) {
-				if (!$group_slug) {
-					$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
-				} else {
-					$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->first();
-				}
+				$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
 				$league = $this->check_league($group);
 			} else {
 				return back()->with('error', 'La competición está en fase de configuración');
@@ -219,12 +215,27 @@ class CompetitionController extends Controller
 					return back()->with('error', 'la liga no esta configurada');
 				}
 
-				$stats_goals = LeagueStat::select('player_id', \DB::raw('SUM(goals) as goals'))
-					->where('league_id', '=', $league->id)
-					->whereNotNull('goals')
-		            ->groupBy('player_id')
-		            ->orderBy('goals', 'desc')
-		            ->get();
+				$stats_goals = LeagueStat::select('leagues_stats.player_id', \DB::raw('SUM(leagues_stats.goals) as goals'), )
+					->leftjoin('season_players', 'leagues_stats.player_id', '=', 'season_players.id')
+					->leftjoin('season_participants', 'season_players.participant_id', '=', 'season_participants.id')
+					->where('leagues_stats.league_id', '=', $league->id);
+		    	if ($participant_id > 0) {
+					$stats_goals = $stats_goals->where('season_participants.id', '=', $participant_id);
+		    	}
+				$stats_goals = $stats_goals->whereNotNull('goals')
+					->groupBy('leagues_stats.player_id')
+					->orderBy('goals', 'desc')
+					->get();
+
+				// $stats_goals = [];
+				// foreach ($goals as $goal) {
+				// 	array_push($stats_goals, [
+				// 	    'player_id' => $goal->player_id,
+				// 	    'goals' => $goal->goals,
+				// 	    'participant_id' => $goal->player->participant->id,
+				// 	]);
+				// }
+
 				$stats_assists = LeagueStat::select('player_id', \DB::raw('SUM(assists) as assists'))
 					->where('league_id', '=', $league->id)
 					->whereNotNull('assists')
@@ -244,20 +255,15 @@ class CompetitionController extends Controller
 		            ->orderBy('red_cards', 'desc')
 		            ->get();
 
-		        return view('competitions.league.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
+		        return view('competitions.league.stats', compact('participant_id', 'stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'league', 'competitions', 'competition'));
 			} else {
-				return redirect()->route('competitions.table', [$season->slug, $competition_slug, $phase_slug, $group_slug]);
+				return redirect()->route('competitions.table', [$season->slug, $competition_slug, $participant_id]);
 			}
-
 
 		} else { // playoffs
 
 			if ($phase->groups->count()>0) {
-				if (!$group_slug) {
-					$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
-				} else {
-					$group = SeasonCompetitionPhaseGroup::where('slug', '=', $group_slug)->first();
-				}
+				$group = SeasonCompetitionPhaseGroup::where('phase_id', '=', $phase->id)->firstOrFail();
 				$playoff = $this->check_playoff($group);
 			} else {
 				return back()->with('error', 'La competición está en fase de configuración');
@@ -297,7 +303,7 @@ class CompetitionController extends Controller
 
 		        return view('competitions.playoffs.stats', compact('stats_goals', 'stats_assists', 'stats_yellow_cards', 'stats_red_cards', 'group', 'playoff', 'competitions', 'competition'));
 		    } else {
-				return redirect()->route('competitions.table', [$season->slug, $competition_slug, $phase_slug, $group_slug]);
+				return redirect()->route('competitions.table', [$season->slug, $competition_slug, $participant_id]);
 		    }
 		}
     }

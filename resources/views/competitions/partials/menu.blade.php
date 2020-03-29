@@ -17,7 +17,7 @@
 
 			@if ($league->has_stats())
 				<li class="item {{ \Route::current()->getName() == 'competitions.stats' ? 'active' : '' }}">
-					<a href="{{ route('competitions.stats', [$competition->season->slug, $group->phase->competition->slug, $group->phase_slug_if_necesary(), $group->group_slug_if_necesary()]) }}">
+					<a href="{{ route('competitions.stats', [$competition->season->slug, $group->phase->competition->slug]) }}">
 						<i class="fas fa-chart-bar"></i>
 						<span>Estadísticas</span>
 					</a>
