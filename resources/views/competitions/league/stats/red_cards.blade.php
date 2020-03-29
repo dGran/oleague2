@@ -18,8 +18,15 @@
 							{{ $stat->player->player->name }}
 							@if ($stats_goals->first()->player->participant)
 								<small class="d-block">
-									<img src="{{ $stat->player->participant->logo() }}" width="16">
-									<span class="text-muted">{{ $stat->player->participant->name() }}</span>
+									@if ($participant_id == 0)
+										<img src="{{ $stat->player->participant->logo() }}" width="16">
+										<span class="text-muted">{{ $stat->player->participant->name() }}</span>
+									@else
+										<img src="{{ asset($stat->player->player->nation_flag()) }}" width="16">
+										<span class="text-muted">{{ $stat->player->player->nation_name }}</span>
+										<span class="text-muted">, {{ $stat->player->player->age }} años</span>
+										<span class="text-muted"> - {{ $stat->player->player->position }}</span>
+									@endif
 								</small>
 							@endif
 						</td>
