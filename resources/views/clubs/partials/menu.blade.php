@@ -1,4 +1,4 @@
-<ul>
+<ul class="scrolling-wrapper">
 	<li class="{{ \Route::current()->getName() == 'club' ? 'active' : '' }}">
 		<a href="{{ route('club', [$season_slug, $participant->team->slug]) }}">
 			<i class="icon-stadium"></i>
@@ -35,4 +35,5 @@
 			<span>Prensa</span>
 		</a>
 	</li>
-</ul>
+</ul> {{-- scrolling-wrapper --}}
+

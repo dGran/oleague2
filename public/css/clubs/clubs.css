@@ -342,6 +342,112 @@
   text-align: right;
 }
 
+.wrapper .calendar .item {
+  border-top: .05rem solid #efefef;
+  padding: .5em;
+}
+
+.wrapper .calendar .item:first-child {
+  border-top: none;
+  padding-top: 1em;
+}
+
+.wrapper .calendar .item:last-child {
+  padding-bottom: 1em;
+}
+
+.wrapper .calendar .item .title {
+  color: #212529;
+  font-size: .65em;
+  padding: .5em;
+  text-align: center;
+  margin-bottom: .5em;
+}
+
+.wrapper .calendar .item .title .match-name {
+  display: block;
+  font-weight: bold;
+}
+
+.wrapper .calendar .item .local,
+.wrapper .calendar .item .visitor {
+  line-height: 1em;
+}
+
+.wrapper .calendar .item .local .team-logo,
+.wrapper .calendar .item .visitor .team-logo {
+  display: block;
+  padding-bottom: .5em;
+  width: 50px;
+}
+
+.wrapper .calendar .item .local .team-name,
+.wrapper .calendar .item .visitor .team-name {
+  display: inline-block;
+  color: #212529;
+  font-size: .65em;
+  font-weight: bold;
+  max-width: 75px;
+}
+
+.wrapper .calendar .item .info {
+  line-height: 1em;
+  text-align: center;
+}
+
+.wrapper .calendar .item .info .logo {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.wrapper .calendar .item .info .competition {
+  font-size: .6em;
+  color: #222;
+}
+
+.wrapper .calendar .item .info .date {
+  display: block;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.wrapper .calendar .item .info .time {
+  display: block;
+  font-size: .7em;
+  font-weight: 400;
+}
+
+.wrapper .calendar .item .info .result {
+  background: #e7b809;
+  border-color: #DBAE08;
+  border-radius: 2px;
+  color: #222;
+  font-size: .9em;
+  font-weight: 900;
+  padding: 0.15em 0;
+  border-radius: 4px;
+}
+
+.wrapper .calendar .item .info .result-register {
+  display: block;
+  font-size: .6em;
+  font-weight: 400;
+}
+
+.wrapper .calendar .competition-link {
+  margin: 1em 1.25em .5em 1.25em;
+}
+
+.wrapper .calendar .competition-link .btn-link {
+  background: #E7E7E7;
+  border-color: #DDDDDD;
+  border-radius: 2px;
+  color: #555555;
+  font-size: .8em;
+  font-weight: 900;
+  line-height: 1.3em;
+}
+
 .wrapper .match-item {
   border: 1px solid #f1eff3;
   font-size: .9em;

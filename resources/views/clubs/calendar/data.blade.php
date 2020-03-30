@@ -1,70 +1,62 @@
 <h4 class="title-position border-bottom">
 	<div class="container clearfix">
-		<span>Calendario {{ $participant->name() }} - {{ $season->name }}</span>
+		<span>CALENDARIO DE PARTIDOS</span>
 	</div>
 </h4>
 
-<div class="container p-3">
+<div class="calendar container">
 	@foreach ($matches as $match)
-		<div class="match-item">
-			@if ($match->winner() == -1)
-				<a href="{{ route('competitions.calendar', [$season->slug, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}">
-			@else
-				<a href="{{ route("competitions.calendar.match.details", [$season->slug, $match->competition()->slug, $match->id]) }}" onclick="view_match_detail(this)">
-			@endif
-				<div class="description">
-					<img src="{{ $match->competition()->getImgFormatted() }}" alt="" width="24" class="rounded">
-					<small class="text-muted pl-1">{{ $match->match_name() }}</small>
+		<div class="item">
+			<div class="title">
+				<span class="match-name">{{ $match->match_name() }}</span>
+				<span class="rival">Rival:
+					@if ($match->local_participant->participant->user->id == $participant->user->id)
+						{{ $match->visitor_participant->participant->user->name }}
+					@else
+						{{ $match->local_participant->participant->user->name }}
+					@endif
+				</span>
+			</div>
+			<div class="row align-items-center">
+				<div class="col local">
+					<center>
+						<img class="team-logo" src="{{ $match->local_participant->participant->logo() }}" alt="">
+						<span class="team-name text-truncate">{{ $match->local_participant->participant->name() }}</span>
+					</center>
 				</div>
-				<div class="match text-dark">
-					<span class="text-dark">{{ $match->local_participant->participant->name() }}</span>
-					<img src="{{ $match->local_participant->participant->logo() }}" alt="" width="16">
-					<strong class="px-2">
+				<div class="col info">
+					<center>
+						<img class="logo rounded-circle shadow-sm" src="{{ $match->competition()->getImgFormatted() }}" alt="" width="24">
 						@if ($match->winner() == -1)
-							vs
+							<span class="date">
+								{{ \Carbon\Carbon::parse($match->date_limit)->format('j F') }}
+							</span>
+							<span class="time">
+								{{ \Carbon\Carbon::parse($match->date_limit)->format('H:i') }}
+							</span>
 						@else
-	    					{{ $match->local_score }} - {{ $match->visitor_score }}
+							<a href="{{ route("competitions.calendar.match.details", [$season->slug, $match->competition()->slug, $match->id]) }}" class="result form-control" onclick="view_match_detail(this)">
+								{{ $match->local_score }} - {{ $match->visitor_score }}
+							</a>
+							<span class="result-register mt-1">
+								Resultado registrado
+								<span class="d-block">{{ \Carbon\Carbon::parse($match->update_at)->format('j F H:i') }}</span>
+							</span>
 						@endif
-					</strong>
-					<img src="{{ $match->visitor_participant->participant->logo() }}" alt="" width="16">
-					<span class="text-dark">{{ $match->visitor_participant->participant->name() }}</span>
+					</center>
 				</div>
-				<div class="bottom-data clearfix shadow-sm">
-					<div class="float-left">
-						<div class="type">
-							@if ($match->winner() == -1)
-								<small class="text-muted">
-									<strong class="px-1">N/D</strong>
-									- No disputado
-								</small>
-							@elseif ($match->winner() == 0)
-								<small class="text-warning">
-									<strong class="px-1">E</strong>
-									- Empate
-								</small>
-							@elseif ($match->winner() == $participant->id)
-								<small class="text-success">
-									<strong class="px-1">V</strong>
-									- Victoria
-								</small>
-							@else
-								<small class="text-danger">
-									<strong class="px-1">D</strong>
-									- Derrota
-								</small>
-							@endif
-						</div>
-					</div>
-					<div class="float-right">
-						<div class="limit text-muted" style="min-width: 80px">
-							<small class="text-muted">
-								<strong class="mr-1">Fecha Límite</strong>
-								{{ \Carbon\Carbon::parse($match->date_limit)->format('d/m/Y - h:m')}}
-							</small>
-						</div>
-					</div>
+				<div class="col visitor">
+					<center>
+						<img class="team-logo" src="{{ $match->visitor_participant->participant->logo() }}" alt="">
+						<span class="team-name text-truncate">{{ $match->visitor_participant->participant->name() }}</span>
+					</center>
 				</div>
-			</a>
+			</div>
+				<div class="competition-link">
+					<a href="{{ route('competitions.calendar', [$season->slug, $match->competition()->slug, $match->group()->phase_slug_if_necesary(), $match->group()->group_slug_if_necesary()]) }}" class="btn btn-link form-control shadow-sm">
+						{{ $match->competition()->name }}
+					</a>
+				</div>
 		</div>
 	@endforeach
 </div>

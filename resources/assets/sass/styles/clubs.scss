@@ -299,6 +299,95 @@
 		}
 	}
 
+	.calendar {
+		.item {
+			border-top: .05rem solid #efefef;
+			padding: .5em;
+			&:first-child {
+				border-top: none;
+				padding-top: 1em;
+			}
+			&:last-child {
+				padding-bottom: 1em;
+			}
+			.title {
+				color: $gray-900;
+				font-size: .65em;
+				padding: .5em;
+				text-align: center;
+				margin-bottom: .5em;
+				.match-name {
+					display: block;
+					font-weight: bold;
+				}
+			}
+			.local, .visitor {
+				line-height: 1em;
+				.team-logo {
+					display: block;
+					padding-bottom: .5em;
+					width: 50px;
+				}
+				.team-name {
+					display: inline-block;
+					color: $gray-900;
+					font-size: .65em;
+					font-weight: bold;
+					max-width: 75px;
+				}
+			}
+			.info {
+				line-height: 1em;
+				text-align: center;
+				.logo {
+					display: block;
+					margin-bottom: 1em;
+				}
+				.competition {
+					font-size: .6em;
+					color: #222;
+				}
+				.date {
+					display: block;
+					font-weight: 900;
+					text-transform: uppercase;
+				}
+				.time {
+					display: block;
+					font-size: .7em;
+					font-weight: 400;
+				}
+				.result {
+					background: #e7b809;
+					border-color: #DBAE08;
+					border-radius: 2px;
+					color: #222;
+					font-size: .9em;
+					font-weight: 900;
+					padding: 0.15em 0;
+					border-radius: 4px;
+				}
+				.result-register {
+					display: block;
+					font-size: .6em;
+					font-weight: 400;
+				}
+			}
+		}
+		.competition-link {
+			margin: 1em 1.25em .5em 1.25em;
+			.btn-link {
+				background: #E7E7E7;
+				border-color: #DDDDDD;
+				border-radius: 2px;
+				color: #555555;
+				font-size: .8em;
+				font-weight: 900;
+				line-height: 1.3em;
+			}
+		}
+	}
+
 	.match-item {
 		border: 1px solid #f1eff3;
 		font-size: .9em;
@@ -340,6 +429,9 @@
 				text-align: right;
 			}
 		}
+	}
+	.btn-link {
+
 	}
 	.club-card {
 		background: #fff;

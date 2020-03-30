@@ -49,6 +49,7 @@
         {{-- cookies --}}
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
+
         {{-- My styles --}}
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
@@ -69,6 +70,7 @@
         {{-- Summernote --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
+
     </head>
 
     <body class="d-flex flex-column">
@@ -86,6 +88,7 @@
         </main>
 
         <footer class="footer">
+            <div id="page-loader"><span class="preloader-interior"></span></div>
             @yield('breadcrumb')
             @include('layouts.partials.footer')
             @yield('bottom-fixed')
@@ -97,6 +100,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
         <script>
+
             window.cookieconsent.initialise({
               "palette": {
                 "popup": {
