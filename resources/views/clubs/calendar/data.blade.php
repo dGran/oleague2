@@ -40,7 +40,7 @@
 							</a>
 							<span class="result-register mt-1">
 								Resultado registrado
-								<span class="d-block">{{ \Carbon\Carbon::parse($match->update_at)->format('j F H:i') }}</span>
+								<span class="d-block">{{ \Carbon\Carbon::parse($match->date_update_result)->format('j F H:i') }}</span>
 							</span>
 						@endif
 					</center>
