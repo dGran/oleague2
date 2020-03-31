@@ -198,7 +198,7 @@ class SeasonCompetitionMatch extends Model
 
             $match_name = $competition->name;
             if ($competition->phases->count() > 1) {
-                $match_name .= ' - ' . $phase->name;
+                // $match_name .= ' - ' . $phase->name;
             }
             if ($phase->groups->count() > 1) {
                 $match_name .= ' - ' . $group->name;
