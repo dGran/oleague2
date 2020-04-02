@@ -57,20 +57,6 @@ class SeasonCompetitionMatch extends Model
         }
     }
 
-    // public function date_limit_formatted()
-    // {
-    //     if (!$this->date_limit) {
-    //         if ($this->day_id) {
-    //             return date('m/d/Y h:m A', strtotime($this->day->date_limit));
-    //         } else {
-    //             return date('m/d/Y h:m A', strtotime($this->clash->date_limit));
-    //         }
-
-    //     } else {
-    //         return date('m/d/Y h:m A', strtotime($this->date_limit));
-    //     }
-    // }
-
     public function clash_prev_match()
     {
         return $prev_match = SeasonCompetitionMatch::where('clash_id', '=', $this->clash_id)->where('order', '=', 1)->first();
@@ -232,6 +218,50 @@ class SeasonCompetitionMatch extends Model
 
             return $match_name;
         }
+    }
+
+    public function match_name_array()
+    {
+        $array = [];
+        if ($this->day) {
+            $competition = $this->day->league->group->phase->competition;
+            $phase = $this->day->league->group->phase;
+            $group = $this->day->league->group;
+
+            $array['competition'] = $competition->name;
+            if ($competition->phases->count() > 1) {
+                $array['phase'] = $phase->name;
+            }
+            if ($phase->groups->count() > 1) {
+                $array['group'] = $group->name;
+            }
+            $array['day'] = $this->day->order;
+        } else { //playoffs
+            $competition = $this->clash->round->playoff->group->phase->competition;
+            $phase = $this->clash->round->playoff->group->phase;
+            $group = $this->clash->round->playoff->group;
+            $playoff = $this->clash->round->playoff;
+            $round = $this->clash->round;
+
+            $array['competition'] = $competition->name;
+            if ($competition->phases->count() > 1) {
+                $array['phase'] = $phase->name;
+            }
+            if ($phase->groups->count() > 1) {
+                $array['group'] = $group->name;
+            }
+            if ($playoff->rounds->count() > 1) {
+                $array['round'] = $round->name;
+            }
+            if ($round->round_trip) {
+                if ($this->order == 1) {
+                    $array['match'] = "Ida";
+                } else {
+                    $array['match'] = "Vuelta";
+                }
+            }
+        }
+        return $array;
     }
 
     public function match_result()

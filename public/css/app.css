@@ -10488,6 +10488,112 @@ button .btn .btn-white .dropdown-toggle:focus {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.ribbon {
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px;
+  height: 75px;
+  text-align: right;
+}
+
+.ribbon.left {
+  left: -5px;
+  top: -5px;
+}
+
+.ribbon.left span {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  top: 19px;
+  left: -21px;
+}
+
+.ribbon.right {
+  right: -5px;
+  top: -5px;
+}
+
+.ribbon.right span {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  top: 19px;
+  right: -21px;
+}
+
+.ribbon.danger span {
+  background: #8F0808;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F70505), to(#8F0808));
+  background: linear-gradient(#F70505 0%, #8F0808 100%);
+}
+
+.ribbon.danger span:before {
+  border-left: 3px solid #8F0808;
+  border-top: 3px solid #8F0808;
+}
+
+.ribbon.danger span:after {
+  border-right: 3px solid #8F0808;
+  border-top: 3px solid #8F0808;
+}
+
+.ribbon.info span {
+  background: #087F8F;
+  background: -webkit-gradient(linear, left top, left bottom, from(#05EFF7), to(#087F8F));
+  background: linear-gradient(#05EFF7 0%, #087F8F 100%);
+}
+
+.ribbon.info span:before {
+  border-left: 3px solid #087F8F;
+  border-top: 3px solid #087F8F;
+}
+
+.ribbon.info span:after {
+  border-right: 3px solid #087F8F;
+  border-top: 3px solid #087F8F;
+}
+
+.ribbon span {
+  background: #808080;
+  background: -webkit-gradient(linear, left top, left bottom, from(#B6BAC9), to(#808080));
+  background: linear-gradient(#B6BAC9 0%, #808080 100%);
+  font-size: 9px;
+  font-weight: bold;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  width: 100px;
+  display: block;
+  -webkit-box-shadow: 0 3px 10px -5px black;
+          box-shadow: 0 3px 10px -5px black;
+  position: absolute;
+}
+
+.ribbon span:before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 100%;
+  z-index: -1;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-left: 3px solid #808080;
+  border-top: 3px solid #808080;
+}
+
+.ribbon span:after {
+  content: "";
+  position: absolute;
+  right: 0px;
+  top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-right: 3px solid #808080;
+  border-top: 3px solid #808080;
+}
+
 .swal-footer {
   background-color: #f5f8fa;
   margin-top: 32px;

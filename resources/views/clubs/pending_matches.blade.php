@@ -21,3 +21,7 @@
 @section('bottom-fixed')
 	@include('clubs.partials.bottom_fixed')
 @endsection
+
+@section('js')
+    @include('clubs.pending_matches.javascript')
+@endsection

@@ -1,8 +1,8 @@
-<h4 class="title-position border-bottom">
+<div class="title-position">
 	<div class="container clearfix">
-		<span>Sala de prensa</span>
+		<h4>Sala de prensa</h4>
 	</div>
-</h4>
+</div>
 <div class="container p-3">
 	<h5 class="m-0">Declaraciones del club</h5>
 	<div class="declarations-list py-2">

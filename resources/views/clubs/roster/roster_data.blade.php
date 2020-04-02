@@ -1,9 +1,10 @@
-<h4 class="title-position">
+<div class="title-position">
 	<div class="container clearfix">
-		<span>Porteros</span>
+		<h4>Porteros</h4>
 		<img src="{{ asset('img/clubs/pt.png') }}">
 	</div>
-</h4>
+</div>
+
 <div class="container">
 	<div class="row m-0">
 		@foreach ($participant->players as $player)
@@ -14,12 +15,12 @@
 	</div>
 </div>
 
-<h4 class="title-position">
+<div class="title-position">
 	<div class="container clearfix">
-		<span>Defensas</span>
+		<h4>Defensas</h4>
 		<img src="{{ asset('img/clubs/ct.png') }}">
 	</div>
-</h4>
+</div>
 <div class="container">
 	<div class="row m-0">
 		@foreach ($participant->players as $player)
@@ -30,12 +31,12 @@
 	</div>
 </div>
 
-<h4 class="title-position">
+<div class="title-position">
 	<div class="container clearfix">
-		<span>Medios</span>
+		<h4>Medios</h4>
 		<img src="{{ asset('img/clubs/mc.png') }}">
 	</div>
-</h4>
+</div>
 <div class="container">
 	<div class="row m-0">
 		@foreach ($participant->players as $player)
@@ -46,12 +47,12 @@
 	</div>
 </div>
 
-<h4 class="title-position">
+<div class="title-position">
 	<div class="container clearfix">
-		<span>Delanteros</span>
+		<h4>Delanteros</h4>
 		<img src="{{ asset('img/clubs/dc.png') }}">
 	</div>
-</h4>
+</div>
 <div class="container">
 	<div class="row m-0">
 		@foreach ($participant->players as $player)

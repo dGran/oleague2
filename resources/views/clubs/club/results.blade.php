@@ -1,9 +1,9 @@
 <div class="club-info">
-	<h4 class="title-position">
+	<div class="title-position">
 		<div class="container clearfix">
-			<span>Racha</span>
+			<h4>Racha</h4>
 		</div>
-	</h4>
+	</div>
 	@if ($participant->last_results())
 		<div class="container pb-3">
 			<div class="p-2 text-center">
@@ -29,11 +29,11 @@
 		</div>
 	@endif
 
-	<h4 class="title-position">
+	<div class="title-position">
 		<div class="container clearfix">
-			<span>Ultimos resultados</span>
+			<h4>Últimos resultados</h4>
 		</div>
-	</h4>
+	</div>
 
 	@if ($participant->last_results())
 		<div class="container pb-3">

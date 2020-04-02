@@ -1,9 +1,10 @@
 <div class="club-info">
-	<h4 class="title-position border-bottom">
+
+	<div class="title-position">
 		<div class="container clearfix">
-			<span>Manager</span>
+			<h4>Manager</h4>
 		</div>
-	</h4>
+	</div>
 	<div class="container p-3" style="position : relative">
 		@if ($participant->user && $participant->user->hasProfile())
 			<img class="avatar" src="{{ asset($participant->user->profile->avatar) }}">

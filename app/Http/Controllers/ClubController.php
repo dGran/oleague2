@@ -61,6 +61,35 @@ class ClubController extends Controller
 
     public function clubCalendar($season_slug, $slug)
     {
+        // $aux = SeasonCompetitionMatch::all();
+        // foreach ($aux as $match) {
+        //     if ($match->day_id) {
+        //         if ($match->day) {
+        //             if ($match->day->league) {
+        //                 $match->competition_id = $match->competition()->id;
+        //                 if (is_null($match->date_limit)) {
+        //                     $match->date_limit = $match->day->date_limit;
+        //                 }
+        //             }
+        //         }
+        //     } elseif ($match->clash_id) {
+        //         if ($match->clash) {
+        //             if ($match->clash->round) {
+        //                 $match->competition_id = $match->competition()->id;
+        //                 if (is_null($match->date_limit)) {
+        //                     if (is_null($match->clash->date_limit)) {
+        //                         $match->date_limit = $match->clash->round->date_limit;
+        //                     } else {
+        //                         $match->date_limit = $match->clash->date_limit;
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     $match->save();
+        // }
+        // return redirect()->route('club', [$season_slug, $slug])->with('info', 'Update succesflly.');
+
         $participants = $this->get_participants($season_slug);
         $participant = $this->get_participant($season_slug, $slug);
 
@@ -77,7 +106,10 @@ class ClubController extends Controller
             ->where('local_participant.id', '=', $participant->id)
             ->orWhere('visitor_participant.id', '=', $participant->id)
             ->orderBy('season_competitions_matches.date_limit', 'asc')
-            ->orderBy('season_competitions_matches.id', 'asc')
+            ->orderBy('season_competitions_matches.competition_id', 'asc')
+            ->orderBy('season_competitions_phases_groups_leagues_days.order', 'asc')
+            ->orderBy('playoffs_rounds_clashes.order', 'asc')
+            ->orderBy('season_competitions_matches.order', 'asc')
             ->get();
 
         return view('clubs.calendar', compact('participants', 'participant', 'matches', 'season_slug', 'season'));
@@ -101,7 +133,10 @@ class ClubController extends Controller
             ->where('local_participant.id', '=', $participant->id)
             ->orWhere('visitor_participant.id', '=', $participant->id)
             ->orderBy('season_competitions_matches.date_limit', 'asc')
-            ->orderBy('season_competitions_matches.id', 'asc')
+            ->orderBy('season_competitions_matches.competition_id', 'asc')
+            ->orderBy('season_competitions_phases_groups_leagues_days.order', 'asc')
+            ->orderBy('playoffs_rounds_clashes.order', 'asc')
+            ->orderBy('season_competitions_matches.order', 'asc')
             ->get();
 
         return view('clubs.pending_matches', compact('participants', 'participant', 'matches', 'season_slug', 'season'));

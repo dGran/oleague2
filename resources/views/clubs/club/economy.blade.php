@@ -1,9 +1,9 @@
 <div class="club-info pt-2">
-	<h4 class="title-position border-bottom">
+	<div class="title-position">
 		<div class="container clearfix">
-			<span>Economía</span>
+			<h4>Economía</h4>
 		</div>
-	</h4>
+	</div>
 	<div class="container p-3">
 		<ul class="details">
 			<li>

@@ -1,8 +1,8 @@
-<h4 class="title-position border-bottom">
+<div class="title-position">
 	<div class="container clearfix">
-		<span>Presupuesto: {{ $participant->budget() }} M.</span>
+		<h4>Presupuesto: {{ $participant->budget() }} M.</h4>
 	</div>
-</h4>
+</div>
 
 <div class="container p-3">
 	@foreach ($participant->cash_history->sortByDesc('created_at') as $cash_history)

@@ -104,7 +104,7 @@
   background: #ffffff;
 }
 
-.wrapper .title-section {
+.title-section {
   font-size: 1.15em;
   font-weight: bold;
   margin: 0;
@@ -112,41 +112,50 @@
   text-transform: uppercase;
 }
 
-.wrapper .title-section span {
+.title-section span {
   padding-top: 5px;
   float: left;
 }
 
-.wrapper .title-section a {
+.title-section a {
   float: right;
   font-size: 1.5rem;
 }
 
-.wrapper .title-position {
-  background: #DBDBDB;
-  border-bottom: 1px solid #C7C7C7;
-  border-top: 1px solid #C7C7C7;
-  font-size: 1.15em;
+.title-position {
+  background: #ECECEC;
+  border-bottom: 1px solid #E2E2E2;
+  border-top: 1px solid #E2E2E2;
+}
+
+.title-position .container {
+  position: relative;
+}
+
+.title-position h4 {
+  float: left;
+  font-size: 1.1em;
   font-weight: bold;
   margin: 0;
-  padding: .5rem;
+  padding: .75em .5em;
   text-transform: uppercase;
 }
 
-.wrapper .title-position span {
-  float: left;
+.title-position img {
+  float: right;
+  height: 25px;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  right: 1em;
+  top: 0;
 }
 
-.wrapper .title-position img {
-  height: 20px;
+.title-position i {
   float: right;
 }
 
-.wrapper .title-position i {
-  float: right;
-}
-
-.wrapper .club-player-card {
+.club-player-card {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px 8px 0 0;
@@ -155,23 +164,23 @@
   text-align: center;
 }
 
-.wrapper .club-player-card .player-img {
+.club-player-card .player-img {
   display: inline-block;
   margin: 0;
 }
 
-.wrapper .club-player-card .player-img img {
+.club-player-card .player-img img {
   width: 96px;
 }
 
-.wrapper .club-player-card .ball {
+.club-player-card .ball {
   position: absolute;
   right: 6px;
   top: 6px;
   width: 28px;
 }
 
-.wrapper .club-player-card .overall-rating {
+.club-player-card .overall-rating {
   font-size: .9em;
   font-weight: bold;
   left: 6px;
@@ -179,7 +188,7 @@
   top: 28px;
 }
 
-.wrapper .club-player-card .position {
+.club-player-card .position {
   border-bottom-width: 2px;
   border-bottom-style: solid;
   font-size: 1.2em;
@@ -190,19 +199,19 @@
   top: 6px;
 }
 
-.wrapper .club-player-card .player-name {
+.club-player-card .player-name {
   background: #EAEAEA;
   border-top: 1px solid #ddd;
   line-height: 18px;
   text-align: center;
 }
 
-.wrapper .club-player-card .player-name span {
+.club-player-card .player-name span {
   font-size: .75em;
   font-weight: bold;
 }
 
-.wrapper .club-player-card .more-data {
+.club-player-card .more-data {
   background: #FDFDFD;
   border-top: 1px solid #ddd;
   line-height: 14px;
@@ -210,12 +219,12 @@
   text-align: center;
 }
 
-.wrapper .club-player-card .more-data span {
+.club-player-card .more-data span {
   display: block;
   font-size: .7em;
 }
 
-.wrapper .club-info .avatar {
+.club-info .avatar {
   position: absolute;
   top: -1.75em;
   right: .5em;
@@ -223,12 +232,12 @@
   padding: .25em;
 }
 
-.wrapper .club-info .details {
+.club-info .details {
   list-style: none;
   padding: 0;
 }
 
-.wrapper .club-info .details li {
+.club-info .details li {
   font: 13px/24px  Arial, Helvetica;
   margin-left: 8px;
   padding-left: 5px;
@@ -236,7 +245,7 @@
   width: 100%;
 }
 
-.wrapper .club-info .details li::before {
+.club-info .details li::before {
   background: #FFB632;
   border-radius: 50%;
   content: " ";
@@ -247,50 +256,50 @@
   width: 5px;
 }
 
-.wrapper .tops {
+.tops {
   font-size: .9em;
   padding: 2px 8px 0 8px;
 }
 
-.wrapper .tops .img {
+.tops .img {
   display: inline-block;
 }
 
-.wrapper .tops .img img {
+.tops .img img {
   background: #f9f9f9;
   border: 1px solid #ddd;
   width: 32px;
 }
 
-.wrapper .tops .age {
+.tops .age {
   display: inline-block;
   margin-left: .5rem;
   max-width: 52px;
   min-width: 52px;
 }
 
-.wrapper .tops .overall_rating {
+.tops .overall_rating {
   display: inline-block;
   margin-left: .5rem;
   max-width: 20px;
   min-width: 20px;
 }
 
-.wrapper .tops .overall_rating span {
+.tops .overall_rating span {
   display: block;
   text-align: center;
 }
 
-.wrapper .tops .ball {
+.tops .ball {
   display: inline-block;
   margin-left: .5rem;
 }
 
-.wrapper .tops .ball img {
+.tops .ball img {
   width: 20px;
 }
 
-.wrapper .tops .position {
+.tops .position {
   display: inline-block;
   margin-left: .5rem;
   max-width: 29px;
@@ -298,208 +307,175 @@
   text-align: center;
 }
 
-.wrapper .tops .name {
+.tops .name {
   display: inline-block;
   margin-left: .5rem;
 }
 
-.wrapper .economy-item {
+.economy-item {
   border: 1px solid #f1eff3;
   font-size: .9em;
   margin-bottom: 1em;
 }
 
-.wrapper .economy-item .description {
+.economy-item .description {
   padding: 1em;
   background: #fff;
 }
 
-.wrapper .economy-item .description td {
+.economy-item .description td {
   padding: 1em;
 }
 
-.wrapper .economy-item .data {
+.economy-item .data {
   background: #FCFCFC;
   border-top: 1px solid #f1eff3;
 }
 
-.wrapper .economy-item .data .type {
+.economy-item .data .type {
   display: inline-block;
   padding: .5em;
   padding-left: 1em;
 }
 
-.wrapper .economy-item .data .amount {
+.economy-item .data .amount {
   display: inline-block;
   padding: .5em;
   text-align: right;
 }
 
-.wrapper .economy-item .data .cash {
+.economy-item .data .cash {
   display: inline-block;
   padding: .5em;
   padding-right: 1em;
   text-align: right;
 }
 
-.wrapper .calendar .item {
-  border-top: .05rem solid #efefef;
-  padding: .5em;
+.calendar .item {
+  background: #fff;
+  border-radius: 4px;
+  border: .05rem solid #efefef;
+  padding: 1em .5em;
+  position: relative;
+  margin-bottom: 1em;
 }
 
-.wrapper .calendar .item:first-child {
-  border-top: none;
-  padding-top: 1em;
+.calendar .item:last-child {
+  margin-bottom: 0;
 }
 
-.wrapper .calendar .item:last-child {
-  padding-bottom: 1em;
+.calendar .item.time-limit-exceded {
+  background: #fef3f3;
+  border: 0.05rem solid #fbdcdd;
 }
 
-.wrapper .calendar .item .title {
-  color: #212529;
-  font-size: .65em;
-  padding: .5em;
+.calendar .item .local,
+.calendar .item .visitor {
+  line-height: .9em;
   text-align: center;
+}
+
+.calendar .item .local .team-logo,
+.calendar .item .visitor .team-logo {
   margin-bottom: .5em;
+  width: 30px;
 }
 
-.wrapper .calendar .item .title .match-name {
-  display: block;
-  font-weight: bold;
-}
-
-.wrapper .calendar .item .local,
-.wrapper .calendar .item .visitor {
-  line-height: 1em;
-}
-
-.wrapper .calendar .item .local .team-logo,
-.wrapper .calendar .item .visitor .team-logo {
-  display: block;
-  padding-bottom: .5em;
-  width: 50px;
-}
-
-.wrapper .calendar .item .local .team-name,
-.wrapper .calendar .item .visitor .team-name {
-  display: inline-block;
+.calendar .item .local .team-name,
+.calendar .item .visitor .team-name {
   color: #212529;
   font-size: .65em;
   font-weight: bold;
   max-width: 75px;
 }
 
-.wrapper .calendar .item .info {
-  line-height: 1em;
+.calendar .item .vs {
   text-align: center;
 }
 
-.wrapper .calendar .item .info .logo {
-  display: block;
-  margin-bottom: 1em;
+.calendar .item .vs .result {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2c4481), to(#181733));
+  background: linear-gradient(180deg, #2c4481 0, #181733);
+  border: none;
+  border-radius: .2em;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 900;
+  line-height: 1em;
+  margin-top: .25em;
+  width: 3.5em;
 }
 
-.wrapper .calendar .item .info .competition {
+.calendar .item .match-info {
+  text-align: center;
+}
+
+.calendar .item .match-info .competition {
+  line-height: 1.5em;
   font-size: .6em;
   color: #222;
 }
 
-.wrapper .calendar .item .info .date {
+.calendar .item .match-info .competition .logo {
+  margin-bottom: .25em;
+  border-radius: 4px;
+  width: 18px;
+}
+
+.calendar .item .match-info .competition div,
+.calendar .item .match-info .competition span {
+  display: block;
+}
+
+.calendar .item .match-info .competition .date-limit {
+  padding-top: .5em;
+}
+
+.calendar .item .match-info .date {
   display: block;
   font-weight: 900;
   text-transform: uppercase;
 }
 
-.wrapper .calendar .item .info .time {
+.calendar .item .match-info .time {
   display: block;
   font-size: .7em;
   font-weight: 400;
 }
 
-.wrapper .calendar .item .info .result {
-  background: #e7b809;
-  border-color: #DBAE08;
-  border-radius: 2px;
-  color: #222;
-  font-size: .9em;
+.calendar .item .match-info .result {
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2c4481), to(#181733));
+  background: linear-gradient(180deg, #2c4481 0, #181733);
+  border: none;
+  border-radius: .2em;
+  color: #fff;
+  font-size: 1.2em;
   font-weight: 900;
-  padding: 0.15em 0;
-  border-radius: 4px;
+  line-height: 1em;
+  margin-top: .25em;
+  width: 3.5em;
 }
 
-.wrapper .calendar .item .info .result-register {
-  display: block;
-  font-size: .6em;
-  font-weight: 400;
-}
-
-.wrapper .calendar .competition-link {
-  margin: 1em 1.25em .5em 1.25em;
-}
-
-.wrapper .calendar .competition-link .btn-link {
-  background: #E7E7E7;
-  border-color: #DDDDDD;
-  border-radius: 2px;
-  color: #555555;
-  font-size: .8em;
-  font-weight: 900;
-  line-height: 1.3em;
-}
-
-.wrapper .match-item {
-  border: 1px solid #f1eff3;
-  font-size: .9em;
-  margin-bottom: 1em;
-}
-
-.wrapper .match-item:hover .match,
-.wrapper .match-item:hover .rival {
-  background: #FBFBF4;
-}
-
-.wrapper .match-item:hover .description,
-.wrapper .match-item:hover .bottom-data {
-  background: #FCFFE9;
-}
-
-.wrapper .match-item .description {
-  background: #FCFCFC;
-  border-bottom: 1px solid #f1eff3;
-  padding: .5em;
-}
-
-.wrapper .match-item .match {
-  padding: 1em;
-  background: #fff;
+.calendar .competition-link {
+  margin: 1.25em 0 1.5em 0;
   text-align: center;
 }
 
-.wrapper .match-item .rival {
-  padding: 1em;
-  background: #fff;
+.calendar .competition-link .btn-link {
+  background: #fdc52c;
+  border-color: #DDDDDD;
+  border-radius: .2em;
+  border: none;
+  -webkit-box-shadow: 0 0.2rem 0.6rem 0.1rem rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0.2rem 0.6rem 0.1rem rgba(0, 0, 0, 0.2);
+  color: #222;
+  font-size: .8em;
+  font-weight: 900;
+  line-height: 1.8em;
+  max-width: 14.5rem;
 }
 
-.wrapper .match-item .bottom-data {
-  background: #FCFCFC;
-  border-top: 1px solid #f1eff3;
-}
-
-.wrapper .match-item .bottom-data .type {
-  display: inline-block;
-  padding: .5em;
-  padding-left: 1em;
-}
-
-.wrapper .match-item .bottom-data .limit {
-  display: inline-block;
-  padding: .5em;
-  padding-right: 1em;
-  text-align: right;
-}
-
-.wrapper .club-card {
+.club-card {
   background: #fff;
   border-radius: 4px;
   border: 1px solid #d8d8d8;
@@ -507,11 +483,11 @@
   padding: 1em 0;
 }
 
-.wrapper .club-card:hover {
+.club-card:hover {
   background: #ecebeb;
 }
 
-.wrapper .club-card ul {
+.club-card ul {
   font-size: .9em;
   line-height: 1.4rem;
   list-style: none;
@@ -616,5 +592,126 @@
   font-family: sans-serif;
   font-size: 0.5em;
   text-anchor: middle;
+}
+
+@media (min-width: 400px) {
+  .calendar .item .local .team-logo,
+  .calendar .item .visitor .team-logo {
+    width: 50px;
+  }
+
+  .calendar .item .local .team-name,
+  .calendar .item .visitor .team-name {
+    font-size: .75em;
+  }
+
+  .calendar .item .match-info .competition {
+    font-size: .7em;
+  }
+
+  .calendar .item .match-info .competition .logo {
+    width: 25px;
+  }
+}
+
+@media (min-width: 768px) {
+  .calendar .item:hover {
+    background-color: #fefbf7;
+    border: 0.05rem solid #fceedb;
+  }
+
+  .calendar .item:hover .match-info,
+  .calendar .item:hover .local,
+  .calendar .item:hover .visitor,
+  .calendar .item:hover .vs {
+    opacity: .35;
+  }
+
+  .calendar .item.time-limit-exceded:hover {
+    background: #fef3f3;
+    border: 0.05rem solid #fbdcdd;
+  }
+
+  .calendar .item .local,
+  .calendar .item .visitor {
+    max-width: 150px;
+  }
+
+  .calendar .item .local .team-logo,
+  .calendar .item .visitor .team-logo {
+    display: inline-block;
+    width: 40px;
+  }
+
+  .calendar .item .local .team-name,
+  .calendar .item .visitor .team-name {
+    display: inline-block;
+    max-width: none;
+  }
+
+  .calendar .item .vs {
+    min-width: 70px;
+  }
+
+  .calendar .item .match-info {
+    border-right: .05rem solid #efefef;
+    display: table;
+    padding: 0 1em;
+    text-align: left;
+  }
+
+  .calendar .item .match-info .competition {
+    display: table-cell;
+    font-size: .85em;
+    vertical-align: middle;
+  }
+
+  .calendar .item .match-info .competition .logo {
+    display: inline-block;
+    margin-bottom: 0;
+    width: 40px;
+  }
+
+  .calendar .item .match-info .competition .name {
+    padding-left: 10px;
+    display: inline-block;
+  }
+
+  .calendar .item .match-info .competition .phase,
+  .calendar .item .match-info .competition .group,
+  .calendar .item .match-info .competition .day,
+  .calendar .item .match-info .competition .round,
+  .calendar .item .match-info .competition .match {
+    display: inline-block;
+  }
+
+  .calendar .item .match-info .competition .phase:before,
+  .calendar .item .match-info .competition .group:before,
+  .calendar .item .match-info .competition .day:before,
+  .calendar .item .match-info .competition .round:before,
+  .calendar .item .match-info .competition .match:before {
+    content: ' - ';
+  }
+
+  .calendar .item .match-info .competition .date-limit {
+    color: #6c757d;
+    font-size: .9em;
+    padding-top: 0;
+    padding-left: 10px;
+  }
+
+  .calendar .item .match-info .competition div {
+    display: inline-block;
+  }
+
+  .calendar .competition-link {
+    position: absolute;
+    margin: auto;
+    top: 30px;
+    left: 0;
+    right: 0;
+    width: 14.5rem;
+    display: none;
+  }
 }
 
