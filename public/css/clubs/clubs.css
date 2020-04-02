@@ -623,7 +623,7 @@
   .calendar .item:hover .match-info,
   .calendar .item:hover .local,
   .calendar .item:hover .visitor,
-  .calendar .item:hover .vs {
+  .calendar .item:hover .blank-result {
     opacity: .35;
   }
 

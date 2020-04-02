@@ -60,7 +60,7 @@
 				</div>
 				<div class="col-md-auto d-none d-md-block vs">
 						@if ($match->winner() == -1)
-							<strong>Vs</strong>
+							<strong class="blank-result">Vs</strong>
 						@else
 							<a href="{{ route("competitions.calendar.match.details", [$season->slug, $match->competition()->slug, $match->id]) }}" class="btn btn-link result" onclick="view_match_detail(this)">
 								{{ $match->local_score }} - {{ $match->visitor_score }}

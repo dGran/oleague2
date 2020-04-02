@@ -552,7 +552,7 @@
 			&:hover {
 				background-color: lighten($warning, 36%);
 				border: .05rem solid lighten($warning, 30%);
-				.match-info, .local, .visitor, .vs {
+				.match-info, .local, .visitor, .blank-result {
 					opacity: .35;
 				}
 			}

@@ -54,7 +54,7 @@
 						</div>
 					</div>
 					<div class="col-md-auto d-none d-md-block vs">
-						<strong>Vs</strong>
+						<strong class="blank-result">Vs</strong>
 					</div>
 					<div class="col visitor">
 						<img class="team-logo" src="{{ $match->visitor_participant->participant->logo() }}" alt="">
