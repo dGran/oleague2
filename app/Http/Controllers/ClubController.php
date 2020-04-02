@@ -61,34 +61,34 @@ class ClubController extends Controller
 
     public function clubCalendar($season_slug, $slug)
     {
-        // $aux = SeasonCompetitionMatch::all();
-        // foreach ($aux as $match) {
-        //     if ($match->day_id) {
-        //         if ($match->day) {
-        //             if ($match->day->league) {
-        //                 $match->competition_id = $match->competition()->id;
-        //                 if (is_null($match->date_limit)) {
-        //                     $match->date_limit = $match->day->date_limit;
-        //                 }
-        //             }
-        //         }
-        //     } elseif ($match->clash_id) {
-        //         if ($match->clash) {
-        //             if ($match->clash->round) {
-        //                 $match->competition_id = $match->competition()->id;
-        //                 if (is_null($match->date_limit)) {
-        //                     if (is_null($match->clash->date_limit)) {
-        //                         $match->date_limit = $match->clash->round->date_limit;
-        //                     } else {
-        //                         $match->date_limit = $match->clash->date_limit;
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     $match->save();
-        // }
-        // return redirect()->route('club', [$season_slug, $slug])->with('info', 'Update succesflly.');
+        $aux = SeasonCompetitionMatch::all();
+        foreach ($aux as $match) {
+            if ($match->day_id) {
+                if ($match->day) {
+                    if ($match->day->league) {
+                        $match->competition_id = $match->competition()->id;
+                        if (is_null($match->date_limit)) {
+                            $match->date_limit = $match->day->date_limit;
+                        }
+                    }
+                }
+            } elseif ($match->clash_id) {
+                if ($match->clash) {
+                    if ($match->clash->round) {
+                        $match->competition_id = $match->competition()->id;
+                        if (is_null($match->date_limit)) {
+                            if (is_null($match->clash->date_limit)) {
+                                $match->date_limit = $match->clash->round->date_limit;
+                            } else {
+                                $match->date_limit = $match->clash->date_limit;
+                            }
+                        }
+                    }
+                }
+            }
+            $match->save();
+        }
+        return redirect()->route('club', [$season_slug, $slug])->with('info', 'Update succesflly.');
 
         $participants = $this->get_participants($season_slug);
         $participant = $this->get_participant($season_slug, $slug);
