@@ -409,6 +409,10 @@
 			max-width: 14.5rem;
 		}
 	}
+	.empty {
+		padding: 1.5em 0;
+		text-align: center;
+	}
 }
 
 .club-card {
@@ -620,6 +624,9 @@
   			right: 0;
 			width: 14.5rem;
 			display: none;
+		}
+		.empty {
+			text-align: left;
 		}
 	}
 }

@@ -10416,6 +10416,10 @@ a.text-dark:focus {
   -webkit-overflow-scrolling: touch;
 }
 
+.bottom-fixed {
+  z-index: 1;
+}
+
 a:focus,
 button:focus,
 input:focus,
@@ -10557,7 +10561,7 @@ button .btn .btn-white .dropdown-toggle:focus {
   background: #808080;
   background: -webkit-gradient(linear, left top, left bottom, from(#B6BAC9), to(#808080));
   background: linear-gradient(#B6BAC9 0%, #808080 100%);
-  font-size: 9px;
+  font-size: .6em;
   font-weight: bold;
   color: #FFF;
   text-transform: uppercase;
