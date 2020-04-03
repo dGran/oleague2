@@ -103,8 +103,10 @@ class ClubController extends Controller
             ->leftJoin('season_participants as local_participant', 'local_participant.id', '=', 'local_group_participant.participant_id')
             ->leftJoin('season_participants as visitor_participant', 'visitor_participant.id', '=', 'visitor_group_participant.participant_id')
             ->select('season_competitions_matches.*')
-            ->where('local_participant.id', '=', $participant->id)
-            ->orWhere('visitor_participant.id', '=', $participant->id)
+            ->where(function ($query) use ($participant) {
+                $query->where('local_participant.id', '=', $participant->id)
+                      ->orWhere('visitor_participant.id', '=', $participant->id);
+            })
             ->orderBy('season_competitions_matches.date_limit', 'asc')
             ->orderBy('season_competitions_matches.competition_id', 'asc')
             ->orderBy('season_competitions_phases_groups_leagues_days.order', 'asc')
@@ -131,18 +133,14 @@ class ClubController extends Controller
             ->leftJoin('season_participants as visitor_participant', 'visitor_participant.id', '=', 'visitor_group_participant.participant_id')
             ->select('season_competitions_matches.*')
             ->where('season_competitions_matches.active', '=', 1)
-            // ->whereNull('season_competitions_matches.local_score')
-            // ->whereNull('season_competitions_matches.visitor_score')
-            ->where(function ($query) use ($participant) {
-                $query->whereNull('season_competitions_matches.local_score')
-                      ->WhereNull('season_competitions_matches.visitor_score');
-            })
             ->where(function ($query) use ($participant) {
                 $query->where('local_participant.id', '=', $participant->id)
                       ->orWhere('visitor_participant.id', '=', $participant->id);
             })
-            // ->where('local_participant.id', '=', $participant->id)
-            // ->orWhere('visitor_participant.id', '=', $participant->id)
+            ->where(function ($query) use ($participant) {
+                $query->whereNull('season_competitions_matches.local_score')
+                      ->WhereNull('season_competitions_matches.visitor_score');
+            })
             ->orderBy('season_competitions_matches.date_limit', 'asc')
             ->orderBy('season_competitions_matches.competition_id', 'asc')
             ->orderBy('season_competitions_phases_groups_leagues_days.order', 'asc')
