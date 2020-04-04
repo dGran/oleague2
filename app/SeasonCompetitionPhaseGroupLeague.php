@@ -44,57 +44,51 @@ class SeasonCompetitionPhaseGroupLeague extends Model
         }
         $table_participants = $table_participants->sortByDesc('gf')->sortByDesc('avg')->sortByDesc('pts')->values();
 
-        $total_items = count($table_participants);
-        $pts_previous = 0;
         foreach ($table_participants as $key => $tp) {
-            if ($key > 0 && $key < $total_items-1) {
-                if ($tp['pts'] == $pts_previous) {
-                    $pts_next = $table_participants[$key+1]['pts'];
-                    if ($tp['pts'] > $pts_next) {
-                        //este es el unico caso, hay que comprobar el gol average general
-                        $p1 = $table_participants[$key-1]['participant'];
-                        $p2 = $tp['participant'];
-                        $matches = SeasonCompetitionPhaseGroupLeagueDay::select('season_competitions_phases_groups_leagues_days.*', 'season_competitions_matches.*')
-                            ->join('season_competitions_matches', 'season_competitions_matches.day_id', '=', 'season_competitions_phases_groups_leagues_days.id')
-                            ->where(function ($query) use ($p1, $p2) {
-                                $query->where('season_competitions_matches.local_id', '=', $p1->id)
-                                      ->Where('season_competitions_matches.visitor_id', '=', $p2->id);
-                            })
-                            ->orWhere(function ($query) use ($p1, $p2) {
-                                $query->where('season_competitions_matches.local_id', '=', $p2->id)
-                                      ->Where('season_competitions_matches.visitor_id', '=', $p1->id);
-                            })
-                            ->get();
+            $filtered = $table_participants->filter(function ($value, $key) use ($tp) {
+                if ($value['pts'] == $tp['pts']) {
+                    return $value;
+                }
+            })->values();
 
-                        $p1_goals = 0;
-                        $p2_goals = 0;
-                        foreach ($matches as $match) {
-                            if ($match->local_id == $p1->id) {
-                                $p1_goals += $match->local_score;
-                                $p2_goals += $match->visitor_score;
-                            } else {
-                                $p1_goals += $match->visitor_score;
-                                $p2_goals += $match->local_score;
-                            }
-                        }
+            if (count($filtered) == 2) {
+                if ($filtered[0]['participant'] == $tp['participant']) {
+                    $p1 = $filtered[0]['participant'];
+                    $p2 = $filtered[1]['participant'];
+                } else {
+                    $p1 = $filtered[1]['participant'];
+                    $p2 = $filtered[0]['participant'];
+                }
+                $matches = SeasonCompetitionPhaseGroupLeagueDay::select('season_competitions_phases_groups_leagues_days.*', 'season_competitions_matches.*')
+                    ->join('season_competitions_matches', 'season_competitions_matches.day_id', '=', 'season_competitions_phases_groups_leagues_days.id')
+                    ->where(function ($query) use ($p1, $p2) {
+                        $query->where('season_competitions_matches.local_id', '=', $p1->id)
+                              ->Where('season_competitions_matches.visitor_id', '=', $p2->id);
+                    })
+                    ->orWhere(function ($query) use ($p1, $p2) {
+                        $query->where('season_competitions_matches.local_id', '=', $p2->id)
+                              ->Where('season_competitions_matches.visitor_id', '=', $p1->id);
+                    })
+                    ->get();
 
-                        if ($p1_goals > $p2_goals) {
-                            $tp_aux = $table_participants->toArray();
-                            $tp_aux[$key-1]['avg_p'] = 1;
-                            $table_participants = collect($tp_aux);
-                        } else {
-                            $tp_aux = $table_participants->toArray();
-                            $tp_aux[$key]['avg_p'] = 1;
-                            $table_participants = collect($tp_aux);
-                            // $tp['avg_p'] = 1;
-                            // $table_participants->put($key, $tp);
-                        }
+                $p1_goals = 0;
+                $p2_goals = 0;
+                foreach ($matches as $match) {
+                    if ($match->local_id == $p1->id) {
+                        $p1_goals += $match->local_score;
+                        $p2_goals += $match->visitor_score;
+                    } else {
+                        $p1_goals += $match->visitor_score;
+                        $p2_goals += $match->local_score;
                     }
                 }
-                $pts_previous = $tp['pts'];
-            }
-            $pts_previous = $tp['pts'];
 
+                if ($p1_goals > $p2_goals) {
+                    $tp_aux = $table_participants->toArray();
+                    $tp_aux[$key]['avg_p'] = 1;
+                    $table_participants = collect($tp_aux);
+                }
+            }
         }
 
         $table_participants = $table_participants->sortByDesc('gf')->sortByDesc('avg')->sortByDesc('avg_p')->sortByDesc('pts')->values();
