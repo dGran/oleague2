@@ -442,7 +442,7 @@ class SeasonController extends Controller
     {
         $season = Season::find($id);
 
-        $newseason Season::find(6);
+        $newseason = Season::find(6);
         if ($season) {
             // $newseason = $season->replicate();
             // $newseason->name .= " (copia)";
