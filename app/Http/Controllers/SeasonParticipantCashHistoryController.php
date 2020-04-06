@@ -176,7 +176,7 @@ class SeasonParticipantCashHistoryController extends Controller
                 $data['participant_id'] = $participant->id;
 				$cash = SeasonParticipantCashHistory::create($data);
 				event(new TableWasSaved($cash, $cash->description));
-				if ($data['telegram'] == 'on') {
+				if (!isset($data['telegram'])) {
 			    	if ($data['movement'] == 'E') {
 			    		$action = 'ingresa';
 			    	} else {
@@ -196,7 +196,7 @@ class SeasonParticipantCashHistoryController extends Controller
 
 	        if ($cash->save()) {
 	            event(new TableWasSaved($cash, $cash->description));
-				if ($data['telegram'] == 'on') {
+				if (!isset($data['telegram'])) {
 			    	if ($data['movement'] == 'E') {
 			    		$action = 'ingresa';
 			    	} else {

@@ -520,10 +520,12 @@ class SeasonController extends Controller
                         $new_participant = SeasonParticipant::where('season_id', '=', $newseason->id)->where('team_id', '=', $favorite->participant->team_id)->where('user_id', '=', $favorite->participant->user_id)->first();
                         $new_player = SeasonPlayer::where('season_id', '=', $newseason->id)->where('player_id', '=', $favorite->season_player->player_id)->first();
 
-                        $new_favorite = new FavoritePlayer;
-                        $new_favorite->player_id = $new_player->id;
-                        $new_favorite->participant_id = $new_participant->id;
-                        $new_favorite->save();
+                        if ($new_player) {
+                            $new_favorite = new FavoritePlayer;
+                            $new_favorite->player_id = $new_player->id;
+                            $new_favorite->participant_id = $new_participant->id;
+                            $new_favorite->save();
+                        }
                     }
                 }
 
