@@ -296,8 +296,6 @@
 		}
 		.data {
 			margin: 1em 1em 1em 1em;
-			background: #FCFCFC;
-			border: .05rem solid #efefef;
 			border-radius: 3px;
 			&.money-in {
 				background-color: lighten($success, 65%);
@@ -683,6 +681,13 @@
 			&:hover {
 				background-color: lighten($warning, 36%);
 				border: .05rem solid lighten($warning, 30%);
+				.money-in, .money-out {
+					background: #fff;
+					border: .05rem solid #efefef;
+					* {
+						color: $gray-600;
+					}
+				}
 			}
 			.date {
 				display: table-cell;
@@ -703,7 +708,6 @@
 			.data {
 				width: 175px;
 				float: right;
-
 			}
 		}
 		.empty {

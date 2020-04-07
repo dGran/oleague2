@@ -336,8 +336,6 @@
 
 .economy .item .data {
   margin: 1em 1em 1em 1em;
-  background: #FCFCFC;
-  border: .05rem solid #efefef;
   border-radius: 3px;
 }
 
@@ -781,6 +779,17 @@
   .economy .item:hover {
     background-color: #fefbf7;
     border: 0.05rem solid #fceedb;
+  }
+
+  .economy .item:hover .money-in,
+  .economy .item:hover .money-out {
+    background: #fff;
+    border: .05rem solid #efefef;
+  }
+
+  .economy .item:hover .money-in *,
+  .economy .item:hover .money-out * {
+    color: #6c757d;
   }
 
   .economy .item .date {
