@@ -778,6 +778,11 @@
     width: 100%;
   }
 
+  .economy .item:hover {
+    background-color: #fefbf7;
+    border: 0.05rem solid #fceedb;
+  }
+
   .economy .item .date {
     display: table-cell;
     font-size: .7em;
