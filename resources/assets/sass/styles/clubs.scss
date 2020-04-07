@@ -276,35 +276,71 @@
 	}
 }
 
-.economy-item {
-	border: 1px solid #f1eff3;
-	font-size: .9em;
-	margin-bottom: 1em;
-	.description {
-		padding: 1em;
+.economy {
+	.item {
 		background: #fff;
-		td {
-			padding: 1em;
+		border: .05rem solid #efefef;
+		border-radius: 4px;
+		position: relative;
+		margin-bottom: 1em;
+		&:last-child {
+			margin-bottom: 0;
 		}
-	}
-	.data {
-		background: #FCFCFC;
-		border-top: 1px solid #f1eff3;
-		.type {
-			display: inline-block;
-			padding: .5em;
-			padding-left: 1em;
+		.date {
+			padding: 1rem 1rem 0 1rem;
+			font-size: .7em;
 		}
-		.amount {
-			display: inline-block;
-			padding: .5em;
-			text-align: right;
+		.description {
+			font-size: .9em;
+			padding: .5em 1rem 1rem 1rem;
 		}
-		.cash {
-			display: inline-block;
-			padding: .5em;
-			padding-right: 1em;
-			text-align: right;
+		.data {
+			margin: 1em 1em 1em 1em;
+			background: #FCFCFC;
+			border: .05rem solid #efefef;
+			border-radius: 3px;
+			&.money-in {
+				background-color: lighten($success, 65%);
+				border: .05rem solid lighten($success, 55%);
+				* {
+					color: $success;
+				}
+			}
+			&.money-out {
+				background-color: lighten($danger, 32%);
+				border: .05rem solid lighten($danger, 28%);
+				* {
+					color: $danger;
+				}
+			}
+			.type {
+				display: inline-block;
+				padding: .5em .5em .5em 1em;
+				display: table-cell;
+				* {
+					vertical-align: middle;
+				}
+				i {
+					font-size: 1.5em;
+				}
+				span {
+					padding-left: .25em;
+					font-size: .8em;
+					text-transform: uppercase;
+				}
+			}
+			.amount {
+				display: inline-block;
+				font-weight: bold;
+				padding: .5em 0 .5em .5em;
+				text-align: right;
+			}
+			.cash {
+				display: inline-block;
+				font-size: .85em;
+				padding-right: 1em;
+				text-align: right;
+			}
 		}
 	}
 }
@@ -543,6 +579,11 @@
 			}
 		}
 	}
+	.economy {
+		.item {
+			padding: .5em;
+		}
+	}
 }
 
 // Small devices (landscape phones, 576px and up)
@@ -627,6 +668,35 @@
 		}
 		.empty {
 			text-align: left;
+		}
+	}
+
+	.economy {
+		.item {
+			display: table;
+			padding: 0 .5em;
+			width: 100%;
+			.date {
+				display: table-cell;
+				font-size: .7em;
+				padding: 0rem .5rem;
+				vertical-align: middle;
+				width: 105px;
+			}
+			.description {
+				display: table-cell;
+				font-size: .9em;
+				padding: 0rem .5rem;
+				vertical-align: middle;
+				i {
+					font-size: 1.7em;
+				}
+			}
+			.data {
+				width: 175px;
+				float: right;
+
+			}
 		}
 	}
 }

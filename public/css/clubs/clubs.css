@@ -312,41 +312,83 @@
   margin-left: .5rem;
 }
 
-.economy-item {
-  border: 1px solid #f1eff3;
-  font-size: .9em;
+.economy .item {
+  background: #fff;
+  border: .05rem solid #efefef;
+  border-radius: 4px;
+  position: relative;
   margin-bottom: 1em;
 }
 
-.economy-item .description {
-  padding: 1em;
-  background: #fff;
+.economy .item:last-child {
+  margin-bottom: 0;
 }
 
-.economy-item .description td {
-  padding: 1em;
+.economy .item .date {
+  padding: 1rem 1rem 0 1rem;
+  font-size: .7em;
 }
 
-.economy-item .data {
+.economy .item .description {
+  font-size: .9em;
+  padding: .5em 1rem 1rem 1rem;
+}
+
+.economy .item .data {
+  margin: 1em 1em 1em 1em;
   background: #FCFCFC;
-  border-top: 1px solid #f1eff3;
+  border: .05rem solid #efefef;
+  border-radius: 3px;
 }
 
-.economy-item .data .type {
-  display: inline-block;
-  padding: .5em;
-  padding-left: 1em;
+.economy .item .data.money-in {
+  background-color: #f9fff5;
+  border: 0.05rem solid #deffc2;
 }
 
-.economy-item .data .amount {
+.economy .item .data.money-in * {
+  color: #4ea800;
+}
+
+.economy .item .data.money-out {
+  background-color: #fffcfd;
+  border: 0.05rem solid #fdeaea;
+}
+
+.economy .item .data.money-out * {
+  color: #ef696c;
+}
+
+.economy .item .data .type {
   display: inline-block;
-  padding: .5em;
+  padding: .5em .5em .5em 1em;
+  display: table-cell;
+}
+
+.economy .item .data .type * {
+  vertical-align: middle;
+}
+
+.economy .item .data .type i {
+  font-size: 1.5em;
+}
+
+.economy .item .data .type span {
+  padding-left: .25em;
+  font-size: .8em;
+  text-transform: uppercase;
+}
+
+.economy .item .data .amount {
+  display: inline-block;
+  font-weight: bold;
+  padding: .5em 0 .5em .5em;
   text-align: right;
 }
 
-.economy-item .data .cash {
+.economy .item .data .cash {
   display: inline-block;
-  padding: .5em;
+  font-size: .85em;
   padding-right: 1em;
   text-align: right;
 }
@@ -617,6 +659,10 @@
   .calendar .item .match-info .competition .logo {
     width: 25px;
   }
+
+  .economy .item {
+    padding: .5em;
+  }
 }
 
 @media (min-width: 768px) {
@@ -719,6 +765,36 @@
 
   .calendar .empty {
     text-align: left;
+  }
+
+  .economy .item {
+    display: table;
+    padding: 0 .5em;
+    width: 100%;
+  }
+
+  .economy .item .date {
+    display: table-cell;
+    font-size: .7em;
+    padding: 0rem .5rem;
+    vertical-align: middle;
+    width: 105px;
+  }
+
+  .economy .item .description {
+    display: table-cell;
+    font-size: .9em;
+    padding: 0rem .5rem;
+    vertical-align: middle;
+  }
+
+  .economy .item .description i {
+    font-size: 1.7em;
+  }
+
+  .economy .item .data {
+    width: 175px;
+    float: right;
   }
 }
 
