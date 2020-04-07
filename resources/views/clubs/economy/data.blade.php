@@ -10,7 +10,7 @@
 			<div class="item shadow-sm">
 				<div class="date text-muted">{{ \Carbon\Carbon::parse($cash_history->created_at)->format('d/m/Y - h:m')}}</div>
 				<div class="description">
-					<i class="fas fa-piggy-bank mr-2 {{ $cash_history->movement == "E" ? 'text-success' : 'text-danger' }}"></i>
+					<i class="d-none d-md-inline-block fas fa-piggy-bank mr-2 {{ $cash_history->movement == "E" ? 'text-success' : 'text-danger' }}"></i>
 					{{ $cash_history->description }}
 				</div>
 				<div class="data clearfix {{ $cash_history->movement == "E" ? 'money-in' : 'money-out' }}">
