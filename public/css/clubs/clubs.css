@@ -393,6 +393,11 @@
   text-align: right;
 }
 
+.economy .empty {
+  padding: 1.5em 0;
+  text-align: center;
+}
+
 .calendar .item {
   background: #fff;
   border-radius: 4px;
@@ -795,6 +800,10 @@
   .economy .item .data {
     width: 175px;
     float: right;
+  }
+
+  .economy .empty {
+    text-align: left;
   }
 }
 
