@@ -1605,6 +1605,7 @@
   position: absolute;
   right: 50px;
   top: 7px;
+  z-index: 2;
 }
 
 .team .content .positions .detail .wrap .item .player-favorite i.active {
