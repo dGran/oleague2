@@ -11,11 +11,11 @@
 				<div class="item shadow-sm" onmouseenter="item_enter({{$match->id}})" onmouseleave="item_leave({{$match->id}})">
 					@if (!is_null($match->day_id))
 						@if ($match->date_limit > $match->day->date_limit)
-							<div class="ribbon left info"><span>Plazo ampliado</span></div>
+							<div class="ribbon rb-left rb-info"><span>Plazo ampliado</span></div>
 						@endif
 					@else
 						@if ($match->date_limit > $match->clash->round->date_limit)
-							<div class="ribbon left info"><span>Plazo ampliado</span></div>
+							<div class="ribbon rb-left rb-info"><span>Plazo ampliado</span></div>
 						@endif
 					@endif
 					<div class="row align-items-center">

@@ -11,10 +11,10 @@
 				<div class="item shadow-sm {{ $match->date_limit_match() && $match->date_limit_match() < now() ? 'time-limit-exceded' : '' }}" onmouseenter="item_enter({{$match->id}})" onmouseleave="item_leave({{$match->id}})">
 					@if ($match->date_limit_match())
 						@if ($match->date_limit_match() < now())
-							<div class="ribbon left danger"><span>Plazo vencido</span></div>
+							<div class="ribbon rb-left rb-danger"><span>Plazo vencido</span></div>
 						@endif
 					@else
-						<div class="ribbon info">Plazo N/D</span>
+						<div class="ribbon rb-info">Plazo N/D</span>
 					@endif
 
 					<div class="row align-items-center">

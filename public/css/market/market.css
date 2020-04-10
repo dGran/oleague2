@@ -1560,7 +1560,7 @@
   background: #F6FFF7;
 }
 
-.team .content .positions .detail .wrap .item.untransferable {
+.team .content .positions .detail .wrap .item.not-allowed {
   border: 1px solid #fbdcdd;
   background: #fef3f3;
 }
@@ -1696,21 +1696,54 @@
   font-size: .7em;
 }
 
-.team .content .positions .detail .wrap .item .market-situation {
-  color: #212529;
-  font-size: 1em;
-  font-weight: bold;
+.team .content .positions .detail .wrap .item .actions {
+  bottom: 8px;
   position: absolute;
-  right: 5px;
-  bottom: 5px;
+  right: 8px;
+  z-index: 2;
 }
 
-.team .content .positions .detail .wrap .item .market-situation.red {
-  color: #f18083;
+.team .content .positions .detail .wrap .item .actions button {
+  background: #F3F3F3;
+  border: 1px solid #DFDDE1;
+  font-size: .9em;
 }
 
-.team .content .positions .detail .wrap .item .market-situation.green {
-  color: #5ac200;
+.team .content .positions .detail .wrap .item .actions button:hover {
+  color: #ffffff;
+  background: #009bce;
+  border: 1px solid #0088b5;
+}
+
+.team .content .positions .detail .wrap .item .actions .dropdown-menu {
+  background: #ffffff;
+  border: 1px solid #0088b5;
+  font-size: .9em;
+}
+
+.team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-header {
+  background: #009bce;
+  padding: .5rem;
+  color: #ffffff;
+}
+
+.team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-header .free {
+  color: #FFE093;
+  margin-left: .25rem;
+}
+
+.team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-item:hover {
+  color: #212529;
+  background: #f9f9f9;
+}
+
+.team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-item.disabled {
+  color: #adb5bd;
+  pointer-events: none;
+}
+
+.team .content .positions .detail .wrap .item .actions .dropdown-menu .dropdown-item.disabled:hover {
+  background: none;
 }
 
 .negotiations {

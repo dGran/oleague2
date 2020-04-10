@@ -79,7 +79,12 @@ button .btn .btn-white .dropdown-toggle:focus {
 	overflow: hidden;
 	width: 75px; height: 75px;
 	text-align: right;
-	&.left {
+	&.rb-op-80 {
+		span {
+			opacity: .8;
+		}
+	}
+	&.rb-left {
 		left: -5px; top: -5px;
 		span {
 			transform: rotate(-45deg);
@@ -87,7 +92,7 @@ button .btn .btn-white .dropdown-toggle:focus {
 			top: 19px; left: -21px;
 		}
 	}
-	&.right {
+	&.rb-right {
 		right: -5px; top: -5px;
 		span {
 			transform: rotate(45deg);
@@ -95,7 +100,7 @@ button .btn .btn-white .dropdown-toggle:focus {
 			top: 19px; right: -21px;
 		}
 	}
-	&.danger {
+	&.rb-danger {
 		span {
 			background: #8F0808;
 			background: linear-gradient(#F70505 0%, #8F0808 100%);
@@ -109,7 +114,35 @@ button .btn .btn-white .dropdown-toggle:focus {
 			}
 		}
 	}
-	&.info {
+	&.rb-success {
+		span {
+			background: #79A70A;
+			background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+			&:before {
+				border-left: 3px solid #79A70A;
+				border-top: 3px solid #79A70A;
+			}
+			&:after {
+				border-right: 3px solid #79A70A;
+				border-top: 3px solid #79A70A;
+			}
+		}
+	}
+	&.rb-warning {
+		span {
+			background: #B85116;
+			background: linear-gradient(#ED6226 0%, #B85116 100%);
+			&:before {
+				border-left: 3px solid #B85116;
+				border-top: 3px solid #B85116;
+			}
+			&:after {
+				border-right: 3px solid #B85116;
+				border-top: 3px solid #B85116;
+			}
+		}
+	}
+	&.rb-info {
 		span {
 			background: #087F8F;
 			background: linear-gradient(#05EFF7 0%, #087F8F 100%);
@@ -126,16 +159,16 @@ button .btn .btn-white .dropdown-toggle:focus {
 	span {
 		background: #808080;
 		background: linear-gradient(#B6BAC9 0%, #808080 100%);
+		box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+		color: #FFF;
+		display: block;
 		font-size: .55em;
 		font-weight: bold;
-		color: #FFF;
-		text-transform: uppercase;
-		text-align: center;
 		line-height: 20px;
-		width: 100px;
-		display: block;
-		box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
 		position: absolute;
+		text-align: center;
+		text-transform: uppercase;
+		width: 100px;
 		&:before {
 			content: "";
 			position: absolute; left: 0px; top: 100%;

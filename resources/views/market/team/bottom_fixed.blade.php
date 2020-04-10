@@ -1,4 +1,4 @@
-<div class="bottom-fixed">
+<div class="bottom-fixed" style="z-index: 99">
 	<div class="container">
 		<div class="scrolling-wrapper">
 			@foreach ($participants as $part)

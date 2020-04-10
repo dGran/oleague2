@@ -10501,58 +10501,94 @@ button .btn .btn-white .dropdown-toggle:focus {
   text-align: right;
 }
 
-.ribbon.left {
+.ribbon.rb-op-80 span {
+  opacity: .8;
+}
+
+.ribbon.rb-left {
   left: -5px;
   top: -5px;
 }
 
-.ribbon.left span {
+.ribbon.rb-left span {
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   top: 19px;
   left: -21px;
 }
 
-.ribbon.right {
+.ribbon.rb-right {
   right: -5px;
   top: -5px;
 }
 
-.ribbon.right span {
+.ribbon.rb-right span {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
   top: 19px;
   right: -21px;
 }
 
-.ribbon.danger span {
+.ribbon.rb-danger span {
   background: #8F0808;
   background: -webkit-gradient(linear, left top, left bottom, from(#F70505), to(#8F0808));
   background: linear-gradient(#F70505 0%, #8F0808 100%);
 }
 
-.ribbon.danger span:before {
+.ribbon.rb-danger span:before {
   border-left: 3px solid #8F0808;
   border-top: 3px solid #8F0808;
 }
 
-.ribbon.danger span:after {
+.ribbon.rb-danger span:after {
   border-right: 3px solid #8F0808;
   border-top: 3px solid #8F0808;
 }
 
-.ribbon.info span {
+.ribbon.rb-success span {
+  background: #79A70A;
+  background: -webkit-gradient(linear, left top, left bottom, from(#9BC90D), to(#79A70A));
+  background: linear-gradient(#9BC90D 0%, #79A70A 100%);
+}
+
+.ribbon.rb-success span:before {
+  border-left: 3px solid #79A70A;
+  border-top: 3px solid #79A70A;
+}
+
+.ribbon.rb-success span:after {
+  border-right: 3px solid #79A70A;
+  border-top: 3px solid #79A70A;
+}
+
+.ribbon.rb-warning span {
+  background: #B85116;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ED6226), to(#B85116));
+  background: linear-gradient(#ED6226 0%, #B85116 100%);
+}
+
+.ribbon.rb-warning span:before {
+  border-left: 3px solid #B85116;
+  border-top: 3px solid #B85116;
+}
+
+.ribbon.rb-warning span:after {
+  border-right: 3px solid #B85116;
+  border-top: 3px solid #B85116;
+}
+
+.ribbon.rb-info span {
   background: #087F8F;
   background: -webkit-gradient(linear, left top, left bottom, from(#05EFF7), to(#087F8F));
   background: linear-gradient(#05EFF7 0%, #087F8F 100%);
 }
 
-.ribbon.info span:before {
+.ribbon.rb-info span:before {
   border-left: 3px solid #087F8F;
   border-top: 3px solid #087F8F;
 }
 
-.ribbon.info span:after {
+.ribbon.rb-info span:after {
   border-right: 3px solid #087F8F;
   border-top: 3px solid #087F8F;
 }
@@ -10561,17 +10597,17 @@ button .btn .btn-white .dropdown-toggle:focus {
   background: #808080;
   background: -webkit-gradient(linear, left top, left bottom, from(#B6BAC9), to(#808080));
   background: linear-gradient(#B6BAC9 0%, #808080 100%);
-  font-size: .55em;
-  font-weight: bold;
-  color: #FFF;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 20px;
-  width: 100px;
-  display: block;
   -webkit-box-shadow: 0 3px 10px -5px black;
           box-shadow: 0 3px 10px -5px black;
+  color: #FFF;
+  display: block;
+  font-size: .55em;
+  font-weight: bold;
+  line-height: 20px;
   position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100px;
 }
 
 .ribbon span:before {
