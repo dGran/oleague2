@@ -477,7 +477,7 @@ class MarketController extends Controller
 
     	$order = request()->order;
         if (!$order) {
-            $order = 'date_desc';
+            $order = 'overall_desc';
         }
         $order_ext = $this->saleGetOrder($order);
         $filterSeason = $season->id;
