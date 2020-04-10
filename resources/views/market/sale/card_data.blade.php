@@ -4,6 +4,18 @@
 	</div>
 </div> {{-- item-header --}}
 <div class="item">
+		@if ($player->season_player->participant->clauses_received_limit() || !$player->season_player->allow_clause_pay)
+			<div class="ribbon rb-left rb-danger">
+				<span>
+					@if ($player->season_player->allow_clause_pay)
+						Claúsula pagada
+					@else
+						Límite claúsulas
+					@endif
+				</span>
+			</div>
+		@endif
+
 	<img class="player-img" src="{{ $player->season_player->player->getImgFormatted() }}">
 	<div class="position" style="background: {{ $player->season_player->player->getPositionColor() }};">
 		{{ $player->season_player->player->position }}
