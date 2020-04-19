@@ -183,8 +183,8 @@ class SeasonParticipantCashHistoryController extends Controller
                 } else {
                     $action = 'desembolsan';
                 }
-                $telegram_text .= "\xF0\x9F\x92\xB2" . "Todos los equipos <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill.\n" . "     Concepto: <i>'" . $data['description'] . "'</i>\n\n";
-                $this->telegram_notification_channel($telegram_text);
+                $text = "\xF0\x9F\x92\xB2" . "Todos los equipos <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill.\n" . "     Concepto: <i>'" . $data['description'] . "'</i>\n\n";
+                $this->telegram_notification_channel($text);
             }
             if (request()->no_close) {
                 return back()->with('success', 'Nuevos registros registrados correctamente');
@@ -383,8 +383,8 @@ class SeasonParticipantCashHistoryController extends Controller
                 event(new TableWasSaved($cash, $cash->description));
             }
 
-            $telegram_text .= "\xF0\x9F\x92\xB2" . "Todos los equipos han <b>pagado</b> los salarios de los jugadores.\n" . "     Puedes revisar el nuevo presupuesto desde clubs->economía\n\n";
-            $this->telegram_notification_channel($telegram_text);
+            $text = "\xF0\x9F\x92\xB2" . "Todos los equipos han <b>pagado</b> los salarios de los jugadores.\n" . "     Puedes revisar el nuevo presupuesto desde clubs->economía\n\n";
+            $this->telegram_notification_channel($text);
 
             $season->salaries_paid = 1;
             $season->save();
