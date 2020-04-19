@@ -2,6 +2,9 @@
 
 @section('style')
     <style>
+    	body {
+    		background: #f9f9f9;
+    	}
 		.notifications-header {
 			background: #353f48;
 			margin-top: 55px;
@@ -21,24 +24,20 @@
 			font-weight: bold;
 			font-size: .8em;
 		}
-		.wrapper {
-			background: #f9f9f9;
-		}
     </style>
 @endsection
 
 @section('content')
 	@include('users.notifications.header')
 
-	<div class="wrapper">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					@include('users.notifications.content')
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				@include('users.notifications.content')
 			</div>
 		</div>
 	</div>
+
 @endsection
 
 @section('breadcrumb')
