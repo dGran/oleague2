@@ -172,21 +172,18 @@ class SeasonParticipantCashHistoryController extends Controller
         $data = request()->all();
         if ($data['participant_id'] == 0) {
             $participants = SeasonParticipant::seasonId($data['season_id'])->get();
-            $telegram_text = '';
             foreach ($participants as $participant) {
                 $data['participant_id'] = $participant->id;
                 $cash = SeasonParticipantCashHistory::create($data);
                 event(new TableWasSaved($cash, $cash->description));
-                if (request()->telegram) {
-                    if ($data['movement'] == 'E') {
-                        $action = 'ingresa';
-                    } else {
-                        $action = 'desembolsa';
-                    }
-                    $telegram_text .= "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill.\n" . "     <i>" . $data['description'] . "</i>\n" . "     Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.\n\n";
-                }
             }
             if (request()->telegram) {
+                if ($data['movement'] == 'E') {
+                    $action = 'ingresan';
+                } else {
+                    $action = 'desembolsan';
+                }
+                $telegram_text .= "\xF0\x9F\x92\xB2" . "Todos los equipos <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill.\n" . "     Concepto: <i>'" . $data['description'] . "'</i>\n\n";
                 $this->telegram_notification_channel($telegram_text);
             }
             if (request()->no_close) {
@@ -205,7 +202,7 @@ class SeasonParticipantCashHistoryController extends Controller
                     } else {
                         $action = 'desembolsa';
                     }
-                    $text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill.\n" . "     <i>" . $data['description'] . "</i>\n" . "     Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.\n\n";
+                    $text = "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>" . $action . "</b> " . number_format($data['amount'], 2, ",", ".") . " mill.\n" . "     Concepto: <i>'" . $data['description'] . "'</i>\n" . "     Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.\n\n";
                     $this->telegram_notification_channel($text);
                 }
                 if (request()->no_close) {
@@ -376,7 +373,6 @@ class SeasonParticipantCashHistoryController extends Controller
         $season = Season::find($season_id);
         if (!$season->salaries_paid) {
             $participants = SeasonParticipant::seasonId($season_id)->get();
-            $telegram_text = '';
             foreach ($participants as $participant) {
                 $cash = new SeasonParticipantCashHistory;
                 $cash->participant_id = $participant->id;
@@ -384,12 +380,10 @@ class SeasonParticipantCashHistoryController extends Controller
                 $cash->amount = $participant->salaries();
                 $cash->movement = "S";
                 $cash->save();
-
-                $telegram_text .= "\xF0\x9F\x92\xB2" . $participant->team->name . " (" . $participant->user->name . ") <b>desembolsa</b> " . number_format($cash->amount, 2, ",", ".") . " mill.\n" . "     <i>" . $cash->description . "</i>\n" . "     Presupuesto " . $participant->team->name . ": " . number_format($participant->budget(), 2, ",", ".") . " mill.\n\n";
-
                 event(new TableWasSaved($cash, $cash->description));
             }
 
+            $telegram_text .= "\xF0\x9F\x92\xB2" . "Todos los equipos han <b>pagado</b> los salarios de los jugadores.\n" . "     Puedes revisar el nuevo presupuesto desde clubs->economía\n\n";
             $this->telegram_notification_channel($telegram_text);
 
             $season->salaries_paid = 1;
