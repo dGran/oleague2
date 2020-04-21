@@ -14,7 +14,7 @@
 							<div class="ribbon rb-left rb-danger"><span>Plazo vencido</span></div>
 						@endif
 					@else
-						<div class="ribbon rb-info">Plazo N/D</span>
+						<div class="ribbon rb-left rb-info"><span>Plazo N/D</span></div>
 					@endif
 
 					<div class="row align-items-center">
@@ -48,7 +48,8 @@
 										@endif
 										<span class="date-limit">
 											<strong>Plazo: </strong>
-											{{ \Carbon\Carbon::parse($match->date_limit_match())->format('j M, H:i') }}</span>
+											{{ \Carbon\Carbon::parse($match->date_limit_match())->format('j M, H:i') }}
+										</span>
 									</div>
 								</div>
 							</div>

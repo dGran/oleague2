@@ -44,12 +44,20 @@ class SeasonCompetitionMatch extends Model
     {
         if (!$this->date_limit) {
             if ($this->day_id) {
-                return $this->day->date_limit;
+                if ($this->day->date_limit) {
+                    return $this->day->date_limit;
+                } else {
+                    return NULL;
+                }
             } else {
                 if ($this->clash->date_limit) {
                     return $this->clash->date_limit;
                 } else {
-                    return $this->clash->round->date_limit;
+                    if ($this->clash->round->date_limit) {
+                        return $this->clash->round->date_limit;
+                    } else {
+                        return NULL;
+                    }
                 }
             }
         } else {

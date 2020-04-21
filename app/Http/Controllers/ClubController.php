@@ -122,6 +122,23 @@ class ClubController extends Controller
         $participants = $this->get_participants($season_slug);
         $participant = $this->get_participant($season_slug, $slug);
 
+        // $matches_aux = SeasonCompetitionMatch::all();
+        // foreach ($matches_aux as $match) {
+        //     if (!$match->date_limit) {
+        //         if ($match->day_id > 0) {
+        //             if ($match->day) {
+        //                 $match->date_limit = $match->day->date_limit;
+        //                 $match->save();
+        //             }
+        //         } else {
+        //             if ($match->clash) {
+        //                 $match->date_limit = $match->clash->round->date_limit;
+        //                 $match->save();
+        //             }
+        //         }
+        //     }
+        // }
+
         $season = $this->get_season($season_slug);
 
         $matches = SeasonCompetitionMatch::
