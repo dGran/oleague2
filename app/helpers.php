@@ -49,11 +49,11 @@ function pesdb_player_img_path($id) {
 }
 
 function pesmaster_player_info_path($id) {
-	return "https://www.pesmaster.com/neymar/pes-2019/player/" . $id;
+	return "https://www.pesmaster.com/neymar/pes-2021/player/" . $id;
 }
 
 function pesmaster_player_img_path($id) {
-	return "https://www.pesmaster.com/pes-2020/graphics/players/player_" . $id . ".png";
+	return "https://www.pesmaster.com/pes-2021/graphics/players/player_" . $id . ".png";
 }
 
 function send_telegram_notification($text) {
