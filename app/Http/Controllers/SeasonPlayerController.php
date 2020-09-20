@@ -573,10 +573,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['DC', 'SD', 'EI', 'ED'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -591,10 +591,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['PT'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        $order = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -609,10 +609,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['CT', 'LD', 'LI'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        $order = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -627,10 +627,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['MC', 'MCD'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -645,10 +645,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['PT'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -665,10 +665,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['LD', 'LI'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [16, 17, 15, 18, 14, 19, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 7, 26, 6, 27, 5, 28, 4, 29, 3, 30, 2, 31, 1, 32];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -684,10 +684,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['LD', 'LI'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        $order = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -702,10 +702,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['LD', 'LI'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -720,10 +720,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['ED', 'EI', 'ID', 'II', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -738,10 +738,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['ED', 'EI', 'ID', 'II', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [16, 17, 15, 18, 14, 19, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 7, 26, 6, 27, 5, 28, 4, 29, 3, 30, 2, 31, 1, 32];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -756,10 +756,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['ED', 'EI', 'ID', 'II', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 31, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        $order = [16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -774,10 +774,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['ED', 'EI', 'ID', 'II', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
+        $order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -792,11 +792,11 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['CT'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
 
-        $order = [16, 17, 15, 18, 14, 19, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 7, 26, 6, 27, 5, 28, 4, 29, 3, 30, 2, 31, 1, 32];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -811,10 +811,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['CT'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -829,10 +829,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['CT'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [16, 17, 15, 18, 14, 19, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 7, 26, 6, 27, 5, 28, 4, 29, 3, 30, 2, 31, 1, 32];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -847,10 +847,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['CT'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -865,10 +865,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['MC', 'MCD', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [16, 17, 15, 18, 14, 19, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 7, 26, 6, 27, 5, 28, 4, 29, 3, 30, 2, 31, 1, 32];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -883,10 +883,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['MC', 'MCD', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -901,10 +901,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['MC', 'MCD', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [16, 17, 15, 18, 14, 19, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 7, 26, 6, 27, 5, 28, 4, 29, 3, 30, 2, 31, 1, 32];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -919,10 +919,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['MC', 'MCD', 'MP'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -937,10 +937,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['DC', 'SD'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [16, 17, 15, 18, 14, 19, 13, 20, 12, 21, 11, 22, 10, 23, 9, 24, 8, 25, 7, 26, 6, 27, 5, 28, 4, 29, 3, 30, 2, 31, 1, 32];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
@@ -955,10 +955,10 @@ class SeasonPlayerController extends Controller
             ->where('season_players.active', '=', 1)
             ->whereIn('players.position', ['DC', 'SD'])
             ->orderBy('players.overall_rating', 'desc')
-            ->limit(32)
+            ->limit(16)
             ->get();
 
-        $order = [32, 1, 31, 2, 30, 3, 29, 4, 28, 5, 27, 6, 26, 7, 25, 8, 24, 9, 23, 10, 22, 11, 21, 12, 20 ,13, 19, 14, 18, 15, 17, 16];
+        $order = [16, 1, 15, 2, 14, 3, 13, 4, 12, 5, 11, 6, 10, 7, 9, 8];
         foreach ($players as $key => $player) {
             $season_player = SeasonPlayer::find($player->id);
             $season_player->participant_id = $season_participants[$order[$key]-1]->id;
