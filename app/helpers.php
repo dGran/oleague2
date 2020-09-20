@@ -41,11 +41,11 @@ function validateUrl($url)
 }
 
 function pesdb_player_info_path($id) {
-	return "http://pesdb.net/pes2019/?id=" . $id;
+	return "http://pesdb.net/pes2021/?id=" . $id;
 }
 
 function pesdb_player_img_path($id) {
-	return "http://pesdb.net/pes2020/images/players/" . $id . ".png";
+	return "http://pesdb.net/pes2021/images/players/" . $id . ".png";
 }
 
 function pesmaster_player_info_path($id) {
