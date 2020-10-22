@@ -42,12 +42,20 @@ class Player extends Model
     	return 'http://pesdb.net/pes2020/?id=' . $this->game_id;
     }
 
+    public function pesdb2021_link() {
+    	return 'http://pesdb.net/pes2021/?id=' . $this->game_id;
+    }
+
     public function pesmaster2019_link() {
     	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2019/player/' . $this->game_id .'/';
     }
 
     public function pesmaster2020_link() {
     	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2020/player/' . $this->game_id .'/';
+    }
+
+    public function pesmaster2021_link() {
+    	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2021/player/' . $this->game_id .'/';
     }
 
 	public function scopeName($query, $name)
