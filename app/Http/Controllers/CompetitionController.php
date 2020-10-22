@@ -178,6 +178,11 @@ class CompetitionController extends Controller
 
     public function stats($season_slug, $competition_slug, $participant_id = null)
     {
+    	// $stats = SeasonCompetitionStat::all();
+    	// foreach ($stats as $stat) {
+    	// 	$stat->competition_id = $stat->match->competition()->id;
+    	// 	$stat->save();
+    	// }
     	if (is_null($participant_id)) {
     		$participant_id = 0;
     		$participant = null;
