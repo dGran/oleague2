@@ -44,7 +44,7 @@ class HomeController extends Controller
         } else {
             $posts = Post::where('type', '=', $type)->orderBy('created_at', 'desc')->paginate();
         }
-        $last_users = User::where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
+        $last_users = User::has('profile')->where('verified', '=', 1)->orderBy('id', 'desc')->take(8)->get();
         $results = Post::where('type', '=', 'result')->orderBy('created_at', 'desc')->take(10)->get();
         $testimonies = Testimony::has('user_profile')->orderBy('created_at', 'desc')->take(5)->get();
 
