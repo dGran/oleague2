@@ -64,7 +64,7 @@
 							@if ($stats_goals->first()->player->participant)
 								<small class="d-block">
 									@if ($participant_id == 0)
-										<img src="{{ $stat->player->participant->logo() }}" width="16">
+										{{-- <img src="{{ $stat->player->participant->logo() }}" width="16"> --}}
 										<span class="text-muted">{{ $stat->player->participant->name() }}</span>
 									@else
 										<img src="{{ asset($stat->player->player->nation_flag()) }}" width="16">
