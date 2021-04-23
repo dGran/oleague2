@@ -2,14 +2,13 @@
     <div class="container">
         <div class="clearfix p-0">
             <h3 class="float-left">
-                Migration
+                Bienvenido a la Open Beta
             </h3>
         </div>
     </div>
 </div>
-{{-- <div class="container">
+<div class="container">
     <div class="text-white p-2">
-        Migration complete
         <div id="clock"></div>
         Puedes probar las funciones de mercado mientras ultimamos los preparativos. <a class="text-info" href="{{ route('register') }}">Regístrate</a> y pide equipo a los administradores.
         <p class="m-0 pt-2">Todos los datos de jugadores y equipos son de prueba.</p>
@@ -18,4 +17,4 @@
         <p class="m-0 pt-2">Habrán pequeñas actualizaciones durante el periodo de la beta.</p>
         <p class="pt-2 m-0 text-center">🐥 🐤 🐣</p>
     </div>
-</div> --}}
+</div>
