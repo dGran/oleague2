@@ -28,9 +28,11 @@
 					<small>({{ $clash->result()[0]['pen_local']}})</small>
 				@endif
 			@else
-				{{ $clash->result()['local'] }}
-				@if (!is_null($clash->result()['pen_local']))
-					<small>({{ $clash->result()['pen_local']}})</small>
+				@if ($clash->result())
+					{{ $clash->result()['local'] }}
+					@if (!is_null($clash->result()['pen_local']))
+						<small>({{ $clash->result()['pen_local']}})</small>
+					@endif
 				@endif
 			@endif
 		</div>
