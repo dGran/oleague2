@@ -28,9 +28,11 @@
 					<small>({{ $clash->result()[0]['pen_visitor']}})</small>
 				@endif
 			@else
-				{{ $clash->result()['visitor'] }}
-				@if (!is_null($clash->result()['pen_visitor']))
-					<small>({{ $clash->result()['pen_visitor']}})</small>
+				@if ($clash->result())
+					{{ $clash->result()['visitor'] }}
+					@if (!is_null($clash->result()['pen_visitor']))
+						<small>({{ $clash->result()['pen_visitor']}})</small>
+					@endif
 				@endif
 			@endif
 		</div>
