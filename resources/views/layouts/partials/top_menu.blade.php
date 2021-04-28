@@ -13,9 +13,9 @@
                         <span>LigasPesXbox</span>
                     </a>
 
-                    {{-- <div style="position: absolute; top: 35px; left: 26px; font-size: .7em; color: #eeff41">
+                    <div style="position: absolute; top: 35px; left: 26px; font-size: .7em; color: #eeff41">
                         Open Beta
-                    </div> --}}
+                    </div>
 
                 </h1>
             </div>
