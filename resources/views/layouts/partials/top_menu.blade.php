@@ -30,7 +30,7 @@
             <div class="col user text-right">
                 <div class="btn-group dropright">
                     @guest
-                        <div class="d-none d-lg-inline-block">
+                        <div class="d-none d-lg-flex align-items-center">
                             <a class="text-white" href="{{ route('login') }}">Iniciar sesión</a>
                             <span class="text-white">/</span>
                             <a  class="text-white" href="{{ route('register') }}">Regístrate</a>
