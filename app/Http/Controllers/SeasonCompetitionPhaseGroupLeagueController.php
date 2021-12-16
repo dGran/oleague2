@@ -846,19 +846,20 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
     protected function generate_days($league_id, $second_round, $inverse_order)
     {
     	$league = SeasonCompetitionPhaseGroupLeague::find($league_id);
-    	$days = SeasonCompetitionPhaseGroupLeagueDay::where('league_id', '=', $league_id)->orderBy('order', 'desc')->get();
-        foreach ($days as $day) {
+        foreach ($league->days as $day) {
             foreach ($day->matches as $match) {
                 $match->delete();
             }
             $day->delete();
         }
-        $days = SeasonCompetitionPhaseGroupLeagueDay::where('league_id', '=', $league_id)->orderBy('order', 'desc')->get();
+    	$days = SeasonCompetitionPhaseGroupLeagueDay::where('league_id', '=', $league_id)->orderBy('order', 'desc')->get();
     	if ($days->count() > 0) {
     		$next_day = $days->first()->order + 1;
     	} else {
     		$next_day = 1;
     	}
+
+        $next_day = $days->count() > 0 ? $days->first()->order + 1 : 1;
 
     	$group_participants = SeasonCompetitionPhaseGroupParticipant::where('group_id', '=', $league->group->id)->inRandomOrder()->get();
 		$participants = [];
@@ -874,6 +875,7 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 			$num_participants = $i-1;
 		} else { // num_participantes impar
 			$num_participants = $i;
+            $participants[$i] = null;
 		}
 
 	    $num_players = ($num_participants > 0) ? (int)$num_participants : 4;
@@ -934,29 +936,33 @@ class SeasonCompetitionPhaseGroupLeagueController extends Controller
 	        // Match the last player
 	        if ($round % 2 == 0) {
 	            $opponent = ($round + $num_players) / 2;
-	            if ($participants[$num_players]->id > 0 && $participants[$opponent]->id > 0) {
+                if ($participants[$num_players] != null) {
+    	            if ($participants[$num_players]->id > 0 && $participants[$opponent]->id > 0) {
 
-				   	$match = new SeasonCompetitionMatch;
-				   	$match->day_id = $day->id;
-                    $match->clash_id = 0;
-				   	$match->local_id = $participants[$num_players]->id;
-				   	$match->local_user_id = $participants[$num_players]->participant->user->id;
-				   	$match->visitor_id = $participants[$opponent]->id;
-				   	$match->visitor_user_id = $participants[$opponent]->participant->user->id;
-				   	$match->save();
-	            }
+    				   	$match = new SeasonCompetitionMatch;
+    				   	$match->day_id = $day->id;
+                        $match->clash_id = 0;
+    				   	$match->local_id = $participants[$num_players]->id;
+    				   	$match->local_user_id = $participants[$num_players]->participant->user->id;
+    				   	$match->visitor_id = $participants[$opponent]->id;
+    				   	$match->visitor_user_id = $participants[$opponent]->participant->user->id;
+    				   	$match->save();
+    	            }
+                }
 	        } else {
 	            $opponent = ($round + 1) / 2;
-				if ($participants[$opponent]->id > 0 && $participants[$num_players]->id > 0) {
-				   	$match = new SeasonCompetitionMatch;
-				   	$match->day_id = $day->id;
-                    $match->clash_id = 0;
-				   	$match->local_id = $participants[$opponent]->id;
-				   	$match->local_user_id = $participants[$opponent]->participant->user->id;
-				   	$match->visitor_id = $participants[$num_players]->id;
-				   	$match->visitor_user_id = $participants[$num_players]->participant->user->id;
-				   	$match->save();
-				}
+                if ($participants[$num_players] != null) {
+    				if ($participants[$opponent]->id > 0 && $participants[$num_players]->id > 0) {
+    				   	$match = new SeasonCompetitionMatch;
+    				   	$match->day_id = $day->id;
+                        $match->clash_id = 0;
+    				   	$match->local_id = $participants[$opponent]->id;
+    				   	$match->local_user_id = $participants[$opponent]->participant->user->id;
+    				   	$match->visitor_id = $participants[$num_players]->id;
+    				   	$match->visitor_user_id = $participants[$num_players]->participant->user->id;
+    				   	$match->save();
+    				}
+                }
 	        }
 	        $next_day++;
 	    }
