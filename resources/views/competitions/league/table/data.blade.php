@@ -47,17 +47,21 @@
 	                    <img src="{{ $tp['participant']->participant->logo() }}" alt="" width="24">
 	                </td>
 			        <td class="names">
-	                    <a href="{{ route('club', [$competition->season->slug, $tp['participant']->participant->team->slug]) }}" class="name text-uppercase">
-	                    	{{ $tp['participant']->participant->name() == 'undefined' ? '' : $tp['participant']->participant->name() }}
-	                    	<br>
-		                    <small class="description">
-		                        @if ($tp['participant']->participant->sub_name() == 'undefined')
-		                            <span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
-		                        @else
-		                            {{ $tp['participant']->participant->sub_name() }}
-		                        @endif
-		                    </small>
-						</a>
+						@if ($competition->season->participant_has_team)
+							<a href="{{ route('club', [$competition->season->slug, $tp['participant']->participant->team->slug]) }}" class="name text-uppercase">
+								{{ $tp['participant']->participant->name() == 'undefined' ? '' : $tp['participant']->participant->name() }}
+								<br>
+								<small class="description">
+									@if ($tp['participant']->participant->sub_name() == 'undefined')
+										<span class="badge badge-danger p-1 mt-1">SIN USUARIO</span>
+									@else
+										{{ $tp['participant']->participant->sub_name() }}
+									@endif
+								</small>
+							</a>
+						@else
+							{{ $tp['participant']->participant->name() == 'undefined' ? '' : $tp['participant']->participant->name() }}
+						@endif
 					</td>
 					<td class="data pt text-center">
 						<strong>{{ $tp['pts'] }}</strong>
