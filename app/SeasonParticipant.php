@@ -108,7 +108,7 @@ class SeasonParticipant extends Model
             }
         } else {
             if ($this->user_id) {
-                return $this->user->avatar();
+                return asset($this->user->avatar());
             } else {
                 return asset('img/user_unknown.png');
             }
