@@ -37,4 +37,9 @@ class Season extends Model
     {
         return $this->hasmany('App\SeasonPlayer', 'season_id', 'id');
     }
+
+    public function competitions()
+    {
+        return $this->hasMany('App\SeasonCompetition', 'season_id', 'id');
+    }
 }

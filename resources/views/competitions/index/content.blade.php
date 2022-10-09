@@ -25,11 +25,6 @@
 				@endforeach
 		    </div>
 		</div>
-
-{{-- 		<div class="col-12 col-md-6 col-lg-4">
-			@include('competitions.index.timeline')
-		</div> --}}
-
 	</div>
 </div>
 

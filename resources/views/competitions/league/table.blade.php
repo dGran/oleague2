@@ -18,5 +18,7 @@
 @endsection
 
 @section('bottom-fixed')
-	@include('competitions.partials.bottom_fixed')
+	@if (active_season()->competitions->count() > 1)
+		@include('competitions.partials.bottom_fixed')
+	@endif
 @endsection
