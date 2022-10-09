@@ -20,47 +20,51 @@
     @endif
 
     @if (user_is_participant(auth()->user()->id))
-        <li class="nav-item category">
-            ACCESOS RAPIDOS
-        </li>
-        <li class="nav-item {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'current' : '' }}">
-            <a class="nav-link offers {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'disabled' : '' }}" href="{{ route('club', [active_season()->slug, participant_of_user()->team->slug]) }}">
-                <i class="icon-stadium"></i>
-                <span>
-                    Mi Club
-                </span>
-            </a>
-        </li>
-        <li class="nav-item {{ \Request::is('mercado/mi-equipo') ? 'current' : '' }}">
-            <a class="nav-link offers {{ \Request::is('mercado/mi-equipo') ? 'disabled' : '' }}" href="{{ route('market.my_team') }}">
-                <i class="icon-my-team"></i>
-                <span>
-                    Mi Equipo
-                </span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link offers" href="{{ route('market.trades.received') }}">
-                <i class="icon-sale"></i>
-                <span>
-                    <span class="counter badge badge-warning rounded-circle {{ (participant_of_user()->trades_received_pending() == 0) ? 'd-none' : '' }}">
-                        {{ participant_of_user()->trades_received_pending() > 9 ? '9+' : participant_of_user()->trades_received_pending() }}
+        @if (active_season()->participant_has_team)
+            <li class="nav-item category">
+                ACCESOS RAPIDOS
+            </li>
+            <li class="nav-item {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'current' : '' }}">
+                <a class="nav-link offers {{ \Request::is('clubs/'. participant_of_user()->team->slug) ? 'disabled' : '' }}" href="{{ route('club', [active_season()->slug, participant_of_user()->team->slug]) }}">
+                    <i class="icon-stadium"></i>
+                    <span>
+                        Mi Club
                     </span>
-                    Ofertas recibidas
-                </span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link offers" href="{{ route('club.pending_matches', [active_season()->slug, participant_of_user()->team->slug]) }}">
-                <i class="icon-xbox-controller"></i>
-                <span>
-                    <span class="counter badge badge-warning rounded-circle {{ (participant_of_user()->pending_matches() == 0) ? 'd-none' : '' }}">
-                        {{ participant_of_user()->pending_matches() > 9 ? '9+' : participant_of_user()->pending_matches() }}
+                </a>
+            </li>
+            @if (active_season()->use_rosters)
+                <li class="nav-item {{ \Request::is('mercado/mi-equipo') ? 'current' : '' }}">
+                    <a class="nav-link offers {{ \Request::is('mercado/mi-equipo') ? 'disabled' : '' }}" href="{{ route('market.my_team') }}">
+                        <i class="icon-my-team"></i>
+                        <span>
+                            Mi Equipo
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link offers" href="{{ route('market.trades.received') }}">
+                        <i class="icon-sale"></i>
+                        <span>
+                        <span class="counter badge badge-warning rounded-circle {{ (participant_of_user()->trades_received_pending() == 0) ? 'd-none' : '' }}">
+                            {{ participant_of_user()->trades_received_pending() > 9 ? '9+' : participant_of_user()->trades_received_pending() }}
+                        </span>
+                        Ofertas recibidas
                     </span>
-                    Partidas pendientes
-                </span>
-            </a>
-        </li>
+                    </a>
+                </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link offers" href="{{ route('club.pending_matches', [active_season()->slug, participant_of_user()->team->slug]) }}">
+                    <i class="icon-xbox-controller"></i>
+                    <span>
+                        <span class="counter badge badge-warning rounded-circle {{ (participant_of_user()->pending_matches() == 0) ? 'd-none' : '' }}">
+                            {{ participant_of_user()->pending_matches() > 9 ? '9+' : participant_of_user()->pending_matches() }}
+                        </span>
+                        Partidas pendientes
+                    </span>
+                </a>
+            </li>
+        @endif
     @endif
     <li class="nav-item category">
         MI CUENTA
