@@ -953,11 +953,15 @@ class CompetitionController extends Controller
         $competition_slug = $match->clash->round->playoff->group->phase->competition->slug;
         $season = $match->clash->round->playoff->group->phase->competition->season;
         $season_slug = $match->clash->round->playoff->group->phase->competition->season->slug;
+
+        if ($season->participant_has_team) {
+            $team_local_slug = $match->local_participant->participant->team->slug;
+            $team_visitor_slug = $match->visitor_participant->participant->team->slug;
+        }
+
         $team_local = $match->local_participant->participant->name();
-        $team_local_slug = $match->local_participant->participant->team->slug;
         $user_local = $match->local_participant->participant->sub_name();
         $team_visitor = $match->visitor_participant->participant->name();
-        $team_visitor_slug = $match->visitor_participant->participant->team->slug;
         $user_visitor = $match->visitor_participant->participant->sub_name();
         $score = $match->local_score . '-' . $match->visitor_score;
         $match_limit = new \Carbon\Carbon($match->date_limit_match());
