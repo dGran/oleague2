@@ -29,10 +29,11 @@ class Controller extends BaseController
     public function get_telegram_chat() {
         $source = $this->telegram_source();
         if ($source == 'production') {
-            $chat_id = env('TELEGRAM_CHANNEL_ID');
+            $chat_id = env('TELEGRAM_CHANNEL_ID', '-1001241759649');
         } else {
             $chat_id = env('TELEGRAM_TEST_CHANNEL_ID');
         }
+
         return $chat_id;
     }
 

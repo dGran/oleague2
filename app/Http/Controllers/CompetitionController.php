@@ -336,8 +336,10 @@ class CompetitionController extends Controller
         }
     }
 
-    public function updateMatch($season_slug, $competition_slug, $match_id) {
+    public function updateMatch($season_slug, $competition_slug, $match_id)
+    {
         $match = SeasonCompetitionMatch::find($match_id);
+        $season = Season::where('slug', $season_slug)->first();
 
         if ($match->day_id > 0) {
 	        if ($match->local_score == null && $match->visitor_score == null) {
@@ -421,102 +423,115 @@ class CompetitionController extends Controller
 		    		}
 		        }
 
-		        // economy
-	        	$this->add_cash_history(
-	        		$match->local_participant->participant->id,
-	        		'Partido jugado, ' . $match->match_name(),
-	        		$match->day->league->play_amount,
-	        		'E'
-	        	);
-	        	$this->add_cash_history(
-	        		$match->visitor_participant->participant->id,
-	        		'Partido jugado, ' . $match->match_name(),
-	        		$match->day->league->play_amount,
-	        		'E'
-	        	);
+                if ($season->use_economy) {
+                    // economy
+                    $this->add_cash_history(
+                        $match->local_participant->participant->id,
+                        'Partido jugado, ' . $match->match_name(),
+                        $match->day->league->play_amount,
+                        'E'
+                    );
+                    $this->add_cash_history(
+                        $match->visitor_participant->participant->id,
+                        'Partido jugado, ' . $match->match_name(),
+                        $match->day->league->play_amount,
+                        'E'
+                    );
 
-		        $match_limit = new \Carbon\Carbon($match->date_limit);
-		        $date_update_result = new \Carbon\Carbon($match->date_update_result);
-				if ($match_limit > $date_update_result) {
-					$play_in_limit = true;
-				} else {
-					$play_in_limit = false;
-				}
+                    $match_limit = new \Carbon\Carbon($match->date_limit);
+                    $date_update_result = new \Carbon\Carbon($match->date_update_result);
+                    if ($match_limit > $date_update_result) {
+                        $play_in_limit = true;
+                    } else {
+                        $play_in_limit = false;
+                    }
 
-		        if ($play_in_limit) {
-		        	$this->add_cash_history(
-		        		$match->local_participant->participant->id,
-		        		'Partido jugado en plazo, ' . $match->match_name(),
-		        		$match->day->league->play_ontime_amount,
-		        		'E'
-		        	);
-		        	$this->add_cash_history(
-		        		$match->visitor_participant->participant->id,
-		        		'Partido jugado en plazo, ' . $match->match_name(),
-		        		$match->day->league->play_ontime_amount,
-		        		'E'
-		        	);
-		        }
+                    if ($play_in_limit) {
+                        $this->add_cash_history(
+                            $match->local_participant->participant->id,
+                            'Partido jugado en plazo, ' . $match->match_name(),
+                            $match->day->league->play_ontime_amount,
+                            'E'
+                        );
+                        $this->add_cash_history(
+                            $match->visitor_participant->participant->id,
+                            'Partido jugado en plazo, ' . $match->match_name(),
+                            $match->day->league->play_ontime_amount,
+                            'E'
+                        );
+                    }
 
-	        	if ($match->local_score > $match->visitor_score) {
-					$local_points = $match->day->league->win_amount;
-					$visitor_points = $match->day->league->lose_amount;
-					$local_result = "victoria";
-					$visitor_result = "derrota";
-	        	} elseif ($match->local_score < $match->visitor_score) {
-					$local_points = $match->day->league->lose_amount;
-					$visitor_points = $match->day->league->win_amount;
-					$local_result = "derrota";
-					$visitor_result = "victoria";
-	        	} else { // draw
-					$local_points = $match->day->league->draw_amount;
-					$visitor_points = $match->day->league->draw_amount;
-					$local_result = "empate";
-					$visitor_result = "empate";
-	        	}
-	        	if ($local_points > 0) {
-		        	$this->add_cash_history(
-		        		$match->local_participant->participant->id,
-		        		'Puntos obtenidos (' . $local_result . ') en partido, ' . $match->match_name(),
-		        		$local_points,
-		        		'E'
-		        	);
-	        	}
-	        	if ($visitor_points > 0) {
-		        	$this->add_cash_history(
-		        		$match->visitor_participant->participant->id,
-		        		'Puntos obtenidos (' . $visitor_result . ') en partido, ' . $match->match_name(),
-		        		$visitor_points,
-		        		'E'
-		        	);
-	        	}
+                    if ($match->local_score > $match->visitor_score) {
+                        $local_points = $match->day->league->win_amount;
+                        $visitor_points = $match->day->league->lose_amount;
+                        $local_result = "victoria";
+                        $visitor_result = "derrota";
+                    } elseif ($match->local_score < $match->visitor_score) {
+                        $local_points = $match->day->league->lose_amount;
+                        $visitor_points = $match->day->league->win_amount;
+                        $local_result = "derrota";
+                        $visitor_result = "victoria";
+                    } else { // draw
+                        $local_points = $match->day->league->draw_amount;
+                        $visitor_points = $match->day->league->draw_amount;
+                        $local_result = "empate";
+                        $visitor_result = "empate";
+                    }
+                    if ($local_points > 0) {
+                        $this->add_cash_history(
+                            $match->local_participant->participant->id,
+                            'Puntos obtenidos (' . $local_result . ') en partido, ' . $match->match_name(),
+                            $local_points,
+                            'E'
+                        );
+                    }
+                    if ($visitor_points > 0) {
+                        $this->add_cash_history(
+                            $match->visitor_participant->participant->id,
+                            'Puntos obtenidos (' . $visitor_result . ') en partido, ' . $match->match_name(),
+                            $visitor_points,
+                            'E'
+                        );
+                    }
+
+                    $team_local_budget = $match->local_participant->participant->budget();
+                    $team_visitor_budget = $match->visitor_participant->participant->budget();
+                } //season use economy
 
 		        // telegram notification
 		        $competition = $match->day->league->group->phase->competition->name;
 				$team_local = $match->local_participant->participant->name();
-				$team_local_slug = $match->local_participant->participant->team->slug;
-				$team_local_budget = $match->local_participant->participant->budget();
+                $team_visitor = $match->visitor_participant->participant->name();
+
+                if ($season->participant_has_team) {
+                    $team_local_slug = $match->local_participant->participant->team->slug;
+                    $team_visitor_slug = $match->visitor_participant->participant->team->slug;
+                }
+
 				$user_local = $match->local_participant->participant->sub_name();
-				$team_visitor = $match->visitor_participant->participant->name();
-				$team_visitor_slug = $match->visitor_participant->participant->team->slug;
-				$team_visitor_budget = $match->visitor_participant->participant->budget();
 				$user_visitor = $match->visitor_participant->participant->sub_name();
 				$score = $match->local_score . '-' . $match->visitor_score;
-				$local_amount = $match->day->league->play_amount + $local_points;
-				if ($play_in_limit) {
-					$local_amount += $match->day->league->play_ontime_amount;
-				}
-				$visitor_amount = $match->day->league->play_amount + $visitor_points;
-				if ($play_in_limit) {
-					$visitor_amount += $match->day->league->play_ontime_amount;
-				}
-		    	$local_economy = "    \xF0\x9F\x92\xB0" . $team_local . " (" . $user_local . ") <b>ingresa</b> " . number_format($local_amount, 2, ",", ".") . " mill.\n";
-				$local_club_link = 'https://lpx.es/clubs/' . $team_local_slug . '/economia';
-		    	$local_economy_link = "    <a href='$local_club_link'>Historial de economia</a>\n\n";
 
-		    	$visitor_economy = "    \xF0\x9F\x92\xB0" . $team_visitor . " (" . $user_visitor . ") <b>ingresa</b> " . number_format($visitor_amount, 2, ",", ".") . " mill.\n";
-				$visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
-		    	$visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
+                if ($season->use_economy) {
+                    $local_amount = $match->day->league->play_amount + $local_points;
+
+                    if ($play_in_limit) {
+                        $local_amount += $match->day->league->play_ontime_amount;
+                    }
+
+                    $visitor_amount = $match->day->league->play_amount + $visitor_points;
+
+                    if ($play_in_limit) {
+                        $visitor_amount += $match->day->league->play_ontime_amount;
+                    }
+
+                    $local_economy = "    \xF0\x9F\x92\xB0" . $team_local . " (" . $user_local . ") <b>ingresa</b> " . number_format($local_amount, 2, ",", ".") . " mill.\n";
+                    $local_club_link = 'https://lpx.es/clubs/' . $team_local_slug . '/economia';
+                    $local_economy_link = "    <a href='$local_club_link'>Historial de economia</a>\n\n";
+                    $visitor_economy = "    \xF0\x9F\x92\xB0" . $team_visitor . " (" . $user_visitor . ") <b>ingresa</b> " . number_format($visitor_amount, 2, ",", ".") . " mill.\n";
+                    $visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
+                    $visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
+                }
 
 				$table_link = 'https://lpx.es/competiciones/clasificacion/' . $season_slug . '/' . $competition_slug;
 				$calendar_link = 'https://lpx.es/competiciones/partidos/' . $season_slug . '/' . $competition_slug;
@@ -534,10 +549,14 @@ class CompetitionController extends Controller
 
 				$text = "$title\n\n";
 				$text .= "    <b>$team_local $score $team_visitor</b>\n\n\n";
-				$text .= $local_economy;
-				$text .= $local_economy_link;
-				$text .= $visitor_economy;
-				$text .= $visitor_economy_link;
+
+                if ($season->use_economy) {
+                    $text .= $local_economy;
+                    $text .= $local_economy_link;
+                    $text .= $visitor_economy;
+                    $text .= $visitor_economy_link;
+                }
+
 				$text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
 				$text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Clasificación $competition</a>\n";
 
@@ -932,6 +951,7 @@ class CompetitionController extends Controller
     protected function generate_telegram_notification($match) {
         $competition = $match->clash->round->playoff->group->phase->competition->name;
         $competition_slug = $match->clash->round->playoff->group->phase->competition->slug;
+        $season = $match->clash->round->playoff->group->phase->competition->season;
         $season_slug = $match->clash->round->playoff->group->phase->competition->season->slug;
         $team_local = $match->local_participant->participant->name();
         $team_local_slug = $match->local_participant->participant->team->slug;
@@ -942,40 +962,45 @@ class CompetitionController extends Controller
         $score = $match->local_score . '-' . $match->visitor_score;
         $match_limit = new \Carbon\Carbon($match->date_limit_match());
         $date_update_result = new \Carbon\Carbon($match->date_update_result);
+
         if ($match_limit > $date_update_result) {
             $play_in_limit = true;
         } else {
             $play_in_limit = false;
         }
-        if (($match->clash->round->round_trip == 1 && $match->order == 2) || $match->clash->round->round_trip == 0) {
-            if ($match->sanctioned_id == 0) {
-                if ($match->clash->winner()->id == $match->local_id) {
-                    $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
-                    $visitor_amount = $match->clash->round->play_amount;
-                } else {
-                    $local_amount = $match->clash->round->play_amount;
-                    $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
-                }
-                if ($play_in_limit) {
-                    $local_amount += $match->clash->round->play_ontime_amount;
-                    $visitor_amount += $match->clash->round->play_ontime_amount;
-                }
-            } else {
-                if ($match->local_id == $match->sanctioned_id) {
-                    $local_amount = 0;
-                    $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
-                } else {
-                    $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
-                    $visitor_amount = 0;
-                }
-            }
-            $local_economy = "    \xF0\x9F\x92\xB0" . $team_local . " (" . $user_local . ") <b>ingresa</b> " . number_format($local_amount, 2, ",", ".") . " mill.\n";
-            $local_club_link = 'https://lpx.es/clubs/' . $team_local_slug . '/economia';
-            $local_economy_link = "    <a href='$local_club_link'>Historial de economia</a>\n\n";
 
-            $visitor_economy = "    \xF0\x9F\x92\xB0" . $team_visitor . " (" . $user_visitor . ") <b>ingresa</b> " . number_format($visitor_amount, 2, ",", ".") . " mill.\n";
-            $visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
-            $visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
+        if ($season->use_economy) {
+            if (($match->clash->round->round_trip == 1 && $match->order == 2) || $match->clash->round->round_trip == 0) {
+                if ($match->sanctioned_id == 0) {
+                    if ($match->clash->winner()->id == $match->local_id) {
+                        $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
+                        $visitor_amount = $match->clash->round->play_amount;
+                    } else {
+                        $local_amount = $match->clash->round->play_amount;
+                        $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount;
+                    }
+                    if ($play_in_limit) {
+                        $local_amount += $match->clash->round->play_ontime_amount;
+                        $visitor_amount += $match->clash->round->play_ontime_amount;
+                    }
+                } else {
+                    if ($match->local_id == $match->sanctioned_id) {
+                        $local_amount = 0;
+                        $visitor_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
+                    } else {
+                        $local_amount = $match->clash->round->play_amount + $match->clash->round->win_amount + $match->clash->round->play_ontime_amount;
+                        $visitor_amount = 0;
+                    }
+                }
+
+                $local_economy = "    \xF0\x9F\x92\xB0" . $team_local . " (" . $user_local . ") <b>ingresa</b> " . number_format($local_amount, 2, ",", ".") . " mill.\n";
+                $local_club_link = 'https://lpx.es/clubs/' . $team_local_slug . '/economia';
+                $local_economy_link = "    <a href='$local_club_link'>Historial de economia</a>\n\n";
+
+                $visitor_economy = "    \xF0\x9F\x92\xB0" . $team_visitor . " (" . $user_visitor . ") <b>ingresa</b> " . number_format($visitor_amount, 2, ",", ".") . " mill.\n";
+                $visitor_club_link = 'https://lpx.es/clubs/' . $team_visitor_slug . '/economia';
+                $visitor_economy_link = "    <a href='$visitor_club_link'>Historial de economia</a>\n\n\n";
+            }
         }
 
         $table_link = 'https://lpx.es/competiciones/clasificacion/' . $season_slug . '/' . $competition_slug;
@@ -995,10 +1020,12 @@ class CompetitionController extends Controller
             }
         }
         if (($match->clash->round->round_trip == 1 && $match->order == 2) || $match->clash->round->round_trip == 0) {
-            $text .= $local_economy;
-            $text .= $local_economy_link;
-            $text .= $visitor_economy;
-            $text .= $visitor_economy_link;
+            if ($season->use_economy) {
+                $text .= $local_economy;
+                $text .= $local_economy_link;
+                $text .= $visitor_economy;
+                $text .= $visitor_economy_link;
+            }
         }
         $text .= "\xF0\x9F\x93\x85 <a href='$calendar_link'>Calendario $competition</a>\n";
         $text .= "\xF0\x9F\x93\x8A <a href='$table_link'>Playoff $competition</a>\n";
