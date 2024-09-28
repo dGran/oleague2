@@ -22,7 +22,7 @@ class TeamTableSeeder extends Seeder
         foreach (range(1,32) as $index) {
         	if ($index < 10) {
         		$pack_num = '0' . $index;
-        	} else
+        	} else {
         		$pack_num = $index;
         	}
             $pack = Team::create([
