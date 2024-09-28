@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class TableZone extends Model
 {
@@ -20,7 +21,7 @@ class TableZone extends Model
 	}
 
 	public function isLocalImg() {
-		if (starts_with($this->img, 'img/table_zones/')) {
+		if (Str::startsWith($this->img, 'img/table_zones/')) {
 			return true;
 		}
 		return false;

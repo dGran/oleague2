@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Player extends Model
 {
@@ -30,7 +31,7 @@ class Player extends Model
     public function nation_flag()
     {
     	if ($this->nation_name) {
-    		return 'img/flags/' . strtoupper(str_slug($this->nation_name)) . '.png';
+    		return 'img/flags/' . strtoupper(Str::slug($this->nation_name)) . '.png';
     	}
     }
 
@@ -47,15 +48,15 @@ class Player extends Model
     }
 
     public function pesmaster2019_link() {
-    	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2019/player/' . $this->game_id .'/';
+    	return 'https://www.pesmaster.com/' . Str::slug($this->name) . '/pes-2019/player/' . $this->game_id .'/';
     }
 
     public function pesmaster2020_link() {
-    	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2020/player/' . $this->game_id .'/';
+    	return 'https://www.pesmaster.com/' . Str::slug($this->name) . '/pes-2020/player/' . $this->game_id .'/';
     }
 
     public function pesmaster2021_link() {
-    	return 'https://www.pesmaster.com/' . str_slug($this->name) . '/pes-2021/player/' . $this->game_id .'/';
+    	return 'https://www.pesmaster.com/' . Str::slug($this->name) . '/pes-2021/player/' . $this->game_id .'/';
     }
 
 	public function scopeName($query, $name)
@@ -94,7 +95,7 @@ class Player extends Model
 	}
 
 	public function isLocalImg() {
-		if (starts_with($this->img, 'img/players/')) {
+		if (Str::startsWith($this->img, 'img/players/')) {
 			return true;
 		}
 		return false;

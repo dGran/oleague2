@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\TeamCategory;
 use App\Team;
+use Illuminate\Support\Str;
 
 class TeamTableSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class TeamTableSeeder extends Seeder
     {
         $category = TeamCategory::create([
             'name' => 'Packs',
-            'slug' => str_slug('Packs')
+            'slug' => Str::slug('Packs')
         ]);
 
         foreach (range(1,32) as $index) {

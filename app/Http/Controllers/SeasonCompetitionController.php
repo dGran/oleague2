@@ -11,6 +11,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class SeasonCompetitionController extends Controller
 {
@@ -142,7 +143,7 @@ class SeasonCompetitionController extends Controller
 
         $data = request()->all();
         $data['season_id'] = request()->season_id;
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
 
         if (request()->url_img) {
@@ -162,7 +163,7 @@ class SeasonCompetitionController extends Controller
 
         $competition = SeasonCompetition::create($data);
 
-        $slug_text = str_slug($competition->name) . '_' . $competition->id;
+        $slug_text = Str::slug($competition->name) . '_' . $competition->id;
         $competition->slug = $slug_text;
         $competition->save();
 
@@ -206,7 +207,7 @@ class SeasonCompetitionController extends Controller
             ]);
 
             $data = request()->all();
-            $slug_text = str_slug(request()->name) . '_' . $competition->id;
+            $slug_text = Str::slug(request()->name) . '_' . $competition->id;
             $data['slug'] = $slug_text;
 
             if (request()->url_img) {
@@ -312,7 +313,7 @@ class SeasonCompetitionController extends Controller
         if ($competition) {
             $NewCompetition = $competition->replicate();
             $NewCompetition->name .= " (copia)";
-            $NewCompetition->slug = str_slug($NewCompetition->name);
+            $NewCompetition->slug = Str::slug($NewCompetition->name);
 
             if ($NewCompetition->img) {
                 if ($NewCompetition->isLocalImg()) {
@@ -351,7 +352,7 @@ class SeasonCompetitionController extends Controller
                 $counter = $counter +1;
                 $competition = $original->replicate();
                 $competition->name .= " (copia)";
-                $competition->slug = str_slug($competition->name);
+                $competition->slug = Str::slug($competition->name);
 
                 if ($competition->img) {
                     if ($competition->isLocalImg()) {
@@ -404,7 +405,7 @@ class SeasonCompetitionController extends Controller
         if (!$filename) {
             $filename = 'season_competitions_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($competitions) {
             $excel->sheet('competiciones', function($sheet) use ($competitions)
@@ -427,7 +428,7 @@ class SeasonCompetitionController extends Controller
                         $competition->season_id = $value->season_id;
                         $competition->name = $value->name;
                         $competition->img = $value->img;
-                        $competition->slug = str_slug($value->name);
+                        $competition->slug = Str::slug($value->name);
 
                         if ($competition) {
                             $competition->save();

@@ -11,6 +11,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class TeamCategoryController extends Controller
 {
@@ -100,7 +101,7 @@ class TeamCategoryController extends Controller
             'name.unique' => 'El nombre de la categoría ya existe',
         ]);
 
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         $category = TeamCategory::create($data);
 
@@ -138,7 +139,7 @@ class TeamCategoryController extends Controller
 	            'name.unique' => 'El nombre de la categoría ya existe',
             ]);
 
-            $data['slug'] = str_slug(request()->name);
+            $data['slug'] = Str::slug(request()->name);
 
             $category->fill($data);
             if ($category->isDirty()) {
@@ -217,7 +218,7 @@ class TeamCategoryController extends Controller
     	if ($category) {
 	    	$newCategory = $category->replicate();
 	    	$newCategory->name .= " (copia)";
-            $newCategory->slug = str_slug($newCategory->name);
+            $newCategory->slug = Str::slug($newCategory->name);
 
 	    	$newCategory->save();
 
@@ -242,7 +243,7 @@ class TeamCategoryController extends Controller
 	    		$counter = $counter +1;
 		    	$category = $original->replicate();
 		    	$category->name .= " (copia)";
-                $category->slug = str_slug($category->name);
+                $category->slug = Str::slug($category->name);
 
 		    	$category->save();
 
@@ -282,7 +283,7 @@ class TeamCategoryController extends Controller
         if (!$filename) {
             $filename = 'categorias_equipos_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($categories) {
             $excel->sheet('categorias_equipos', function($sheet) use ($categories)
@@ -303,7 +304,7 @@ class TeamCategoryController extends Controller
                     try {
                         $category = new TeamCategory;
                         $category->name = $value->name;
-                        $category->slug = str_slug($value->name);
+                        $category->slug = Str::slug($value->name);
 
                         if ($category) {
                             $category->save();

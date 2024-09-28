@@ -10,6 +10,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 
 class TableZoneController extends Controller
@@ -107,7 +108,7 @@ class TableZoneController extends Controller
             'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
         ]);
 
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         if (request()->hasFile('img')) {
             $image = request()->file('img');
@@ -163,7 +164,7 @@ class TableZoneController extends Controller
                 'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
             ]);
 
-            $data['slug'] = str_slug(request()->name);
+            $data['slug'] = Str::slug(request()->name);
 
             if (request()->hasFile('img')) {
                 $image = request()->file('img');
@@ -261,7 +262,7 @@ class TableZoneController extends Controller
     	if ($table_zone) {
 	    	$newTableZone = $table_zone->replicate();
 	    	$newTableZone->name .= " (copia)";
-            $newTableZone->slug = str_slug($newTableZone->name);
+            $newTableZone->slug = Str::slug($newTableZone->name);
 
             if ($newTableZone->img) {
                 if ($newTableZone->isLocalImg()) {
@@ -300,7 +301,7 @@ class TableZoneController extends Controller
 	    		$counter = $counter +1;
 		    	$table_zone = $original->replicate();
 		    	$table_zone->name .= " (copia)";
-                $table_zone->slug = str_slug($table_zone->name);
+                $table_zone->slug = Str::slug($table_zone->name);
 
                 if ($table_zone->img) {
                     if ($table_zone->isLocalimg()) {
@@ -354,7 +355,7 @@ class TableZoneController extends Controller
         if ($filename == null) {
             $filename = 'marcado_de_zonas_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($table_zones) {
             $excel->sheet('marcado_de_zonas', function($sheet) use ($table_zones)
@@ -376,7 +377,7 @@ class TableZoneController extends Controller
                         $table_zone = new TableZone;
                         $table_zone->name = $value->name;
                         $table_zone->img = $value->img;
-                        $table_zone->slug = str_slug($value->name);
+                        $table_zone->slug = Str::slug($value->name);
 
                         if ($table_zone) {
                             $table_zone->save();

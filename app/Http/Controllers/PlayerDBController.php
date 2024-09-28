@@ -10,6 +10,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class PlayerDBController extends Controller
 {
@@ -100,7 +101,7 @@ public function index()
             'name.unique' => 'El nombre de la categoría ya existe',
         ]);
 
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         $database = PlayerDB::create($data);
 
@@ -138,7 +139,7 @@ public function index()
 	            'name.unique' => 'El nombre de la database ya existe',
             ]);
 
-            $data['slug'] = str_slug(request()->name);
+            $data['slug'] = Str::slug(request()->name);
 
             $database->fill($data);
             if ($database->isDirty()) {
@@ -217,7 +218,7 @@ public function index()
     	if ($database) {
 	    	$newDatabase = $database->replicate();
 	    	$newDatabase->name .= " (copia)";
-            $newDatabase->slug = str_slug($newDatabase->name);
+            $newDatabase->slug = Str::slug($newDatabase->name);
 
 	    	$newDatabase->save();
 
@@ -242,7 +243,7 @@ public function index()
 	    		$counter = $counter +1;
 		    	$database = $original->replicate();
 		    	$database->name .= " (copia)";
-                $database->slug = str_slug($database->name);
+                $database->slug = Str::slug($database->name);
 
 		    	$database->save();
 
@@ -282,7 +283,7 @@ public function index()
         if (!$filename) {
             $filename = 'players_databases_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($databases) {
             $excel->sheet('players_dbs', function($sheet) use ($databases)
@@ -303,7 +304,7 @@ public function index()
                     try {
                         $database = new PlayerDB;
                         $database->name = $value->name;
-                        $database->slug = str_slug($value->name);
+                        $database->slug = Str::slug($value->name);
 
                         if ($database) {
                             $database->save();

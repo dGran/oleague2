@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Team extends Model
 {
@@ -32,7 +33,7 @@ class Team extends Model
 	}
 
 	public function isLocalLogo() {
-		if (starts_with($this->logo, 'img/teams/')) {
+		if (Str::startsWith($this->logo, 'img/teams/')) {
 			return true;
 		}
 		return false;

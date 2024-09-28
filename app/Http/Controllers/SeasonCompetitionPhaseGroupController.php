@@ -11,6 +11,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class SeasonCompetitionPhaseGroupController extends Controller
 {
@@ -42,11 +43,11 @@ class SeasonCompetitionPhaseGroupController extends Controller
 
         $data = request()->all();
         $data['phase_id'] = $phase->id;
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         $group = SeasonCompetitionPhaseGroup::create($data);
 
-        $slug_text = str_slug($group->name) . '_' . $group->id;
+        $slug_text = Str::slug($group->name) . '_' . $group->id;
         $group->slug = $slug_text;
         $group->save();
 
@@ -88,7 +89,7 @@ class SeasonCompetitionPhaseGroupController extends Controller
             ]);
 
             $data = request()->all();
-            $slug_text = str_slug(request()->name) . '_' . $group->id;
+            $slug_text = Str::slug(request()->name) . '_' . $group->id;
             $data['slug'] = $slug_text;
 
             $group->fill($data);
@@ -163,7 +164,7 @@ class SeasonCompetitionPhaseGroupController extends Controller
         if (!$filename) {
             $filename = 'season_competitions_phases_groups_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($groups) {
             $excel->sheet('grupos', function($sheet) use ($groups)
@@ -186,7 +187,7 @@ class SeasonCompetitionPhaseGroupController extends Controller
                         $group->phase_id = $value->phase_id;
                         $group->name = $value->name;
                         $group->num_participants = $value->num_participants;
-                        $group->slug = str_slug($value->name);
+                        $group->slug = Str::slug($value->name);
 
                         if ($group) {
                             $group->save();

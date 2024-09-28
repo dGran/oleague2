@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Nation extends Model
 {
@@ -15,6 +16,6 @@ class Nation extends Model
 
     public function flag()
     {
-		return 'img/flags/' . str_slug($this->name) . '.png';
+		return 'img/flags/' . Str::slug($this->name) . '.png';
 	}
 }

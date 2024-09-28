@@ -13,6 +13,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class SeasonParticipantController extends Controller
 {
@@ -372,7 +373,7 @@ class SeasonParticipantController extends Controller
         if (!$filename) {
             $filename = 'participantes_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($participants) {
             $excel->sheet('participantes', function($sheet) use ($participants)

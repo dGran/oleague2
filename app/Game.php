@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Game extends Model
 {
@@ -20,7 +21,7 @@ class Game extends Model
 	}
 
 	public function isLocalImg() {
-		if (starts_with($this->img, 'img/games/')) {
+		if (Str::startsWith($this->img, 'img/games/')) {
 			return true;
 		}
 		return false;

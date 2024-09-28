@@ -12,6 +12,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 
 class SeasonCompetitionPhaseGroupParticipantController extends Controller
@@ -173,7 +174,7 @@ class SeasonCompetitionPhaseGroupParticipantController extends Controller
         if (!$filename) {
             $filename = 'season_competitions_phases_groups_participants_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($participants, $group) {
             $excel->sheet($group->name . ' - Participantes', function($sheet) use ($participants)

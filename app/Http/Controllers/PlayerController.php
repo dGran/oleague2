@@ -14,6 +14,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class PlayerController extends Controller
 {
@@ -142,7 +143,7 @@ class PlayerController extends Controller
 
             $database = new PlayerDB;
             $database->name = request()->players_db_name;
-            $database->slug = str_slug($database->name);
+            $database->slug = Str::slug($database->name);
             $database->save();
             event(new TableWasSaved($database, $database->name));
 
@@ -168,7 +169,7 @@ class PlayerController extends Controller
 
         $data = request()->all();
         $data['players_db_id'] = $players_db_id;
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         if (request()->url_img) {
             $data['img'] = request()->img_link;
@@ -233,7 +234,7 @@ class PlayerController extends Controller
 
                 $database = new PlayerDB;
                 $database->name = request()->players_db_name;
-                $database->slug = str_slug($database->name);
+                $database->slug = Str::slug($database->name);
                 $database->save();
                 event(new TableWasSaved($database, $database->name));
 
@@ -259,7 +260,7 @@ class PlayerController extends Controller
 
             $data = request()->all();
             $data['players_db_id'] = $players_db_id;
-            $data['slug'] = str_slug(request()->name);
+            $data['slug'] = Str::slug(request()->name);
 
             if (request()->url_img) {
                 $data['img'] = request()->img_link;
@@ -375,7 +376,7 @@ class PlayerController extends Controller
     	if ($player) {
 	    	$newPlayer = $player->replicate();
 	    	$newPlayer->name .= " (copia)";
-            $newPlayer->slug = str_slug($newPlayer->name);
+            $newPlayer->slug = Str::slug($newPlayer->name);
 
             if ($newPlayer->img) {
                 if ($newPlayer->isLocalImg()) {
@@ -414,7 +415,7 @@ class PlayerController extends Controller
 	    		$counter = $counter +1;
 		    	$player = $original->replicate();
 		    	$player->name .= " (copia)";
-                $player->slug = str_slug($player->name);
+                $player->slug = Str::slug($player->name);
 
                 if ($player->img) {
                     if ($player->isLocalImg()) {
@@ -480,7 +481,7 @@ class PlayerController extends Controller
         if (!$filename) {
             $filename = 'jugadores_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($players) {
             $excel->sheet('jugadores', function($sheet) use ($players)
@@ -505,7 +506,7 @@ class PlayerController extends Controller
             if (request()->new_parent) {
                 $database = new PlayerDB;
                 $database->name = request()->players_db_name;
-                $database->slug = str_slug($database->name);
+                $database->slug = Str::slug($database->name);
                 $database->save();
                 event(new TableWasSaved($database, $database->name));
 
@@ -523,7 +524,7 @@ class PlayerController extends Controller
                             if (!$nation) {
                                 $nation = Nation::create([
                                     'name' => $value->nation_name,
-                                    'flag' => 'img/flags/' . str_slug($value->nation_name) . '.png'
+                                    'flag' => 'img/flags/' . Str::slug($value->nation_name) . '.png'
                                 ]);
                                 event(new TableWasSaved($nation, $nation->name));
                             }
@@ -535,7 +536,7 @@ class PlayerController extends Controller
                                 if (!$category) {
                                     $category = TeamCategory::create([
                                         'name' => $value->league_name,
-                                        'slug' => str_slug($value->league_name)
+                                        'slug' => Str::slug($value->league_name)
                                     ]);
                                     event(new TableWasSaved($category, $category->name));
                                 }
@@ -549,7 +550,7 @@ class PlayerController extends Controller
                                         'team_category_id' => $category->id,
                                         'name' => $value->team_name,
                                         'logo' => '',
-                                        'slug' => str_slug($value->team_name)
+                                        'slug' => Str::slug($value->team_name)
                                     ]);
                                     event(new TableWasSaved($team, $team->name));
                                 }
@@ -570,7 +571,7 @@ class PlayerController extends Controller
                         $player->foot = $value->foot;
                         $player->overall_rating = $value->overall_rating;
                         $player->pack_id = $value->pack_id;
-                        $player->slug = str_slug($value->name);
+                        $player->slug = Str::slug($value->name);
 
                         if ($player) {
                             $player->save();

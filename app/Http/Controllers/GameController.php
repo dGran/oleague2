@@ -10,6 +10,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class GameController extends Controller
 {
@@ -106,7 +107,7 @@ class GameController extends Controller
             'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
         ]);
 
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         if (request()->hasFile('img')) {
             $image = request()->file('img');
@@ -162,7 +163,7 @@ class GameController extends Controller
                 'img.dimensions' => 'Las dimensiones de la imagen no son válidas'
             ]);
 
-            $data['slug'] = str_slug(request()->name);
+            $data['slug'] = Str::slug(request()->name);
 
             if (request()->hasFile('img')) {
                 $image = request()->file('img');
@@ -260,7 +261,7 @@ class GameController extends Controller
         if ($game) {
             $newGame = $game->replicate();
             $newGame->name .= " (copia)";
-            $newGame->slug = str_slug($newGame->name);
+            $newGame->slug = Str::slug($newGame->name);
 
             if ($newGame->img) {
                 if ($newGame->isLocalImg()) {
@@ -299,7 +300,7 @@ class GameController extends Controller
                 $counter = $counter +1;
                 $game = $original->replicate();
                 $game->name .= " (copia)";
-                $game->slug = str_slug($game->name);
+                $game->slug = Str::slug($game->name);
 
                 if ($game->img) {
                     if ($game->isLocalimg()) {
@@ -353,7 +354,7 @@ class GameController extends Controller
         if ($filename == null) {
             $filename = 'marcado_de_zonas_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($games) {
             $excel->sheet('marcado_de_zonas', function($sheet) use ($games)
@@ -375,7 +376,7 @@ class GameController extends Controller
                         $game = new Game;
                         $game->name = $value->name;
                         $game->img = $value->img;
-                        $game->slug = str_slug($value->name);
+                        $game->slug = Str::slug($value->name);
 
                         if ($game) {
                             $game->save();

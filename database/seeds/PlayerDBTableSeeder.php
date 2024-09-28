@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\PlayerDB;
+use Illuminate\Support\Str;
 
 class PlayerDBTableSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class PlayerDBTableSeeder extends Seeder
     {
         $player = PlayerDB::create([
             'name' => 'PES 2020 - Sep19',
-            'slug' => str_slug('PES 2020 - Sep19')
+            'slug' => Str::slug('PES 2020 - Sep19')
         ]);
     }
 }

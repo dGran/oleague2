@@ -11,6 +11,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class TeamController extends Controller
 {
@@ -121,7 +122,7 @@ class TeamController extends Controller
 
             $category = new TeamCategory;
             $category->name = request()->team_category_name;
-            $category->slug = str_slug($category->name);
+            $category->slug = Str::slug($category->name);
             $category->save();
             event(new TableWasSaved($category, $category->name));
             $data['team_category_id'] = $category->id;
@@ -143,11 +144,11 @@ class TeamController extends Controller
             ]);
         }
 
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         if (request()->hasFile('logo')) {
             $image = request()->file('logo');
-            $name = request()->team_category_id . '_' . date('mdYHis') . uniqid() . '.' . $image->getClientOriginalExtension();
+            $name = request()->team_category_id . '_' . date('mdYHis') . uniqid('', true) . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/img/teams');
             $imagePath = $destinationPath. "/".  $name;
             $image->move($destinationPath, $name);
@@ -206,7 +207,7 @@ class TeamController extends Controller
 
                 $category = new TeamCategory;
                 $category->name = request()->team_category_name;
-                $category->slug = str_slug($category->name);
+                $category->slug = Str::slug($category->name);
                 $category->save();
                 event(new TableWasSaved($category, $category->name));
                 $data['team_category_id'] = $category->id;
@@ -228,7 +229,7 @@ class TeamController extends Controller
                 ]);
             }
 
-            $data['slug'] = str_slug(request()->name);
+            $data['slug'] = Str::slug(request()->name);
 
             if (request()->hasFile('logo')) {
                 $image = request()->file('logo');
@@ -335,7 +336,7 @@ class TeamController extends Controller
     	if ($team) {
 	    	$newTeam = $team->replicate();
 	    	$newTeam->name .= " (copia)";
-            $newTeam->slug = str_slug($newTeam->name);
+            $newTeam->slug = Str::slug($newTeam->name);
 
             if ($newTeam->logo) {
                 if ($newTeam->isLocalLogo()) {
@@ -374,7 +375,7 @@ class TeamController extends Controller
 	    		$counter = $counter +1;
 		    	$team = $original->replicate();
 		    	$team->name .= " (copia)";
-                $team->slug = str_slug($team->name);
+                $team->slug = Str::slug($team->name);
 
                 if ($team->logo) {
                     if ($team->isLocalLogo()) {
@@ -431,7 +432,7 @@ class TeamController extends Controller
         if ($filename == null) {
             $filename = 'equipos_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($teams) {
             $excel->sheet('equipos', function($sheet) use ($teams)
@@ -454,7 +455,7 @@ class TeamController extends Controller
                         $team->team_category_id = $value->team_category_id;
                         $team->name = $value->name;
                         $team->logo = $value->logo;
-                        $team->slug = str_slug($value->name);
+                        $team->slug = Str::slug($value->name);
 
                         if ($team) {
                             $team->save();

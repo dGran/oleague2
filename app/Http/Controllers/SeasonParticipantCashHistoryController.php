@@ -13,6 +13,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class SeasonParticipantCashHistoryController extends Controller
 {
@@ -324,7 +325,7 @@ class SeasonParticipantCashHistoryController extends Controller
         if (!$filename) {
             $filename = 'historial_de_economia_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($cashs) {
             $excel->sheet('historial_de_economia', function($sheet) use ($cashs)

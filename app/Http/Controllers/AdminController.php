@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\AdminLog;
 use App\User;
 use App\Role;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -74,7 +75,7 @@ class AdminController extends Controller
         if ($filename == null) {
             $filename = 'logs_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($logs) {
             $excel->sheet('logs', function($sheet) use ($logs)

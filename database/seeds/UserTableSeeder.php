@@ -11,6 +11,7 @@ use App\Team;
 
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 
 class UserTableSeeder extends Seeder
 {
@@ -65,7 +66,7 @@ class UserTableSeeder extends Seeder
 
         $category = TeamCategory::create([
             'name' => 'Packs',
-            'slug' => str_slug('Packs')
+            'slug' => Str::slug('Packs')
         ]);
 
         foreach (range(1,32) as $index) {
@@ -78,7 +79,7 @@ class UserTableSeeder extends Seeder
                 'team_category_id' => 1,
                 'name' => "Pack $pack_num",
                 'logo' => 'img/teams/packs.png',
-                'slug' => str_slug("Pack $pack_num")
+                'slug' => Str::slug("Pack $pack_num")
             ]);
         }
     }

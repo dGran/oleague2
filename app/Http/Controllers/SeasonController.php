@@ -17,6 +17,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class SeasonController extends Controller
 {
@@ -108,7 +109,7 @@ class SeasonController extends Controller
         ]);
 
         $data = request()->all();
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
         $data['num_participants'] = (is_null(request()->num_participants)) ? 0 : request()->num_participants;
         $data['participant_has_team'] = (is_null(request()->participant_has_team)) ? 0 : 1;
         $data['use_economy'] = (is_null(request()->use_economy)) ? 0 : 1;
@@ -181,7 +182,7 @@ class SeasonController extends Controller
             ]);
 
             $data = request()->all();
-            $data['slug'] = str_slug(request()->name);
+            $data['slug'] = Str::slug(request()->name);
             $data['num_participants'] = (is_null(request()->num_participants)) ? 0 : request()->num_participants;
             $data['participant_has_team'] = (is_null(request()->participant_has_team)) ? 0 : 1;
             $data['use_economy'] = (is_null(request()->use_economy)) ? 0 : 1;
@@ -445,7 +446,7 @@ class SeasonController extends Controller
         if ($season) {
             $newseason = $season->replicate();
             $newseason->name .= " (copia)";
-            $newseason->slug = str_slug($newseason->name);
+            $newseason->slug = Str::slug($newseason->name);
             $newseason->salaries_paid = 0;
             $newseason->initial_budget = 0;
             $newseason->change_salaries_period = 0;
@@ -548,7 +549,7 @@ class SeasonController extends Controller
     //             $counter = $counter +1;
     //             $season = $original->replicate();
     //             $season->name .= " (copia)";
-    //             $season->slug = str_slug($season->name);
+    //             $season->slug = Str::slug($season->name);
 
     //             $season->save();
 
@@ -736,7 +737,7 @@ class SeasonController extends Controller
         if (!$filename) {
             $filename = 'temporadas_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($seasons) {
             $excel->sheet('temporadas', function($sheet) use ($seasons)
@@ -757,7 +758,7 @@ class SeasonController extends Controller
                     try {
                         $season = new Season;
                         $season->name = $value->name;
-                        $season->slug = str_slug($value->name);
+                        $season->slug = Str::slug($value->name);
 
                         if ($season) {
                             $season->save();

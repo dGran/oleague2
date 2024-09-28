@@ -11,6 +11,7 @@ use App\Events\TableWasSaved;
 use App\Events\TableWasDeleted;
 use App\Events\TableWasUpdated;
 use App\Events\TableWasImported;
+use Illuminate\Support\Str;
 
 class SeasonCompetitionPhaseController extends Controller
 {
@@ -44,11 +45,11 @@ class SeasonCompetitionPhaseController extends Controller
         $data['competition_id'] = $competition->id;
         $data['order'] = $this->calculateOrder($competition->id);
         $data['active'] = 0;
-        $data['slug'] = str_slug(request()->name);
+        $data['slug'] = Str::slug(request()->name);
 
         $phase = SeasonCompetitionPhase::create($data);
 
-        $slug_text = str_slug($phase->name) . '_' . $phase->id;
+        $slug_text = Str::slug($phase->name) . '_' . $phase->id;
         $phase->slug = $slug_text;
         $phase->save();
 
@@ -91,7 +92,7 @@ class SeasonCompetitionPhaseController extends Controller
 
             $data = request()->all();
             $data['order'] = $this->calculateOrder($competition->id);
-            $slug_text = str_slug(request()->name) . '_' . $phase->id;
+            $slug_text = Str::slug(request()->name) . '_' . $phase->id;
             $data['slug'] = $slug_text;
 
             $phase->fill($data);
@@ -238,7 +239,7 @@ class SeasonCompetitionPhaseController extends Controller
         if (!$filename) {
             $filename = 'season_competitions_phases_export' . time();
         } else {
-            $filename = str_slug($filename);
+            $filename = Str::slug($filename);
         }
         return \Excel::create($filename, function($excel) use ($phases) {
             $excel->sheet('Fases', function($sheet) use ($phases)
@@ -264,7 +265,7 @@ class SeasonCompetitionPhaseController extends Controller
                         $phase->num_participants = $value->num_participants;
                         $phase->order = $value->order;
                         $phase->active = is_null($value->active) ? 0 : $value->active;
-                        $phase->slug = str_slug($value->name);
+                        $phase->slug = Str::slug($value->name);
 
                         if ($phase) {
                             $phase->save();

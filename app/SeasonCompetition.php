@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class SeasonCompetition extends Model
 {
@@ -35,7 +36,7 @@ class SeasonCompetition extends Model
     }
 
     public function isLocalImg() {
-        if (starts_with($this->img, 'img/competitions/')) {
+        if (Str::startsWith($this->img, 'img/competitions/')) {
             return true;
         }
         return false;
